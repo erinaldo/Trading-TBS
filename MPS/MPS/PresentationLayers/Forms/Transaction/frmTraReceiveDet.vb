@@ -10,10 +10,11 @@ Public Class frmTraReceiveDet
     Private dtItem As New DataTable
     Private intPos As Integer = 0
     Private strJournalID As String = ""
+    Private intItemID As Integer = 0
     Property pubID As String
     Property pubIsNew As Boolean = False
     Property pubIsSave As Boolean = False
-    Private intItemID As Integer = 0
+    Property pubCS As New VO.CS
 
     Public Sub pubShowDialog(ByVal frmGetParent As Form)
         frmParent = frmGetParent
@@ -74,6 +75,8 @@ Public Class frmTraReceiveDet
     End Sub
 
     Private Sub prvFillForm()
+        pgMain.Value = 30
+        Me.Cursor = Cursors.WaitCursor
         prvFillCombo()
         Try
             If pubIsNew Then
@@ -115,6 +118,9 @@ Public Class frmTraReceiveDet
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
             Me.Close()
+        Finally
+            Me.Cursor = Cursors.Default
+            pgMain.Value = 100
         End Try
     End Sub
 
@@ -168,7 +174,8 @@ Public Class frmTraReceiveDet
         If Not UI.usForm.frmAskQuestion("Simpan data penjualan?") Then Exit Sub
 
         clsData = New VO.Receive
-        clsData.CompanyID = MPSLib.UI.usUserApp.CompanyID
+        clsData.ProgramID = pubCS.ProgramID
+        clsData.CompanyID = pubCS.CompanyID
         clsData.ID = txtID.Text.Trim
         clsData.BPID = intBPID
         clsData.BPName = txtBPName.Text.Trim

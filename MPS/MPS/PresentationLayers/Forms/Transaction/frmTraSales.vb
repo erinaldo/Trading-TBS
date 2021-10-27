@@ -4,12 +4,16 @@ Public Class frmTraSales
 
     Private intPos As Integer = 0
     Private clsData As New VO.Sales
+    Private intCompanyID As Integer
 
     Private Const _
        cNew = 0, cDetail = 1, cDelete = 2, cSep1 = 3, cPrintDO = 4, cRefresh = 5, cClose = 6
 
     Private Sub prvSetGrid()
+        UI.usForm.SetGrid(grdView, "ProgramID", "ProgramID", 100, UI.usDefGrid.gIntNum, False)
+        UI.usForm.SetGrid(grdView, "ProgramName", "Program", 100, UI.usDefGrid.gString, False)
         UI.usForm.SetGrid(grdView, "CompanyID", "CompanyID", 100, UI.usDefGrid.gIntNum, False)
+        UI.usForm.SetGrid(grdView, "CompanyName", "Perusahaan", 100, UI.usDefGrid.gString, False)
         UI.usForm.SetGrid(grdView, "ID", "Nomor", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "BPID", "BPID", 100, UI.usDefGrid.gIntNum, False)
         UI.usForm.SetGrid(grdView, "BPName", "Pelanggan", 100, UI.usDefGrid.gString)
@@ -76,15 +80,15 @@ Public Class frmTraSales
 
     Private Sub prvQuery()
         Me.Cursor = Cursors.WaitCursor
-        progressBar.Visible = True
+        pgMain.Value = 30
         Try
-            grdMain.DataSource = BL.Sales.ListData(dtpDateFrom.Value.Date, dtpDateTo.Value.Date, cboStatus.SelectedValue)
+            grdMain.DataSource = BL.Sales.ListData(intCompanyID, MPSLib.UI.usUserApp.ProgramID, dtpDateFrom.Value.Date, dtpDateTo.Value.Date, cboStatus.SelectedValue)
             grdView.BestFitColumns()
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
         Finally
             Me.Cursor = Cursors.Default
-            progressBar.Visible = False
+            pgMain.Value = 100
             prvSetButton()
         End Try
     End Sub
@@ -99,9 +103,21 @@ Public Class frmTraSales
         End With
     End Sub
 
+    Private Function prvGetCS() As VO.CS
+        Dim clsCS As New VO.CS
+        clsCS.ProgramID = MPSLib.UI.usUserApp.ProgramID
+        clsCS.ProgramName = MPSLib.UI.usUserApp.ProgramName
+        clsCS.CompanyID = intCompanyID
+        clsCS.CompanyName = txtCompanyName.Text.Trim
+        Return clsCS
+    End Function
+
     Private Function prvGetData() As VO.Sales
         Dim clsReturn As New VO.Sales
+        clsReturn.ProgramID = grdView.GetRowCellValue(intPos, "ProgramID")
+        clsReturn.ProgramName = grdView.GetRowCellValue(intPos, "ProgramName")
         clsReturn.CompanyID = grdView.GetRowCellValue(intPos, "CompanyID")
+        clsReturn.CompanyName = grdView.GetRowCellValue(intPos, "CompanyName")
         clsReturn.ID = grdView.GetRowCellValue(intPos, "ID")
         clsReturn.BPID = grdView.GetRowCellValue(intPos, "BPID")
         clsReturn.BPName = grdView.GetRowCellValue(intPos, "BPName")
@@ -128,6 +144,7 @@ Public Class frmTraSales
         Dim frmDetail As New frmTraSalesDet
         With frmDetail
             .pubIsNew = True
+            .pubCS = prvGetCS()
             .StartPosition = FormStartPosition.CenterScreen
             .pubShowDialog(Me)
         End With
@@ -140,6 +157,7 @@ Public Class frmTraSales
         Dim frmDetail As New frmTraSalesDet
         With frmDetail
             .pubIsNew = False
+            .pubCS = prvGetCS()
             .pubID = clsData.ID
             .StartPosition = FormStartPosition.CenterScreen
             .pubShowDialog(Me)
@@ -165,7 +183,7 @@ Public Class frmTraSales
         End With
 
         Me.Cursor = Cursors.WaitCursor
-        progressBar.Visible = True
+        pgMain.Value = 30
         Try
             BL.Sales.DeleteData(clsData)
             UI.usForm.frmMessageBox("Hapus data berhasil.")
@@ -174,7 +192,7 @@ Public Class frmTraSales
             UI.usForm.frmMessageBox(ex.Message)
         Finally
             Me.Cursor = Cursors.Default
-            progressBar.Visible = False
+            pgMain.Value = 100
         End Try
     End Sub
 
@@ -233,6 +251,19 @@ Public Class frmTraSales
         Finally
             Me.Cursor = Cursors.Default
         End Try
+    End Sub
+
+    Private Sub prvChooseCompany()
+        Dim frmDetail As New frmViewCompany
+        With frmDetail
+            .StartPosition = FormStartPosition.CenterScreen
+            .ShowDialog()
+            If .pubIsLookUpGet Then
+                intCompanyID = .pubLUdtRow.Item("CompanyID")
+                txtCompanyName.Text = .pubLUdtRow.Item("CompanyName")
+                btnExecute.Focus()
+            End If
+        End With
     End Sub
 
     Private Sub prvUserAccess()

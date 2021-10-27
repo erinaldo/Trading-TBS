@@ -69,7 +69,6 @@ Partial Class frmTraSalesDet
         Me.Label2 = New System.Windows.Forms.Label()
         Me.lblName = New System.Windows.Forms.Label()
         Me.txtID = New MPS.usTextBox()
-        Me.progressBar = New DevExpress.XtraWaitForm.ProgressPanel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtItemName = New MPS.usTextBox()
         Me.lblSalesPrice = New System.Windows.Forms.Label()
@@ -79,6 +78,13 @@ Partial Class frmTraSalesDet
         Me.grdStatus = New DevExpress.XtraGrid.GridControl()
         Me.grdStatusView = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.lblInfo = New System.Windows.Forms.Label()
+        Me.pgMain = New System.Windows.Forms.ProgressBar()
+        Me.tpSupplier = New System.Windows.Forms.TabPage()
+        Me.ToolBarSupplier = New MPS.usToolBar()
+        Me.grdSupplier = New DevExpress.XtraGrid.GridControl()
+        Me.grdSupplierView = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.BarAddSupplier = New System.Windows.Forms.ToolBarButton()
+        Me.BarDeleteSupplier = New System.Windows.Forms.ToolBarButton()
         Me.StatusStrip.SuspendLayout()
         Me.tcHeader.SuspendLayout()
         Me.tpMain.SuspendLayout()
@@ -92,6 +98,9 @@ Partial Class frmTraSalesDet
         Me.tpHistory.SuspendLayout()
         CType(Me.grdStatus, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.grdStatusView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.tpSupplier.SuspendLayout()
+        CType(Me.grdSupplier, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.grdSupplierView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'ToolBar
@@ -122,7 +131,7 @@ Partial Class frmTraSalesDet
         '
         Me.StatusStrip.Font = New System.Drawing.Font("Tahoma", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripEmpty, Me.ToolStripLogInc, Me.ToolStripLogBy, Me.ToolStripStatusLabel1, Me.ToolStripLogDate})
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 364)
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 367)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.Size = New System.Drawing.Size(1003, 22)
         Me.StatusStrip.TabIndex = 3
@@ -173,12 +182,13 @@ Partial Class frmTraSalesDet
         '
         Me.tcHeader.Appearance = System.Windows.Forms.TabAppearance.FlatButtons
         Me.tcHeader.Controls.Add(Me.tpMain)
+        Me.tcHeader.Controls.Add(Me.tpSupplier)
         Me.tcHeader.Controls.Add(Me.tpHistory)
         Me.tcHeader.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tcHeader.Location = New System.Drawing.Point(0, 50)
         Me.tcHeader.Name = "tcHeader"
         Me.tcHeader.SelectedIndex = 0
-        Me.tcHeader.Size = New System.Drawing.Size(1003, 314)
+        Me.tcHeader.Size = New System.Drawing.Size(1003, 317)
         Me.tcHeader.TabIndex = 2
         '
         'tpMain
@@ -220,7 +230,6 @@ Partial Class frmTraSalesDet
         Me.tpMain.Controls.Add(Me.Label2)
         Me.tpMain.Controls.Add(Me.lblName)
         Me.tpMain.Controls.Add(Me.txtID)
-        Me.tpMain.Controls.Add(Me.progressBar)
         Me.tpMain.Controls.Add(Me.Label1)
         Me.tpMain.Controls.Add(Me.txtItemName)
         Me.tpMain.Controls.Add(Me.lblSalesPrice)
@@ -229,7 +238,7 @@ Partial Class frmTraSalesDet
         Me.tpMain.Location = New System.Drawing.Point(4, 25)
         Me.tpMain.Name = "tpMain"
         Me.tpMain.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpMain.Size = New System.Drawing.Size(995, 285)
+        Me.tpMain.Size = New System.Drawing.Size(995, 288)
         Me.tpMain.TabIndex = 0
         Me.tpMain.Text = "Main - F1"
         Me.tpMain.UseVisualStyleBackColor = True
@@ -620,20 +629,6 @@ Partial Class frmTraSalesDet
         Me.txtID.Size = New System.Drawing.Size(143, 21)
         Me.txtID.TabIndex = 0
         '
-        'progressBar
-        '
-        Me.progressBar.Appearance.BackColor = System.Drawing.Color.Transparent
-        Me.progressBar.Appearance.Options.UseBackColor = True
-        Me.progressBar.BarAnimationElementThickness = 2
-        Me.progressBar.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.progressBar.Caption = "Mohon tunggu"
-        Me.progressBar.Description = "Sedang diproses ..."
-        Me.progressBar.Location = New System.Drawing.Point(752, 186)
-        Me.progressBar.Name = "progressBar"
-        Me.progressBar.Size = New System.Drawing.Size(157, 48)
-        Me.progressBar.TabIndex = 21
-        Me.progressBar.Visible = False
-        '
         'Label1
         '
         Me.Label1.AutoSize = True
@@ -695,9 +690,9 @@ Partial Class frmTraSalesDet
         Me.tpHistory.Location = New System.Drawing.Point(4, 25)
         Me.tpHistory.Name = "tpHistory"
         Me.tpHistory.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpHistory.Size = New System.Drawing.Size(995, 285)
+        Me.tpHistory.Size = New System.Drawing.Size(995, 288)
         Me.tpHistory.TabIndex = 1
-        Me.tpHistory.Text = "History - F2"
+        Me.tpHistory.Text = "History - F3"
         Me.tpHistory.UseVisualStyleBackColor = True
         '
         'grdStatus
@@ -720,7 +715,7 @@ Partial Class frmTraSalesDet
         Me.grdStatus.Location = New System.Drawing.Point(3, 3)
         Me.grdStatus.MainView = Me.grdStatusView
         Me.grdStatus.Name = "grdStatus"
-        Me.grdStatus.Size = New System.Drawing.Size(985, 275)
+        Me.grdStatus.Size = New System.Drawing.Size(985, 278)
         Me.grdStatus.TabIndex = 12
         Me.grdStatus.UseEmbeddedNavigator = True
         Me.grdStatus.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.grdStatusView})
@@ -747,13 +742,92 @@ Partial Class frmTraSalesDet
         Me.lblInfo.Text = "« Penjualan Detail"
         Me.lblInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
+        'pgMain
+        '
+        Me.pgMain.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.pgMain.Location = New System.Drawing.Point(0, 389)
+        Me.pgMain.Name = "pgMain"
+        Me.pgMain.Size = New System.Drawing.Size(1003, 23)
+        Me.pgMain.TabIndex = 4
+        '
+        'tpSupplier
+        '
+        Me.tpSupplier.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.tpSupplier.Controls.Add(Me.grdSupplier)
+        Me.tpSupplier.Controls.Add(Me.ToolBarSupplier)
+        Me.tpSupplier.Location = New System.Drawing.Point(4, 25)
+        Me.tpSupplier.Name = "tpSupplier"
+        Me.tpSupplier.Size = New System.Drawing.Size(995, 288)
+        Me.tpSupplier.TabIndex = 2
+        Me.tpSupplier.Text = "Pemasok - F2"
+        Me.tpSupplier.UseVisualStyleBackColor = True
+        '
+        'ToolBarSupplier
+        '
+        Me.ToolBarSupplier.Appearance = System.Windows.Forms.ToolBarAppearance.Flat
+        Me.ToolBarSupplier.Buttons.AddRange(New System.Windows.Forms.ToolBarButton() {Me.BarAddSupplier, Me.BarDeleteSupplier})
+        Me.ToolBarSupplier.DropDownArrows = True
+        Me.ToolBarSupplier.Location = New System.Drawing.Point(0, 0)
+        Me.ToolBarSupplier.Name = "ToolBarSupplier"
+        Me.ToolBarSupplier.ShowToolTips = True
+        Me.ToolBarSupplier.Size = New System.Drawing.Size(991, 28)
+        Me.ToolBarSupplier.TabIndex = 0
+        Me.ToolBarSupplier.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right
+        '
+        'grdSupplier
+        '
+        Me.grdSupplier.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.grdSupplier.EmbeddedNavigator.Buttons.Append.Enabled = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.Append.Visible = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.CancelEdit.Enabled = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.CancelEdit.Visible = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.Edit.Enabled = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.Edit.Visible = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.EndEdit.Enabled = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.EndEdit.Visible = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.NextPage.Enabled = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.NextPage.Visible = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.PrevPage.Enabled = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.PrevPage.Visible = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.Remove.Enabled = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.Remove.Visible = False
+        Me.grdSupplier.Location = New System.Drawing.Point(0, 28)
+        Me.grdSupplier.MainView = Me.grdSupplierView
+        Me.grdSupplier.Name = "grdSupplier"
+        Me.grdSupplier.Size = New System.Drawing.Size(991, 256)
+        Me.grdSupplier.TabIndex = 1
+        Me.grdSupplier.UseEmbeddedNavigator = True
+        Me.grdSupplier.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.grdSupplierView})
+        '
+        'grdSupplierView
+        '
+        Me.grdSupplierView.GridControl = Me.grdSupplier
+        Me.grdSupplierView.Name = "grdSupplierView"
+        Me.grdSupplierView.OptionsCustomization.AllowColumnMoving = False
+        Me.grdSupplierView.OptionsCustomization.AllowGroup = False
+        Me.grdSupplierView.OptionsView.ColumnAutoWidth = False
+        Me.grdSupplierView.OptionsView.ShowGroupPanel = False
+        '
+        'BarAddSupplier
+        '
+        Me.BarAddSupplier.Name = "BarAddSupplier"
+        Me.BarAddSupplier.Tag = "Add"
+        Me.BarAddSupplier.Text = "Add"
+        '
+        'BarDeleteSupplier
+        '
+        Me.BarDeleteSupplier.Name = "BarDeleteSupplier"
+        Me.BarDeleteSupplier.Tag = "Delete"
+        Me.BarDeleteSupplier.Text = "Delete"
+        '
         'frmTraSalesDet
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1003, 386)
+        Me.ClientSize = New System.Drawing.Size(1003, 412)
         Me.Controls.Add(Me.tcHeader)
         Me.Controls.Add(Me.StatusStrip)
+        Me.Controls.Add(Me.pgMain)
         Me.Controls.Add(Me.lblInfo)
         Me.Controls.Add(Me.ToolBar)
         Me.Font = New System.Drawing.Font("Tahoma", 8.25!)
@@ -777,6 +851,10 @@ Partial Class frmTraSalesDet
         Me.tpHistory.ResumeLayout(False)
         CType(Me.grdStatus, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.grdStatusView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.tpSupplier.ResumeLayout(False)
+        Me.tpSupplier.PerformLayout()
+        CType(Me.grdSupplier, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.grdSupplierView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -811,7 +889,6 @@ Partial Class frmTraSalesDet
     Friend WithEvents txtRemarks As MPS.usTextBox
     Friend WithEvents grdStatus As DevExpress.XtraGrid.GridControl
     Friend WithEvents grdStatusView As DevExpress.XtraGrid.Views.Grid.GridView
-    Friend WithEvents progressBar As DevExpress.XtraWaitForm.ProgressPanel
     Friend WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents txtPlatNumber As MPS.usTextBox
     Friend WithEvents Label11 As System.Windows.Forms.Label
@@ -837,4 +914,11 @@ Partial Class frmTraSalesDet
     Friend WithEvents lblSalesPrice As System.Windows.Forms.Label
     Friend WithEvents lblUomID1 As System.Windows.Forms.Label
     Friend WithEvents lblQty As System.Windows.Forms.Label
+    Friend WithEvents pgMain As System.Windows.Forms.ProgressBar
+    Friend WithEvents tpSupplier As System.Windows.Forms.TabPage
+    Friend WithEvents grdSupplier As DevExpress.XtraGrid.GridControl
+    Friend WithEvents grdSupplierView As DevExpress.XtraGrid.Views.Grid.GridView
+    Friend WithEvents ToolBarSupplier As MPS.usToolBar
+    Friend WithEvents BarAddSupplier As System.Windows.Forms.ToolBarButton
+    Friend WithEvents BarDeleteSupplier As System.Windows.Forms.ToolBarButton
 End Class

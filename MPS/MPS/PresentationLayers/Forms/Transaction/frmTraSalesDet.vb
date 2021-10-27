@@ -10,10 +10,11 @@ Public Class frmTraSalesDet
     Private dtItem As New DataTable
     Private intPos As Integer = 0
     Private strJournalID As String = ""
+    Private intItemID As Integer = 0
     Property pubID As String
     Property pubIsNew As Boolean = False
     Property pubIsSave As Boolean = False
-    Private intItemID As Integer = 0
+    Property pubCS As New VO.CS
 
     Public Sub pubShowDialog(ByVal frmGetParent As Form)
         frmParent = frmGetParent
@@ -74,6 +75,8 @@ Public Class frmTraSalesDet
     End Sub
 
     Private Sub prvFillForm()
+        pgMain.Value = 30
+        Me.Cursor = Cursors.WaitCursor
         prvFillCombo()
         Try
             If pubIsNew Then
@@ -109,6 +112,10 @@ Public Class frmTraSalesDet
             End If
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
+            Me.Close()
+        Finally
+            Me.Cursor = Cursors.Default
+            pgMain.Value = 100
         End Try
     End Sub
 
@@ -150,7 +157,8 @@ Public Class frmTraSalesDet
         If Not UI.usForm.frmAskQuestion("Simpan data penjualan?") Then Exit Sub
 
         clsData = New VO.Sales
-        clsData.CompanyID = MPSLib.UI.usUserApp.CompanyID
+        clsData.ProgramID = pubCS.ProgramID
+        clsData.CompanyID = pubCS.CompanyID
         clsData.ID = txtID.Text.Trim
         clsData.BPID = intBPID
         clsData.BPName = txtBPName.Text.Trim
@@ -176,7 +184,7 @@ Public Class frmTraSalesDet
         clsData.JournalID = strJournalID
 
         Me.Cursor = Cursors.WaitCursor
-        progressBar.Visible = True
+        pgMain.Value = 30
         Try
             Dim strID As String = BL.Sales.SaveData(pubIsNew, clsData)
             If strID.Trim <> "" Then
@@ -199,7 +207,7 @@ Public Class frmTraSalesDet
             UI.usForm.frmMessageBox(ex.Message)
         Finally
             Me.Cursor = Cursors.Default
-            progressBar.Visible = False
+            pgMain.Value = 100
         End Try
     End Sub
 
@@ -310,6 +318,8 @@ Public Class frmTraSalesDet
         If e.KeyCode = Keys.F1 Then
             tcHeader.SelectedTab = tpMain
         ElseIf e.KeyCode = Keys.F2 Then
+            tcHeader.SelectedTab = tpSupplier
+        ElseIf e.KeyCode = Keys.F3 Then
             tcHeader.SelectedTab = tpHistory
         ElseIf e.KeyCode = Keys.Escape Then
             If UI.usForm.frmAskQuestion("Tutup form?") Then Me.Close()

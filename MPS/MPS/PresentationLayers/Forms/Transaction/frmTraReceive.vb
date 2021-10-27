@@ -88,7 +88,7 @@ Public Class frmTraReceive
 
     Private Sub prvQuery()
         Me.Cursor = Cursors.WaitCursor
-        pgMain.Value = 40
+        pgMain.Value = 30
         Try
             grdMain.DataSource = BL.Receive.ListData(intCompanyID, MPSLib.UI.usUserApp.ProgramID, dtpDateFrom.Value.Date, dtpDateTo.Value.Date, cboStatus.SelectedValue)
             grdView.BestFitColumns()
@@ -111,10 +111,21 @@ Public Class frmTraReceive
         End With
     End Sub
 
+    Private Function prvGetCS() As VO.CS
+        Dim clsCS As New VO.CS
+        clsCS.ProgramID = MPSLib.UI.usUserApp.ProgramID
+        clsCS.ProgramName = MPSLib.UI.usUserApp.ProgramName
+        clsCS.CompanyID = intCompanyID
+        clsCS.CompanyName = txtCompanyName.Text.Trim
+        Return clsCS
+    End Function
+
     Private Function prvGetData() As VO.Receive
         Dim clsReturn As New VO.Receive
         clsReturn.ProgramID = grdView.GetRowCellValue(intPos, "ProgramID")
+        clsReturn.ProgramName = grdView.GetRowCellValue(intPos, "ProgramName")
         clsReturn.CompanyID = grdView.GetRowCellValue(intPos, "CompanyID")
+        clsReturn.CompanyName = grdView.GetRowCellValue(intPos, "CompanyName")
         clsReturn.ID = grdView.GetRowCellValue(intPos, "ID")
         clsReturn.ReferencesID = grdView.GetRowCellValue(intPos, "ReferencesID")
         clsReturn.BPID = grdView.GetRowCellValue(intPos, "BPID")
@@ -144,6 +155,7 @@ Public Class frmTraReceive
         Dim frmDetail As New frmTraReceiveDet
         With frmDetail
             .pubIsNew = True
+            .pubCS = prvGetCS()
             .StartPosition = FormStartPosition.CenterScreen
             .pubShowDialog(Me)
         End With
@@ -156,6 +168,7 @@ Public Class frmTraReceive
         Dim frmDetail As New frmTraReceiveDet
         With frmDetail
             .pubIsNew = False
+            .pubCS = prvGetCS()
             .pubID = clsData.ID
             .StartPosition = FormStartPosition.CenterScreen
             .pubShowDialog(Me)

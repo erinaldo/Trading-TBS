@@ -145,6 +145,7 @@
     <Compile Include="ValueObject\Base\ChartOfAccountGroup.vb" />
     <Compile Include="ValueObject\Base\Common.vb" />
     <Compile Include="ValueObject\Base\Company.vb" />
+    <Compile Include="ValueObject\Base\CS.vb" />
     <Compile Include="ValueObject\Base\DefaultServer.vb" />
     <Compile Include="ValueObject\Base\JournalPost.vb" />
     <Compile Include="ValueObject\Base\Modules.vb" />

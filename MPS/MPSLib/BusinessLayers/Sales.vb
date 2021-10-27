@@ -4,25 +4,16 @@ Namespace BL
 
 #Region "Main"
 
-        Public Shared Function ListData(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intIDStatus As Integer) As DataTable
+        Public Shared Function ListData(ByVal intCompanyID As Integer, ByVal intProgramID As Integer, _
+                                        ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intIDStatus As Integer) As DataTable
             dtmDateTo = dtmDateTo.AddHours(23).AddMinutes(59).AddSeconds(59)
             BL.Server.ServerDefault()
-            Return DL.Sales.ListData(dtmDateFrom, dtmDateTo, intIDStatus)
+            Return DL.Sales.ListData(intCompanyID, intProgramID, dtmDateFrom, dtmDateTo, intIDStatus)
         End Function
 
-        Public Shared Function ListDataBonFaktur(ByVal strID As String) As DataTable
-            BL.Server.ServerDefault()
-            Return DL.Sales.ListDataBonFaktur(strID)
-        End Function
-
-        Public Shared Function ListDataOutstanding() As DataTable
-            BL.Server.ServerDefault()
-            Return DL.Sales.ListDataOutstanding()
-        End Function
-
-        Private Shared Function GetNewID(ByVal intCompanyID As Integer)
+        Private Shared Function GetNewID(ByVal intCompanyID As Integer, ByVal intProgramID As Integer)
             Dim clsCompany As VO.Company = DL.Company.GetDetail(intCompanyID)
-            Dim strReturn As String = "SO" & Format(Now, "yyMMdd") & "-" & clsCompany.CompanyInitial & "-"
+            Dim strReturn As String = "SO" & Format(Now, "yyMMdd") & "-" & clsCompany.CompanyInitial & "-" & Format(intProgramID, "00") & "-"
             strReturn = strReturn & Format(DL.Sales.GetMaxID(strReturn), "000")
             Return strReturn
         End Function
@@ -33,7 +24,7 @@ Namespace BL
                 DL.SQL.BeginTransaction()
 
                 If bolNew Then
-                    clsData.ID = GetNewID(clsData.CompanyID)
+                    clsData.ID = GetNewID(clsData.CompanyID, clsData.ProgramID)
                     If DL.Sales.DataExists(clsData.ID) Then
                         Err.Raise(515, "", "ID sudah ada sebelumnya")
                         'ElseIf Format(clsData.SalesDate, "yyyyMMdd") <= DL.PostGL.LastPostedDate Then
@@ -129,6 +120,16 @@ Namespace BL
             End Try
 
         End Sub
+
+        Public Shared Function ListDataBonFaktur(ByVal strID As String) As DataTable
+            BL.Server.ServerDefault()
+            Return DL.Sales.ListDataBonFaktur(strID)
+        End Function
+
+        Public Shared Function ListDataOutstanding() As DataTable
+            BL.Server.ServerDefault()
+            Return DL.Sales.ListDataOutstanding()
+        End Function
 
         'Public Shared Function ListDataDeliveryOrder(ByVal strID As String) As DataTable
         '    BL.Server.ServerDefault()
@@ -251,25 +252,6 @@ Namespace BL
 
 #End Region
 
-        '#Region "Detail"
-
-        '        Public Shared Function ListDataDetail(ByVal strSalesID As String) As DataTable
-        '            BL.Server.ServerDefault()
-        '            Return DL.Sales.ListDataDetail(strSalesID)
-        '        End Function
-
-        '        Public Shared Function ListDataOutstandingUsage(ByVal strSalesID As String) As DataTable
-        '            BL.Server.ServerDefault()
-        '            Return DL.Sales.ListDataOutstandingUsage(strSalesID)
-        '        End Function
-
-        '        Public Shared Function ListDataOutstandingReturn(ByVal intBPID As Integer) As DataTable
-        '            BL.Server.ServerDefault()
-        '            Return DL.Sales.ListDataOutstandingReturn(intBPID)
-        '        End Function
-
-        '#End Region
-
 #Region "Status"
 
         Public Shared Function ListDataStatus(ByVal strSalesID As String) As DataTable
@@ -290,6 +272,25 @@ Namespace BL
         End Sub
 
 #End Region
+
+        '#Region "Detail"
+
+        '        Public Shared Function ListDataDetail(ByVal strSalesID As String) As DataTable
+        '            BL.Server.ServerDefault()
+        '            Return DL.Sales.ListDataDetail(strSalesID)
+        '        End Function
+
+        '        Public Shared Function ListDataOutstandingUsage(ByVal strSalesID As String) As DataTable
+        '            BL.Server.ServerDefault()
+        '            Return DL.Sales.ListDataOutstandingUsage(strSalesID)
+        '        End Function
+
+        '        Public Shared Function ListDataOutstandingReturn(ByVal intBPID As Integer) As DataTable
+        '            BL.Server.ServerDefault()
+        '            Return DL.Sales.ListDataOutstandingReturn(intBPID)
+        '        End Function
+
+        '#End Region
 
     End Class
 

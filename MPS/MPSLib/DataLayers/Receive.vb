@@ -133,27 +133,27 @@ Namespace DL
                     .Connection = SQL.sqlConn
                     .CommandText = _
                         "SELECT 	" & vbNewLine & _
-                        "    A.CompanyID, A.ID, A.ReferencesID, A.BPID, C.Name AS BPName, A.ReceiveDate, A.PaymentTerm, A.DriverName, A.PlatNumber, A.DueDate, 	" & vbNewLine & _
-                        "    A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MI.UomID1 AS UOMID, MU.Code AS UomCode, 	" & vbNewLine & _
-                        "    A.ArrivalBrutto, A.ArrivalTarra, A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, A.ArrivalBrutto+TS.ArrivalNettoAfter-TS.ArrivalUsage-TS.ArrivalReturn AS MaxBrutto, 	" & vbNewLine & _
-                        "	A.Price, A.TotalPrice, A.ArrivalReturn, A.TotalPayment, A.IsPostedGL,   	" & vbNewLine & _
-                        "    A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, A.CreatedBy,   	" & vbNewLine & _
-                        "    A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID  	" & vbNewLine & _
+                        "   A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.ReferencesID, A.BPID, C.Name AS BPName, A.ReceiveDate, A.PaymentTerm, A.DriverName, A.PlatNumber, A.DueDate, 	" & vbNewLine & _
+                        "   A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MI.UomID1 AS UOMID, MU.Code AS UomCode, 	" & vbNewLine & _
+                        "   A.ArrivalBrutto, A.ArrivalTarra, A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, A.ArrivalBrutto+TS.ArrivalNettoAfter-TS.ArrivalUsage-TS.ArrivalReturn AS MaxBrutto, 	" & vbNewLine & _
+                        "   A.Price, A.TotalPrice, A.ArrivalReturn, A.TotalPayment, A.IsPostedGL,   	" & vbNewLine & _
+                        "   A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, A.CreatedBy,   	" & vbNewLine & _
+                        "   A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID  	" & vbNewLine & _
                         "FROM traReceive A 	" & vbNewLine & _
                         "INNER JOIN traSales TS ON 	" & vbNewLine & _
                         "	A.ReferencesID=TS.ID 	" & vbNewLine & _
                         "INNER JOIN mstBusinessPartner C ON 	" & vbNewLine & _
-                        "    A.BPID=C.ID 	" & vbNewLine & _
+                        "   A.BPID=C.ID 	" & vbNewLine & _
                         "INNER JOIN mstItem MI ON 	" & vbNewLine & _
-                        "    A.ItemID=MI.ID 	" & vbNewLine & _
+                        "   A.ItemID=MI.ID 	" & vbNewLine & _
                         "INNER JOIN mstUOM MU ON 	" & vbNewLine & _
-                        "    MI.UomID=MU.ID	" & vbNewLine & _
+                        "   MI.UomID=MU.ID	" & vbNewLine & _
                         "INNER JOIN mstCompany MC ON " & vbNewLine & _
-                        "    A.CompanyID=MC.ID " & vbNewLine & _
+                        "   A.CompanyID=MC.ID " & vbNewLine & _
                         "INNER JOIN mstProgram MP ON " & vbNewLine & _
-                        "    A.ProgramID=MP.ID " & vbNewLine & _
+                        "   A.ProgramID=MP.ID " & vbNewLine & _
                         "WHERE  " & vbNewLine & _
-                        "    A.ID=@ID " & vbNewLine
+                        "   A.ID=@ID " & vbNewLine
 
                     .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
 
@@ -164,6 +164,9 @@ Namespace DL
                     If .HasRows Then
                         .Read()
                         voReturn.CompanyID = .Item("CompanyID")
+                        voReturn.CompanyName = .Item("CompanyName")
+                        voReturn.ProgramID = .Item("ProgramID")
+                        voReturn.ProgramName = .Item("ProgramName")
                         voReturn.ID = .Item("ID")
                         voReturn.ReferencesID = .Item("ReferencesID")
                         voReturn.BPID = .Item("BPID")
@@ -243,7 +246,7 @@ Namespace DL
                         "   ID=ISNULL(RIGHT(MAX(ID),3),0) " & vbNewLine & _
                         "FROM traReceive " & vbNewLine & _
                         "WHERE  " & vbNewLine & _
-                        "   LEFT(ID,13)=@ID " & vbNewLine
+                        "   LEFT(ID,16)=@ID " & vbNewLine
 
                     .Parameters.Add("@ID", SqlDbType.VarChar, 16).Value = strID
 

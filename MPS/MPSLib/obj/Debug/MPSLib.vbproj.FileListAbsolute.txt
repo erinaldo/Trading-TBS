@@ -6,3 +6,11 @@ D:\My Project\Desktop\TBS\MPS\MPSLib\obj\Debug\MPSLib.vbproj.GenerateResource.Ca
 D:\My Project\Desktop\TBS\MPS\MPSLib\obj\Debug\MPSLib.dll
 D:\My Project\Desktop\TBS\MPS\MPSLib\obj\Debug\MPSLib.xml
 D:\My Project\Desktop\TBS\MPS\MPSLib\obj\Debug\MPSLib.pdb
+C:\Project\Desktop\Trading-TBS\MPS\MPSLib\bin\Debug\MPSLib.dll
+C:\Project\Desktop\Trading-TBS\MPS\MPSLib\bin\Debug\MPSLib.pdb
+C:\Project\Desktop\Trading-TBS\MPS\MPSLib\bin\Debug\MPSLib.xml
+C:\Project\Desktop\Trading-TBS\MPS\MPSLib\obj\Debug\MPSLib.Resources.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPSLib\obj\Debug\MPSLib.vbproj.GenerateResource.Cache
+C:\Project\Desktop\Trading-TBS\MPS\MPSLib\obj\Debug\MPSLib.dll
+C:\Project\Desktop\Trading-TBS\MPS\MPSLib\obj\Debug\MPSLib.xml
+C:\Project\Desktop\Trading-TBS\MPS\MPSLib\obj\Debug\MPSLib.pdb
