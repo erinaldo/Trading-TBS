@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D2C04D4C-5EBB-412F-8A74-EA4267D0697F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>MPSLib</RootNamespace>
+    <AssemblyName>MPSLib</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>MPSLib.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>MPSLib.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Data.SqlClient" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessLayers\Base\Access.vb" />
+    <Compile Include="BusinessLayers\Base\ChartOfAccount.vb" />
+    <Compile Include="BusinessLayers\Base\ChartOfAccountAssign.vb" />
+    <Compile Include="BusinessLayers\Base\ChartOfAccountGroup.vb" />
+    <Compile Include="BusinessLayers\Base\Company.vb" />
+    <Compile Include="BusinessLayers\Base\JournalPost.vb" />
+    <Compile Include="BusinessLayers\Base\Modules.vb" />
+    <Compile Include="BusinessLayers\Base\ModulesAccess.vb" />
+    <Compile Include="BusinessLayers\Base\Program.vb" />
+    <Compile Include="BusinessLayers\Base\ProgramModules.vb" />
+    <Compile Include="BusinessLayers\Base\Server.vb" />
+    <Compile Include="BusinessLayers\Base\Status.vb" />
+    <Compile Include="BusinessLayers\Base\StatusModules.vb" />
+    <Compile Include="BusinessLayers\Base\User.vb" />
+    <Compile Include="BusinessLayers\Base\UserAccess.vb" />
+    <Compile Include="BusinessLayers\Base\UserCompany.vb" />
+    <Compile Include="BusinessLayers\BusinessPartner.vb" />
+    <Compile Include="BusinessLayers\History.vb" />
+    <Compile Include="BusinessLayers\Item.vb" />
+    <Compile Include="BusinessLayers\PaymentReferences.vb" />
+    <Compile Include="BusinessLayers\PaymentTerm.vb" />
+    <Compile Include="BusinessLayers\Receive.vb" />
+    <Compile Include="BusinessLayers\Sales.vb" />
+    <Compile Include="BusinessLayers\SalesDiscount.vb" />
+    <Compile Include="BusinessLayers\UOM.vb" />
+    <Compile Include="DataLayers\Base\Access.vb" />
+    <Compile Include="DataLayers\Base\ChartOfAccount.vb" />
+    <Compile Include="DataLayers\Base\ChartOfAccountAssign.vb" />
+    <Compile Include="DataLayers\Base\ChartOfAccountGroup.vb" />
+    <Compile Include="DataLayers\Base\Company.vb" />
+    <Compile Include="DataLayers\Base\JournalPost.vb" />
+    <Compile Include="DataLayers\Base\Modules.vb" />
+    <Compile Include="DataLayers\Base\ModulesAccess.vb" />
+    <Compile Include="DataLayers\Base\Program.vb" />
+    <Compile Include="DataLayers\Base\ProgramModules.vb" />
+    <Compile Include="DataLayers\Base\Server.vb" />
+    <Compile Include="DataLayers\Base\SQL.vb" />
+    <Compile Include="DataLayers\Base\Status.vb" />
+    <Compile Include="DataLayers\Base\StatusModules.vb" />
+    <Compile Include="DataLayers\Base\User.vb" />
+    <Compile Include="DataLayers\Base\UserAccess.vb" />
+    <Compile Include="DataLayers\Base\UserCompany.vb" />
+    <Compile Include="DataLayers\Base\BusinessPartner.vb" />
+    <Compile Include="DataLayers\Item.vb" />
+    <Compile Include="DataLayers\PaymentReferences.vb" />
+    <Compile Include="DataLayers\PaymentTerm.vb" />
+    <Compile Include="DataLayers\Receive.vb" />
+    <Compile Include="DataLayers\Sales.vb" />
+    <Compile Include="DataLayers\SalesDiscount.vb" />
+    <Compile Include="DataLayers\UOM.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="SharedLib\Functions\DataSetHelper.vb" />
+    <Compile Include="SharedLib\Functions\DirectoryUtility.vb" />
+    <Compile Include="SharedLib\Functions\Encryption.vb" />
+    <Compile Include="SharedLib\Functions\StringUtility.vb" />
+    <Compile Include="SharedLib\Functions\usUserApp.vb" />
+    <Compile Include="ValueObject\AccountPayable.vb" />
+    <Compile Include="ValueObject\AccountPayableDet.vb" />
+    <Compile Include="ValueObject\AccountPayableStatus.vb" />
+    <Compile Include="ValueObject\AccountReceivable.vb" />
+    <Compile Include="ValueObject\AccountReceivableDet.vb" />
+    <Compile Include="ValueObject\AccountReceivableStatus.vb" />
+    <Compile Include="ValueObject\Base\Access.vb" />
+    <Compile Include="ValueObject\Base\ChartOfAccount.vb" />
+    <Compile Include="ValueObject\Base\ChartOfAccountAssign.vb" />
+    <Compile Include="ValueObject\Base\ChartOfAccountGroup.vb" />
+    <Compile Include="ValueObject\Base\Common.vb" />
+    <Compile Include="ValueObject\Base\Company.vb" />
+    <Compile Include="ValueObject\Base\DefaultServer.vb" />
+    <Compile Include="ValueObject\Base\JournalPost.vb" />
+    <Compile Include="ValueObject\Base\Modules.vb" />
+    <Compile Include="ValueObject\Base\ModulesAccess.vb" />
+    <Compile Include="ValueObject\Base\Program.vb" />
+    <Compile Include="ValueObject\Base\ProgramModules.vb" />
+    <Compile Include="ValueObject\Base\Server.vb" />
+    <Compile Include="ValueObject\Base\ServerList.vb" />
+    <Compile Include="ValueObject\Base\Status.vb" />
+    <Compile Include="ValueObject\Base\StatusModules.vb" />
+    <Compile Include="ValueObject\Base\User.vb" />
+    <Compile Include="ValueObject\Base\UserAccess.vb" />
+    <Compile Include="ValueObject\Base\UserCompany.vb" />
+    <Compile Include="ValueObject\Base\BusinessPartner.vb" />
+    <Compile Include="ValueObject\Cost.vb" />
+    <Compile Include="ValueObject\CostDet.vb" />
+    <Compile Include="ValueObject\CostStatus.vb" />
+    <Compile Include="ValueObject\Item.vb" />
+    <Compile Include="ValueObject\Journal.vb" />
+    <Compile Include="ValueObject\JournalDet.vb" />
+    <Compile Include="ValueObject\JournalStatus.vb" />
+    <Compile Include="ValueObject\PaymentReferences.vb" />
+    <Compile Include="ValueObject\PaymentTerm.vb" />
+    <Compile Include="ValueObject\PostGL.vb" />
+    <Compile Include="ValueObject\Receive.vb" />
+    <Compile Include="ValueObject\ReceiveDet.vb" />
+    <Compile Include="ValueObject\ReceiveReturn.vb" />
+    <Compile Include="ValueObject\ReceiveReturnDet.vb" />
+    <Compile Include="ValueObject\ReceiveReturnStatus.vb" />
+    <Compile Include="ValueObject\ReceiveStatus.vb" />
+    <Compile Include="ValueObject\Reports\rptAccountPayableReport.vb" />
+    <Compile Include="ValueObject\Reports\rptAccountReceivableReport.vb" />
+    <Compile Include="ValueObject\Reports\rptBalanceSheet.vb" />
+    <Compile Include="ValueObject\Reports\rptBonFaktur.vb" />
+    <Compile Include="ValueObject\Reports\rptBonTimbang.vb" />
+    <Compile Include="ValueObject\Reports\rptCostReport.vb" />
+    <Compile Include="ValueObject\Reports\rptDeliveryOrder.vb" />
+    <Compile Include="ValueObject\Reports\rptJournalReport.vb" />
+    <Compile Include="ValueObject\Reports\rptPurchaseReport.vb" />
+    <Compile Include="ValueObject\Reports\rptPurchaseReturnReport.vb" />
+    <Compile Include="ValueObject\Reports\rptSalesReport.vb" />
+    <Compile Include="ValueObject\Reports\rptSalesReturnReport.vb" />
+    <Compile Include="ValueObject\Sales.vb" />
+    <Compile Include="ValueObject\SalesDet.vb" />
+    <Compile Include="ValueObject\SalesDiscount.vb" />
+    <Compile Include="ValueObject\SalesReturn.vb" />
+    <Compile Include="ValueObject\SalesReturnDet.vb" />
+    <Compile Include="ValueObject\SalesReturnStatus.vb" />
+    <Compile Include="ValueObject\SalesStatus.vb" />
+    <Compile Include="ValueObject\StockIN.vb" />
+    <Compile Include="ValueObject\StockOut.vb" />
+    <Compile Include="ValueObject\UOM.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
