@@ -1,16 +1,31 @@
 Namespace DL
     Public Class BusinessPartner
-        Public Shared Function ListData() As DataTable
+        Public Shared Function ListData(ByVal decOnAmount As Decimal) As DataTable
             Dim sqlcmdExecute As New SqlCommand
             With sqlcmdExecute
                 .CommandText = _
-                   "SELECT " & vbNewLine & _
-                   "     A.ID, A.Name, A.Address, A.PICName, A.PICPhoneNumber, A.PaymentTermID, A.IsUsePurchaseLimit, A.MaxPurchaseLimit, " & vbNewLine & _
-                   "     A.APBalance, A.ARBalance, A.IDStatus, B.Name AS StatusInfo, A.CreatedBy, A.CreatedDate, A.LogBy, A.LogDate  " & vbNewLine & _
-                   "FROM mstBusinessPartner A " & vbNewLine & _
-                   "INNER JOIN mstStatus B ON  " & vbNewLine & _
-                   "    A.IDStatus=B.ID" & vbNewLine
+                    "SELECT  	" & vbNewLine & _
+                    "     A.ID, A.Name, A.Address, A.PICName, A.PICPhoneNumber, A.PaymentTermID, A.IsUsePurchaseLimit, A.MaxPurchaseLimit, 	" & vbNewLine & _
+                    "	 ISNULL(TR.TotalPrice1,0) AS TotalPurchase1, ISNULL(TR.TotalPrice2,0) AS TotalPurchase2, A.APBalance, A.ARBalance, 	" & vbNewLine & _
+                    "	 A.IDStatus, B.Name AS StatusInfo, A.CreatedBy, A.CreatedDate, A.LogBy, A.LogDate   	" & vbNewLine & _
+                    "FROM mstBusinessPartner A  	" & vbNewLine & _
+                    "INNER JOIN mstStatus B ON   	" & vbNewLine & _
+                    "    A.IDStatus=B.ID 	" & vbNewLine & _
+                    "LEFT JOIN 	" & vbNewLine & _
+                    "(	" & vbNewLine & _
+                    "	SELECT 	" & vbNewLine & _
+                    "		TR.BPID, SUM(TR.TotalPrice1) AS TotalPrice1, SUM(TR.TotalPrice2) AS TotalPrice2	" & vbNewLine & _
+                    "	FROM traReceive TR 	" & vbNewLine & _
+                    "	WHERE	" & vbNewLine & _
+                    "		TR.IsDeleted=0 	" & vbNewLine & _
+                    "		AND YEAR(TR.ReceiveDate)=YEAR(GETDATE())	" & vbNewLine & _
+                    "	GROUP BY 	" & vbNewLine & _
+                    "		TR.BPID 	" & vbNewLine & _
+                    ") TR ON A.ID=TR.BPID 	" & vbNewLine & _
+                    "WHERE 	" & vbNewLine & _
+                    "	A.IsUsePurchaseLimit=0 OR (A.IsUsePurchaseLimit=1 AND A.MaxPurchaseLimit>=ISNULL(TR.TotalPrice1,0)+@OnAmount)	" & vbNewLine
 
+                .Parameters.Add("@OnAmount", SqlDbType.Decimal).Value = decOnAmount
             End With
             Return SQL.QueryDataTable(sqlcmdExecute)
         End Function

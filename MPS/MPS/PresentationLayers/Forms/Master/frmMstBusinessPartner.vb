@@ -3,6 +3,7 @@ Public Class frmMstBusinessPartner
     Public pubLUdtRow As DataRow
     Public pubIsLookUp As Boolean = False
     Public pubIsLookUpGet As Boolean = False
+    Public pubOnAmount As Decimal = 0
     Private intPos As Integer = 0
 
     Private Const _
@@ -46,7 +47,7 @@ Public Class frmMstBusinessPartner
 
     Private Sub prvQuery()
         Try
-            grdMain.DataSource = BL.BusinessPartner.ListData()
+            grdMain.DataSource = BL.BusinessPartner.ListData(pubOnAmount)
             grdView.BestFitColumns()
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)

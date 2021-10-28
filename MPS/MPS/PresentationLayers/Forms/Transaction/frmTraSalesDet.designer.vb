@@ -74,17 +74,17 @@ Partial Class frmTraSalesDet
         Me.lblSalesPrice = New System.Windows.Forms.Label()
         Me.lblUomID1 = New System.Windows.Forms.Label()
         Me.lblQty = New System.Windows.Forms.Label()
+        Me.tpSupplier = New System.Windows.Forms.TabPage()
+        Me.grdSupplier = New DevExpress.XtraGrid.GridControl()
+        Me.grdSupplierView = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.ToolBarSupplier = New MPS.usToolBar()
+        Me.BarAddSupplier = New System.Windows.Forms.ToolBarButton()
+        Me.BarDeleteSupplier = New System.Windows.Forms.ToolBarButton()
         Me.tpHistory = New System.Windows.Forms.TabPage()
         Me.grdStatus = New DevExpress.XtraGrid.GridControl()
         Me.grdStatusView = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.lblInfo = New System.Windows.Forms.Label()
         Me.pgMain = New System.Windows.Forms.ProgressBar()
-        Me.tpSupplier = New System.Windows.Forms.TabPage()
-        Me.ToolBarSupplier = New MPS.usToolBar()
-        Me.grdSupplier = New DevExpress.XtraGrid.GridControl()
-        Me.grdSupplierView = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.BarAddSupplier = New System.Windows.Forms.ToolBarButton()
-        Me.BarDeleteSupplier = New System.Windows.Forms.ToolBarButton()
         Me.StatusStrip.SuspendLayout()
         Me.tcHeader.SuspendLayout()
         Me.tpMain.SuspendLayout()
@@ -95,12 +95,12 @@ Partial Class frmTraSalesDet
         CType(Me.txtTotalPrice, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtPrice, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtBrutto, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.tpHistory.SuspendLayout()
-        CType(Me.grdStatus, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.grdStatusView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tpSupplier.SuspendLayout()
         CType(Me.grdSupplier, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.grdSupplierView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.tpHistory.SuspendLayout()
+        CType(Me.grdStatus, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.grdStatusView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'ToolBar
@@ -683,6 +683,76 @@ Partial Class frmTraSalesDet
         Me.lblQty.TabIndex = 93
         Me.lblQty.Text = "Brutto"
         '
+        'tpSupplier
+        '
+        Me.tpSupplier.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.tpSupplier.Controls.Add(Me.grdSupplier)
+        Me.tpSupplier.Controls.Add(Me.ToolBarSupplier)
+        Me.tpSupplier.Location = New System.Drawing.Point(4, 25)
+        Me.tpSupplier.Name = "tpSupplier"
+        Me.tpSupplier.Size = New System.Drawing.Size(995, 288)
+        Me.tpSupplier.TabIndex = 2
+        Me.tpSupplier.Text = "Pemasok - F2"
+        Me.tpSupplier.UseVisualStyleBackColor = True
+        '
+        'grdSupplier
+        '
+        Me.grdSupplier.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.grdSupplier.EmbeddedNavigator.Buttons.Append.Enabled = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.Append.Visible = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.CancelEdit.Enabled = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.CancelEdit.Visible = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.Edit.Enabled = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.Edit.Visible = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.EndEdit.Enabled = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.EndEdit.Visible = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.NextPage.Enabled = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.NextPage.Visible = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.PrevPage.Enabled = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.PrevPage.Visible = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.Remove.Enabled = False
+        Me.grdSupplier.EmbeddedNavigator.Buttons.Remove.Visible = False
+        Me.grdSupplier.Location = New System.Drawing.Point(0, 28)
+        Me.grdSupplier.MainView = Me.grdSupplierView
+        Me.grdSupplier.Name = "grdSupplier"
+        Me.grdSupplier.Size = New System.Drawing.Size(991, 256)
+        Me.grdSupplier.TabIndex = 1
+        Me.grdSupplier.UseEmbeddedNavigator = True
+        Me.grdSupplier.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.grdSupplierView})
+        '
+        'grdSupplierView
+        '
+        Me.grdSupplierView.GridControl = Me.grdSupplier
+        Me.grdSupplierView.Name = "grdSupplierView"
+        Me.grdSupplierView.OptionsCustomization.AllowColumnMoving = False
+        Me.grdSupplierView.OptionsCustomization.AllowGroup = False
+        Me.grdSupplierView.OptionsView.ColumnAutoWidth = False
+        Me.grdSupplierView.OptionsView.ShowGroupPanel = False
+        '
+        'ToolBarSupplier
+        '
+        Me.ToolBarSupplier.Appearance = System.Windows.Forms.ToolBarAppearance.Flat
+        Me.ToolBarSupplier.Buttons.AddRange(New System.Windows.Forms.ToolBarButton() {Me.BarAddSupplier, Me.BarDeleteSupplier})
+        Me.ToolBarSupplier.DropDownArrows = True
+        Me.ToolBarSupplier.Location = New System.Drawing.Point(0, 0)
+        Me.ToolBarSupplier.Name = "ToolBarSupplier"
+        Me.ToolBarSupplier.ShowToolTips = True
+        Me.ToolBarSupplier.Size = New System.Drawing.Size(991, 28)
+        Me.ToolBarSupplier.TabIndex = 0
+        Me.ToolBarSupplier.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right
+        '
+        'BarAddSupplier
+        '
+        Me.BarAddSupplier.Name = "BarAddSupplier"
+        Me.BarAddSupplier.Tag = "Add"
+        Me.BarAddSupplier.Text = "Tambah"
+        '
+        'BarDeleteSupplier
+        '
+        Me.BarDeleteSupplier.Name = "BarDeleteSupplier"
+        Me.BarDeleteSupplier.Tag = "Delete"
+        Me.BarDeleteSupplier.Text = "Hapus"
+        '
         'tpHistory
         '
         Me.tpHistory.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
@@ -750,76 +820,6 @@ Partial Class frmTraSalesDet
         Me.pgMain.Size = New System.Drawing.Size(1003, 23)
         Me.pgMain.TabIndex = 4
         '
-        'tpSupplier
-        '
-        Me.tpSupplier.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.tpSupplier.Controls.Add(Me.grdSupplier)
-        Me.tpSupplier.Controls.Add(Me.ToolBarSupplier)
-        Me.tpSupplier.Location = New System.Drawing.Point(4, 25)
-        Me.tpSupplier.Name = "tpSupplier"
-        Me.tpSupplier.Size = New System.Drawing.Size(995, 288)
-        Me.tpSupplier.TabIndex = 2
-        Me.tpSupplier.Text = "Pemasok - F2"
-        Me.tpSupplier.UseVisualStyleBackColor = True
-        '
-        'ToolBarSupplier
-        '
-        Me.ToolBarSupplier.Appearance = System.Windows.Forms.ToolBarAppearance.Flat
-        Me.ToolBarSupplier.Buttons.AddRange(New System.Windows.Forms.ToolBarButton() {Me.BarAddSupplier, Me.BarDeleteSupplier})
-        Me.ToolBarSupplier.DropDownArrows = True
-        Me.ToolBarSupplier.Location = New System.Drawing.Point(0, 0)
-        Me.ToolBarSupplier.Name = "ToolBarSupplier"
-        Me.ToolBarSupplier.ShowToolTips = True
-        Me.ToolBarSupplier.Size = New System.Drawing.Size(991, 28)
-        Me.ToolBarSupplier.TabIndex = 0
-        Me.ToolBarSupplier.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right
-        '
-        'grdSupplier
-        '
-        Me.grdSupplier.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.grdSupplier.EmbeddedNavigator.Buttons.Append.Enabled = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.Append.Visible = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.CancelEdit.Enabled = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.CancelEdit.Visible = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.Edit.Enabled = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.Edit.Visible = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.EndEdit.Enabled = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.EndEdit.Visible = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.NextPage.Enabled = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.NextPage.Visible = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.PrevPage.Enabled = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.PrevPage.Visible = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.Remove.Enabled = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.Remove.Visible = False
-        Me.grdSupplier.Location = New System.Drawing.Point(0, 28)
-        Me.grdSupplier.MainView = Me.grdSupplierView
-        Me.grdSupplier.Name = "grdSupplier"
-        Me.grdSupplier.Size = New System.Drawing.Size(991, 256)
-        Me.grdSupplier.TabIndex = 1
-        Me.grdSupplier.UseEmbeddedNavigator = True
-        Me.grdSupplier.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.grdSupplierView})
-        '
-        'grdSupplierView
-        '
-        Me.grdSupplierView.GridControl = Me.grdSupplier
-        Me.grdSupplierView.Name = "grdSupplierView"
-        Me.grdSupplierView.OptionsCustomization.AllowColumnMoving = False
-        Me.grdSupplierView.OptionsCustomization.AllowGroup = False
-        Me.grdSupplierView.OptionsView.ColumnAutoWidth = False
-        Me.grdSupplierView.OptionsView.ShowGroupPanel = False
-        '
-        'BarAddSupplier
-        '
-        Me.BarAddSupplier.Name = "BarAddSupplier"
-        Me.BarAddSupplier.Tag = "Add"
-        Me.BarAddSupplier.Text = "Add"
-        '
-        'BarDeleteSupplier
-        '
-        Me.BarDeleteSupplier.Name = "BarDeleteSupplier"
-        Me.BarDeleteSupplier.Tag = "Delete"
-        Me.BarDeleteSupplier.Text = "Delete"
-        '
         'frmTraSalesDet
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -848,13 +848,13 @@ Partial Class frmTraSalesDet
         CType(Me.txtTotalPrice, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtPrice, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtBrutto, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.tpHistory.ResumeLayout(False)
-        CType(Me.grdStatus, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.grdStatusView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tpSupplier.ResumeLayout(False)
         Me.tpSupplier.PerformLayout()
         CType(Me.grdSupplier, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.grdSupplierView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.tpHistory.ResumeLayout(False)
+        CType(Me.grdStatus, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.grdStatusView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

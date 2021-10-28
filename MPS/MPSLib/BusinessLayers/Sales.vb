@@ -254,6 +254,15 @@ Namespace BL
 
 #Region "Status"
 
+        Public Shared Function ListDataSupplier(ByVal strSalesID As String) As DataTable
+            BL.Server.ServerDefault()
+            Return DL.Sales.ListDataSupplier(strSalesID)
+        End Function
+
+#End Region
+
+#Region "Status"
+
         Public Shared Function ListDataStatus(ByVal strSalesID As String) As DataTable
             BL.Server.ServerDefault()
             Return DL.Sales.ListDataStatus(strSalesID)

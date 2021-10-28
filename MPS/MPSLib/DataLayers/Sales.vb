@@ -128,7 +128,7 @@ Namespace DL
                     .CommandText = _
                         "SELECT " & vbNewLine & _
                         "    A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.BPID, C.Name AS BPName, A.SalesDate, A.PaymentTerm, A.DriverName, A.PlatNumber, A.DueDate, " & vbNewLine & _
-                        "    A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MI.UomID1 AS UOMID, MU.Code AS UomCode, " & vbNewLine & _
+                        "    A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MI.UomID AS UOMID, MU.Code AS UomCode, " & vbNewLine & _
                         "    A.ArrivalBrutto, A.ArrivalTarra, A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, A.Price, A.TotalPrice, A.ArrivalReturn, A.TotalPayment, A.IsPostedGL,   " & vbNewLine & _
                         "    A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, A.CreatedBy,   " & vbNewLine & _
                         "    A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID  " & vbNewLine & _
@@ -340,7 +340,7 @@ Namespace DL
                    "INNER JOIN mstItem MI ON " & vbNewLine & _
                    "    A.ItemID=MI.ID " & vbNewLine & _
                    "INNER JOIN mstUOM MU ON " & vbNewLine & _
-                   "    MI.UomID1=MU.ID " & vbNewLine & _
+                   "    MI.UomID=MU.ID " & vbNewLine & _
                    "WHERE A.ID=@ID	" & vbNewLine
 
                 .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
@@ -399,7 +399,7 @@ Namespace DL
                 .CommandText = _
                    "SELECT " & vbNewLine & _
                    "    A.CompanyID, A.ID, A.BPID, C.Name AS BPName, A.SalesDate, A.PaymentTerm, A.DriverName, A.PlatNumber, A.DueDate, " & vbNewLine & _
-                   "    A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MI.UomID1 AS UomID, MU.Code AS UomCode, A.ArrivalBrutto, A.ArrivalTarra, " & vbNewLine & _
+                   "    A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MI.UomID AS UomID, MU.Code AS UomCode, A.ArrivalBrutto, A.ArrivalTarra, " & vbNewLine & _
                    "    A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, A.ArrivalNettoAfter-A.ArrivalUsage-A.ArrivalReturn AS MaxBrutto, A.Price, A.TotalPrice, A.ArrivalReturn, A.TotalPayment, A.IsPostedGL,   " & vbNewLine & _
                    "    A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, B.Name AS StatusInfo, A.CreatedBy,   " & vbNewLine & _
                    "    A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID  " & vbNewLine & _
@@ -411,7 +411,7 @@ Namespace DL
                    "INNER JOIN mstItem MI ON " & vbNewLine & _
                    "    A.ItemID=MI.ID " & vbNewLine & _
                    "INNER JOIN mstUOM MU ON " & vbNewLine & _
-                   "    MI.UomID1=MU.ID " & vbNewLine & _
+                   "    MI.UomID=MU.ID " & vbNewLine & _
                    "WHERE  " & vbNewLine & _
                    "    A.ArrivalNettoAfter-A.ArrivalUsage-A.ArrivalReturn>0 " & vbNewLine & _
                    "    AND A.IsDeleted=0 " & vbNewLine
@@ -660,6 +660,27 @@ Namespace DL
         '        Throw ex
         '    End Try
         'End Sub
+
+#End Region
+
+#Region "Sales Supplier"
+        
+        Public Shared Function ListDataSupplier(ByVal strSalesID As String) As DataTable
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "SELECT 	" & vbNewLine & _
+                    "	TSS.BPID, MB.Name AS BPName, MB.Address 	" & vbNewLine & _
+                    "FROM traSalesSupplier TSS 	" & vbNewLine & _
+                    "INNER JOIN mstBusinessPartner MB ON 	" & vbNewLine & _
+                    "	TSS.BPID=MB.ID 	" & vbNewLine & _
+                    "WHERE	" & vbNewLine & _
+                    "	TSS.SalesID=@SalesID	" & vbNewLine
+
+                .Parameters.Add("@SalesID", SqlDbType.VarChar, 30).Value = strSalesID
+            End With
+            Return SQL.QueryDataTable(sqlcmdExecute)
+        End Function
 
 #End Region
 

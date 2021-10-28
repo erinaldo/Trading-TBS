@@ -11,6 +11,7 @@ Public Class frmTraSalesDet
     Private intPos As Integer = 0
     Private strJournalID As String = ""
     Private intItemID As Integer = 0
+    Private dtSupplier As New DataTable
     Property pubID As String
     Property pubIsNew As Boolean = False
     Property pubIsSave As Boolean = False
@@ -36,6 +37,10 @@ Public Class frmTraSalesDet
     End Sub
 
     Private Sub prvSetGrid()
+        UI.usForm.SetGrid(grdSupplierView, "BPID", "BPID", 100, UI.usDefGrid.gString, False)
+        UI.usForm.SetGrid(grdSupplierView, "BPName", "Pemasok", 100, UI.usDefGrid.gString)
+        UI.usForm.SetGrid(grdSupplierView, "Address", "Alamat", 200, UI.usDefGrid.gString)
+
         UI.usForm.SetGrid(grdStatusView, "ID", "ID", 100, UI.usDefGrid.gString, False)
         UI.usForm.SetGrid(grdStatusView, "SalesID", "SalesID", 100, UI.usDefGrid.gString, False)
         UI.usForm.SetGrid(grdStatusView, "Status", "Status", 200, UI.usDefGrid.gString)
@@ -300,6 +305,61 @@ Public Class frmTraSalesDet
 
 #End Region
 
+#Region "Supplier Handle"
+
+    Private Sub prvQueryBP()
+        Me.Cursor = Cursors.WaitCursor
+        pgMain.Value = 30
+        Try
+            dtSupplier = BL.Sales.ListDataSupplier(txtID.Text.Trim)
+            grdSupplier.DataSource = dtSupplier
+            grdSupplierView.BestFitColumns()
+        Catch ex As Exception
+            UI.usForm.frmMessageBox(ex.Message)
+        Finally
+            Me.Cursor = Cursors.Default
+            pgMain.Value = 100
+        End Try
+    End Sub
+
+    Private Sub prvAddSupplier()
+        If txtTotalPrice.Value <= 0 Then
+            If Not UI.usForm.frmAskQuestion("Nilai total harga lebih kecil / sama dengan 0. Apakah ingin melanjutkan proses penambahan pemasok?") Then Exit Sub
+        End If
+
+        Dim frmDetail As New frmMstBusinessPartner
+        With frmDetail
+            .pubOnAmount = txtTotalPrice.Value
+            .pubIsLookUp = True
+            .ShowDialog()
+            If .pubIsLookUpGet Then
+                Dim drExists() As DataRow = dtSupplier.Select("BPID=" & .pubLUdtRow.Item("ID"))
+                If drExists.Count > 0 Then
+                    UI.usForm.frmMessageBox("Pemasok " & .pubLUdtRow.Item("Name") & " telah ada sebelumnya.")
+                    Exit Sub
+                Else
+                    Dim drNew As DataRow
+                    drNew = dtSupplier.NewRow
+                    With drNew
+                        .BeginEdit()
+                        .Item("BPID") = frmDetail.pubLUdtRow.Item("ID")
+                        .Item("BPName") = frmDetail.pubLUdtRow.Item("Name")
+                        .Item("Address") = frmDetail.pubLUdtRow.Item("Address")
+                        .EndEdit()
+                    End With
+                    dtSupplier.Rows.Add(drNew)
+                    dtSupplier.AcceptChanges()
+                End If
+            End If
+        End With
+    End Sub
+
+    Private Sub prvDeleteSupplier()
+
+    End Sub
+
+#End Region
+
 #Region "History Handle"
 
     Private Sub prvQueryHistory()
@@ -329,9 +389,11 @@ Public Class frmTraSalesDet
     Private Sub frmTraSalesDet_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         UI.usForm.SetIcon(Me, "MyLogo")
         ToolBar.SetIcon(Me)
+        ToolBarSupplier.SetIcon(Me)
         prvSetTitleForm()
         prvSetGrid()
         prvFillForm()
+        prvQueryBP()
         prvQueryHistory()
         prvUserAccess()
     End Sub
@@ -351,9 +413,15 @@ Public Class frmTraSalesDet
         End Select
     End Sub
 
+    Private Sub ToolBarSupplier_ButtonClick(sender As Object, e As ToolBarButtonClickEventArgs) Handles ToolBarSupplier.ButtonClick
+        Select Case e.Button.Text.Trim
+            Case "Tambah" : prvAddSupplier()
+            Case "Hapus" : prvAddSupplier()
+        End Select
+    End Sub
+
     Private Sub txtValue_ValueChanged(sender As Object, e As EventArgs) Handles txtBrutto.ValueChanged, txtTarra.ValueChanged, _
         txtDeduction.ValueChanged, txtPrice.ValueChanged
-
         txtNettoBefore.Value = txtBrutto.Value - txtTarra.Value
         txtNettoAfter.Value = txtNettoBefore.Value - txtDeduction.Value
         txtTotalPrice.Value = txtNettoAfter.Value * txtPrice.Value

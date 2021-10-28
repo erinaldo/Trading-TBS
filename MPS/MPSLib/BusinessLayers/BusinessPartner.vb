@@ -1,9 +1,9 @@
 Namespace BL
     Public Class BusinessPartner
 
-        Public Shared Function ListData() As DataTable
+        Public Shared Function ListData(ByVal decOnAmount As Decimal) As DataTable
             BL.Server.ServerDefault()
-            Return DL.BusinessPartner.ListData
+            Return DL.BusinessPartner.ListData(decOnAmount)
         End Function
 
         Public Shared Function SaveData(ByVal bolNew As Boolean, ByVal clsData As VO.BusinessPartner) As Integer
