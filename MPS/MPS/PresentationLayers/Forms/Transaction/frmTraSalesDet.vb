@@ -12,6 +12,7 @@ Public Class frmTraSalesDet
     Private strJournalID As String = ""
     Private intItemID As Integer = 0
     Private dtSupplier As New DataTable
+    Private clsSupplier As VO.SalesSupplier
     Property pubID As String
     Property pubIsNew As Boolean = False
     Property pubIsSave As Boolean = False
@@ -42,8 +43,8 @@ Public Class frmTraSalesDet
 
     Private Sub prvSetGrid()
         UI.usForm.SetGrid(grdSupplierView, "BPID", "BPID", 100, UI.usDefGrid.gString, False)
-        UI.usForm.SetGrid(grdSupplierView, "BPName", "Pemasok", 100, UI.usDefGrid.gString)
-        UI.usForm.SetGrid(grdSupplierView, "Address", "Alamat", 200, UI.usDefGrid.gString)
+        UI.usForm.SetGrid(grdSupplierView, "BPName", "Pemasok", 250, UI.usDefGrid.gString)
+        UI.usForm.SetGrid(grdSupplierView, "Address", "Alamat", 350, UI.usDefGrid.gString)
 
         UI.usForm.SetGrid(grdStatusView, "ID", "ID", 100, UI.usDefGrid.gString, False)
         UI.usForm.SetGrid(grdStatusView, "SalesID", "SalesID", 100, UI.usDefGrid.gString, False)
@@ -193,10 +194,20 @@ Public Class frmTraSalesDet
         clsData.LogBy = MPSLib.UI.usUserApp.UserID
         clsData.JournalID = strJournalID
 
+        Dim clsSupplierAll(grdSupplierView.RowCount - 1) As VO.SalesSupplier
+        With grdSupplierView
+            For i As Integer = 0 To .RowCount - 1
+                clsSupplier = New VO.SalesSupplier
+                clsSupplier.BPID = .GetRowCellValue(i, "BPID")
+                clsSupplierAll(i) = clsSupplier
+            Next
+        End With
+
         Me.Cursor = Cursors.WaitCursor
         pgMain.Value = 30
         Try
-            Dim strID As String = BL.Sales.SaveData(pubIsNew, clsData)
+            Dim strID As String = BL.Sales.SaveData(pubIsNew, clsData, clsSupplierAll)
+            pgMain.Value = 100
             If strID.Trim <> "" Then
                 If pubIsNew Then
                     UI.usForm.frmMessageBox("Data berhasil disimpan. " & vbCrLf & "Nomor penjualan: " & strID)
@@ -296,7 +307,7 @@ Public Class frmTraSalesDet
                 intItemID = .pubLUdtRow.Item("ID")
                 txtItemCode.Text = .pubLUdtRow.Item("Code")
                 txtItemName.Text = .pubLUdtRow.Item("Name")
-                cboUOMID.SelectedValue = .pubLUdtRow.Item("UomID1")
+                cboUOMID.SelectedValue = .pubLUdtRow.Item("UomID")
                 txtPrice.Value = .pubLUdtRow.Item("SalesPrice")
                 txtBrutto.Focus()
             End If
@@ -319,7 +330,6 @@ Public Class frmTraSalesDet
         Try
             dtSupplier = BL.Sales.ListDataSupplier(txtID.Text.Trim)
             grdSupplier.DataSource = dtSupplier
-            grdSupplierView.BestFitColumns()
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
         Finally
@@ -338,6 +348,7 @@ Public Class frmTraSalesDet
         With frmDetail
             .pubOnAmount = txtTotalPrice.Value
             .pubIsLookUp = True
+            .StartPosition = FormStartPosition.CenterScreen
             .ShowDialog()
             If .pubIsLookUpGet Then
                 Dim drExists() As DataRow = dtSupplier.Select("BPID=" & .pubLUdtRow.Item("ID"))
@@ -362,7 +373,17 @@ Public Class frmTraSalesDet
     End Sub
 
     Private Sub prvDeleteSupplier()
+        intPos = grdSupplierView.FocusedRowHandle
+        If intPos < 0 Then Exit Sub
 
+        Dim intBPID As String = grdSupplierView.GetRowCellValue(intPos, "BPID")
+        For i As Integer = 0 To dtSupplier.Rows.Count - 1
+            If dtSupplier.Rows(i).Item("BPID") = intBPID Then
+                dtSupplier.Rows(i).Delete()
+                Exit For
+            End If
+        Next
+        dtSupplier.AcceptChanges()
     End Sub
 
 #End Region

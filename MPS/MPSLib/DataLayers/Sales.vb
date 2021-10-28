@@ -147,7 +147,6 @@ Namespace DL
                         "    A.ID=@ID " & vbNewLine
 
                     .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
-
                     If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
                 End With
                 sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)
@@ -682,6 +681,77 @@ Namespace DL
             Return SQL.QueryDataTable(sqlcmdExecute)
         End Function
 
+        Public Shared Sub SaveDataSupplier(ByVal clsData As VO.SalesSupplier)
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                   "INSERT INTO traSalesSupplier " & vbNewLine & _
+                   "    (ID, SalesID, BPID)   " & vbNewLine & _
+                   "VALUES " & vbNewLine & _
+                   "    (@ID, @SalesID, @BPID)  " & vbNewLine
+
+                .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = clsData.ID
+                .Parameters.Add("@SalesID", SqlDbType.VarChar, 30).Value = clsData.SalesID
+                .Parameters.Add("@BPID", SqlDbType.Int).Value = clsData.BPID
+            End With
+            Try
+                SQL.ExecuteNonQuery(sqlcmdExecute)
+            Catch ex As SqlException
+                Throw ex
+            End Try
+        End Sub
+
+        Public Shared Function GetMaxIDSupplier(ByVal strSalesID As String) As Integer
+            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
+            Dim intReturn As Integer = 1
+            Try
+                If Not SQL.bolUseTrans Then SQL.OpenConnection()
+                With sqlcmdExecute
+                    .Connection = SQL.sqlConn
+                    .CommandText = _
+                        "SELECT TOP 1 " & vbNewLine & _
+                        "   ID=ISNULL(RIGHT(MAX(ID),3),0) " & vbNewLine & _
+                        "FROM traSalesSupplier " & vbNewLine & _
+                        "WHERE  " & vbNewLine & _
+                        "   SalesID=@SalesID " & vbNewLine
+
+                    .Parameters.Add("@SalesID", SqlDbType.VarChar, 30).Value = strSalesID
+
+                    If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
+                End With
+                sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)
+                With sqlrdData
+                    If .HasRows Then
+                        .Read()
+                        intReturn = .Item("ID") + 1
+                    End If
+                End With
+                If Not SQL.bolUseTrans Then SQL.CloseConnection()
+            Catch ex As Exception
+                Throw ex
+            Finally
+                If Not sqlrdData Is Nothing Then sqlrdData.Close()
+            End Try
+            Return intReturn
+        End Function
+
+        Public Shared Sub DeleteDataSupplier(ByVal strSalesID As String)
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "DELETE FROM traSalesStatus " & vbNewLine & _
+                    "WHERE " & vbNewLine & _
+                    "   SalesID=@SalesID " & vbNewLine
+
+                .Parameters.Add("@SalesID", SqlDbType.VarChar, 30).Value = strSalesID
+            End With
+            Try
+                SQL.ExecuteNonQuery(sqlcmdExecute)
+            Catch ex As SqlException
+                Throw ex
+            End Try
+        End Sub
+
 #End Region
 
 #Region "Status"
@@ -736,9 +806,9 @@ Namespace DL
                         "   ID=ISNULL(RIGHT(MAX(ID),3),0) " & vbNewLine & _
                         "FROM traSalesStatus " & vbNewLine & _
                         "WHERE  " & vbNewLine & _
-                        "   LEFT(SalesID,17)=@SalesID " & vbNewLine
+                        "   SalesID=@SalesID " & vbNewLine
 
-                    .Parameters.Add("@SalesID", SqlDbType.VarChar, 17).Value = strSalesID
+                    .Parameters.Add("@SalesID", SqlDbType.VarChar, 30).Value = strSalesID
 
                     If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
                 End With

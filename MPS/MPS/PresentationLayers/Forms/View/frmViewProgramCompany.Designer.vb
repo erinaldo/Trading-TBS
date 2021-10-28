@@ -23,10 +23,10 @@ Partial Class frmViewProgramCompany
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.ToolBar = New MPS.usToolBar()
+        Me.BarChoose = New System.Windows.Forms.ToolBarButton()
         Me.BarClose = New System.Windows.Forms.ToolBarButton()
         Me.grdMain = New DevExpress.XtraGrid.GridControl()
         Me.grdView = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.BarChoose = New System.Windows.Forms.ToolBarButton()
         CType(Me.grdMain, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.grdView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -39,9 +39,15 @@ Partial Class frmViewProgramCompany
         Me.ToolBar.Location = New System.Drawing.Point(0, 0)
         Me.ToolBar.Name = "ToolBar"
         Me.ToolBar.ShowToolTips = True
-        Me.ToolBar.Size = New System.Drawing.Size(665, 28)
+        Me.ToolBar.Size = New System.Drawing.Size(964, 28)
         Me.ToolBar.TabIndex = 0
         Me.ToolBar.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right
+        '
+        'BarChoose
+        '
+        Me.BarChoose.Name = "BarChoose"
+        Me.BarChoose.Tag = "Get"
+        Me.BarChoose.Text = "Pilih"
         '
         'BarClose
         '
@@ -69,7 +75,7 @@ Partial Class frmViewProgramCompany
         Me.grdMain.Location = New System.Drawing.Point(0, 28)
         Me.grdMain.MainView = Me.grdView
         Me.grdMain.Name = "grdMain"
-        Me.grdMain.Size = New System.Drawing.Size(665, 362)
+        Me.grdMain.Size = New System.Drawing.Size(964, 486)
         Me.grdMain.TabIndex = 1
         Me.grdMain.UseEmbeddedNavigator = True
         Me.grdMain.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.grdView})
@@ -84,17 +90,11 @@ Partial Class frmViewProgramCompany
         Me.grdView.OptionsView.ShowAutoFilterRow = True
         Me.grdView.OptionsView.ShowGroupPanel = False
         '
-        'BarChoose
-        '
-        Me.BarChoose.Name = "BarChoose"
-        Me.BarChoose.Tag = "Get"
-        Me.BarChoose.Text = "Pilih"
-        '
         'frmViewProgramCompany
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(665, 390)
+        Me.ClientSize = New System.Drawing.Size(964, 514)
         Me.Controls.Add(Me.grdMain)
         Me.Controls.Add(Me.ToolBar)
         Me.Name = "frmViewProgramCompany"

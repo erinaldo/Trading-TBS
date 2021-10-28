@@ -195,6 +195,7 @@
     <Compile Include="ValueObject\SalesReturnDet.vb" />
     <Compile Include="ValueObject\SalesReturnStatus.vb" />
     <Compile Include="ValueObject\SalesStatus.vb" />
+    <Compile Include="ValueObject\SalesSupplier.vb" />
     <Compile Include="ValueObject\StockIN.vb" />
     <Compile Include="ValueObject\StockOut.vb" />
     <Compile Include="ValueObject\UOM.vb" />

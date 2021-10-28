@@ -18,7 +18,7 @@ Namespace BL
             Return strReturn
         End Function
 
-        Public Shared Function SaveData(ByVal bolNew As Boolean, ByVal clsData As VO.Sales) As String
+        Public Shared Function SaveData(ByVal bolNew As Boolean, ByVal clsData As VO.Sales, ByVal clsDataSupplier() As VO.SalesSupplier) As String
             Try
                 DL.SQL.OpenConnection()
                 DL.SQL.BeginTransaction()
@@ -43,9 +43,18 @@ Namespace BL
                         'ElseIf DL.Sales.IsPostedGL(clsData.ID) Then
                         '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses posting data transaksi")
                     End If
+
+                    DL.Sales.DeleteDataSupplier(clsData.ID)
                 End If
 
                 DL.Sales.SaveData(bolNew, clsData)
+
+                '# Save Data Sales Supplier
+                For Each clsItem As VO.SalesSupplier In clsDataSupplier
+                    clsItem.ID = clsData.ID & "-" & Format(DL.Sales.GetMaxIDSupplier(clsData.ID), "000")
+                    clsItem.SalesID = clsData.ID
+                    DL.Sales.SaveDataSupplier(clsItem)
+                Next
 
                 '# Save Data Status
                 SaveDataStatus(clsData.ID, IIf(bolNew, "BARU", "EDIT"), clsData.LogBy, clsData.Remarks)
@@ -252,7 +261,7 @@ Namespace BL
 
 #End Region
 
-#Region "Status"
+#Region "Supplier"
 
         Public Shared Function ListDataSupplier(ByVal strSalesID As String) As DataTable
             BL.Server.ServerDefault()

@@ -30,6 +30,8 @@ Namespace VO
         Property TotalPrice2 As Decimal
         Property ArrivalReturn As Decimal
         Property TotalPayment As Decimal
+        Property TotalReturn As Decimal
+        Property Tolerance As Decimal
         Property IsPostedGL As Boolean
         Property PostedBy As String
         Property PostedDate As DateTime

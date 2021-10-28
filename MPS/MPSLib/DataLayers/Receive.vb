@@ -53,11 +53,11 @@ Namespace DL
                        "INSERT INTO traReceive " & vbNewLine & _
                        "    (CompanyID, ProgramID, ID, ReferencesID, BPID, ReceiveDate, PaymentTerm, DueDate, DriverName, PlatNumber, " & vbNewLine & _
                        "     PPN, PPH, ItemID, ArrivalBrutto, ArrivalTarra, ArrivalNettoBefore, ArrivalDeduction, ArrivalNettoAfter, " & vbNewLine & _
-                       "     Price1, TotalPrice1, Price2, TotalPrice2, Remarks, IDStatus, CreatedBy, CreatedDate, LogBy, LogDate)   " & vbNewLine & _
+                       "     Price1, TotalPrice1, Price2, TotalPrice2, Tolerance, Remarks, IDStatus, CreatedBy, CreatedDate, LogBy, LogDate)   " & vbNewLine & _
                        "VALUES " & vbNewLine & _
                        "    (@CompanyID, @ProgramID, @ID, @ReferencesID, @BPID, @ReceiveDate, @PaymentTerm, @DueDate, @DriverName, @PlatNumber, " & vbNewLine & _
                        "     @PPN, @PPH, @ItemID, @ArrivalBrutto, @ArrivalTarra, @ArrivalNettoBefore, @ArrivalDeduction, @ArrivalNettoAfter, " & vbNewLine & _
-                       "     Price1, TotalPrice1, Price2, TotalPrice2, @Remarks, @IDStatus, @LogBy, GETDATE(), @LogBy, GETDATE())  " & vbNewLine
+                       "     @Price1, @TotalPrice1, @Price2, @TotalPrice2, @Tolerance, @Remarks, @IDStatus, @LogBy, GETDATE(), @LogBy, GETDATE())  " & vbNewLine
                 Else
                     .CommandText = _
                         "UPDATE traReceive SET " & vbNewLine & _
@@ -82,6 +82,7 @@ Namespace DL
                         "    Price2=@Price2, " & vbNewLine & _
                         "    TotalPrice1=@TotalPrice1, " & vbNewLine & _
                         "    TotalPrice2=@TotalPrice2, " & vbNewLine & _
+                        "    Tolerance=@Tolerance, " & vbNewLine & _
                         "    Remarks=@Remarks, " & vbNewLine & _
                         "    IDStatus=@IDStatus, " & vbNewLine & _
                         "    LogInc=LogInc+1, " & vbNewLine & _
@@ -113,6 +114,7 @@ Namespace DL
                 .Parameters.Add("@Price2", SqlDbType.Decimal).Value = clsData.Price2
                 .Parameters.Add("@TotalPrice1", SqlDbType.Decimal).Value = clsData.TotalPrice1
                 .Parameters.Add("@TotalPrice2", SqlDbType.Decimal).Value = clsData.TotalPrice2
+                .Parameters.Add("@Tolerance", SqlDbType.Decimal).Value = clsData.Tolerance
                 .Parameters.Add("@Remarks", SqlDbType.VarChar, 250).Value = clsData.Remarks
                 .Parameters.Add("@IDStatus", SqlDbType.Int).Value = clsData.IDStatus
                 .Parameters.Add("@LogBy", SqlDbType.VarChar, 20).Value = clsData.LogBy
@@ -136,7 +138,7 @@ Namespace DL
                         "   A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.ReferencesID, A.BPID, C.Name AS BPName, A.ReceiveDate, A.PaymentTerm, A.DriverName, A.PlatNumber, A.DueDate, 	" & vbNewLine & _
                         "   A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MI.UomID1 AS UOMID, MU.Code AS UomCode, 	" & vbNewLine & _
                         "   A.ArrivalBrutto, A.ArrivalTarra, A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, A.ArrivalBrutto+TS.ArrivalNettoAfter-TS.ArrivalUsage-TS.ArrivalReturn AS MaxBrutto, 	" & vbNewLine & _
-                        "   A.Price, A.TotalPrice, A.ArrivalReturn, A.TotalPayment, A.IsPostedGL,   	" & vbNewLine & _
+                        "   A.Price, A.TotalPrice, A.ArrivalReturn, A.TotalPayment, A.Tolerance, A.IsPostedGL,   	" & vbNewLine & _
                         "   A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, A.CreatedBy,   	" & vbNewLine & _
                         "   A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID  	" & vbNewLine & _
                         "FROM traReceive A 	" & vbNewLine & _
@@ -194,6 +196,7 @@ Namespace DL
                         voReturn.TotalPrice2 = .Item("TotalPrice2")
                         voReturn.ArrivalReturn = .Item("ArrivalReturn")
                         voReturn.TotalPayment = .Item("TotalPayment")
+                        voReturn.Tolerance = .Item("Tolerance")
                         voReturn.IsPostedGL = .Item("IsPostedGL")
                         voReturn.PostedBy = .Item("PostedBy")
                         voReturn.PostedDate = .Item("PostedDate")

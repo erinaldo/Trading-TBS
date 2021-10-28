@@ -331,6 +331,10 @@ Public Class frmTraSales
         prvClear()
     End Sub
 
+    Private Sub btnCompany_Click(sender As Object, e As EventArgs) Handles btnCompany.Click
+        prvChooseCompany()
+    End Sub
+
     Private Sub grdView_RowStyle(sender As Object, e As DevExpress.XtraGrid.Views.Grid.RowStyleEventArgs) Handles grdView.RowStyle
         Dim View As DevExpress.XtraGrid.Views.Grid.GridView = sender
         If (e.RowHandle >= 0) Then

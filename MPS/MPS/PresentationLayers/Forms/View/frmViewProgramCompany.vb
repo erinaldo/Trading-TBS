@@ -10,9 +10,9 @@
 
     Private Sub prvSetGrid()
         UI.usForm.SetGrid(grdView, "ProgramID", "ProgramID", 100, UI.usDefGrid.gIntNum, False)
-        UI.usForm.SetGrid(grdView, "ProgramName", "Program", 100, UI.usDefGrid.gString)
+        UI.usForm.SetGrid(grdView, "ProgramName", "Program", 200, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "CompanyID", "CompanyID", 100, UI.usDefGrid.gIntNum, False)
-        UI.usForm.SetGrid(grdView, "CompanyName", "Nama Perusahaan", 250, UI.usDefGrid.gString)
+        UI.usForm.SetGrid(grdView, "CompanyName", "Nama Perusahaan", 350, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "Address", "Alamat", 300, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "CompanyInitial", "CompanyInitial", 100, UI.usDefGrid.gString, False)
     End Sub
