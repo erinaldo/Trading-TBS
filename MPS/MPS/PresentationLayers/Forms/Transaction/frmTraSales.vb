@@ -9,6 +9,10 @@ Public Class frmTraSales
     Private Const _
        cNew = 0, cDetail = 1, cDelete = 2, cSep1 = 3, cPrintDO = 4, cRefresh = 5, cClose = 6
 
+    Private Sub prvResetProgressBar()
+        pgMain.Value = 0
+    End Sub
+
     Private Sub prvSetGrid()
         UI.usForm.SetGrid(grdView, "ProgramID", "ProgramID", 100, UI.usDefGrid.gIntNum, False)
         UI.usForm.SetGrid(grdView, "ProgramName", "Program", 100, UI.usDefGrid.gString, False)
@@ -78,6 +82,11 @@ Public Class frmTraSales
         End Try
     End Sub
 
+    Private Sub prvDefaultFilter()
+        intCompanyID = MPSLib.UI.usUserApp.CompanyID
+        txtCompanyName.Text = MPSLib.UI.usUserApp.CompanyName
+    End Sub
+
     Private Sub prvQuery()
         Me.Cursor = Cursors.WaitCursor
         pgMain.Value = 30
@@ -90,6 +99,7 @@ Public Class frmTraSales
             Me.Cursor = Cursors.Default
             pgMain.Value = 100
             prvSetButton()
+            prvResetProgressBar()
         End Try
     End Sub
 
@@ -141,6 +151,7 @@ Public Class frmTraSales
     End Function
 
     Private Sub prvNew()
+        prvResetProgressBar()
         Dim frmDetail As New frmTraSalesDet
         With frmDetail
             .pubIsNew = True
@@ -151,6 +162,7 @@ Public Class frmTraSales
     End Sub
 
     Private Sub prvDetail()
+        prvResetProgressBar()
         intPos = grdView.FocusedRowHandle
         If intPos < 0 Then Exit Sub
         clsData = prvGetData()
@@ -193,6 +205,7 @@ Public Class frmTraSales
         Finally
             Me.Cursor = Cursors.Default
             pgMain.Value = 100
+            prvResetProgressBar()
         End Try
     End Sub
 
@@ -289,6 +302,7 @@ Public Class frmTraSales
         cboStatus.SelectedValue = VO.Status.Values.All
         dtpDateFrom.Value = Today.Date.AddDays(-7)
         dtpDateTo.Value = Today.Date
+        prvDefaultFilter()
         prvQuery()
         prvUserAccess()
     End Sub

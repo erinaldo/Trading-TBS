@@ -9,6 +9,10 @@ Public Class frmTraReceive
     Private Const _
        cNew = 0, cDetail = 1, cDelete = 2, cSep1 = 3, cPrintBonTimbang = 4, cRefresh = 5, cClose = 6
 
+    Private Sub prvResetProgressBar()
+        pgMain.Value = 0
+    End Sub
+
     Private Sub prvSetGrid()
         UI.usForm.SetGrid(grdView, "ProgramID", "ProgramID", 100, UI.usDefGrid.gIntNum, False)
         UI.usForm.SetGrid(grdView, "ProgramName", "Program", 100, UI.usDefGrid.gString, False)
@@ -98,6 +102,7 @@ Public Class frmTraReceive
             Me.Cursor = Cursors.Default
             pgMain.Value = 100
             prvSetButton()
+            prvResetProgressBar()
         End Try
     End Sub
 
@@ -152,6 +157,7 @@ Public Class frmTraReceive
     End Function
 
     Private Sub prvNew()
+        prvResetProgressBar()
         Dim frmDetail As New frmTraReceiveDet
         With frmDetail
             .pubIsNew = True
@@ -162,6 +168,7 @@ Public Class frmTraReceive
     End Sub
 
     Private Sub prvDetail()
+        prvResetProgressBar()
         intPos = grdView.FocusedRowHandle
         If intPos < 0 Then Exit Sub
         clsData = prvGetData()
@@ -204,6 +211,7 @@ Public Class frmTraReceive
         Finally
             Me.Cursor = Cursors.Default
             pgMain.Value = 100
+            prvResetProgressBar()
         End Try
     End Sub
 

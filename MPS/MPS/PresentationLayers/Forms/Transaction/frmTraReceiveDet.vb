@@ -35,6 +35,10 @@ Public Class frmTraReceiveDet
         End If
     End Sub
 
+    Private Sub prvResetProgressBar()
+        pgMain.Value = 0
+    End Sub
+
     Private Sub prvSetGrid()
         UI.usForm.SetGrid(grdStatusView, "ID", "ID", 100, UI.usDefGrid.gString, False)
         UI.usForm.SetGrid(grdStatusView, "ReceiveID", "ReceiveID", 100, UI.usDefGrid.gString, False)
@@ -121,6 +125,7 @@ Public Class frmTraReceiveDet
         Finally
             Me.Cursor = Cursors.Default
             pgMain.Value = 100
+            prvResetProgressBar()
         End Try
     End Sub
 
@@ -228,6 +233,7 @@ Public Class frmTraReceiveDet
         Finally
             Me.Cursor = Cursors.Default
             pgMain.Value = 100
+            prvResetProgressBar()
         End Try
     End Sub
 
@@ -305,6 +311,7 @@ Public Class frmTraReceiveDet
         txtNettoBefore.Value = txtBrutto.Value - txtTarra.Value
         txtNettoAfter.Value = txtNettoBefore.Value - txtDeduction.Value
         txtTotalPrice1.Value = txtNettoAfter.Value * txtPrice1.Value
+        txtTotalPrice2.Value = txtNettoAfter.Value * txtPrice2.Value
     End Sub
 
 #End Region
@@ -312,10 +319,16 @@ Public Class frmTraReceiveDet
 #Region "History Handle"
 
     Private Sub prvQueryHistory()
+        Me.Cursor = Cursors.WaitCursor
+        pgMain.Value = 30
         Try
             grdStatus.DataSource = BL.Receive.ListDataStatus(txtID.Text.Trim)
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
+        Finally
+            Me.Cursor = Cursors.Default
+            pgMain.Value = 100
+            prvResetProgressBar()
         End Try
     End Sub
 

@@ -36,6 +36,10 @@ Public Class frmTraSalesDet
         End If
     End Sub
 
+    Private Sub prvResetProgressBar()
+        pgMain.Value = 0
+    End Sub
+
     Private Sub prvSetGrid()
         UI.usForm.SetGrid(grdSupplierView, "BPID", "BPID", 100, UI.usDefGrid.gString, False)
         UI.usForm.SetGrid(grdSupplierView, "BPName", "Pemasok", 100, UI.usDefGrid.gString)
@@ -121,6 +125,7 @@ Public Class frmTraSalesDet
         Finally
             Me.Cursor = Cursors.Default
             pgMain.Value = 100
+            prvResetProgressBar()
         End Try
     End Sub
 
@@ -213,6 +218,7 @@ Public Class frmTraSalesDet
         Finally
             Me.Cursor = Cursors.Default
             pgMain.Value = 100
+            prvResetProgressBar()
         End Try
     End Sub
 
@@ -319,6 +325,7 @@ Public Class frmTraSalesDet
         Finally
             Me.Cursor = Cursors.Default
             pgMain.Value = 100
+            prvResetProgressBar()
         End Try
     End Sub
 
@@ -363,10 +370,16 @@ Public Class frmTraSalesDet
 #Region "History Handle"
 
     Private Sub prvQueryHistory()
+        Me.Cursor = Cursors.WaitCursor
+        pgMain.Value = 30
         Try
             grdStatus.DataSource = BL.Sales.ListDataStatus(txtID.Text.Trim)
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
+        Finally
+            Me.Cursor = Cursors.Default
+            pgMain.Value = 100
+            prvResetProgressBar()
         End Try
     End Sub
 
