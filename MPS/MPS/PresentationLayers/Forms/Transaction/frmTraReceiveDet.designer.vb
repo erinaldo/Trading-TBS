@@ -35,6 +35,12 @@ Partial Class frmTraReceiveDet
         Me.ToolStripLogDate = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tcHeader = New System.Windows.Forms.TabControl()
         Me.tpMain = New System.Windows.Forms.TabPage()
+        Me.txtArrivalNettoUsage = New MPS.usNumeric()
+        Me.Label24 = New System.Windows.Forms.Label()
+        Me.txtArrivalNettoSales = New MPS.usNumeric()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.txtTolerance = New MPS.usNumeric()
+        Me.Label15 = New System.Windows.Forms.Label()
         Me.txtTotalPrice2 = New MPS.usNumeric()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.txtPrice2 = New MPS.usNumeric()
@@ -98,6 +104,9 @@ Partial Class frmTraReceiveDet
         Me.StatusStrip.SuspendLayout()
         Me.tcHeader.SuspendLayout()
         Me.tpMain.SuspendLayout()
+        CType(Me.txtArrivalNettoUsage, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txtArrivalNettoSales, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txtTolerance, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtTotalPrice2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtPrice2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtMaxBrutto, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -121,7 +130,7 @@ Partial Class frmTraReceiveDet
         Me.ToolBar.Location = New System.Drawing.Point(0, 0)
         Me.ToolBar.Name = "ToolBar"
         Me.ToolBar.ShowToolTips = True
-        Me.ToolBar.Size = New System.Drawing.Size(1004, 28)
+        Me.ToolBar.Size = New System.Drawing.Size(1002, 28)
         Me.ToolBar.TabIndex = 0
         Me.ToolBar.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right
         '
@@ -145,7 +154,7 @@ Partial Class frmTraReceiveDet
         Me.lblInfo.ForeColor = System.Drawing.Color.White
         Me.lblInfo.Location = New System.Drawing.Point(0, 28)
         Me.lblInfo.Name = "lblInfo"
-        Me.lblInfo.Size = New System.Drawing.Size(1004, 22)
+        Me.lblInfo.Size = New System.Drawing.Size(1002, 22)
         Me.lblInfo.TabIndex = 1
         Me.lblInfo.Text = "« Pembelian Detail"
         Me.lblInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -154,16 +163,16 @@ Partial Class frmTraReceiveDet
         '
         Me.StatusStrip.Font = New System.Drawing.Font("Tahoma", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripEmpty, Me.ToolStripLogInc, Me.ToolStripLogBy, Me.ToolStripStatusLabel1, Me.ToolStripLogDate})
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 436)
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 453)
         Me.StatusStrip.Name = "StatusStrip"
-        Me.StatusStrip.Size = New System.Drawing.Size(1004, 22)
+        Me.StatusStrip.Size = New System.Drawing.Size(1002, 22)
         Me.StatusStrip.TabIndex = 3
         Me.StatusStrip.Text = "StatusStrip1"
         '
         'ToolStripEmpty
         '
         Me.ToolStripEmpty.Name = "ToolStripEmpty"
-        Me.ToolStripEmpty.Size = New System.Drawing.Size(881, 17)
+        Me.ToolStripEmpty.Size = New System.Drawing.Size(879, 17)
         Me.ToolStripEmpty.Spring = True
         '
         'ToolStripLogInc
@@ -210,13 +219,19 @@ Partial Class frmTraReceiveDet
         Me.tcHeader.Location = New System.Drawing.Point(0, 50)
         Me.tcHeader.Name = "tcHeader"
         Me.tcHeader.SelectedIndex = 0
-        Me.tcHeader.Size = New System.Drawing.Size(1004, 431)
+        Me.tcHeader.Size = New System.Drawing.Size(1002, 448)
         Me.tcHeader.TabIndex = 2
         '
         'tpMain
         '
         Me.tpMain.AutoScroll = True
         Me.tpMain.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.tpMain.Controls.Add(Me.txtArrivalNettoUsage)
+        Me.tpMain.Controls.Add(Me.Label24)
+        Me.tpMain.Controls.Add(Me.txtArrivalNettoSales)
+        Me.tpMain.Controls.Add(Me.Label17)
+        Me.tpMain.Controls.Add(Me.txtTolerance)
+        Me.tpMain.Controls.Add(Me.Label15)
         Me.tpMain.Controls.Add(Me.txtTotalPrice2)
         Me.tpMain.Controls.Add(Me.Label22)
         Me.tpMain.Controls.Add(Me.txtPrice2)
@@ -276,17 +291,92 @@ Partial Class frmTraReceiveDet
         Me.tpMain.Location = New System.Drawing.Point(4, 25)
         Me.tpMain.Name = "tpMain"
         Me.tpMain.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpMain.Size = New System.Drawing.Size(996, 402)
+        Me.tpMain.Size = New System.Drawing.Size(994, 419)
         Me.tpMain.TabIndex = 0
         Me.tpMain.Text = "Main - F1"
         Me.tpMain.UseVisualStyleBackColor = True
+        '
+        'txtArrivalNettoUsage
+        '
+        Me.txtArrivalNettoUsage.BackColor = System.Drawing.Color.LightYellow
+        Me.txtArrivalNettoUsage.DecimalPlaces = 2
+        Me.txtArrivalNettoUsage.Enabled = False
+        Me.txtArrivalNettoUsage.Location = New System.Drawing.Point(791, 275)
+        Me.txtArrivalNettoUsage.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
+        Me.txtArrivalNettoUsage.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
+        Me.txtArrivalNettoUsage.Name = "txtArrivalNettoUsage"
+        Me.txtArrivalNettoUsage.Size = New System.Drawing.Size(160, 21)
+        Me.txtArrivalNettoUsage.TabIndex = 31
+        Me.txtArrivalNettoUsage.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txtArrivalNettoUsage.ThousandsSeparator = True
+        '
+        'Label24
+        '
+        Me.Label24.AutoSize = True
+        Me.Label24.BackColor = System.Drawing.Color.Transparent
+        Me.Label24.ForeColor = System.Drawing.Color.Black
+        Me.Label24.Location = New System.Drawing.Point(685, 279)
+        Me.Label24.Name = "Label24"
+        Me.Label24.Size = New System.Drawing.Size(87, 13)
+        Me.Label24.TabIndex = 141
+        Me.Label24.Text = "Netto 2 Terpakai"
+        '
+        'txtArrivalNettoSales
+        '
+        Me.txtArrivalNettoSales.BackColor = System.Drawing.Color.LightYellow
+        Me.txtArrivalNettoSales.DecimalPlaces = 2
+        Me.txtArrivalNettoSales.Enabled = False
+        Me.txtArrivalNettoSales.Location = New System.Drawing.Point(791, 248)
+        Me.txtArrivalNettoSales.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
+        Me.txtArrivalNettoSales.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
+        Me.txtArrivalNettoSales.Name = "txtArrivalNettoSales"
+        Me.txtArrivalNettoSales.Size = New System.Drawing.Size(160, 21)
+        Me.txtArrivalNettoSales.TabIndex = 30
+        Me.txtArrivalNettoSales.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txtArrivalNettoSales.ThousandsSeparator = True
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.BackColor = System.Drawing.Color.Transparent
+        Me.Label17.ForeColor = System.Drawing.Color.Black
+        Me.Label17.Location = New System.Drawing.Point(707, 252)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(65, 13)
+        Me.Label17.TabIndex = 139
+        Me.Label17.Text = "Netto 2 Jual"
+        '
+        'txtTolerance
+        '
+        Me.txtTolerance.BackColor = System.Drawing.Color.LightYellow
+        Me.txtTolerance.DecimalPlaces = 2
+        Me.txtTolerance.Enabled = False
+        Me.txtTolerance.Location = New System.Drawing.Point(791, 221)
+        Me.txtTolerance.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
+        Me.txtTolerance.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
+        Me.txtTolerance.Name = "txtTolerance"
+        Me.txtTolerance.Size = New System.Drawing.Size(160, 21)
+        Me.txtTolerance.TabIndex = 29
+        Me.txtTolerance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txtTolerance.ThousandsSeparator = True
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.BackColor = System.Drawing.Color.Transparent
+        Me.Label15.ForeColor = System.Drawing.Color.Black
+        Me.Label15.Location = New System.Drawing.Point(722, 225)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(50, 13)
+        Me.Label15.TabIndex = 137
+        Me.Label15.Text = "Toleransi"
         '
         'txtTotalPrice2
         '
         Me.txtTotalPrice2.BackColor = System.Drawing.Color.LightYellow
         Me.txtTotalPrice2.DecimalPlaces = 2
         Me.txtTotalPrice2.Enabled = False
-        Me.txtTotalPrice2.Location = New System.Drawing.Point(791, 248)
+        Me.txtTotalPrice2.Location = New System.Drawing.Point(791, 194)
         Me.txtTotalPrice2.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
         Me.txtTotalPrice2.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
         Me.txtTotalPrice2.Name = "txtTotalPrice2"
@@ -301,7 +391,7 @@ Partial Class frmTraReceiveDet
         Me.Label22.AutoSize = True
         Me.Label22.BackColor = System.Drawing.Color.Transparent
         Me.Label22.ForeColor = System.Drawing.Color.Black
-        Me.Label22.Location = New System.Drawing.Point(700, 251)
+        Me.Label22.Location = New System.Drawing.Point(700, 197)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(72, 13)
         Me.Label22.TabIndex = 136
@@ -311,7 +401,7 @@ Partial Class frmTraReceiveDet
         '
         Me.txtPrice2.BackColor = System.Drawing.Color.White
         Me.txtPrice2.DecimalPlaces = 2
-        Me.txtPrice2.Location = New System.Drawing.Point(791, 221)
+        Me.txtPrice2.Location = New System.Drawing.Point(791, 167)
         Me.txtPrice2.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
         Me.txtPrice2.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
         Me.txtPrice2.Name = "txtPrice2"
@@ -325,7 +415,7 @@ Partial Class frmTraReceiveDet
         Me.Label23.AutoSize = True
         Me.Label23.BackColor = System.Drawing.Color.Transparent
         Me.Label23.ForeColor = System.Drawing.Color.Black
-        Me.Label23.Location = New System.Drawing.Point(727, 224)
+        Me.Label23.Location = New System.Drawing.Point(727, 170)
         Me.Label23.Name = "Label23"
         Me.Label23.Size = New System.Drawing.Size(45, 13)
         Me.Label23.TabIndex = 135
@@ -336,7 +426,7 @@ Partial Class frmTraReceiveDet
         Me.Label21.AutoSize = True
         Me.Label21.BackColor = System.Drawing.Color.Transparent
         Me.Label21.ForeColor = System.Drawing.Color.Black
-        Me.Label21.Location = New System.Drawing.Point(425, 279)
+        Me.Label21.Location = New System.Drawing.Point(425, 306)
         Me.Label21.Name = "Label21"
         Me.Label21.Size = New System.Drawing.Size(56, 13)
         Me.Label21.TabIndex = 132
@@ -346,19 +436,19 @@ Partial Class frmTraReceiveDet
         '
         Me.txtSpesification.BackColor = System.Drawing.Color.White
         Me.txtSpesification.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtSpesification.Location = New System.Drawing.Point(502, 275)
+        Me.txtSpesification.Location = New System.Drawing.Point(502, 302)
         Me.txtSpesification.MaxLength = 250
         Me.txtSpesification.Multiline = True
         Me.txtSpesification.Name = "txtSpesification"
-        Me.txtSpesification.Size = New System.Drawing.Size(449, 45)
-        Me.txtSpesification.TabIndex = 22
+        Me.txtSpesification.Size = New System.Drawing.Size(449, 56)
+        Me.txtSpesification.TabIndex = 24
         '
         'Label20
         '
         Me.Label20.AutoSize = True
         Me.Label20.BackColor = System.Drawing.Color.Transparent
         Me.Label20.ForeColor = System.Drawing.Color.Black
-        Me.Label20.Location = New System.Drawing.Point(705, 117)
+        Me.Label20.Location = New System.Drawing.Point(29, 294)
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(67, 13)
         Me.Label20.TabIndex = 130
@@ -368,11 +458,11 @@ Partial Class frmTraReceiveDet
         '
         Me.txtSegelNumber.BackColor = System.Drawing.Color.White
         Me.txtSegelNumber.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtSegelNumber.Location = New System.Drawing.Point(791, 113)
+        Me.txtSegelNumber.Location = New System.Drawing.Point(135, 290)
         Me.txtSegelNumber.MaxLength = 250
         Me.txtSegelNumber.Name = "txtSegelNumber"
         Me.txtSegelNumber.Size = New System.Drawing.Size(160, 21)
-        Me.txtSegelNumber.TabIndex = 23
+        Me.txtSegelNumber.TabIndex = 12
         '
         'Label19
         '
@@ -421,12 +511,12 @@ Partial Class frmTraReceiveDet
         Me.txtMaxBrutto.BackColor = System.Drawing.Color.LightYellow
         Me.txtMaxBrutto.DecimalPlaces = 2
         Me.txtMaxBrutto.Enabled = False
-        Me.txtMaxBrutto.Location = New System.Drawing.Point(791, 140)
+        Me.txtMaxBrutto.Location = New System.Drawing.Point(502, 275)
         Me.txtMaxBrutto.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
         Me.txtMaxBrutto.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
         Me.txtMaxBrutto.Name = "txtMaxBrutto"
         Me.txtMaxBrutto.Size = New System.Drawing.Size(160, 21)
-        Me.txtMaxBrutto.TabIndex = 24
+        Me.txtMaxBrutto.TabIndex = 23
         Me.txtMaxBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtMaxBrutto.ThousandsSeparator = True
         '
@@ -435,11 +525,11 @@ Partial Class frmTraReceiveDet
         Me.Label9.AutoSize = True
         Me.Label9.BackColor = System.Drawing.Color.Transparent
         Me.Label9.ForeColor = System.Drawing.Color.Black
-        Me.Label9.Location = New System.Drawing.Point(708, 143)
+        Me.Label9.Location = New System.Drawing.Point(425, 279)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(64, 13)
+        Me.Label9.Size = New System.Drawing.Size(61, 13)
         Me.Label9.TabIndex = 120
-        Me.Label9.Text = "Max. Brutto"
+        Me.Label9.Text = "Max. Netto"
         '
         'btnReferences
         '
@@ -483,7 +573,7 @@ Partial Class frmTraReceiveDet
         Me.txtNettoAfter.Name = "txtNettoAfter"
         Me.txtNettoAfter.ReadOnly = True
         Me.txtNettoAfter.Size = New System.Drawing.Size(160, 21)
-        Me.txtNettoAfter.TabIndex = 21
+        Me.txtNettoAfter.TabIndex = 22
         Me.txtNettoAfter.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtNettoAfter.ThousandsSeparator = True
         '
@@ -503,7 +593,7 @@ Partial Class frmTraReceiveDet
         Me.Label8.AutoSize = True
         Me.Label8.BackColor = System.Drawing.Color.Transparent
         Me.Label8.ForeColor = System.Drawing.Color.Black
-        Me.Label8.Location = New System.Drawing.Point(425, 251)
+        Me.Label8.Location = New System.Drawing.Point(425, 252)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(43, 13)
         Me.Label8.TabIndex = 106
@@ -528,7 +618,7 @@ Partial Class frmTraReceiveDet
         Me.txtDeduction.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
         Me.txtDeduction.Name = "txtDeduction"
         Me.txtDeduction.Size = New System.Drawing.Size(160, 21)
-        Me.txtDeduction.TabIndex = 20
+        Me.txtDeduction.TabIndex = 21
         Me.txtDeduction.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtDeduction.ThousandsSeparator = True
         '
@@ -569,7 +659,7 @@ Partial Class frmTraReceiveDet
         Me.Label10.AutoSize = True
         Me.Label10.BackColor = System.Drawing.Color.Transparent
         Me.Label10.ForeColor = System.Drawing.Color.Black
-        Me.Label10.Location = New System.Drawing.Point(29, 294)
+        Me.Label10.Location = New System.Drawing.Point(29, 321)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(63, 13)
         Me.Label10.TabIndex = 110
@@ -586,7 +676,7 @@ Partial Class frmTraReceiveDet
         Me.txtNettoBefore.Name = "txtNettoBefore"
         Me.txtNettoBefore.ReadOnly = True
         Me.txtNettoBefore.Size = New System.Drawing.Size(160, 21)
-        Me.txtNettoBefore.TabIndex = 19
+        Me.txtNettoBefore.TabIndex = 20
         Me.txtNettoBefore.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtNettoBefore.ThousandsSeparator = True
         '
@@ -594,12 +684,12 @@ Partial Class frmTraReceiveDet
         '
         Me.txtRemarks.BackColor = System.Drawing.Color.White
         Me.txtRemarks.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtRemarks.Location = New System.Drawing.Point(135, 290)
+        Me.txtRemarks.Location = New System.Drawing.Point(135, 317)
         Me.txtRemarks.MaxLength = 250
         Me.txtRemarks.Multiline = True
         Me.txtRemarks.Name = "txtRemarks"
         Me.txtRemarks.Size = New System.Drawing.Size(220, 41)
-        Me.txtRemarks.TabIndex = 12
+        Me.txtRemarks.TabIndex = 13
         '
         'dtpDueDate
         '
@@ -617,7 +707,7 @@ Partial Class frmTraReceiveDet
         Me.Label13.AutoSize = True
         Me.Label13.BackColor = System.Drawing.Color.Transparent
         Me.Label13.ForeColor = System.Drawing.Color.Black
-        Me.Label13.Location = New System.Drawing.Point(425, 197)
+        Me.Label13.Location = New System.Drawing.Point(425, 198)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(43, 13)
         Me.Label13.TabIndex = 102
@@ -640,7 +730,7 @@ Partial Class frmTraReceiveDet
         Me.txtTarra.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
         Me.txtTarra.Name = "txtTarra"
         Me.txtTarra.Size = New System.Drawing.Size(160, 21)
-        Me.txtTarra.TabIndex = 18
+        Me.txtTarra.TabIndex = 19
         Me.txtTarra.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtTarra.ThousandsSeparator = True
         '
@@ -683,14 +773,14 @@ Partial Class frmTraReceiveDet
         Me.cboStatus.Location = New System.Drawing.Point(791, 20)
         Me.cboStatus.Name = "cboStatus"
         Me.cboStatus.Size = New System.Drawing.Size(160, 21)
-        Me.cboStatus.TabIndex = 14
+        Me.cboStatus.TabIndex = 15
         '
         'txtTotalPrice1
         '
         Me.txtTotalPrice1.BackColor = System.Drawing.Color.LightYellow
         Me.txtTotalPrice1.DecimalPlaces = 2
         Me.txtTotalPrice1.Enabled = False
-        Me.txtTotalPrice1.Location = New System.Drawing.Point(791, 194)
+        Me.txtTotalPrice1.Location = New System.Drawing.Point(791, 140)
         Me.txtTotalPrice1.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
         Me.txtTotalPrice1.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
         Me.txtTotalPrice1.Name = "txtTotalPrice1"
@@ -716,7 +806,7 @@ Partial Class frmTraReceiveDet
         Me.Label16.AutoSize = True
         Me.Label16.BackColor = System.Drawing.Color.Transparent
         Me.Label16.ForeColor = System.Drawing.Color.Black
-        Me.Label16.Location = New System.Drawing.Point(700, 197)
+        Me.Label16.Location = New System.Drawing.Point(700, 143)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(72, 13)
         Me.Label16.TabIndex = 96
@@ -738,7 +828,7 @@ Partial Class frmTraReceiveDet
         '
         Me.txtPrice1.BackColor = System.Drawing.Color.White
         Me.txtPrice1.DecimalPlaces = 2
-        Me.txtPrice1.Location = New System.Drawing.Point(791, 167)
+        Me.txtPrice1.Location = New System.Drawing.Point(791, 113)
         Me.txtPrice1.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
         Me.txtPrice1.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
         Me.txtPrice1.Name = "txtPrice1"
@@ -764,7 +854,7 @@ Partial Class frmTraReceiveDet
         Me.txtBrutto.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
         Me.txtBrutto.Name = "txtBrutto"
         Me.txtBrutto.Size = New System.Drawing.Size(160, 21)
-        Me.txtBrutto.TabIndex = 17
+        Me.txtBrutto.TabIndex = 18
         Me.txtBrutto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtBrutto.ThousandsSeparator = True
         '
@@ -784,7 +874,7 @@ Partial Class frmTraReceiveDet
         Me.cboUOMID.Location = New System.Drawing.Point(502, 113)
         Me.cboUOMID.Name = "cboUOMID"
         Me.cboUOMID.Size = New System.Drawing.Size(160, 21)
-        Me.cboUOMID.TabIndex = 16
+        Me.cboUOMID.TabIndex = 17
         '
         'lblCode
         '
@@ -816,7 +906,7 @@ Partial Class frmTraReceiveDet
         Me.txtItemCode.Name = "txtItemCode"
         Me.txtItemCode.ReadOnly = True
         Me.txtItemCode.Size = New System.Drawing.Size(160, 21)
-        Me.txtItemCode.TabIndex = 13
+        Me.txtItemCode.TabIndex = 14
         Me.txtItemCode.TabStop = False
         '
         'Label2
@@ -833,7 +923,7 @@ Partial Class frmTraReceiveDet
         Me.lblName.AutoSize = True
         Me.lblName.BackColor = System.Drawing.Color.Transparent
         Me.lblName.ForeColor = System.Drawing.Color.Black
-        Me.lblName.Location = New System.Drawing.Point(425, 50)
+        Me.lblName.Location = New System.Drawing.Point(425, 51)
         Me.lblName.Name = "lblName"
         Me.lblName.Size = New System.Drawing.Size(71, 13)
         Me.lblName.TabIndex = 93
@@ -868,14 +958,14 @@ Partial Class frmTraReceiveDet
         Me.txtItemName.Name = "txtItemName"
         Me.txtItemName.ReadOnly = True
         Me.txtItemName.Size = New System.Drawing.Size(449, 60)
-        Me.txtItemName.TabIndex = 15
+        Me.txtItemName.TabIndex = 16
         '
         'lblPrice1
         '
         Me.lblPrice1.AutoSize = True
         Me.lblPrice1.BackColor = System.Drawing.Color.Transparent
         Me.lblPrice1.ForeColor = System.Drawing.Color.Black
-        Me.lblPrice1.Location = New System.Drawing.Point(727, 170)
+        Me.lblPrice1.Location = New System.Drawing.Point(727, 116)
         Me.lblPrice1.Name = "lblPrice1"
         Me.lblPrice1.Size = New System.Drawing.Size(45, 13)
         Me.lblPrice1.TabIndex = 93
@@ -910,7 +1000,7 @@ Partial Class frmTraReceiveDet
         Me.tpHistory.Location = New System.Drawing.Point(4, 25)
         Me.tpHistory.Name = "tpHistory"
         Me.tpHistory.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpHistory.Size = New System.Drawing.Size(996, 402)
+        Me.tpHistory.Size = New System.Drawing.Size(994, 419)
         Me.tpHistory.TabIndex = 1
         Me.tpHistory.Text = "History - F2"
         Me.tpHistory.UseVisualStyleBackColor = True
@@ -935,7 +1025,7 @@ Partial Class frmTraReceiveDet
         Me.grdStatus.Location = New System.Drawing.Point(3, 3)
         Me.grdStatus.MainView = Me.grdStatusView
         Me.grdStatus.Name = "grdStatus"
-        Me.grdStatus.Size = New System.Drawing.Size(986, 392)
+        Me.grdStatus.Size = New System.Drawing.Size(984, 409)
         Me.grdStatus.TabIndex = 12
         Me.grdStatus.UseEmbeddedNavigator = True
         Me.grdStatus.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.grdStatusView})
@@ -952,16 +1042,16 @@ Partial Class frmTraReceiveDet
         'pgMain
         '
         Me.pgMain.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.pgMain.Location = New System.Drawing.Point(0, 458)
+        Me.pgMain.Location = New System.Drawing.Point(0, 475)
         Me.pgMain.Name = "pgMain"
-        Me.pgMain.Size = New System.Drawing.Size(1004, 23)
+        Me.pgMain.Size = New System.Drawing.Size(1002, 23)
         Me.pgMain.TabIndex = 4
         '
         'frmTraReceiveDet
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1004, 481)
+        Me.ClientSize = New System.Drawing.Size(1002, 498)
         Me.Controls.Add(Me.StatusStrip)
         Me.Controls.Add(Me.pgMain)
         Me.Controls.Add(Me.tcHeader)
@@ -978,6 +1068,9 @@ Partial Class frmTraReceiveDet
         Me.tcHeader.ResumeLayout(False)
         Me.tpMain.ResumeLayout(False)
         Me.tpMain.PerformLayout()
+        CType(Me.txtArrivalNettoUsage, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtArrivalNettoSales, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtTolerance, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtTotalPrice2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtPrice2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtMaxBrutto, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1053,7 +1146,6 @@ Partial Class frmTraReceiveDet
     Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents txtReferencesID As MPS.usTextBox
     Friend WithEvents txtMaxBrutto As MPS.usNumeric
-    Friend WithEvents Label9 As System.Windows.Forms.Label
     Friend WithEvents Label21 As System.Windows.Forms.Label
     Friend WithEvents txtSpesification As MPS.usTextBox
     Friend WithEvents Label20 As System.Windows.Forms.Label
@@ -1067,4 +1159,11 @@ Partial Class frmTraReceiveDet
     Friend WithEvents txtPrice2 As MPS.usNumeric
     Friend WithEvents Label23 As System.Windows.Forms.Label
     Friend WithEvents pgMain As System.Windows.Forms.ProgressBar
+    Friend WithEvents txtArrivalNettoUsage As MPS.usNumeric
+    Friend WithEvents Label24 As System.Windows.Forms.Label
+    Friend WithEvents txtArrivalNettoSales As MPS.usNumeric
+    Friend WithEvents Label17 As System.Windows.Forms.Label
+    Friend WithEvents txtTolerance As MPS.usNumeric
+    Friend WithEvents Label15 As System.Windows.Forms.Label
+    Friend WithEvents Label9 As System.Windows.Forms.Label
 End Class

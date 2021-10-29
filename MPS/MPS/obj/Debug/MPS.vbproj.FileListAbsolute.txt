@@ -205,3 +205,4 @@ D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.rptDeliveryOrder.resourc
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.usFormRemarks.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.vbproj.GenerateResource.Cache
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.exe.licenses
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSalesSplitReceive.resources

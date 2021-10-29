@@ -69,6 +69,35 @@ Namespace BL
             Return clsData.ID
         End Function
 
+        Public Shared Function SplitDataReceive(ByVal clsData As VO.Sales, ByVal clsReceive() As VO.Receive) As Boolean
+            Dim bolReturn As Boolean = False
+            Try
+                DL.SQL.OpenConnection()
+                DL.SQL.BeginTransaction()
+
+                '# Checking Already Split Receive
+
+                '# Save Data Sales Supplier
+                For Each clsItem As VO.Receive In clsReceive
+                    BL.Receive.SaveDataDefault(True, clsItem)
+                Next
+
+                DL.Sales.CalculateArrivalUsage(clsData.ID)
+
+                '# Save Data Status
+                SaveDataStatus(clsData.ID, "SPLIT PEMBELIAN", clsData.LogBy, clsData.Remarks)
+
+                DL.SQL.CommitTransaction()
+                bolReturn = True
+            Catch ex As Exception
+                DL.SQL.RollBackTransaction()
+                Throw ex
+            Finally
+                DL.SQL.CloseConnection()
+            End Try
+            Return bolReturn
+        End Function
+
         Public Shared Function GetDetail(ByVal strID As String) As VO.Sales
             BL.Server.ServerDefault()
             Return DL.Sales.GetDetail(strID)
@@ -106,6 +135,14 @@ Namespace BL
                 DL.SQL.CloseConnection()
             End Try
         End Sub
+
+        Public Shared Function ListDataSplitReceive(ByVal strSalesID As String) As DataTable
+            BL.Server.ServerDefault()
+            Return DL.Sales.ListDataSplitReceive(strSalesID)
+        End Function
+
+
+
 
         Public Shared Sub PrintBonFaktur(ByVal clsData As VO.Sales, ByVal doColor As List(Of String))
             BL.Server.ServerDefault()

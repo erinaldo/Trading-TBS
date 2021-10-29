@@ -397,6 +397,12 @@
     <Compile Include="PresentationLayers\Forms\Transaction\frmTraSalesPrintBonFaktur.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraSalesSplitReceive.Designer.vb">
+      <DependentUpon>frmTraSalesSplitReceive.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraSalesSplitReceive.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="PresentationLayers\Forms\View\frmViewCompany.Designer.vb">
       <DependentUpon>frmViewCompany.vb</DependentUpon>
     </Compile>
@@ -614,6 +620,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraSalesPrintBonFaktur.resx">
       <DependentUpon>frmTraSalesPrintBonFaktur.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraSalesSplitReceive.resx">
+      <DependentUpon>frmTraSalesSplitReceive.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\View\frmViewCompany.resx">
       <DependentUpon>frmViewCompany.vb</DependentUpon>

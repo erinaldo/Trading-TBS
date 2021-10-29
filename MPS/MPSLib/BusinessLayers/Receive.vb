@@ -11,7 +11,7 @@ Namespace BL
             Return DL.Receive.ListData(intCompanyID, intProgramID, dtmDateFrom, dtmDateTo, intIDStatus)
         End Function
 
-        Private Shared Function GetNewID(ByVal intCompanyID As Integer, ByVal intProgramID As Integer)
+        Public Shared Function GetNewID(ByVal intCompanyID As Integer, ByVal intProgramID As Integer)
             Dim clsCompany As VO.Company = DL.Company.GetDetail(intCompanyID)
             Dim strReturn As String = "RV" & Format(Now, "yyMMdd") & "-" & clsCompany.CompanyInitial & "-" & Format(intProgramID, "00") & "-"
             strReturn = strReturn & Format(DL.Receive.GetMaxID(strReturn), "000")
@@ -23,33 +23,9 @@ Namespace BL
                 DL.SQL.OpenConnection()
                 DL.SQL.BeginTransaction()
 
-                If bolNew Then
-                    clsData.ID = GetNewID(clsData.CompanyID, clsData.ProgramID)
-                    If DL.Receive.DataExists(clsData.ID) Then
-                        Err.Raise(515, "", "ID sudah ada sebelumnya")
-                        'ElseIf Format(clsData.ReceiveDate, "yyyyMMdd") <= DL.PostGL.LastPostedDate Then
-                        '    Err.Raise(515, "", "Data tidak dapat disimpan. Dikarenakan tanggal transaksi lebih kecil atau sama dengan tanggal Posting Transaksi")
-                    End If
-                Else
-                    'Dim strReturnID As String = DL.ReceiveReturn.AlreadyCreatedReturn(clsData.ID)
-                    'Dim strInvoiceID As String = DL.AccountReceivable.AlreadyCreatedInvoice(clsData.ID)
+                SaveDataDefault(bolNew, clsData)
 
-                    If DL.Receive.IsDeleted(clsData.ID) Then
-                        Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dihapus")
-                        'ElseIf strReturnID.Trim <> "" Then
-                        '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dibuat retur dengan nomor " & strReturnID)
-                        'ElseIf strInvoiceID.Trim <> "" Then
-                        '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses penagihan dengan nomor " & strInvoiceID)
-                        'ElseIf DL.Receive.IsPostedGL(clsData.ID) Then
-                        '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses posting data transaksi")
-                    End If
-                End If
-
-                DL.Receive.SaveData(bolNew, clsData)
                 DL.Sales.CalculateArrivalUsage(clsData.ReferencesID)
-
-                '# Save Data Status
-                SaveDataStatus(clsData.ID, IIf(bolNew, "BARU", "EDIT"), clsData.LogBy, clsData.Remarks)
 
                 DL.SQL.CommitTransaction()
             Catch ex As Exception
@@ -58,6 +34,36 @@ Namespace BL
             Finally
                 DL.SQL.CloseConnection()
             End Try
+            Return clsData.ID
+        End Function
+
+        Public Shared Function SaveDataDefault(ByVal bolNew As Boolean, ByVal clsData As VO.Receive) As String
+            If bolNew Then
+                clsData.ID = GetNewID(clsData.CompanyID, clsData.ProgramID)
+                If DL.Receive.DataExists(clsData.ID) Then
+                    Err.Raise(515, "", "ID sudah ada sebelumnya")
+                    'ElseIf Format(clsData.ReceiveDate, "yyyyMMdd") <= DL.PostGL.LastPostedDate Then
+                    '    Err.Raise(515, "", "Data tidak dapat disimpan. Dikarenakan tanggal transaksi lebih kecil atau sama dengan tanggal Posting Transaksi")
+                End If
+            Else
+                'Dim strReturnID As String = DL.ReceiveReturn.AlreadyCreatedReturn(clsData.ID)
+                'Dim strInvoiceID As String = DL.AccountReceivable.AlreadyCreatedInvoice(clsData.ID)
+
+                If DL.Receive.IsDeleted(clsData.ID) Then
+                    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dihapus")
+                    'ElseIf strReturnID.Trim <> "" Then
+                    '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dibuat retur dengan nomor " & strReturnID)
+                    'ElseIf strInvoiceID.Trim <> "" Then
+                    '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses penagihan dengan nomor " & strInvoiceID)
+                    'ElseIf DL.Receive.IsPostedGL(clsData.ID) Then
+                    '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses posting data transaksi")
+                End If
+            End If
+
+            DL.Receive.SaveData(bolNew, clsData)
+
+            '# Save Data Status
+            SaveDataStatus(clsData.ID, IIf(bolNew, "BARU", "EDIT"), clsData.LogBy, clsData.Remarks)
             Return clsData.ID
         End Function
 

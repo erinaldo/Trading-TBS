@@ -22,6 +22,7 @@ Namespace VO
         Property ArrivalNettoAfter As Decimal
         Property Price As Decimal
         Property TotalPrice As Decimal
+        Property ArrivalUsage As Decimal
         Property ArrivalReturn As Decimal
         Property TotalPayment As Decimal
         Property IsPostedGL As Boolean
@@ -29,5 +30,6 @@ Namespace VO
         Property PostedDate As DateTime
         Property Remarks As String
         Property IDStatus As Integer
+        Property Tolerance As Decimal
     End Class
 End Namespace

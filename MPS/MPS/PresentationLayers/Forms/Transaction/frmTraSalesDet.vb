@@ -27,7 +27,7 @@ Public Class frmTraSalesDet
 
     Private Const _
        cSave = 0, cClose = 1,
-       cAdd = 0, cEdit = 1, cDelete = 2
+       cAdd = 0, cDelete = 1
 
     Private Sub prvSetTitleForm()
         If pubIsNew Then
@@ -153,15 +153,22 @@ Public Class frmTraSalesDet
             Exit Sub
         ElseIf txtItemCode.Text.Trim = "" Then
             UI.usForm.frmMessageBox("Pilih kode barang terlebih dahulu")
+            tcHeader.SelectedTab = tpMain
             txtItemCode.Focus()
             Exit Sub
         ElseIf txtBrutto.Value <= 0 Then
             UI.usForm.frmMessageBox("Brutto harus lebih besar dari 0")
+            tcHeader.SelectedTab = tpMain
             txtBrutto.Focus()
             Exit Sub
         ElseIf txtPrice.Value <= 0 Then
             UI.usForm.frmMessageBox("Harga harus lebih besar dari 0")
+            tcHeader.SelectedTab = tpMain
             txtPrice.Focus()
+            Exit Sub
+        ElseIf grdSupplierView.RowCount = 0 Then
+            UI.usForm.frmMessageBox("Pemasok harus diinput terlebih dahulu")
+            tcHeader.SelectedTab = tpSupplier
             Exit Sub
         End If
 
@@ -215,6 +222,14 @@ Public Class frmTraSalesDet
                     prvPrintBonFaktur()
                     prvClear()
                     prvQueryHistory()
+                    prvQueryBP()
+
+                    Dim frmDetail As New frmTraSalesSplitReceive
+                    With frmDetail
+                        .pubCS = pubCS
+                        .pubSalesID = strID
+                        .ShowDialog()
+                    End With
                 Else
                     pubIsSave = True
                     prvPrintBonFaktur()
@@ -450,7 +465,7 @@ Public Class frmTraSalesDet
     Private Sub ToolBarSupplier_ButtonClick(sender As Object, e As ToolBarButtonClickEventArgs) Handles ToolBarSupplier.ButtonClick
         Select Case e.Button.Text.Trim
             Case "Tambah" : prvAddSupplier()
-            Case "Hapus" : prvAddSupplier()
+            Case "Hapus" : prvDeleteSupplier()
         End Select
     End Sub
 

@@ -84,6 +84,10 @@ Public Class frmMstBusinessPartnerDet
             '    UI.usForm.frmMessageBox("Alamat belum diinput")
             '    txtAddress.Focus()
             '    Exit Sub
+        ElseIf cboPaymentTerm.SelectedIndex = -1 Then
+            UI.usForm.frmMessageBox("Jenis pembayaran harus dipilih agar dapat dijadikan nilai default saat transaksi")
+            cboPaymentTerm.Focus()
+            Exit Sub
         ElseIf chkIsUsePurchaseLimit.Checked AndAlso txtMaxPurchaseLimit.Value <= 0 Then
             UI.usForm.frmMessageBox(chkIsUsePurchaseLimit.Text & " harus lebih besar dari 0 jika tercentang")
             txtMaxPurchaseLimit.Focus()

@@ -131,7 +131,7 @@ Namespace DL
                         "    A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MI.UomID AS UOMID, MU.Code AS UomCode, " & vbNewLine & _
                         "    A.ArrivalBrutto, A.ArrivalTarra, A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, A.Price, A.TotalPrice, A.ArrivalReturn, A.TotalPayment, A.IsPostedGL,   " & vbNewLine & _
                         "    A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, A.CreatedBy,   " & vbNewLine & _
-                        "    A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID  " & vbNewLine & _
+                        "    A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID, MI.Tolerance, A.ArrivalUsage  " & vbNewLine & _
                         "FROM traSales A " & vbNewLine & _
                         "INNER JOIN mstBusinessPartner C ON " & vbNewLine & _
                         "    A.BPID=C.ID " & vbNewLine & _
@@ -190,6 +190,8 @@ Namespace DL
                         voReturn.LogInc = .Item("LogInc")
                         voReturn.LogDate = .Item("LogDate")
                         voReturn.JournalID = .Item("JournalID")
+                        voReturn.Tolerance = .Item("Tolerance")
+                        voReturn.ArrivalUsage = .Item("ArrivalUsage")
                     End If
                 End With
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()
@@ -321,6 +323,36 @@ Namespace DL
             End Try
             Return bolExists
         End Function
+
+        Public Shared Function ListDataSplitReceive(ByVal strSalesID As String) As DataTable
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "SELECT 	" & vbNewLine & _
+                    "	TS.ProgramID, MP.Name AS ProgramName, TS.CompanyID, MC.Name AS CompanyName, TSS.ID, TSS.SalesID AS ReferencesID, TSS.BPID, MBP.Name AS BPName, GETDATE() AS ReceiveDate, 	" & vbNewLine & _
+                    "	MBP.PaymentTermID AS PaymentTerm, GETDATE() AS DueDate, TS.DriverName, TS.PlatNumber, TS.PPN, TS.PPH, CAST(0 AS DECIMAL(18,2)) AS ArrivalBrutto, CAST(0 AS DECIMAL(18,2)) AS ArrivalTarra,	" & vbNewLine & _
+                    "	CAST(0 AS DECIMAL(18,2)) AS ArrivalNettoBefore, CAST(0 AS DECIMAL(18,2)) AS ArrivalDeduction, CAST(0 AS DECIMAL(18,2)) AS ArrivalNettoAfter, MI.PurchasePrice1 AS Price1, MI.PurchasePrice2 AS Price2, 	" & vbNewLine & _
+                    "	CAST(0 AS DECIMAL(18,2)) AS TotalPrice1, CAST(0 AS DECIMAL(18,2)) AS TotalPrice2, CAST('' AS VARCHAR(250)) AS Remarks	" & vbNewLine & _
+                    "FROM traSales TS 	" & vbNewLine & _
+                    "INNER JOIN traSalesSupplier TSS ON 	" & vbNewLine & _
+                    "	TS.ID=TSS.SalesID 	" & vbNewLine & _
+                    "INNER JOIN mstProgram MP ON 	" & vbNewLine & _
+                    "	TS.ProgramID=MP.ID 	" & vbNewLine & _
+                    "INNER JOIN mstCompany MC ON 	" & vbNewLine & _
+                    "	TS.CompanyID=MC.ID 	" & vbNewLine & _
+                    "INNER JOIN mstBusinessPartner MBP ON 	" & vbNewLine & _
+                    "	TSS.BPID=MBP.ID		" & vbNewLine & _
+                    "INNER JOIN mstItem MI ON 	" & vbNewLine & _
+                    "	TS.ItemID=MI.ID 	" & vbNewLine & _
+                    "WHERE TS.ID=@SalesID	" & vbNewLine
+
+                .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strSalesID
+            End With
+            Return SQL.QueryDataTable(sqlcmdExecute)
+        End Function
+
+
+
 
         Public Shared Function ListDataBonFaktur(ByVal strID As String) As DataTable
             Dim sqlcmdExecute As New SqlCommand
@@ -739,7 +771,7 @@ Namespace DL
             Dim sqlcmdExecute As New SqlCommand
             With sqlcmdExecute
                 .CommandText = _
-                    "DELETE FROM traSalesStatus " & vbNewLine & _
+                    "DELETE FROM traSalesSupplier " & vbNewLine & _
                     "WHERE " & vbNewLine & _
                     "   SalesID=@SalesID " & vbNewLine
 
