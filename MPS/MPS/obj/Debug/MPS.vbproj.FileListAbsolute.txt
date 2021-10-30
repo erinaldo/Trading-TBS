@@ -136,10 +136,8 @@ C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.exe.licenses
 C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.exe
 C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.xml
 C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.pdb
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSalesSplitReceive.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\bin\Debug\MPS.exe.config
-D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.exe
-D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.xml
-D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.pdb
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\bin\Debug\MPS.exe
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\bin\Debug\MPS.pdb
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\bin\Debug\MPS.xml
@@ -196,6 +194,7 @@ D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraReceiveListOutstan
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSales.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSalesDet.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSalesPrintBonFaktur.resources
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSalesSplitReceive.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmViewCompany.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmViewProgram.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmViewProgramCompany.resources
@@ -205,5 +204,6 @@ D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.rptDeliveryOrder.resourc
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.usFormRemarks.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.vbproj.GenerateResource.Cache
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.exe.licenses
-D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSalesSplitReceive.resources
-C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSalesSplitReceive.resources
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.exe
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.xml
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.pdb

@@ -351,6 +351,86 @@ Namespace DL
             Return SQL.QueryDataTable(sqlcmdExecute)
         End Function
 
+        Public Shared Function IsSplitReceive(ByVal strID As String) As Boolean
+            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
+            Dim bolExists As Boolean = False
+            Try
+                If Not SQL.bolUseTrans Then SQL.OpenConnection()
+                With sqlcmdExecute
+                    .Connection = SQL.sqlConn
+                    .CommandText = _
+                        "SELECT TOP 1 " & vbNewLine & _
+                        "   ID " & vbNewLine & _
+                        "FROM traSales " & vbNewLine & _
+                        "WHERE  " & vbNewLine & _
+                        "   ID=@ID " & vbNewLine & _
+                        "   AND IsSplitReceive=1 " & vbNewLine
+
+                    .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
+                    If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
+                End With
+                sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)
+                With sqlrdData
+                    If .HasRows Then
+                        .Read()
+                        bolExists = True
+                    End If
+                End With
+                If Not SQL.bolUseTrans Then SQL.CloseConnection()
+            Catch ex As Exception
+                Throw ex
+            Finally
+                If Not sqlrdData Is Nothing Then sqlrdData.Close()
+            End Try
+            Return bolExists
+        End Function
+
+        Public Shared Sub SetIsSplitReceive(ByVal strID As String, ByVal bolIsSplitReceive As Boolean)
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "UPDATE traSales " & vbNewLine & _
+                    "SET IsSplitReceive=@IsSplitReceive " & vbNewLine & _
+                    "WHERE " & vbNewLine & _
+                    "   ID=@ID " & vbNewLine
+
+                .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
+                .Parameters.Add("@IDStatus", SqlDbType.Int).Value = VO.Status.Values.Deleted
+                .Parameters.Add("@IsSplitReceive", SqlDbType.Bit).Value = bolIsSplitReceive
+            End With
+            Try
+                SQL.ExecuteNonQuery(sqlcmdExecute)
+            Catch ex As SqlException
+                Throw ex
+            End Try
+        End Sub
+
+        Public Shared Sub CalculateArrivalUsage(ByVal strID As String)
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "UPDATE traSales 	" & vbNewLine & _
+                    "SET ArrivalUsage=	" & vbNewLine & _
+                    "	ISNULL(	" & vbNewLine & _
+                    "	(	" & vbNewLine & _
+                    "		SELECT SUM(A.ArrivalNettoAfter) 	" & vbNewLine & _
+                    "		FROM traReceive A 	" & vbNewLine & _
+                    "		WHERE 	" & vbNewLine & _
+                    "			A.ReferencesID=@ReferencesID " & vbNewLine & _
+                    "			AND A.IsDeleted=0 	" & vbNewLine & _
+                    "	),0)	" & vbNewLine & _
+                    "WHERE " & vbNewLine & _
+                    "   ID=@ReferencesID " & vbNewLine
+
+                .Parameters.Add("@ReferencesID", SqlDbType.VarChar, 30).Value = strID
+            End With
+            Try
+                SQL.ExecuteNonQuery(sqlcmdExecute)
+            Catch ex As SqlException
+                Throw ex
+            End Try
+        End Sub
+
 
 
 
@@ -390,32 +470,6 @@ Namespace DL
 
                 .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
                 .Parameters.Add("@IDStatus", SqlDbType.Int).Value = VO.Status.Values.Printed
-            End With
-            Try
-                SQL.ExecuteNonQuery(sqlcmdExecute)
-            Catch ex As SqlException
-                Throw ex
-            End Try
-        End Sub
-
-        Public Shared Sub CalculateArrivalUsage(ByVal strID As String)
-            Dim sqlcmdExecute As New SqlCommand
-            With sqlcmdExecute
-                .CommandText = _
-                    "UPDATE traSales 	" & vbNewLine & _
-                    "SET ArrivalUsage=	" & vbNewLine & _
-                    "	ISNULL(	" & vbNewLine & _
-                    "	(	" & vbNewLine & _
-                    "		SELECT SUM(A.ArrivalBrutto) 	" & vbNewLine & _
-                    "		FROM traReceive A 	" & vbNewLine & _
-                    "		WHERE 	" & vbNewLine & _
-                    "			A.ReferencesID=@ReferencesID " & vbNewLine & _
-                    "			AND A.IsDeleted=0 	" & vbNewLine & _
-                    "	),0)	" & vbNewLine & _
-                    "WHERE " & vbNewLine & _
-                    "   ID=@ReferencesID " & vbNewLine
-
-                .Parameters.Add("@ReferencesID", SqlDbType.VarChar, 30).Value = strID
             End With
             Try
                 SQL.ExecuteNonQuery(sqlcmdExecute)

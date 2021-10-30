@@ -76,12 +76,16 @@ Namespace BL
                 DL.SQL.BeginTransaction()
 
                 '# Checking Already Split Receive
+                If DL.Sales.IsSplitReceive(clsData.ID) Then
+                    Err.Raise(515, "", "Data tidak dapat dilakukan split pembelian. Dikarenakan data telah dilakukan split pembelian sebelumnya.")
+                End If
 
                 '# Save Data Sales Supplier
                 For Each clsItem As VO.Receive In clsReceive
                     BL.Receive.SaveDataDefault(True, clsItem)
                 Next
 
+                DL.Sales.SetIsSplitReceive(clsData.ID, True)
                 DL.Sales.CalculateArrivalUsage(clsData.ID)
 
                 '# Save Data Status

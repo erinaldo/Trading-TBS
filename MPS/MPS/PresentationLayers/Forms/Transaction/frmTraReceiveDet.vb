@@ -107,11 +107,14 @@ Public Class frmTraReceiveDet
                 txtNettoBefore.Value = clsData.ArrivalNettoBefore
                 txtDeduction.Value = clsData.ArrivalDeduction
                 txtNettoAfter.Value = clsData.ArrivalNettoAfter
-                txtMaxBrutto.Value = clsData.MaxBrutto
+                txtMaxBrutto.Value = clsData.MaxBrutto + (clsData.ArrivalNettoAfterSales * clsData.Tolerance / 100)
                 txtPrice1.Value = clsData.Price1
                 txtTotalPrice1.Value = clsData.TotalPrice1
                 txtPrice2.Value = clsData.Price2
                 txtTotalPrice2.Value = clsData.TotalPrice2
+                txtTolerance.Value = clsData.Tolerance
+                txtArrivalNettoAfterSales.Value = clsData.ArrivalNettoAfterSales
+                txtArrivalNettoUsage.Value = clsData.ArrivalUsage
                 cboStatus.SelectedValue = clsData.IDStatus
                 ToolStripLogInc.Text = "Jumlah Edit : " & clsData.LogInc
                 ToolStripLogBy.Text = "Dibuat Oleh : " & clsData.LogBy
@@ -162,7 +165,7 @@ Public Class frmTraReceiveDet
             UI.usForm.frmMessageBox("Brutto harus lebih besar dari 0")
             txtBrutto.Focus()
             Exit Sub
-        ElseIf txtBrutto.Value > txtMaxBrutto.Value Then
+        ElseIf txtNettoAfter.Value > txtMaxBrutto.Value Then
             UI.usForm.frmMessageBox("Nilai Brutto tidak boleh lebih besar dari nilai Max. Brutto")
             txtBrutto.Focus()
             Exit Sub
@@ -176,7 +179,7 @@ Public Class frmTraReceiveDet
             Exit Sub
         End If
 
-        If Not UI.usForm.frmAskQuestion("Simpan data penjualan?") Then Exit Sub
+        If Not UI.usForm.frmAskQuestion("Simpan data pembelian?") Then Exit Sub
 
         clsData = New VO.Receive
         clsData.ProgramID = pubCS.ProgramID
@@ -204,6 +207,7 @@ Public Class frmTraReceiveDet
         clsData.TotalPrice1 = txtTotalPrice1.Value
         clsData.Price2 = txtPrice2.Value
         clsData.TotalPrice2 = txtTotalPrice2.Value
+        clsData.Tolerance = txtTolerance.Value
         clsData.IDStatus = cboStatus.SelectedValue
         clsData.LogBy = MPSLib.UI.usUserApp.UserID
         clsData.JournalID = strJournalID

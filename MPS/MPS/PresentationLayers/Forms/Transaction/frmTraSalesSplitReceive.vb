@@ -42,9 +42,9 @@ Public Class frmTraSalesSplitReceive
         UI.usForm.SetGrid(grdView, "PPH", " PPH", 100, UI.usDefGrid.gReal2Num, False)
         UI.usForm.SetGrid(grdView, "ArrivalBrutto", "Brutto", 100, UI.usDefGrid.gReal2Num, True, False)
         UI.usForm.SetGrid(grdView, "ArrivalTarra", "Tarra", 100, UI.usDefGrid.gReal2Num, True, False)
-        UI.usForm.SetGrid(grdView, "ArrivalNettoBefore", "Netto 1", 100, UI.usDefGrid.gReal2Num, True, False)
+        UI.usForm.SetGrid(grdView, "ArrivalNettoBefore", "Netto 1", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "ArrivalDeduction", "Potongan", 100, UI.usDefGrid.gReal2Num, True, False)
-        UI.usForm.SetGrid(grdView, "ArrivalNettoAfter", "Netto 2", 100, UI.usDefGrid.gReal2Num, True, False)
+        UI.usForm.SetGrid(grdView, "ArrivalNettoAfter", "Netto 2", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "Price1", "Price 1", 100, UI.usDefGrid.gReal2Num, True, False)
         UI.usForm.SetGrid(grdView, "Price2", "Price 2", 100, UI.usDefGrid.gReal2Num, True, False)
         UI.usForm.SetGrid(grdView, "TotalPrice1", "Total Price 1", 100, UI.usDefGrid.gReal2Num)
@@ -292,6 +292,7 @@ Public Class frmTraSalesSplitReceive
                 clsReceive.TotalPrice1 = .Rows(i).Item("TotalPrice1")
                 clsReceive.Price2 = .Rows(i).Item("Price2")
                 clsReceive.TotalPrice2 = .Rows(i).Item("TotalPrice2")
+                clsReceive.Tolerance = txtTolerance.Value
                 clsReceive.IDStatus = VO.Status.Values.Draft
                 clsReceive.LogBy = MPSLib.UI.usUserApp.UserID
                 clsReceive.JournalID = ""
@@ -302,25 +303,11 @@ Public Class frmTraSalesSplitReceive
         Me.Cursor = Cursors.WaitCursor
         pgMain.Value = 30
         Try
-            'Dim strID As String = BL.Sales.SaveData(pubIsNew, clsData, clsSupplierAll)
-            'pgMain.Value = 100
-            'If strID.Trim <> "" Then
-            '    If pubIsNew Then
-            '        UI.usForm.frmMessageBox("Data berhasil disimpan. " & vbCrLf & "Nomor penjualan: " & strID)
-            '        frmParent.pubRefresh(clsData.ID)
-            '        prvPrintBonFaktur()
-            '        prvClear()
-            '        prvQueryHistory()
-            '        prvQueryBP()
-            '    Else
-            '        pubIsSave = True
-            '        prvPrintBonFaktur()
-            '        Me.Close()
-            '    End If
-            'Else
-            '    UI.usForm.frmMessageBox("Proses simpan data tidak berhasil")
-            '    Exit Sub
-            'End If
+            Dim bolValid As Boolean = BL.Sales.SplitDataReceive(clsData, clsReceiveAll)
+            If bolValid Then
+                UI.usForm.frmMessageBox("Split data pembelian berhasil.")
+                Me.Close()
+            End If
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
         Finally
@@ -389,6 +376,7 @@ Public Class frmTraSalesSplitReceive
                     .SetRowCellValue(intFocus, "TotalPrice1", .GetRowCellValue(intFocus, "ArrivalNettoAfter") * .GetRowCellValue(intFocus, "Price1"))
                     .SetRowCellValue(intFocus, "TotalPrice2", .GetRowCellValue(intFocus, "ArrivalNettoAfter") * .GetRowCellValue(intFocus, "Price2"))
                     .UpdateCurrentRow()
+                    .BestFitColumns()
                 End If
             End If
 

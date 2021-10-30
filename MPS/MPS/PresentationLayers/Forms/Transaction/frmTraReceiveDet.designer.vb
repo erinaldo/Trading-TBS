@@ -37,7 +37,7 @@ Partial Class frmTraReceiveDet
         Me.tpMain = New System.Windows.Forms.TabPage()
         Me.txtArrivalNettoUsage = New MPS.usNumeric()
         Me.Label24 = New System.Windows.Forms.Label()
-        Me.txtArrivalNettoSales = New MPS.usNumeric()
+        Me.txtArrivalNettoAfterSales = New MPS.usNumeric()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.txtTolerance = New MPS.usNumeric()
         Me.Label15 = New System.Windows.Forms.Label()
@@ -105,7 +105,7 @@ Partial Class frmTraReceiveDet
         Me.tcHeader.SuspendLayout()
         Me.tpMain.SuspendLayout()
         CType(Me.txtArrivalNettoUsage, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtArrivalNettoSales, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txtArrivalNettoAfterSales, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtTolerance, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtTotalPrice2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtPrice2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -228,7 +228,7 @@ Partial Class frmTraReceiveDet
         Me.tpMain.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.tpMain.Controls.Add(Me.txtArrivalNettoUsage)
         Me.tpMain.Controls.Add(Me.Label24)
-        Me.tpMain.Controls.Add(Me.txtArrivalNettoSales)
+        Me.tpMain.Controls.Add(Me.txtArrivalNettoAfterSales)
         Me.tpMain.Controls.Add(Me.Label17)
         Me.tpMain.Controls.Add(Me.txtTolerance)
         Me.tpMain.Controls.Add(Me.Label15)
@@ -321,19 +321,19 @@ Partial Class frmTraReceiveDet
         Me.Label24.TabIndex = 141
         Me.Label24.Text = "Netto 2 Terpakai"
         '
-        'txtArrivalNettoSales
+        'txtArrivalNettoAfterSales
         '
-        Me.txtArrivalNettoSales.BackColor = System.Drawing.Color.LightYellow
-        Me.txtArrivalNettoSales.DecimalPlaces = 2
-        Me.txtArrivalNettoSales.Enabled = False
-        Me.txtArrivalNettoSales.Location = New System.Drawing.Point(791, 248)
-        Me.txtArrivalNettoSales.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
-        Me.txtArrivalNettoSales.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
-        Me.txtArrivalNettoSales.Name = "txtArrivalNettoSales"
-        Me.txtArrivalNettoSales.Size = New System.Drawing.Size(160, 21)
-        Me.txtArrivalNettoSales.TabIndex = 30
-        Me.txtArrivalNettoSales.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.txtArrivalNettoSales.ThousandsSeparator = True
+        Me.txtArrivalNettoAfterSales.BackColor = System.Drawing.Color.LightYellow
+        Me.txtArrivalNettoAfterSales.DecimalPlaces = 2
+        Me.txtArrivalNettoAfterSales.Enabled = False
+        Me.txtArrivalNettoAfterSales.Location = New System.Drawing.Point(791, 248)
+        Me.txtArrivalNettoAfterSales.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
+        Me.txtArrivalNettoAfterSales.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
+        Me.txtArrivalNettoAfterSales.Name = "txtArrivalNettoAfterSales"
+        Me.txtArrivalNettoAfterSales.Size = New System.Drawing.Size(160, 21)
+        Me.txtArrivalNettoAfterSales.TabIndex = 30
+        Me.txtArrivalNettoAfterSales.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txtArrivalNettoAfterSales.ThousandsSeparator = True
         '
         'Label17
         '
@@ -1069,7 +1069,7 @@ Partial Class frmTraReceiveDet
         Me.tpMain.ResumeLayout(False)
         Me.tpMain.PerformLayout()
         CType(Me.txtArrivalNettoUsage, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtArrivalNettoSales, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtArrivalNettoAfterSales, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtTolerance, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtTotalPrice2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtPrice2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1161,7 +1161,7 @@ Partial Class frmTraReceiveDet
     Friend WithEvents pgMain As System.Windows.Forms.ProgressBar
     Friend WithEvents txtArrivalNettoUsage As MPS.usNumeric
     Friend WithEvents Label24 As System.Windows.Forms.Label
-    Friend WithEvents txtArrivalNettoSales As MPS.usNumeric
+    Friend WithEvents txtArrivalNettoAfterSales As MPS.usNumeric
     Friend WithEvents Label17 As System.Windows.Forms.Label
     Friend WithEvents txtTolerance As MPS.usNumeric
     Friend WithEvents Label15 As System.Windows.Forms.Label

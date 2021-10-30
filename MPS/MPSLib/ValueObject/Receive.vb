@@ -29,6 +29,8 @@ Namespace VO
         Property TotalPrice1 As Decimal
         Property TotalPrice2 As Decimal
         Property ArrivalReturn As Decimal
+        Property ArrivalUsage As Decimal
+        Property ArrivalNettoAfterSales As Decimal
         Property TotalPayment As Decimal
         Property TotalReturn As Decimal
         Property Tolerance As Decimal

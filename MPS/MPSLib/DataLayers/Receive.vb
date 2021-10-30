@@ -136,9 +136,9 @@ Namespace DL
                     .CommandText = _
                         "SELECT 	" & vbNewLine & _
                         "   A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.ReferencesID, A.BPID, C.Name AS BPName, A.ReceiveDate, A.PaymentTerm, A.DriverName, A.PlatNumber, A.DueDate, 	" & vbNewLine & _
-                        "   A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MI.UomID1 AS UOMID, MU.Code AS UomCode, 	" & vbNewLine & _
-                        "   A.ArrivalBrutto, A.ArrivalTarra, A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, A.ArrivalBrutto+TS.ArrivalNettoAfter-TS.ArrivalUsage-TS.ArrivalReturn AS MaxBrutto, 	" & vbNewLine & _
-                        "   A.Price, A.TotalPrice, A.ArrivalReturn, A.TotalPayment, A.Tolerance, A.IsPostedGL,   	" & vbNewLine & _
+                        "   A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MI.UomID AS UOMID, MU.Code AS UomCode, 	" & vbNewLine & _
+                        "   A.ArrivalBrutto, A.ArrivalTarra, A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, TS.ArrivalUsage, (A.ArrivalNettoAfter+TS.ArrivalNettoAfter-TS.ArrivalUsage-TS.ArrivalReturn) AS MaxBrutto, 	" & vbNewLine & _
+                        "   A.Price1, A.TotalPrice1, A.Price2, A.TotalPrice2, A.ArrivalReturn, A.TotalPayment, A.Tolerance, A.IsPostedGL, TS.ArrivalNettoAfter AS ArrivalNettoAfterSales, " & vbNewLine & _
                         "   A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, A.CreatedBy,   	" & vbNewLine & _
                         "   A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID  	" & vbNewLine & _
                         "FROM traReceive A 	" & vbNewLine & _
@@ -194,6 +194,8 @@ Namespace DL
                         voReturn.Price2 = .Item("Price2")
                         voReturn.TotalPrice1 = .Item("TotalPrice1")
                         voReturn.TotalPrice2 = .Item("TotalPrice2")
+                        voReturn.ArrivalNettoAfterSales = .Item("ArrivalNettoAfterSales")
+                        voReturn.ArrivalUsage = .Item("ArrivalUsage")
                         voReturn.ArrivalReturn = .Item("ArrivalReturn")
                         voReturn.TotalPayment = .Item("TotalPayment")
                         voReturn.Tolerance = .Item("Tolerance")
@@ -355,7 +357,7 @@ Namespace DL
                    "INNER JOIN mstItem MI ON " & vbNewLine & _
                    "    A.ItemID=MI.ID " & vbNewLine & _
                    "INNER JOIN mstUOM MU ON " & vbNewLine & _
-                   "    MI.UomID1=MU.ID " & vbNewLine & _
+                   "    MI.UomID=MU.ID " & vbNewLine & _
                    "WHERE A.ID=@ID	" & vbNewLine
 
                 .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = strID
