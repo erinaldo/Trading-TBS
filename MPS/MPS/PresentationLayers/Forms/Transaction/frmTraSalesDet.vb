@@ -223,13 +223,10 @@ Public Class frmTraSalesDet
                     prvClear()
                     prvQueryHistory()
                     prvQueryBP()
+                    If UI.usForm.frmAskQuestion("Lakukan split data pembelian?") Then
+                        modSharedForm.ShowSplitReceive(strID, pubCS)
+                    End If
 
-                    Dim frmDetail As New frmTraSalesSplitReceive
-                    With frmDetail
-                        .pubCS = pubCS
-                        .pubSalesID = strID
-                        .ShowDialog()
-                    End With
                 Else
                     pubIsSave = True
                     prvPrintBonFaktur()

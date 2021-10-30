@@ -346,7 +346,7 @@ Namespace DL
                     "	TS.ItemID=MI.ID 	" & vbNewLine & _
                     "WHERE TS.ID=@SalesID	" & vbNewLine
 
-                .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strSalesID
+                .Parameters.Add("@SalesID", SqlDbType.VarChar, 30).Value = strSalesID
             End With
             Return SQL.QueryDataTable(sqlcmdExecute)
         End Function

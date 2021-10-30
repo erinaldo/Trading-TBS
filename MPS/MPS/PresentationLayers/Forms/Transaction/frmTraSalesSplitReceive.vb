@@ -1,4 +1,7 @@
-﻿Public Class frmTraSalesSplitReceive
+﻿Imports DevExpress.XtraGrid
+Imports DevExpress.XtraGrid.Columns
+
+Public Class frmTraSalesSplitReceive
 
 #Region "Property"
 
@@ -7,6 +10,7 @@
     Private dtItem As New DataTable
     Private intPos As Integer = 0
     Private clsData As VO.Sales
+    Private bolValid As Boolean = True
     Property pubIsSave As Boolean = False
     Property pubCS As New VO.CS
     Property pubSalesID As String
@@ -46,6 +50,12 @@
         UI.usForm.SetGrid(grdView, "TotalPrice1", "Total Price 1", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "TotalPrice2", "Total Price 2", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "Remarks", "Remarks", 100, UI.usDefGrid.gString, True, False)
+
+        grdView.Columns("ArrivalBrutto").ColumnEdit = rpiValue
+        grdView.Columns("ArrivalTarra").ColumnEdit = rpiValue
+        grdView.Columns("ArrivalDeduction").ColumnEdit = rpiValue
+        grdView.Columns("Price1").ColumnEdit = rpiValue
+        grdView.Columns("Price2").ColumnEdit = rpiValue
     End Sub
 
     Private Sub prvFillStatus()
@@ -163,6 +173,12 @@
                         .Rows(i).Item("ArrivalNettoAfter") = .Rows(i).Item("ArrivalNettoBefore") - .Rows(i).Item("ArrivalDeduction")
                         decArrivalNettoAfter += decArrivalNettoBefore - decArrivalDeduction
 
+                        '# Total Price 1
+                        .Rows(i).Item("TotalPrice1") = .Rows(i).Item("ArrivalNettoAfter") * .Rows(i).Item("Price1")
+
+                        '# Total Price 2
+                        .Rows(i).Item("TotalPrice2") = .Rows(i).Item("ArrivalNettoAfter") * .Rows(i).Item("Price2")
+
                         .Rows(i).EndEdit()
                     Else
                         .Rows(i).BeginEdit()
@@ -182,10 +198,20 @@
                         '# Arrival Netto After
                         .Rows(i).Item("ArrivalNettoAfter") = .Rows(i).Item("ArrivalNettoBefore") - .Rows(i).Item("ArrivalDeduction")
 
+                        '# Total Price 1
+                        .Rows(i).Item("TotalPrice1") = .Rows(i).Item("ArrivalNettoAfter") * .Rows(i).Item("Price1")
+
+                        '# Total Price 2
+                        .Rows(i).Item("TotalPrice2") = .Rows(i).Item("ArrivalNettoAfter") * .Rows(i).Item("Price2")
+
                         .Rows(i).EndEdit()
                     End If
                 Next
             End With
+            dtItem.AcceptChanges()
+            grdMain.DataSource = dtItem
+            prvSumGrid()
+            grdView.BestFitColumns()
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
             Me.Close()
@@ -196,47 +222,43 @@
         End Try
     End Sub
 
+    Private Sub prvSumGrid()
+        Dim SumTotalBrutto As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalBrutto", "Total Brutto: {0:#,##0.00}")
+        Dim SumTotalTarra As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalTarra", "Total Tarra: {0:#,##0.00}")
+        Dim SumTotalNetto1 As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalNettoBefore", "Total Netto 1: {0:#,##0.00}")
+        Dim SumTotalPotongan As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalDeduction", "Total Potongan: {0:#,##0.00}")
+        Dim SumTotalNetto2 As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalNettoAfter", "Total Netto 2: {0:#,##0.00}")
+
+        If grdView.Columns("ArrivalBrutto").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalBrutto").Summary.Add(SumTotalBrutto)
+        End If
+
+        If grdView.Columns("ArrivalTarra").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalTarra").Summary.Add(SumTotalTarra)
+        End If
+
+        If grdView.Columns("ArrivalNettoBefore").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalNettoBefore").Summary.Add(SumTotalNetto1)
+        End If
+
+        If grdView.Columns("ArrivalDeduction").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalDeduction").Summary.Add(SumTotalPotongan)
+        End If
+
+        If grdView.Columns("ArrivalNettoAfter").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalNettoAfter").Summary.Add(SumTotalNetto2)
+        End If
+    End Sub
+
     Private Sub prvSave()
-        'If txtBPName.Text.Trim = "" Then
-        '    UI.usForm.frmMessageBox("Pilih pelanggan terlebih dahulu")
-        '    tcHeader.SelectedTab = tpMain
-        '    txtBPName.Focus()
-        '    Exit Sub
-        'ElseIf cboPaymentTerm.SelectedIndex = -1 Then
-        '    UI.usForm.frmMessageBox("Pilih jenis pembayaran terlebih dahulu")
-        '    tcHeader.SelectedTab = tpMain
-        '    cboPaymentTerm.Focus()
-        '    Exit Sub
-        'ElseIf txtPlatNumber.Text.Trim = "" Then
-        '    UI.usForm.frmMessageBox("Nomor plat harus diiisi terlebih dahulu")
-        '    tcHeader.SelectedTab = tpMain
-        '    txtPlatNumber.Focus()
-        '    Exit Sub
-        'ElseIf txtDriverName.Text.Trim = "" Then
-        '    UI.usForm.frmMessageBox("Nama supir harus diiisi terlebih dahulu")
-        '    tcHeader.SelectedTab = tpMain
-        '    txtDriverName.Focus()
-        '    Exit Sub
-        'ElseIf txtItemCode.Text.Trim = "" Then
-        '    UI.usForm.frmMessageBox("Pilih kode barang terlebih dahulu")
-        '    tcHeader.SelectedTab = tpMain
-        '    txtItemCode.Focus()
-        '    Exit Sub
-        'ElseIf txtBrutto.Value <= 0 Then
-        '    UI.usForm.frmMessageBox("Brutto harus lebih besar dari 0")
-        '    tcHeader.SelectedTab = tpMain
-        '    txtBrutto.Focus()
-        '    Exit Sub
-        'ElseIf txtPrice.Value <= 0 Then
-        '    UI.usForm.frmMessageBox("Harga harus lebih besar dari 0")
-        '    tcHeader.SelectedTab = tpMain
-        '    txtPrice.Focus()
-        '    Exit Sub
-        'ElseIf grdSupplierView.RowCount = 0 Then
-        '    UI.usForm.frmMessageBox("Pemasok harus diinput terlebih dahulu")
-        '    tcHeader.SelectedTab = tpSupplier
-        '    Exit Sub
-        'End If
+        txtID.Focus()
+        grdView.UpdateCurrentRow()
+        If bolValid = False Then Exit Sub
+
+        If grdView.Columns("ArrivalNettoAfter").SummaryItem.SummaryValue > txtMaxNetto.Value Then
+            UI.usForm.frmMessageBox("Total netto 2 tidak boleh lebih besar dari " & lblMaxNetto.Text)
+            Exit Sub
+        End If
 
         If Not UI.usForm.frmAskQuestion("Simpan data split pembelian?") Then Exit Sub
         Dim clsReceive As VO.Receive
@@ -315,7 +337,9 @@
 #Region "Form Handle"
 
     Private Sub frmTraSalesSplitReceive_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
-        If UI.usForm.frmAskQuestion("Tutup form?") Then Me.Close()
+        If e.KeyCode = Keys.Escape Then
+            If UI.usForm.frmAskQuestion("Tutup form?") Then Me.Close()
+        End If
     End Sub
 
     Private Sub frmTraSalesSplitReceive_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -332,6 +356,43 @@
             Case "Simpan" : prvSave()
             Case "Tutup" : Me.Close()
         End Select
+    End Sub
+
+    Private Sub grdView_ValidatingEditor(sender As Object, e As DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventArgs) Handles grdView.ValidatingEditor
+        With grdView
+            bolValid = True
+            Dim col As GridColumn = .FocusedColumn
+            If (col.Name = "ArrivalBrutto") Or (col.Name = "ArrivalTarra") Or (col.Name = "ArrivalDeduction") Or _
+               (col.Name = "Price1") Or (col.Name = "Price2") Then
+                Dim oldValue As Decimal = IIf(.GetFocusedRowCellValue(col).Equals(DBNull.Value), 0, .GetFocusedRowCellValue(col))
+                Dim newValue As Decimal = IIf((e.Value = "") Or (e.Value.Equals(DBNull.Value) Or (e.Value = ".")), 0, e.Value)
+                Dim intFocus As Integer = .FocusedRowHandle
+                Dim strErrorMessage As String = ""
+
+                If newValue < 0 Then
+                    bolValid = False
+                    strErrorMessage = "Nilai harus lebih besar dari 0"
+                End If
+
+                If bolValid = False Then
+                    e.Value = oldValue
+                    e.Valid = False
+                    e.ErrorText = strErrorMessage
+                    .FocusedRowHandle = intFocus
+                    .FocusedColumn = .Columns(col.Name)
+                    .ShowEditor()
+                    Exit Sub
+                Else
+                    .SetRowCellValue(intFocus, col.Name, newValue)
+                    .SetRowCellValue(intFocus, "ArrivalNettoBefore", .GetRowCellValue(intFocus, "ArrivalBrutto") - .GetRowCellValue(intFocus, "ArrivalTarra"))
+                    .SetRowCellValue(intFocus, "ArrivalNettoAfter", .GetRowCellValue(intFocus, "ArrivalNettoBefore") - .GetRowCellValue(intFocus, "ArrivalDeduction"))
+                    .SetRowCellValue(intFocus, "TotalPrice1", .GetRowCellValue(intFocus, "ArrivalNettoAfter") * .GetRowCellValue(intFocus, "Price1"))
+                    .SetRowCellValue(intFocus, "TotalPrice2", .GetRowCellValue(intFocus, "ArrivalNettoAfter") * .GetRowCellValue(intFocus, "Price2"))
+                    .UpdateCurrentRow()
+                End If
+            End If
+
+        End With
     End Sub
 
 #End Region

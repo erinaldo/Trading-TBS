@@ -7,7 +7,7 @@ Public Class frmTraSales
     Private intCompanyID As Integer
 
     Private Const _
-       cNew = 0, cDetail = 1, cDelete = 2, cSep1 = 3, cPrintDO = 4, cRefresh = 5, cClose = 6
+       cNew = 0, cDetail = 1, cDelete = 2, cSep1 = 3, cSplitReceive = 4, cPrintFaktur = 5, cSep2 = 6, cRefresh = 7, cClose = 8
 
     Private Sub prvResetProgressBar()
         pgMain.Value = 0
@@ -57,6 +57,8 @@ Public Class frmTraSales
         With ToolBar.Buttons
             .Item(cDetail).Enabled = bolEnable
             .Item(cDelete).Enabled = bolEnable
+            .Item(cSplitReceive).Enabled = bolEnable
+            .Item(cPrintFaktur).Enabled = bolEnable
         End With
     End Sub
 
@@ -266,6 +268,12 @@ Public Class frmTraSales
         End Try
     End Sub
 
+    Private Sub prvSplitReceive()
+        intPos = grdView.FocusedRowHandle
+        If intPos < 0 Then Exit Sub
+        modSharedForm.ShowSplitReceive(prvGetData.ID, prvGetCS)
+    End Sub
+
     Private Sub prvChooseCompany()
         Dim frmDetail As New frmViewCompany
         With frmDetail
@@ -318,7 +326,8 @@ Public Class frmTraSales
             Select Case e.Button.Name
                 Case ToolBar.Buttons(cDetail).Name : prvDetail()
                 Case ToolBar.Buttons(cDelete).Name : prvDelete()
-                Case ToolBar.Buttons(cPrintDO).Name : prvPrintBonFaktur()
+                Case ToolBar.Buttons(cSplitReceive).Name : prvSplitReceive()
+                Case ToolBar.Buttons(cPrintFaktur).Name : prvPrintBonFaktur()
             End Select
         End If
     End Sub

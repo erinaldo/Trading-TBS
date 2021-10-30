@@ -47,6 +47,8 @@ Partial Class frmTraSales
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pgMain = New System.Windows.Forms.ProgressBar()
+        Me.BarSplitReceive = New System.Windows.Forms.ToolBarButton()
+        Me.BarSep2 = New System.Windows.Forms.ToolBarButton()
         CType(Me.grdMain, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.grdView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pnlMain, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -91,7 +93,7 @@ Partial Class frmTraSales
         'ToolBar
         '
         Me.ToolBar.Appearance = System.Windows.Forms.ToolBarAppearance.Flat
-        Me.ToolBar.Buttons.AddRange(New System.Windows.Forms.ToolBarButton() {Me.BarNew, Me.BarDetail, Me.BarDelete, Me.BarSep1, Me.BarPrintDO, Me.BarRefresh, Me.BarClose})
+        Me.ToolBar.Buttons.AddRange(New System.Windows.Forms.ToolBarButton() {Me.BarNew, Me.BarDetail, Me.BarDelete, Me.BarSep1, Me.BarSplitReceive, Me.BarPrintDO, Me.BarSep2, Me.BarRefresh, Me.BarClose})
         Me.ToolBar.DropDownArrows = True
         Me.ToolBar.Location = New System.Drawing.Point(0, 0)
         Me.ToolBar.Name = "ToolBar"
@@ -288,6 +290,17 @@ Partial Class frmTraSales
         Me.pgMain.Size = New System.Drawing.Size(984, 23)
         Me.pgMain.TabIndex = 3
         '
+        'BarSplitReceive
+        '
+        Me.BarSplitReceive.Name = "BarSplitReceive"
+        Me.BarSplitReceive.Tag = "Copy"
+        Me.BarSplitReceive.Text = "Split Pembelian"
+        '
+        'BarSep2
+        '
+        Me.BarSep2.Name = "BarSep2"
+        Me.BarSep2.Style = System.Windows.Forms.ToolBarButtonStyle.Separator
+        '
         'frmTraSales
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -334,6 +347,8 @@ Partial Class frmTraSales
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents pgMain As System.Windows.Forms.ProgressBar
+    Friend WithEvents BarSplitReceive As System.Windows.Forms.ToolBarButton
+    Friend WithEvents BarSep2 As System.Windows.Forms.ToolBarButton
 End Class
 
 

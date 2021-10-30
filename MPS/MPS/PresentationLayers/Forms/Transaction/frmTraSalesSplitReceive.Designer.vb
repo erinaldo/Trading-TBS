@@ -71,9 +71,9 @@ Partial Class frmTraSalesSplitReceive
         Me.lblSalesPrice = New System.Windows.Forms.Label()
         Me.lblUomID1 = New System.Windows.Forms.Label()
         Me.lblQty = New System.Windows.Forms.Label()
-        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.pnlMain = New System.Windows.Forms.Panel()
         Me.txtMaxNetto = New MPS.usNumeric()
-        Me.Label9 = New System.Windows.Forms.Label()
+        Me.lblMaxNetto = New System.Windows.Forms.Label()
         Me.txtArrivalNettoUsage = New MPS.usNumeric()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.txtTolerance = New MPS.usNumeric()
@@ -81,6 +81,7 @@ Partial Class frmTraSalesSplitReceive
         Me.Label6 = New System.Windows.Forms.Label()
         Me.grdMain = New DevExpress.XtraGrid.GridControl()
         Me.grdView = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.rpiValue = New DevExpress.XtraEditors.Repository.RepositoryItemTextEdit()
         Me.StatusStrip.SuspendLayout()
         CType(Me.txtNettoAfter, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtDeduction, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -89,12 +90,13 @@ Partial Class frmTraSalesSplitReceive
         CType(Me.txtTotalPrice, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtPrice, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtBrutto, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Panel1.SuspendLayout()
+        Me.pnlMain.SuspendLayout()
         CType(Me.txtMaxNetto, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtArrivalNettoUsage, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtTolerance, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.grdMain, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.grdView, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.rpiValue, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'ToolBar
@@ -137,7 +139,7 @@ Partial Class frmTraSalesSplitReceive
         'pgMain
         '
         Me.pgMain.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.pgMain.Location = New System.Drawing.Point(0, 644)
+        Me.pgMain.Location = New System.Drawing.Point(0, 599)
         Me.pgMain.Name = "pgMain"
         Me.pgMain.Size = New System.Drawing.Size(1003, 23)
         Me.pgMain.TabIndex = 6
@@ -146,7 +148,7 @@ Partial Class frmTraSalesSplitReceive
         '
         Me.StatusStrip.Font = New System.Drawing.Font("Tahoma", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripEmpty, Me.ToolStripLogInc, Me.ToolStripLogBy, Me.ToolStripStatusLabel1, Me.ToolStripLogDate})
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 622)
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 577)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.Size = New System.Drawing.Size(1003, 22)
         Me.StatusStrip.TabIndex = 5
@@ -234,7 +236,6 @@ Partial Class frmTraSalesSplitReceive
         '
         Me.txtPlatNumber.BackColor = System.Drawing.Color.LightYellow
         Me.txtPlatNumber.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtPlatNumber.Enabled = False
         Me.txtPlatNumber.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold)
         Me.txtPlatNumber.Location = New System.Drawing.Point(128, 150)
         Me.txtPlatNumber.MaxLength = 250
@@ -283,7 +284,6 @@ Partial Class frmTraSalesSplitReceive
         '
         Me.txtDriverName.BackColor = System.Drawing.Color.LightYellow
         Me.txtDriverName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtDriverName.Enabled = False
         Me.txtDriverName.Location = New System.Drawing.Point(128, 177)
         Me.txtDriverName.MaxLength = 250
         Me.txtDriverName.Name = "txtDriverName"
@@ -321,7 +321,6 @@ Partial Class frmTraSalesSplitReceive
         '
         Me.txtRemarks.BackColor = System.Drawing.Color.LightYellow
         Me.txtRemarks.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtRemarks.Enabled = False
         Me.txtRemarks.Location = New System.Drawing.Point(128, 204)
         Me.txtRemarks.MaxLength = 250
         Me.txtRemarks.Multiline = True
@@ -631,59 +630,58 @@ Partial Class frmTraSalesSplitReceive
         Me.lblQty.TabIndex = 93
         Me.lblQty.Text = "Brutto"
         '
-        'Panel1
+        'pnlMain
         '
-        Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.Panel1.Controls.Add(Me.txtMaxNetto)
-        Me.Panel1.Controls.Add(Me.Label9)
-        Me.Panel1.Controls.Add(Me.txtArrivalNettoUsage)
-        Me.Panel1.Controls.Add(Me.Label24)
-        Me.Panel1.Controls.Add(Me.txtTolerance)
-        Me.Panel1.Controls.Add(Me.Label15)
-        Me.Panel1.Controls.Add(Me.txtNettoAfter)
-        Me.Panel1.Controls.Add(Me.Label1)
-        Me.Panel1.Controls.Add(Me.Label12)
-        Me.Panel1.Controls.Add(Me.lblQty)
-        Me.Panel1.Controls.Add(Me.Label8)
-        Me.Panel1.Controls.Add(Me.lblUomID1)
-        Me.Panel1.Controls.Add(Me.txtPlatNumber)
-        Me.Panel1.Controls.Add(Me.lblSalesPrice)
-        Me.Panel1.Controls.Add(Me.txtDeduction)
-        Me.Panel1.Controls.Add(Me.txtItemName)
-        Me.Panel1.Controls.Add(Me.Label11)
-        Me.Panel1.Controls.Add(Me.txtID)
-        Me.Panel1.Controls.Add(Me.Label7)
-        Me.Panel1.Controls.Add(Me.lblName)
-        Me.Panel1.Controls.Add(Me.txtDriverName)
-        Me.Panel1.Controls.Add(Me.Label2)
-        Me.Panel1.Controls.Add(Me.Label10)
-        Me.Panel1.Controls.Add(Me.txtItemCode)
-        Me.Panel1.Controls.Add(Me.txtNettoBefore)
-        Me.Panel1.Controls.Add(Me.txtBPName)
-        Me.Panel1.Controls.Add(Me.txtRemarks)
-        Me.Panel1.Controls.Add(Me.lblCode)
-        Me.Panel1.Controls.Add(Me.dtpDueDate)
-        Me.Panel1.Controls.Add(Me.cboUOMID)
-        Me.Panel1.Controls.Add(Me.Label13)
-        Me.Panel1.Controls.Add(Me.Label5)
-        Me.Panel1.Controls.Add(Me.txtBrutto)
-        Me.Panel1.Controls.Add(Me.txtTarra)
-        Me.Panel1.Controls.Add(Me.Label3)
-        Me.Panel1.Controls.Add(Me.cboPaymentTerm)
-        Me.Panel1.Controls.Add(Me.txtPrice)
-        Me.Panel1.Controls.Add(Me.Label14)
-        Me.Panel1.Controls.Add(Me.dtpSalesDate)
-        Me.Panel1.Controls.Add(Me.Label4)
-        Me.Panel1.Controls.Add(Me.Label16)
-        Me.Panel1.Controls.Add(Me.lblIDStatus)
-        Me.Panel1.Controls.Add(Me.cboStatus)
-        Me.Panel1.Controls.Add(Me.txtTotalPrice)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel1.Enabled = False
-        Me.Panel1.Location = New System.Drawing.Point(0, 50)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1003, 284)
-        Me.Panel1.TabIndex = 2
+        Me.pnlMain.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.pnlMain.Controls.Add(Me.txtMaxNetto)
+        Me.pnlMain.Controls.Add(Me.lblMaxNetto)
+        Me.pnlMain.Controls.Add(Me.txtArrivalNettoUsage)
+        Me.pnlMain.Controls.Add(Me.Label24)
+        Me.pnlMain.Controls.Add(Me.txtTolerance)
+        Me.pnlMain.Controls.Add(Me.Label15)
+        Me.pnlMain.Controls.Add(Me.txtNettoAfter)
+        Me.pnlMain.Controls.Add(Me.Label1)
+        Me.pnlMain.Controls.Add(Me.Label12)
+        Me.pnlMain.Controls.Add(Me.lblQty)
+        Me.pnlMain.Controls.Add(Me.Label8)
+        Me.pnlMain.Controls.Add(Me.lblUomID1)
+        Me.pnlMain.Controls.Add(Me.txtPlatNumber)
+        Me.pnlMain.Controls.Add(Me.lblSalesPrice)
+        Me.pnlMain.Controls.Add(Me.txtDeduction)
+        Me.pnlMain.Controls.Add(Me.txtItemName)
+        Me.pnlMain.Controls.Add(Me.Label11)
+        Me.pnlMain.Controls.Add(Me.txtID)
+        Me.pnlMain.Controls.Add(Me.Label7)
+        Me.pnlMain.Controls.Add(Me.lblName)
+        Me.pnlMain.Controls.Add(Me.txtDriverName)
+        Me.pnlMain.Controls.Add(Me.Label2)
+        Me.pnlMain.Controls.Add(Me.Label10)
+        Me.pnlMain.Controls.Add(Me.txtItemCode)
+        Me.pnlMain.Controls.Add(Me.txtNettoBefore)
+        Me.pnlMain.Controls.Add(Me.txtBPName)
+        Me.pnlMain.Controls.Add(Me.txtRemarks)
+        Me.pnlMain.Controls.Add(Me.lblCode)
+        Me.pnlMain.Controls.Add(Me.dtpDueDate)
+        Me.pnlMain.Controls.Add(Me.cboUOMID)
+        Me.pnlMain.Controls.Add(Me.Label13)
+        Me.pnlMain.Controls.Add(Me.Label5)
+        Me.pnlMain.Controls.Add(Me.txtBrutto)
+        Me.pnlMain.Controls.Add(Me.txtTarra)
+        Me.pnlMain.Controls.Add(Me.Label3)
+        Me.pnlMain.Controls.Add(Me.cboPaymentTerm)
+        Me.pnlMain.Controls.Add(Me.txtPrice)
+        Me.pnlMain.Controls.Add(Me.Label14)
+        Me.pnlMain.Controls.Add(Me.dtpSalesDate)
+        Me.pnlMain.Controls.Add(Me.Label4)
+        Me.pnlMain.Controls.Add(Me.Label16)
+        Me.pnlMain.Controls.Add(Me.lblIDStatus)
+        Me.pnlMain.Controls.Add(Me.cboStatus)
+        Me.pnlMain.Controls.Add(Me.txtTotalPrice)
+        Me.pnlMain.Dock = System.Windows.Forms.DockStyle.Top
+        Me.pnlMain.Location = New System.Drawing.Point(0, 50)
+        Me.pnlMain.Name = "pnlMain"
+        Me.pnlMain.Size = New System.Drawing.Size(1003, 284)
+        Me.pnlMain.TabIndex = 2
         '
         'txtMaxNetto
         '
@@ -699,16 +697,16 @@ Partial Class frmTraSalesSplitReceive
         Me.txtMaxNetto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtMaxNetto.ThousandsSeparator = True
         '
-        'Label9
+        'lblMaxNetto
         '
-        Me.Label9.AutoSize = True
-        Me.Label9.BackColor = System.Drawing.Color.Transparent
-        Me.Label9.ForeColor = System.Drawing.Color.Black
-        Me.Label9.Location = New System.Drawing.Point(701, 189)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(61, 13)
-        Me.Label9.TabIndex = 145
-        Me.Label9.Text = "Max. Netto"
+        Me.lblMaxNetto.AutoSize = True
+        Me.lblMaxNetto.BackColor = System.Drawing.Color.Transparent
+        Me.lblMaxNetto.ForeColor = System.Drawing.Color.Black
+        Me.lblMaxNetto.Location = New System.Drawing.Point(701, 189)
+        Me.lblMaxNetto.Name = "lblMaxNetto"
+        Me.lblMaxNetto.Size = New System.Drawing.Size(65, 13)
+        Me.lblMaxNetto.TabIndex = 145
+        Me.lblMaxNetto.Text = "Maks. Netto"
         '
         'txtArrivalNettoUsage
         '
@@ -793,13 +791,16 @@ Partial Class frmTraSalesSplitReceive
         Me.grdMain.Location = New System.Drawing.Point(0, 356)
         Me.grdMain.MainView = Me.grdView
         Me.grdMain.Name = "grdMain"
-        Me.grdMain.Size = New System.Drawing.Size(1003, 266)
+        Me.grdMain.RepositoryItems.AddRange(New DevExpress.XtraEditors.Repository.RepositoryItem() {Me.rpiValue})
+        Me.grdMain.Size = New System.Drawing.Size(1003, 221)
         Me.grdMain.TabIndex = 4
         Me.grdMain.UseEmbeddedNavigator = True
         Me.grdMain.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.grdView})
         '
         'grdView
         '
+        Me.grdView.Appearance.FooterPanel.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.grdView.Appearance.FooterPanel.Options.UseFont = True
         Me.grdView.GridControl = Me.grdMain
         Me.grdView.Name = "grdView"
         Me.grdView.OptionsCustomization.AllowColumnMoving = False
@@ -808,14 +809,21 @@ Partial Class frmTraSalesSplitReceive
         Me.grdView.OptionsView.ShowFooter = True
         Me.grdView.OptionsView.ShowGroupPanel = False
         '
+        'rpiValue
+        '
+        Me.rpiValue.AutoHeight = False
+        Me.rpiValue.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.rpiValue.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.rpiValue.Name = "rpiValue"
+        '
         'frmTraSalesSplitReceive
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1003, 667)
+        Me.ClientSize = New System.Drawing.Size(1003, 622)
         Me.Controls.Add(Me.grdMain)
         Me.Controls.Add(Me.Label6)
-        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.StatusStrip)
         Me.Controls.Add(Me.pgMain)
         Me.Controls.Add(Me.lblInfo)
@@ -835,13 +843,14 @@ Partial Class frmTraSalesSplitReceive
         CType(Me.txtTotalPrice, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtPrice, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtBrutto, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.Panel1.ResumeLayout(False)
-        Me.Panel1.PerformLayout()
+        Me.pnlMain.ResumeLayout(False)
+        Me.pnlMain.PerformLayout()
         CType(Me.txtMaxNetto, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtArrivalNettoUsage, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtTolerance, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.grdMain, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.grdView, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.rpiValue, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -895,7 +904,7 @@ Partial Class frmTraSalesSplitReceive
     Friend WithEvents lblSalesPrice As System.Windows.Forms.Label
     Friend WithEvents lblUomID1 As System.Windows.Forms.Label
     Friend WithEvents lblQty As System.Windows.Forms.Label
-    Friend WithEvents Panel1 As System.Windows.Forms.Panel
+    Friend WithEvents pnlMain As System.Windows.Forms.Panel
     Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents grdMain As DevExpress.XtraGrid.GridControl
     Friend WithEvents grdView As DevExpress.XtraGrid.Views.Grid.GridView
@@ -904,5 +913,6 @@ Partial Class frmTraSalesSplitReceive
     Friend WithEvents txtArrivalNettoUsage As MPS.usNumeric
     Friend WithEvents Label24 As System.Windows.Forms.Label
     Friend WithEvents txtMaxNetto As MPS.usNumeric
-    Friend WithEvents Label9 As System.Windows.Forms.Label
+    Friend WithEvents lblMaxNetto As System.Windows.Forms.Label
+    Friend WithEvents rpiValue As DevExpress.XtraEditors.Repository.RepositoryItemTextEdit
 End Class

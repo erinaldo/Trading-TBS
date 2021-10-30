@@ -460,6 +460,7 @@
     <Compile Include="PresentationLayers\SharedLib\Components\usToolBar.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="PresentationLayers\SharedLib\Functions\modSharedForm.vb" />
     <Compile Include="PresentationLayers\SharedLib\Functions\usDefCons.vb" />
     <Compile Include="PresentationLayers\SharedLib\Functions\usDefGrid.vb" />
     <Compile Include="PresentationLayers\SharedLib\Functions\usDOColors.vb" />

@@ -10,6 +10,7 @@ Namespace VO
         Property SalesPrice As Decimal
         Property PurchasePrice1 As Decimal
         Property PurchasePrice2 As Decimal
+        Property Tolerance As Decimal
         Property IDStatus As Integer
 
         Enum HistoryFilter

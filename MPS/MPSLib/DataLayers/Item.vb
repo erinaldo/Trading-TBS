@@ -7,7 +7,7 @@ Namespace DL
                 .CommandText = _
                     "SELECT 	" & vbNewLine & _
                     "   MI.ID, MI.Code, MI.Name, MI.UomID, MU.Code AS UomCode, MI.MinQty,   	" & vbNewLine & _
-                    "   MI.BalanceQty, MI.SalesPrice, MI.PurchasePrice1, MI.PurchasePrice2, MI.IDStatus, MS.Name AS StatusInfo, MI.CreatedBy, MI.CreatedDate, MI.LogBy,   	" & vbNewLine & _
+                    "   MI.BalanceQty, MI.SalesPrice, MI.PurchasePrice1, MI.PurchasePrice2, MI.Tolerance, MI.IDStatus, MS.Name AS StatusInfo, MI.CreatedBy, MI.CreatedDate, MI.LogBy,   	" & vbNewLine & _
                     "   MI.LogDate " & vbNewLine & _
                     "FROM mstItem MI 	" & vbNewLine & _
                     "INNER JOIN mstStatus MS ON 	" & vbNewLine & _
@@ -26,11 +26,11 @@ Namespace DL
                     .CommandText = _
                        "INSERT INTO mstItem " & vbNewLine & _
                        "    (ID, Code, Name, UomID, MinQty,   " & vbNewLine & _
-                       "      BalanceQty, SalesPrice, PurchasePrice1, PurchasePrice2, IDStatus, CreatedBy, CreatedDate, LogBy,   " & vbNewLine & _
-                       "      LogDate)   " & vbNewLine & _
+                       "      BalanceQty, SalesPrice, PurchasePrice1, PurchasePrice2, Tolerance, IDStatus, CreatedBy, CreatedDate, LogBy,   " & vbNewLine & _
+                       "      LogDate, Tolerance)   " & vbNewLine & _
                        "VALUES " & vbNewLine & _
                        "    (@ID, @Code, @Name, @UomID, @MinQty,   " & vbNewLine & _
-                       "     @BalanceQty, @SalesPrice, @PurchasePrice1, @PurchasePrice2, @IDStatus, @LogBy, GETDATE(), @LogBy,   " & vbNewLine & _
+                       "     @BalanceQty, @SalesPrice, @PurchasePrice1, @PurchasePrice2, @Tolerance, @IDStatus, @LogBy, GETDATE(), @LogBy,   " & vbNewLine & _
                        "     GETDATE())  " & vbNewLine
                 Else
                     .CommandText = _
@@ -43,6 +43,7 @@ Namespace DL
                     "    SalesPrice=@SalesPrice, " & vbNewLine & _
                     "    PurchasePrice1=@PurchasePrice1, " & vbNewLine & _
                     "    PurchasePrice2=@PurchasePrice2, " & vbNewLine & _
+                    "    Tolerance=@Tolerance, " & vbNewLine & _
                     "    IDStatus=@IDStatus, " & vbNewLine & _
                     "    LogInc=LogInc+1, " & vbNewLine & _
                     "    LogBy=@LogBy, " & vbNewLine & _
@@ -60,6 +61,7 @@ Namespace DL
                 .Parameters.Add("@SalesPrice", SqlDbType.Decimal).Value = clsData.SalesPrice
                 .Parameters.Add("@PurchasePrice1", SqlDbType.Decimal).Value = clsData.PurchasePrice1
                 .Parameters.Add("@PurchasePrice2", SqlDbType.Decimal).Value = clsData.PurchasePrice2
+                .Parameters.Add("@Tolerance", SqlDbType.Decimal).Value = clsData.Tolerance
                 .Parameters.Add("@IDStatus", SqlDbType.Int).Value = clsData.IDStatus
                 .Parameters.Add("@LogBy", SqlDbType.VarChar, 20).Value = clsData.LogBy
             End With
@@ -80,7 +82,7 @@ Namespace DL
                     .CommandText = _
                        "SELECT TOP 1 " & vbNewLine & _
                        "    A.ID, A.Code, A.Name, A.UomID, A.MinQty,   " & vbNewLine & _
-                       "    A.BalanceQty, A.SalesPrice, A.PurchasePrice1, A.PurchasePrice2, A.IDStatus, A.LogBy, A.LogDate  " & vbNewLine & _
+                       "    A.BalanceQty, A.SalesPrice, A.PurchasePrice1, A.PurchasePrice2, A.Tolerance, A.IDStatus, A.LogBy, A.LogDate " & vbNewLine & _
                        "FROM mstItem A " & vbNewLine & _
                        "WHERE " & vbNewLine & _
                        "    ID=@ID " & vbNewLine
@@ -101,6 +103,7 @@ Namespace DL
                         voReturn.SalesPrice = .Item("SalesPrice")
                         voReturn.PurchasePrice1 = .Item("PurchasePrice1")
                         voReturn.PurchasePrice2 = .Item("PurchasePrice2")
+                        voReturn.Tolerance = .Item("Tolerance")
                         voReturn.IDStatus = .Item("IDStatus")
                         voReturn.LogBy = .Item("LogBy")
                         voReturn.LogDate = .Item("LogDate")

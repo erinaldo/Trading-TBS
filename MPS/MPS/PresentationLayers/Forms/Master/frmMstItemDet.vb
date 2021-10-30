@@ -64,6 +64,7 @@ Public Class frmMstItemDet
                 txtSalesPrice.Value = clsData.SalesPrice
                 txtPurchasePrice1.Value = clsData.PurchasePrice1
                 txtPurchasePrice2.Value = clsData.PurchasePrice2
+                txtTolerance.Value = clsData.Tolerance
                 cboStatus.SelectedValue = clsData.IDStatus
                 ToolStripLogInc.Text = "Jumlah Edit : " & clsData.LogInc
                 ToolStripLogBy.Text = "Dibuat Oleh : " & clsData.LogBy
@@ -95,11 +96,12 @@ Public Class frmMstItemDet
         clsData.Code = txtCode.Text.Trim
         clsData.Name = txtName.Text.Trim
         clsData.UomID = cboUOMID.SelectedValue
-        clsData.MinQty = txtMinQty.Value
-        clsData.BalanceQty = txtBalanceQty.Value
         clsData.SalesPrice = txtSalesPrice.Value
         clsData.PurchasePrice1 = txtPurchasePrice1.Value
         clsData.PurchasePrice2 = txtPurchasePrice2.Value
+        clsData.Tolerance = txtTolerance.Value
+        clsData.MinQty = txtMinQty.Value
+        clsData.BalanceQty = txtBalanceQty.Value
         clsData.IDStatus = cboStatus.SelectedValue
         clsData.LogBy = MPSLib.UI.usUserApp.UserID
 
