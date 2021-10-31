@@ -35,6 +35,7 @@ Public Class frmTraSales
         UI.usForm.SetGrid(grdView, "ArrivalNettoAfter", "Netto 2", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "Price", "Price", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "TotalPrice", "Total Price", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "IsSplitReceive", "Split Pembelian", 100, UI.usDefGrid.gBoolean)
         UI.usForm.SetGrid(grdView, "ArrivalReturn", "Total Retur", 100, UI.usDefGrid.gReal2Num, False)
         UI.usForm.SetGrid(grdView, "TotalPayment", "Total Bayar", 100, UI.usDefGrid.gReal2Num, False)
         UI.usForm.SetGrid(grdView, "IsPostedGL", "IsPostedGL", 100, UI.usDefGrid.gBoolean, False)
@@ -271,7 +272,14 @@ Public Class frmTraSales
     Private Sub prvSplitReceive()
         intPos = grdView.FocusedRowHandle
         If intPos < 0 Then Exit Sub
-        modSharedForm.ShowSplitReceive(prvGetData.ID, prvGetCS)
+        If grdView.GetRowCellValue(intPos, "IsSplitReceive") Then
+            UI.usForm.frmMessageBox("Data sudah dilakukan proses split pembelian")
+            Exit Sub
+        End If
+        Dim clsCurrent As VO.Sales = prvGetData()
+        If modSharedForm.ShowSplitReceive(clsCurrent.ID, prvGetCS) Then
+            pubRefresh(clsCurrent.ID)
+        End If
     End Sub
 
     Private Sub prvChooseCompany()

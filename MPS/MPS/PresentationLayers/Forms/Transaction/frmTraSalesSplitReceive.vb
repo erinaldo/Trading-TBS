@@ -228,6 +228,8 @@ Public Class frmTraSalesSplitReceive
         Dim SumTotalNetto1 As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalNettoBefore", "Total Netto 1: {0:#,##0.00}")
         Dim SumTotalPotongan As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalDeduction", "Total Potongan: {0:#,##0.00}")
         Dim SumTotalNetto2 As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalNettoAfter", "Total Netto 2: {0:#,##0.00}")
+        Dim SumTotalPrice1 As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalPrice1", "Total Price 1: {0:#,##0.00}")
+        Dim SumTotalPrice2 As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalPrice2", "Total Price 2: {0:#,##0.00}")
 
         If grdView.Columns("ArrivalBrutto").SummaryText.Trim = "" Then
             grdView.Columns("ArrivalBrutto").Summary.Add(SumTotalBrutto)
@@ -248,6 +250,15 @@ Public Class frmTraSalesSplitReceive
         If grdView.Columns("ArrivalNettoAfter").SummaryText.Trim = "" Then
             grdView.Columns("ArrivalNettoAfter").Summary.Add(SumTotalNetto2)
         End If
+
+        If grdView.Columns("TotalPrice1").SummaryText.Trim = "" Then
+            grdView.Columns("TotalPrice1").Summary.Add(SumTotalPrice1)
+        End If
+
+        If grdView.Columns("TotalPrice2").SummaryText.Trim = "" Then
+            grdView.Columns("TotalPrice2").Summary.Add(SumTotalPrice2)
+        End If
+
     End Sub
 
     Private Sub prvSave()
@@ -305,7 +316,9 @@ Public Class frmTraSalesSplitReceive
         Try
             Dim bolValid As Boolean = BL.Sales.SplitDataReceive(clsData, clsReceiveAll)
             If bolValid Then
+                pgMain.Value = 100
                 UI.usForm.frmMessageBox("Split data pembelian berhasil.")
+                pubIsSave = bolValid
                 Me.Close()
             End If
         Catch ex As Exception

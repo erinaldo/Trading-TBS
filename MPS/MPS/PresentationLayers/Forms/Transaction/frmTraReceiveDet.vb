@@ -121,6 +121,7 @@ Public Class frmTraReceiveDet
                 ToolStripLogDate.Text = Format(clsData.LogDate, UI.usDefCons.DateFull)
                 strJournalID = clsData.JournalID
                 btnReferences.Enabled = False
+                btnBP.Enabled = False
             End If
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
@@ -166,7 +167,7 @@ Public Class frmTraReceiveDet
             txtBrutto.Focus()
             Exit Sub
         ElseIf txtNettoAfter.Value > txtMaxBrutto.Value Then
-            UI.usForm.frmMessageBox("Nilai Brutto tidak boleh lebih besar dari nilai Max. Brutto")
+            UI.usForm.frmMessageBox("Nilai Netto 2 tidak boleh lebih besar dari nilai Max. Netto")
             txtBrutto.Focus()
             Exit Sub
         ElseIf txtPrice1.Value <= 0 Then
@@ -216,14 +217,17 @@ Public Class frmTraReceiveDet
         Me.Cursor = Cursors.WaitCursor
         Try
             Dim strID As String = BL.Receive.SaveData(pubIsNew, clsData)
+            pgMain.Value = 50
             If strID.Trim <> "" Then
                 If pubIsNew Then
+                    pgMain.Value = 100
                     UI.usForm.frmMessageBox("Data berhasil disimpan. " & vbCrLf & "Nomor penjualan: " & strID)
                     frmParent.pubRefresh(clsData.ID)
                     'prvPrintBonFaktur()
                     prvClear()
                     prvQueryHistory()
                 Else
+                    pgMain.Value = 100
                     pubIsSave = True
                     'prvPrintBonFaktur()
                     Me.Close()

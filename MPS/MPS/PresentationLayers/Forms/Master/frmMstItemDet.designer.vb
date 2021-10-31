@@ -30,6 +30,8 @@ Partial Class frmMstItemDet
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripLogDate = New System.Windows.Forms.ToolStripStatusLabel()
         Me.pnlDetail = New System.Windows.Forms.Panel()
+        Me.txtTolerance = New MPS.usNumeric()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.txtPurchasePrice2 = New MPS.usNumeric()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.txtPurchasePrice1 = New MPS.usNumeric()
@@ -51,16 +53,15 @@ Partial Class frmMstItemDet
         Me.Toolbar = New MPS.usToolBar()
         Me.BarRefresh = New System.Windows.Forms.ToolBarButton()
         Me.BarClose = New System.Windows.Forms.ToolBarButton()
-        Me.txtTolerance = New MPS.usNumeric()
-        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.StatusStrip.SuspendLayout()
         Me.pnlDetail.SuspendLayout()
+        CType(Me.txtTolerance, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtPurchasePrice2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtPurchasePrice1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtSalesPrice, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtBalanceQty, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtMinQty, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtTolerance, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'lblInfo
@@ -130,6 +131,7 @@ Partial Class frmMstItemDet
         'pnlDetail
         '
         Me.pnlDetail.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.pnlDetail.Controls.Add(Me.Label4)
         Me.pnlDetail.Controls.Add(Me.txtTolerance)
         Me.pnlDetail.Controls.Add(Me.Label3)
         Me.pnlDetail.Controls.Add(Me.txtPurchasePrice2)
@@ -155,6 +157,29 @@ Partial Class frmMstItemDet
         Me.pnlDetail.Name = "pnlDetail"
         Me.pnlDetail.Size = New System.Drawing.Size(622, 246)
         Me.pnlDetail.TabIndex = 2
+        '
+        'txtTolerance
+        '
+        Me.txtTolerance.DecimalPlaces = 2
+        Me.txtTolerance.Location = New System.Drawing.Point(422, 107)
+        Me.txtTolerance.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
+        Me.txtTolerance.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
+        Me.txtTolerance.Name = "txtTolerance"
+        Me.txtTolerance.Size = New System.Drawing.Size(161, 21)
+        Me.txtTolerance.TabIndex = 6
+        Me.txtTolerance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txtTolerance.ThousandsSeparator = True
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.BackColor = System.Drawing.Color.Transparent
+        Me.Label3.ForeColor = System.Drawing.Color.Black
+        Me.Label3.Location = New System.Drawing.Point(337, 111)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(50, 13)
+        Me.Label3.TabIndex = 101
+        Me.Label3.Text = "Toleransi"
         '
         'txtPurchasePrice2
         '
@@ -382,28 +407,16 @@ Partial Class frmMstItemDet
         Me.BarClose.Tag = "Close"
         Me.BarClose.Text = "Tutup"
         '
-        'txtTolerance
+        'Label4
         '
-        Me.txtTolerance.DecimalPlaces = 2
-        Me.txtTolerance.Location = New System.Drawing.Point(422, 107)
-        Me.txtTolerance.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
-        Me.txtTolerance.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
-        Me.txtTolerance.Name = "txtTolerance"
-        Me.txtTolerance.Size = New System.Drawing.Size(160, 21)
-        Me.txtTolerance.TabIndex = 6
-        Me.txtTolerance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.txtTolerance.ThousandsSeparator = True
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.BackColor = System.Drawing.Color.Transparent
-        Me.Label3.ForeColor = System.Drawing.Color.Black
-        Me.Label3.Location = New System.Drawing.Point(337, 111)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(50, 13)
-        Me.Label3.TabIndex = 101
-        Me.Label3.Text = "Toleransi"
+        Me.Label4.AutoSize = True
+        Me.Label4.BackColor = System.Drawing.Color.Transparent
+        Me.Label4.ForeColor = System.Drawing.Color.Black
+        Me.Label4.Location = New System.Drawing.Point(587, 111)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(18, 13)
+        Me.Label4.TabIndex = 102
+        Me.Label4.Text = "%"
         '
         'frmMstItemDet
         '
@@ -425,12 +438,12 @@ Partial Class frmMstItemDet
         Me.StatusStrip.PerformLayout()
         Me.pnlDetail.ResumeLayout(False)
         Me.pnlDetail.PerformLayout()
+        CType(Me.txtTolerance, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtPurchasePrice2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtPurchasePrice1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtSalesPrice, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtBalanceQty, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtMinQty, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtTolerance, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -467,6 +480,7 @@ Partial Class frmMstItemDet
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents txtTolerance As MPS.usNumeric
     Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents Label4 As System.Windows.Forms.Label
 End Class
 
 

@@ -345,9 +345,9 @@ Namespace DL
             With sqlcmdExecute
                 .CommandText = _
                    "SELECT " & vbNewLine & _
-                   "    A.ID, A.ReceiveDate, C.Name AS BPName, C.Address AS BPAddress, A.PlatNumber, A.DriverName, " & vbNewLine & _
-                   "    MI.Name AS ItemName, MU.Code AS UomCode, A.ArrivalBrutto AS Brutto, A.ArrivalTarra AS Tarra, " & vbNewLine & _
-                   "    A.ArrivalNettoBefore AS NettoBefore, A.ArrivalDeduction AS Deduction, A.ArrivalNettoAfter AS NettoAfter, A.Price, A.TotalPrice, " & vbNewLine & _
+                   "    MC.Name AS CompanyName, A.ID, A.ReceiveDate, C.Name AS BPName, C.Address AS BPAddress, A.DONumber, A.SPBNumber, A.ArrivalBrutto AS Brutto, A.ArrivalTarra AS Tarra, " & vbNewLine & _
+                   "    A.ArrivalNettoBefore AS NettoBefore, A.ArrivalDeduction AS Deduction, A.ArrivalNettoAfter AS NettoAfter, A.Remarks, MI.Name AS ItemName, A.SegelNumber, A.DriverName, A.PlatNumber, " & vbNewLine & _
+                   "    A.Specification, A.Price1 AS Price, A.TotalPrice1 AS TotalPrice, " & vbNewLine & _
                    "    A.Remarks, A.CreatedBy " & vbNewLine & _
                    "FROM traReceive A " & vbNewLine & _
                    "INNER JOIN mstStatus B ON " & vbNewLine & _
@@ -356,8 +356,8 @@ Namespace DL
                    "    A.BPID=C.ID " & vbNewLine & _
                    "INNER JOIN mstItem MI ON " & vbNewLine & _
                    "    A.ItemID=MI.ID " & vbNewLine & _
-                   "INNER JOIN mstUOM MU ON " & vbNewLine & _
-                   "    MI.UomID=MU.ID " & vbNewLine & _
+                   "INNER JOIN mstCompany MC ON " & vbNewLine & _
+                   "    A.CompanyID=MC.ID " & vbNewLine & _
                    "WHERE A.ID=@ID	" & vbNewLine
 
                 .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = strID

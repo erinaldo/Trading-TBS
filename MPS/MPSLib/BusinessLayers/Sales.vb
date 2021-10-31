@@ -145,10 +145,7 @@ Namespace BL
             Return DL.Sales.ListDataSplitReceive(strSalesID)
         End Function
 
-
-
-
-        Public Shared Sub PrintBonFaktur(ByVal clsData As VO.Sales, ByVal doColor As List(Of String))
+        Public Shared Sub PrintBonFaktur(ByVal clsData As VO.Sales)
             BL.Server.ServerDefault()
             Try
                 DL.SQL.OpenConnection()
@@ -157,9 +154,7 @@ Namespace BL
                 DL.Sales.PrintBonFaktur(clsData.ID)
 
                 '# Save Data Status
-                For i As Integer = 0 To doColor.Count - 1
-                    SaveDataStatus(clsData.ID, "PRINT " & doColor(i).Trim, clsData.LogBy, clsData.Remarks)
-                Next
+                SaveDataStatus(clsData.ID, "PRINT BON FAKTUR", clsData.LogBy, clsData.Remarks)
 
                 DL.SQL.CommitTransaction()
             Catch ex As Exception
@@ -318,7 +313,7 @@ Namespace BL
             Return DL.Sales.ListDataStatus(strSalesID)
         End Function
 
-        Private Shared Sub SaveDataStatus(ByVal strSalesID As String, ByVal strStatus As String, ByVal strStatusBy As String, _
+        Public Shared Sub SaveDataStatus(ByVal strSalesID As String, ByVal strStatus As String, ByVal strStatusBy As String, _
                                          ByVal strRemarks As String)
             Dim clsData As New VO.SalesStatus
             clsData.ID = strSalesID & "-" & Format(DL.Sales.GetMaxIDStatus(strSalesID), "000")

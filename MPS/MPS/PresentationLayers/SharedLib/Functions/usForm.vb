@@ -238,25 +238,21 @@ Namespace UI
             Return bolReturn
         End Function
 
-        Public Shared Function PrintBonFaktur(ByVal frmMe As Form, ByVal strID As String, ByVal doColor As List(Of SharedLib.usDOColors)) As Boolean
+        Public Shared Function PrintBonFaktur(ByVal frmMe As Form, ByVal strID As String) As Boolean
             Dim bolReturn As Boolean
             frmMe.Cursor = Cursors.WaitCursor
             Try
-                For i As Integer = 0 To doColor.Count - 1
-                    Using cr As New rptBonFaktur
-                        cr.CreateDocument(True)
-                        cr.DataSource = BL.Sales.ListDataBonFaktur(strID)
-                        cr.ShowPreviewMarginLines = False
+                Using cr As New rptBonFaktur
+                    cr.CreateDocument(True)
+                    cr.DataSource = BL.Sales.ListDataBonFaktur(strID)
+                    cr.ShowPreviewMarginLines = False
+                    cr.ShowPrintMarginsWarning = False
+                    cr.DisplayName = strID
 
-                        cr.DisplayName = doColor(i).DisplayName
-                        cr.labelMark.BackColor = doColor(i).TextColor
-                        cr.labelMark.Text = doColor(i).TextName
-
-                        Using tool As New ReportPrintTool(cr)
-                            tool.Print()
-                        End Using
+                    Using tool As New ReportPrintTool(cr)
+                        tool.Print()
                     End Using
-                Next
+                End Using
                 bolReturn = True
             Catch ex As Exception
                 UI.usForm.frmMessageBox(ex.Message)

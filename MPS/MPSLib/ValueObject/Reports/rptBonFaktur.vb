@@ -1,5 +1,6 @@
 ﻿Namespace VO
     Public Class rptBonFaktur
+        Property CompanyName As String
         Property ID As String
         Property SalesDate As DateTime
         Property BPName As String

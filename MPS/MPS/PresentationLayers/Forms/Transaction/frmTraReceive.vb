@@ -58,6 +58,7 @@ Public Class frmTraReceive
     Private Sub prvSetButton()
         Dim bolEnable As Boolean = IIf(grdView.RowCount > 0, True, False)
         With ToolBar.Buttons
+            .Item(cNew).Visible = False
             .Item(cDetail).Enabled = bolEnable
             .Item(cDelete).Enabled = bolEnable
         End With
@@ -232,6 +233,8 @@ Public Class frmTraReceive
                 cr.CreateDocument(True)
                 cr.DataSource = BL.Receive.ListDataBonFaktur(clsData.ID)
                 cr.ShowPreviewMarginLines = False
+                cr.DisplayName = clsData.ID
+                cr.ShowPrintMarginsWarning = False
 
                 Using tool As New ReportPrintTool(cr)
                     tool.Print()
@@ -259,7 +262,7 @@ Public Class frmTraReceive
 
     Private Sub prvUserAccess()
         With ToolBar.Buttons
-            .Item(cNew).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionReceive, VO.Access.Values.NewAccess)
+            '.Item(cNew).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionReceive, VO.Access.Values.NewAccess)
             .Item(cDelete).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionReceive, VO.Access.Values.DeleteAccess)
         End With
     End Sub

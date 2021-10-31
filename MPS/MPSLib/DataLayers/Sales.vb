@@ -11,7 +11,7 @@ Namespace DL
                    "SELECT " & vbNewLine & _
                    "    A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.BPID, C.Name AS BPName, A.SalesDate, A.PaymentTerm, A.DriverName, A.PlatNumber, A.DueDate, " & vbNewLine & _
                    "    A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MU.Code AS UomCode, A.ArrivalBrutto, A.ArrivalTarra, " & vbNewLine & _
-                   "    A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, A.Price, A.TotalPrice, A.ArrivalReturn, A.TotalPayment, A.IsPostedGL,   " & vbNewLine & _
+                   "    A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, A.Price, A.TotalPrice, A.ArrivalReturn, A.IsSplitReceive, A.TotalPayment, A.IsPostedGL,   " & vbNewLine & _
                    "    A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, B.Name AS StatusInfo, A.CreatedBy,   " & vbNewLine & _
                    "    A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID  " & vbNewLine & _
                    "FROM traSales A " & vbNewLine & _
@@ -431,15 +431,46 @@ Namespace DL
             End Try
         End Sub
 
+        Public Shared Function OutstandingReceive(ByVal strID As String) As Boolean
+            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
+            Dim bolExists As Boolean = False
+            Try
+                If Not SQL.bolUseTrans Then SQL.OpenConnection()
+                With sqlcmdExecute
+                    .Connection = SQL.sqlConn
+                    .CommandText = _
+                        "SELECT TOP 1 " & vbNewLine & _
+                        "   ID " & vbNewLine & _
+                        "FROM traReceive " & vbNewLine & _
+                        "WHERE  " & vbNewLine & _
+                        "   ReferencesID=@ID " & vbNewLine & _
+                        "   AND IsDeleted=0 " & vbNewLine
 
-
+                    .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
+                    If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
+                End With
+                sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)
+                With sqlrdData
+                    If .HasRows Then
+                        .Read()
+                        bolExists = True
+                    End If
+                End With
+                If Not SQL.bolUseTrans Then SQL.CloseConnection()
+            Catch ex As Exception
+                Throw ex
+            Finally
+                If Not sqlrdData Is Nothing Then sqlrdData.Close()
+            End Try
+            Return bolExists
+        End Function
 
         Public Shared Function ListDataBonFaktur(ByVal strID As String) As DataTable
             Dim sqlcmdExecute As New SqlCommand
             With sqlcmdExecute
                 .CommandText = _
                    "SELECT " & vbNewLine & _
-                   "    A.ID, A.SalesDate, C.Name AS BPName, C.Address AS BPAddress, A.PlatNumber, A.DriverName, " & vbNewLine & _
+                   "    MC.Name AS CompanyName, A.ID, A.SalesDate, C.Name AS BPName, C.Address AS BPAddress, A.PlatNumber, A.DriverName, " & vbNewLine & _
                    "    MI.Name AS ItemName, MU.Code AS UomCode, A.ArrivalBrutto AS Brutto, A.ArrivalTarra AS Tarra, " & vbNewLine & _
                    "    A.ArrivalNettoBefore AS NettoBefore, A.ArrivalDeduction AS Deduction, A.ArrivalNettoAfter AS NettoAfter, A.Price, A.TotalPrice, " & vbNewLine & _
                    "    A.Remarks, A.CreatedBy " & vbNewLine & _
@@ -452,6 +483,8 @@ Namespace DL
                    "    A.ItemID=MI.ID " & vbNewLine & _
                    "INNER JOIN mstUOM MU ON " & vbNewLine & _
                    "    MI.UomID=MU.ID " & vbNewLine & _
+                   "INNER JOIN mstCompany MC ON " & vbNewLine & _
+                   "    A.CompanyID=MC.ID " & vbNewLine & _
                    "WHERE A.ID=@ID	" & vbNewLine
 
                 .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID

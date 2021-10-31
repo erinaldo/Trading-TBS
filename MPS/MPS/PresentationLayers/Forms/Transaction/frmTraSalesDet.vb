@@ -214,9 +214,10 @@ Public Class frmTraSalesDet
         pgMain.Value = 30
         Try
             Dim strID As String = BL.Sales.SaveData(pubIsNew, clsData, clsSupplierAll)
-            pgMain.Value = 100
+            pgMain.Value = 80
             If strID.Trim <> "" Then
                 If pubIsNew Then
+                    pgMain.Value = 100
                     UI.usForm.frmMessageBox("Data berhasil disimpan. " & vbCrLf & "Nomor penjualan: " & strID)
                     frmParent.pubRefresh(clsData.ID)
                     prvPrintBonFaktur()
@@ -224,7 +225,9 @@ Public Class frmTraSalesDet
                     prvQueryHistory()
                     prvQueryBP()
                     If UI.usForm.frmAskQuestion("Lakukan split data pembelian?") Then
-                        modSharedForm.ShowSplitReceive(strID, pubCS)
+                        If modSharedForm.ShowSplitReceive(strID, pubCS) Then
+                            frmParent.pubRefresh(strID)
+                        End If
                     End If
 
                 Else
@@ -233,6 +236,7 @@ Public Class frmTraSalesDet
                     Me.Close()
                 End If
             Else
+                pgMain.Value = 100
                 UI.usForm.frmMessageBox("Proses simpan data tidak berhasil")
                 Exit Sub
             End If
@@ -264,6 +268,7 @@ Public Class frmTraSalesDet
     End Sub
 
     Private Sub prvClear()
+        tcHeader.SelectedTab = tpMain
         txtID.Text = ""
         intBPID = 0
         txtBPName.Text = ""

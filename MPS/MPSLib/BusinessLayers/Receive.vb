@@ -94,6 +94,17 @@ Namespace BL
 
                     '# Save Data Status
                     SaveDataStatus(clsData.ID, "DIHAPUS", clsData.LogBy, clsData.Remarks)
+
+                    '# CaLculate Sales Arrival Usage
+                    DL.Sales.CalculateArrivalUsage(clsData.ReferencesID)
+
+                    '# Checking Outstanding Receive
+                    If Not DL.Sales.OutstandingReceive(clsData.ReferencesID) Then
+                        DL.Sales.SetIsSplitReceive(clsData.ReferencesID, False)
+
+                        '# Save Data Sales
+                        BL.Sales.SaveDataStatus(clsData.ReferencesID, "BATAL SPLIT PEMBELIAN", MPSLib.UI.usUserApp.UserID, clsData.Remarks)
+                    End If
                 End If
 
                 DL.SQL.CommitTransaction()
