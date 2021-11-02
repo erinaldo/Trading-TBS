@@ -128,6 +128,18 @@
     <Compile Include="PresentationLayers\Forms\Master\frmMstBusinessPartner.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="PresentationLayers\Forms\Master\frmMstBusinessPartnerAssign.Designer.vb">
+      <DependentUpon>frmMstBusinessPartnerAssign.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Master\frmMstBusinessPartnerAssign.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Master\frmMstBusinessPartnerAssignItem.vb.Designer.vb">
+      <DependentUpon>frmMstBusinessPartnerAssignItem.vb.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Master\frmMstBusinessPartnerAssignItem.vb.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="PresentationLayers\Forms\Master\frmMstBusinessPartnerDet.designer.vb">
       <DependentUpon>frmMstBusinessPartnerDet.vb</DependentUpon>
     </Compile>
@@ -362,6 +374,42 @@
     <Compile Include="PresentationLayers\Forms\System\frmSysMain.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraCost.designer.vb">
+      <DependentUpon>frmTraCost.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraCost.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraCostDet.designer.vb">
+      <DependentUpon>frmTraCostDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraCostDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraCostItem.designer.vb">
+      <DependentUpon>frmTraCostItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraCostItem.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraJournal.designer.vb">
+      <DependentUpon>frmTraJournal.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraJournal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraJournalDet.designer.vb">
+      <DependentUpon>frmTraJournalDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraJournalDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraJournalItem.designer.vb">
+      <DependentUpon>frmTraJournalItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraJournalItem.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="PresentationLayers\Forms\Transaction\frmTraReceive.designer.vb">
       <DependentUpon>frmTraReceive.vb</DependentUpon>
     </Compile>
@@ -372,12 +420,6 @@
       <DependentUpon>frmTraReceiveDet.vb</DependentUpon>
     </Compile>
     <Compile Include="PresentationLayers\Forms\Transaction\frmTraReceiveDet.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PresentationLayers\Forms\Transaction\frmTraReceiveListOutstandingUsage.designer.vb">
-      <DependentUpon>frmTraReceiveListOutstandingUsage.vb</DependentUpon>
-    </Compile>
-    <Compile Include="PresentationLayers\Forms\Transaction\frmTraReceiveListOutstandingUsage.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PresentationLayers\Forms\Transaction\frmTraSales.designer.vb">
@@ -487,6 +529,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\Master\frmMstBusinessPartner.resx">
       <DependentUpon>frmMstBusinessPartner.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\Master\frmMstBusinessPartnerAssign.resx">
+      <DependentUpon>frmMstBusinessPartnerAssign.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\Master\frmMstBusinessPartnerAssignItem.vb.resx">
+      <DependentUpon>frmMstBusinessPartnerAssignItem.vb.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\Master\frmMstBusinessPartnerDet.resx">
       <DependentUpon>frmMstBusinessPartnerDet.vb</DependentUpon>
@@ -605,14 +653,29 @@
     <EmbeddedResource Include="PresentationLayers\Forms\System\frmSysMain.resx">
       <DependentUpon>frmSysMain.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraCost.resx">
+      <DependentUpon>frmTraCost.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraCostDet.resx">
+      <DependentUpon>frmTraCostDet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraCostItem.resx">
+      <DependentUpon>frmTraCostItem.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraJournal.resx">
+      <DependentUpon>frmTraJournal.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraJournalDet.resx">
+      <DependentUpon>frmTraJournalDet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraJournalItem.resx">
+      <DependentUpon>frmTraJournalItem.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraReceive.resx">
       <DependentUpon>frmTraReceive.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraReceiveDet.resx">
       <DependentUpon>frmTraReceiveDet.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraReceiveListOutstandingUsage.resx">
-      <DependentUpon>frmTraReceiveListOutstandingUsage.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraSales.resx">
       <DependentUpon>frmTraSales.vb</DependentUpon>

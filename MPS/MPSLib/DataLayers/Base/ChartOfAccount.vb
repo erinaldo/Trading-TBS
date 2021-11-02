@@ -1,37 +1,94 @@
 Namespace DL
     Public Class ChartOfAccount
-        Public Shared Function ListData(ByVal enumFilterGroup As VO.ChartOfAccount.FilterGroup) As DataTable
+        Public Shared Function ListData(ByVal enumFilterGroup As VO.ChartOfAccount.FilterGroup, ByVal intCompanyID As Integer, ByVal intProgramID As Integer) As DataTable
             Dim sqlcmdExecute As New SqlCommand
             With sqlcmdExecute
                 .CommandText = _
                     "SELECT 	" & vbNewLine & _
                     "	COA.ID, COA.AccountGroupID, COAG.Name AS AccountGroupName, COAG.AliasName AS GroupAccount, COA.Code, COA.Name, 	" & vbNewLine & _
-                    "	Balance=ISNULL(	" & vbNewLine & _
-                    "	COA.FirstBalance+	" & vbNewLine & _
-                    "	CASE WHEN 	" & vbNewLine & _
-                    "		COA.AccountGroupID=1 OR COA.AccountGroupID=2 OR COA.AccountGroupID=3 OR COA.AccountGroupID=4 	" & vbNewLine & _
-                    "		OR COA.AccountGroupID=5 OR COA.AccountGroupID=6 OR COA.AccountGroupID=7 OR COA.AccountGroupID=17 	" & vbNewLine & _
-                    "		OR COA.AccountGroupID=18 OR COA.AccountGroupID=13 OR COA.AccountGroupID=14 OR COA.AccountGroupID=15 OR COA.AccountGroupID=16 	" & vbNewLine & _
-                    "	THEN ISNULL(JH.TotalDebit,0)-ISNULL(JH.TotalCredit,0) " & vbNewLine & _
-                    "	ELSE ISNULL(JH.TotalCredit,0)-ISNULL(JH.TotalDebit,0) " & vbNewLine & _
-                    "	END,0),	" & vbNewLine & _
-                    "	COA.IDStatus, MS.Name AS StatusInfo, COA.CreatedBy, COA.CreatedDate, COA.LogBy, COA.LogDate, COA.LogInc 	" & vbNewLine & _
+                    "	COA.FirstBalance AS Balance, COA.IDStatus, MS.Name AS StatusInfo, COA.CreatedBy, COA.CreatedDate, COA.LogBy, COA.LogDate, COA.LogInc 	" & vbNewLine & _
                     "FROM mstChartOfAccount COA 	" & vbNewLine & _
                     "INNER JOIN mstChartOfAccountGroup COAG ON  	" & vbNewLine & _
                     "    COA.AccountGroupID=COAG.ID 	" & vbNewLine & _
                     "INNER JOIN mstStatus MS ON  	" & vbNewLine & _
-                    "    COA.IDStatus=MS.ID 	" & vbNewLine & _
+                    "    COA.IDStatus=MS.ID 	" & vbNewLine
+
+                If intCompanyID <> 0 And intProgramID <> 0 Then
+                    .CommandText += _
+                        "INNER JOIN mstChartOfAccountAssign COAA ON  	" & vbNewLine & _
+                        "    COA.ID=COAA.COAID " & vbNewLine & _
+                        "    AND COAA.CompanyID=@CompanyID " & vbNewLine & _
+                        "    AND COAA.ProgramID=@ProgramID " & vbNewLine
+                End If
+
+                If enumFilterGroup = VO.ChartOfAccount.FilterGroup.CashOrBank Then
+                    .CommandText += "WHERE COAG.ID=1"
+                ElseIf enumFilterGroup = VO.ChartOfAccount.FilterGroup.Expense Then
+                    .CommandText += "WHERE COAG.ID IN (14,15) "
+                End If
+
+                .CommandText += _
+                    "ORDER BY " & vbNewLine & _
+                    "    COA.Code ASC " & vbNewLine
+
+                .Parameters.Add("@CompanyID", SqlDbType.Int).Value = intCompanyID
+                .Parameters.Add("@ProgramID", SqlDbType.Int).Value = intProgramID
+            End With
+            Return SQL.QueryDataTable(sqlcmdExecute)
+        End Function
+
+        Public Shared Function ListData_(ByVal enumFilterGroup As VO.ChartOfAccount.FilterGroup, ByVal intCompanyID As Integer, ByVal intProgramID As Integer) As DataTable
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                .CommandText = _
+                    "SELECT 	" & vbNewLine & _
+                    "	COA.ID, COA.AccountGroupID, COAG.Name AS AccountGroupName, COAG.AliasName AS GroupAccount, COA.Code, COA.Name, 		" & vbNewLine & _
+                    "	Balance=ISNULL(COAA.FirstBalance,0) +	" & vbNewLine & _
+                    "	CASE WHEN 		" & vbNewLine & _
+                    "		COA.AccountGroupID=1 OR COA.AccountGroupID=2 OR COA.AccountGroupID=3 OR COA.AccountGroupID=4 		" & vbNewLine & _
+                    "		OR COA.AccountGroupID=5 OR COA.AccountGroupID=6 OR COA.AccountGroupID=7 OR COA.AccountGroupID=17 		" & vbNewLine & _
+                    "		OR COA.AccountGroupID=18 OR COA.AccountGroupID=13 OR COA.AccountGroupID=14 OR COA.AccountGroupID=15 OR COA.AccountGroupID=16 		" & vbNewLine & _
+                    "	THEN ISNULL(JH.TotalDebit,0)-ISNULL(JH.TotalCredit,0) 	" & vbNewLine & _
+                    "	ELSE ISNULL(JH.TotalCredit,0)-ISNULL(JH.TotalDebit,0) 	" & vbNewLine & _
+                    "	END, 	" & vbNewLine & _
+                    "	COA.IDStatus, MS.Name AS StatusInfo, COA.CreatedBy, COA.CreatedDate, COA.LogBy, COA.LogDate, COA.LogInc 		" & vbNewLine & _
+                    "FROM mstChartOfAccount COA 	" & vbNewLine & _
+                    "INNER JOIN mstChartOfAccountGroup COAG ON 	" & vbNewLine & _
+                    "	COA.AccountGroupID=COAG.ID	" & vbNewLine & _
+                    "INNER JOIN mstStatus MS ON 	" & vbNewLine & _
+                    "	COA.IDStatus=MS.ID	" & vbNewLine
+
+                If intCompanyID <> 0 And intProgramID <> 0 Then
+                    .CommandText += _
+                        "INNER JOIN mstChartOfAccountAssign COAA ON  	" & vbNewLine & _
+                        "    COA.ID=COAA.COAID " & vbNewLine & _
+                        "    AND COAA.CompanyID=@CompanyID " & vbNewLine & _
+                        "    AND COAA.ProgramID=@ProgramID " & vbNewLine
+                Else
+                    .CommandText += _
+                        "LEFT JOIN mstChartOfAccountAssign COAA ON  	" & vbNewLine & _
+                        "    COA.ID=COAA.COAID " & vbNewLine & _
+                        "    AND COAA.CompanyID=@CompanyID " & vbNewLine & _
+                        "    AND COAA.ProgramID=@ProgramID " & vbNewLine
+                End If
+
+                .CommandText += _
                     "LEFT JOIN 	" & vbNewLine & _
                     "(	" & vbNewLine & _
                     "	SELECT 	" & vbNewLine & _
                     "		JD.CoAID, SUM(JD.DebitAmount) AS TotalDebit, SUM(JD.CreditAmount) AS TotalCredit	" & vbNewLine & _
-                    "	FROM traJournalDet JD 	" & vbNewLine & _
-                    "	INNER JOIN traJournal JH ON 	" & vbNewLine & _
-                    "		JD.JournalID=JH.ID 	" & vbNewLine & _
+                    "	FROM traJournal JH 	" & vbNewLine & _
+                    "	INNER JOIN traJournalDet JD ON 	" & vbNewLine & _
+                    "		JH.ID=JD.JournalID 	" & vbNewLine & _
                     "	WHERE 	" & vbNewLine & _
                     "		JH.IsDeleted=0 	" & vbNewLine & _
-                    "	GROUP BY JD.CoAID 	" & vbNewLine & _
-                    ") JH ON COA.ID=JH.CoAID	" & vbNewLine
+                    "		AND JH.CompanyID=@CompanyID 	" & vbNewLine & _
+                    "		AND JH.ProgramID=@ProgramID 	" & vbNewLine & _
+                    "	GROUP BY 	" & vbNewLine & _
+                    "		JD.CoAID	" & vbNewLine & _
+                    ") JH ON 	" & vbNewLine & _
+                    "	COA.ID=JH.CoAID	" & vbNewLine
 
                 If enumFilterGroup = VO.ChartOfAccount.FilterGroup.CashOrBank Then
                     .CommandText += "WHERE COAG.ID=1"

@@ -4,10 +4,12 @@ Public Class frmMstBusinessPartner
     Public pubIsLookUp As Boolean = False
     Public pubIsLookUpGet As Boolean = False
     Public pubOnAmount As Decimal = 0
+    Public pubCompanyID As Integer = 0
+    Public pubProgramID As Integer = 0
     Private intPos As Integer = 0
 
     Private Const _
-       cGet = 0, cSep1 = 1, cNew = 2, cDetail = 3, cDelete = 4, cHistory = 5, cSep2 = 6, cRefresh = 7, cClose = 8
+       cGet = 0, cSep1 = 1, cNew = 2, cDetail = 3, cDelete = 4, cHistory = 5, cAssign = 6, cSep2 = 7, cRefresh = 8, cClose = 9
 
     Private Sub prvSetTitleForm()
         If pubIsLookUp Then
@@ -24,8 +26,8 @@ Public Class frmMstBusinessPartner
         UI.usForm.SetGrid(grdView, "PaymentTermID", "PaymentTermID", 100, UI.usDefGrid.gIntNum, False)
         UI.usForm.SetGrid(grdView, "IsUsePurchaseLimit", "IsUsePurchaseLimit", 100, UI.usDefGrid.gBoolean, False)
         UI.usForm.SetGrid(grdView, "MaxPurchaseLimit", "Maks. Limit Pembelian", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "APBalance", "Saldo Hutang", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "ARBalance", "Saldo Piutang", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "APBalance", "Saldo Hutang", 100, UI.usDefGrid.gReal2Num, False)
+        UI.usForm.SetGrid(grdView, "ARBalance", "Saldo Piutang", 100, UI.usDefGrid.gReal2Num, False)
         UI.usForm.SetGrid(grdView, "IDStatus", "IDStatus", 100, UI.usDefGrid.gIntNum, False)
         UI.usForm.SetGrid(grdView, "CreatedBy", "Dibuat Oleh", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "CreatedDate", "Tanggal Buat", 100, UI.usDefGrid.gFullDate)
@@ -42,12 +44,14 @@ Public Class frmMstBusinessPartner
             .Item(cGet).Enabled = bolEnable
             .Item(cDetail).Enabled = bolEnable
             .Item(cDelete).Enabled = bolEnable
+            .Item(cHistory).Enabled = bolEnable
+            .Item(cAssign).Enabled = bolEnable
         End With
     End Sub
 
     Private Sub prvQuery()
         Try
-            grdMain.DataSource = BL.BusinessPartner.ListData(pubOnAmount)
+            grdMain.DataSource = BL.BusinessPartner.ListData(pubOnAmount, pubCompanyID, pubProgramID)
             grdView.BestFitColumns()
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
@@ -64,6 +68,19 @@ Public Class frmMstBusinessPartner
             If grdView.RowCount > 0 Then UI.usForm.GridMoveRow(grdView, "ID", strSearch)
         End With
     End Sub
+
+    Private Function prvGetData() As VO.BusinessPartner
+        Dim clsReturn As New VO.BusinessPartner
+        clsReturn.ID = grdView.GetRowCellValue(intPos, "ID")
+        clsReturn.Name = grdView.GetRowCellValue(intPos, "Name")
+        clsReturn.Address = grdView.GetRowCellValue(intPos, "Address")
+        clsReturn.PICName = grdView.GetRowCellValue(intPos, "PICName")
+        clsReturn.PICPhoneNumber = grdView.GetRowCellValue(intPos, "PICPhoneNumber")
+        clsReturn.PaymentTermID = grdView.GetRowCellValue(intPos, "PaymentTermID")
+        clsReturn.IsUsePurchaseLimit = grdView.GetRowCellValue(intPos, "IsUsePurchaseLimit")
+        clsReturn.MaxPurchaseLimit = grdView.GetRowCellValue(intPos, "MaxPurchaseLimit")
+        Return clsReturn
+    End Function
 
     Private Sub prvGet()
         intPos = grdView.FocusedRowHandle
@@ -124,6 +141,17 @@ Public Class frmMstBusinessPartner
         End With
     End Sub
 
+    Private Sub prvAssign()
+        intPos = grdView.FocusedRowHandle
+        If intPos < 0 Then Exit Sub
+        Dim frmDetail As New frmMstBusinessPartnerAssign
+        With frmDetail
+            .pubClsData = prvGetData()
+            .StartPosition = FormStartPosition.CenterScreen
+            .pubShowDialog(Me)
+        End With
+    End Sub
+
     Private Sub prvUserAccess()
         With ToolBar.Buttons
             .Item(cNew).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.MasterBusinessPartners, VO.Access.Values.NewAccess)
@@ -159,6 +187,7 @@ Public Class frmMstBusinessPartner
         ElseIf grdView.FocusedRowHandle >= 0 Then
             Select Case e.Button.Name
                 Case ToolBar.Buttons(cGet).Name : prvGet()
+                Case ToolBar.Buttons(cAssign).Name : prvAssign()
                 Case ToolBar.Buttons(cDetail).Name : prvDetail()
                 Case ToolBar.Buttons(cDelete).Name : prvDelete()
                 Case ToolBar.Buttons(cHistory).Name : prvHistory()

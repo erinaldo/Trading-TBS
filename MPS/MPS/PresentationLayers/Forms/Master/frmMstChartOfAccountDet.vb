@@ -77,6 +77,14 @@
             UI.usForm.frmMessageBox("Nama akun belum diinput")
             txtName.Focus()
             Exit Sub
+        ElseIf cboChartOfAccountGroup.Text.Trim = "" Then
+            UI.usForm.frmMessageBox("Group kosong. Mohon untuk tutup form dan buka kembali")
+            cboChartOfAccountGroup.Focus()
+            Exit Sub
+        ElseIf cboStatus.Text.Trim = "" Then
+            UI.usForm.frmMessageBox("Status kosong. Mohon untuk tutup form dan buka kembali")
+            cboStatus.Focus()
+            Exit Sub
         End If
 
         If Not UI.usForm.frmAskQuestion("Simpan data?") Then Exit Sub

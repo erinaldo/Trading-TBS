@@ -18,12 +18,12 @@ Namespace BL
             Return strReturn
         End Function
 
-        Public Shared Function SaveData(ByVal bolNew As Boolean, ByVal clsData As VO.Receive) As String
+        Public Shared Function SaveDataDefault(ByVal bolNew As Boolean, ByVal clsData As VO.Receive) As String
             Try
                 DL.SQL.OpenConnection()
                 DL.SQL.BeginTransaction()
 
-                SaveDataDefault(bolNew, clsData)
+                SaveData(bolNew, clsData)
 
                 DL.Sales.CalculateArrivalUsage(clsData.ReferencesID)
 
@@ -37,7 +37,7 @@ Namespace BL
             Return clsData.ID
         End Function
 
-        Public Shared Function SaveDataDefault(ByVal bolNew As Boolean, ByVal clsData As VO.Receive) As String
+        Public Shared Function SaveData(ByVal bolNew As Boolean, ByVal clsData As VO.Receive) As String
             If bolNew Then
                 clsData.ID = GetNewID(clsData.CompanyID, clsData.ProgramID)
                 If DL.Receive.DataExists(clsData.ID) Then
@@ -116,18 +116,16 @@ Namespace BL
             End Try
         End Sub
 
-        Public Shared Sub PrintBonFaktur(ByVal clsData As VO.Receive, ByVal doColor As List(Of String))
+        Public Shared Sub PrintSlipTimbang(ByVal clsData As VO.Sales)
             BL.Server.ServerDefault()
             Try
                 DL.SQL.OpenConnection()
                 DL.SQL.BeginTransaction()
 
-                DL.Receive.PrintBonFaktur(clsData.ID)
+                DL.Receive.PrintSlipTimbang(clsData.ID)
 
                 '# Save Data Status
-                For i As Integer = 0 To doColor.Count - 1
-                    SaveDataStatus(clsData.ID, "PRINT " & doColor(i).Trim, clsData.LogBy, clsData.Remarks)
-                Next
+                SaveDataStatus(clsData.ID, "PRINT SLIP TIMBANGAN", clsData.LogBy, clsData.Remarks)
 
                 DL.SQL.CommitTransaction()
             Catch ex As Exception
@@ -136,46 +134,12 @@ Namespace BL
             Finally
                 DL.SQL.CloseConnection()
             End Try
-
         End Sub
 
-        Public Shared Function ListDataBonFaktur(ByVal strID As String) As DataTable
+        Public Shared Function ListDataSlipTimbang(ByVal strID As String) As DataTable
             BL.Server.ServerDefault()
-            Return DL.Receive.ListDataBonFaktur(strID)
+            Return DL.Receive.ListDataSlipTimbang(strID)
         End Function
-
-        'Public Shared Function ListDataOutstanding() As DataTable
-        '    BL.Server.ServerDefault()
-        '    Return DL.Receive.ListDataOutstanding()
-        'End Function
-
-        'Public Shared Function ListDataDeliveryOrder(ByVal strID As String) As DataTable
-        '    BL.Server.ServerDefault()
-        '    Return DL.Receive.ListDataDeliveryOrder(strID)
-        'End Function
-
-        'Public Shared Sub PrintDeliveryOrder(ByVal clsData As VO.Receive, ByVal doColor As List(Of String))
-        '    BL.Server.ServerDefault()
-        '    Try
-        '        DL.SQL.OpenConnection()
-        '        DL.SQL.BeginTransaction()
-
-        '        DL.Receive.PrintDeliveryOrder(clsData.ID)
-
-        '        '# Save Data Status
-        '        For i As Integer = 0 To doColor.Count - 1
-        '            SaveDataStatus(clsData.ID, "PRINT " & doColor(i).Trim, clsData.LogBy, clsData.Remarks)
-        '        Next
-
-        '        DL.SQL.CommitTransaction()
-        '    Catch ex As Exception
-        '        DL.SQL.RollBackTransaction()
-        '        Throw ex
-        '    Finally
-        '        DL.SQL.CloseConnection()
-        '    End Try
-
-        'End Sub
 
         'Public Shared Sub PostData(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime)
         '    Dim dtData As DataTable = DL.Receive.ListDataOutstandingPostGL(dtmDateFrom, dtmDateTo)

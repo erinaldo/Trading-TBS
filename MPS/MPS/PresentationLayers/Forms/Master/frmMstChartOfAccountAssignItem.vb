@@ -27,6 +27,8 @@
         Else
             intProgramID = pubSelectedRow.Item("ProgramID")
             txtProgramName.Text = pubSelectedRow.Item("ProgramName")
+            intCompanyID = pubSelectedRow.Item("CompanyID")
+            txtCompanyName.Text = pubSelectedRow.Item("CompanyName")
             txtFirstBalance.Value = pubSelectedRow.Item("FirstBalance")
             dtpFirstBalanceDate.Value = pubSelectedRow.Item("FirstBalanceDate")
         End If
@@ -98,6 +100,7 @@
             pubDtItem.Rows.Add(drNew)
             prvClear()
             frmParent.grdView.BestFitColumns()
+            frmParent.prvSetButton()
         Else
             For Each dr As DataRow In pubDtItem.Rows
                 With dr

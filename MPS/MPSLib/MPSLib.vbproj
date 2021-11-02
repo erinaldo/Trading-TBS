@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLayers\Base\Access.vb" />
+    <Compile Include="BusinessLayers\Base\BusinessPartnerAssign.vb" />
     <Compile Include="BusinessLayers\Base\ChartOfAccount.vb" />
     <Compile Include="BusinessLayers\Base\ChartOfAccountAssign.vb" />
     <Compile Include="BusinessLayers\Base\ChartOfAccountGroup.vb" />
@@ -79,9 +80,11 @@
     <Compile Include="BusinessLayers\Base\User.vb" />
     <Compile Include="BusinessLayers\Base\UserAccess.vb" />
     <Compile Include="BusinessLayers\Base\UserCompany.vb" />
-    <Compile Include="BusinessLayers\BusinessPartner.vb" />
+    <Compile Include="BusinessLayers\Base\BusinessPartner.vb" />
+    <Compile Include="BusinessLayers\Cost.vb" />
     <Compile Include="BusinessLayers\History.vb" />
     <Compile Include="BusinessLayers\Item.vb" />
+    <Compile Include="BusinessLayers\Journal.vb" />
     <Compile Include="BusinessLayers\PaymentReferences.vb" />
     <Compile Include="BusinessLayers\PaymentTerm.vb" />
     <Compile Include="BusinessLayers\Receive.vb" />
@@ -89,6 +92,7 @@
     <Compile Include="BusinessLayers\SalesDiscount.vb" />
     <Compile Include="BusinessLayers\UOM.vb" />
     <Compile Include="DataLayers\Base\Access.vb" />
+    <Compile Include="DataLayers\Base\BusinessPartnerAssign.vb" />
     <Compile Include="DataLayers\Base\ChartOfAccount.vb" />
     <Compile Include="DataLayers\Base\ChartOfAccountAssign.vb" />
     <Compile Include="DataLayers\Base\ChartOfAccountGroup.vb" />
@@ -106,7 +110,9 @@
     <Compile Include="DataLayers\Base\UserAccess.vb" />
     <Compile Include="DataLayers\Base\UserCompany.vb" />
     <Compile Include="DataLayers\Base\BusinessPartner.vb" />
+    <Compile Include="DataLayers\Cost.vb" />
     <Compile Include="DataLayers\Item.vb" />
+    <Compile Include="DataLayers\Journal.vb" />
     <Compile Include="DataLayers\PaymentReferences.vb" />
     <Compile Include="DataLayers\PaymentTerm.vb" />
     <Compile Include="DataLayers\Receive.vb" />
@@ -140,6 +146,7 @@
     <Compile Include="ValueObject\AccountReceivableDet.vb" />
     <Compile Include="ValueObject\AccountReceivableStatus.vb" />
     <Compile Include="ValueObject\Base\Access.vb" />
+    <Compile Include="ValueObject\Base\BusinessPartnerAssign.vb" />
     <Compile Include="ValueObject\Base\ChartOfAccount.vb" />
     <Compile Include="ValueObject\Base\ChartOfAccountAssign.vb" />
     <Compile Include="ValueObject\Base\ChartOfAccountGroup.vb" />

@@ -152,7 +152,7 @@ Partial Class frmMstChartOfAccountAssign
         '
         Me.BarAdd.Name = "BarAdd"
         Me.BarAdd.Tag = "Add"
-        Me.BarAdd.Text = "Add"
+        Me.BarAdd.Text = "Tambah"
         '
         'BarEdit
         '
@@ -164,7 +164,7 @@ Partial Class frmMstChartOfAccountAssign
         '
         Me.BarDelete.Name = "BarDelete"
         Me.BarDelete.Tag = "Delete"
-        Me.BarDelete.Text = "Delete"
+        Me.BarDelete.Text = "Hapus"
         '
         'grdMain
         '

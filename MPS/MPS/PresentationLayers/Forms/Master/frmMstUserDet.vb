@@ -96,6 +96,10 @@ Public Class frmMstUserDet
             UI.usForm.frmMessageBox("Password dan konfirmasi password tidak sama")
             txtConfirmPassword.Focus()
             Exit Sub
+        ElseIf cboStatus.Text.Trim = "" Then
+            UI.usForm.frmMessageBox("Status kosong. Mohon untuk tutup form dan buka kembali")
+            cboStatus.Focus()
+            Exit Sub
         End If
 
         clsData = New VO.User

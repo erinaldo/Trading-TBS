@@ -4,6 +4,8 @@
     Public pubIsLookUp As Boolean = False
     Public pubIsLookUpGet As Boolean = False
     Public pubFilterGroup As VO.ChartOfAccount.FilterGroup = VO.ChartOfAccount.FilterGroup.All
+    Public pubCompanyID As Integer = 0
+    Public pubProgramID As Integer = 0
     Private intPos As Integer = 0
 
     Private Const _
@@ -39,12 +41,13 @@
             .Item(cGet).Enabled = bolEnable
             .Item(cDetail).Enabled = bolEnable
             .Item(cDelete).Enabled = bolEnable
+            .Item(cAssign).Enabled = bolEnable
         End With
     End Sub
 
     Private Sub prvQuery()
         Try
-            grdMain.DataSource = BL.ChartOfAccount.ListData(pubFilterGroup)
+            grdMain.DataSource = BL.ChartOfAccount.ListData(pubFilterGroup, pubCompanyID, pubProgramID)
             grdView.Columns("GroupAccount").GroupIndex = 0
             grdView.ExpandAllGroups()
             grdView.BestFitColumns()

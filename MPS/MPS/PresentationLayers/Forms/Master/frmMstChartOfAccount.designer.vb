@@ -28,12 +28,12 @@ Partial Class frmMstChartOfAccount
         Me.BarNew = New System.Windows.Forms.ToolBarButton()
         Me.BarDetail = New System.Windows.Forms.ToolBarButton()
         Me.BarDelete = New System.Windows.Forms.ToolBarButton()
+        Me.BarAssign = New System.Windows.Forms.ToolBarButton()
         Me.BarSep2 = New System.Windows.Forms.ToolBarButton()
         Me.BarRefresh = New System.Windows.Forms.ToolBarButton()
         Me.BarClose = New System.Windows.Forms.ToolBarButton()
         Me.grdMain = New DevExpress.XtraGrid.GridControl()
         Me.grdView = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.BarAssign = New System.Windows.Forms.ToolBarButton()
         CType(Me.grdMain, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.grdView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -78,6 +78,12 @@ Partial Class frmMstChartOfAccount
         Me.BarDelete.Name = "BarDelete"
         Me.BarDelete.Tag = "Delete"
         Me.BarDelete.Text = "Hapus"
+        '
+        'BarAssign
+        '
+        Me.BarAssign.Name = "BarAssign"
+        Me.BarAssign.Tag = "Approved"
+        Me.BarAssign.Text = "Assign"
         '
         'BarSep2
         '
@@ -129,12 +135,6 @@ Partial Class frmMstChartOfAccount
         Me.grdView.OptionsCustomization.AllowGroup = False
         Me.grdView.OptionsView.ColumnAutoWidth = False
         Me.grdView.OptionsView.ShowAutoFilterRow = True
-        '
-        'BarAssign
-        '
-        Me.BarAssign.Name = "BarAssign"
-        Me.BarAssign.Tag = "Approved"
-        Me.BarAssign.Text = "Assign"
         '
         'frmMstChartOfAccount
         '

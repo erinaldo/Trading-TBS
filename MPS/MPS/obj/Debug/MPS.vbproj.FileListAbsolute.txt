@@ -149,6 +149,8 @@ D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.Resources.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmMstAccess.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmMstAccessDet.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmMstBusinessPartner.resources
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmMstBusinessPartnerAssign.resources
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmMstBusinessPartnerAssignItem.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmMstBusinessPartnerDet.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmMstBusinessPartnerHistory.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmMstChartOfAccount.resources
@@ -188,9 +190,14 @@ D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmSysChooseCompany.reso
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmSysJournalPost.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmSysLogin.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmSysMain.resources
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraCost.resources
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraCostDet.resources
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraCostItem.resources
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraJournal.resources
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraJournalDet.resources
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraJournalItem.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraReceive.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraReceiveDet.resources
-D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraReceiveListOutstandingUsage.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSales.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSalesDet.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSalesPrintBonFaktur.resources

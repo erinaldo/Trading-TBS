@@ -244,7 +244,7 @@ Namespace UI
             Try
                 Using cr As New rptBonFaktur
                     cr.CreateDocument(True)
-                    cr.DataSource = BL.Sales.ListDataBonFaktur(strID)
+                    cr.DataSource = BL.Sales.ListDataFakturPenjualan(strID)
                     cr.ShowPreviewMarginLines = False
                     cr.ShowPrintMarginsWarning = False
                     cr.DisplayName = strID

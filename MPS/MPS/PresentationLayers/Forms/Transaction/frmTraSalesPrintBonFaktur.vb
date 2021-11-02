@@ -6,7 +6,7 @@
     Private Sub prvPrint()
         UI.usForm.PrintBonFaktur(Me, pubData.ID)
         Try
-            BL.Sales.PrintBonFaktur(pubData)
+            BL.Sales.PrintFakturPenjualan(pubData)
             pubIsPrint = True
             Me.Close()
         Catch ex As Exception

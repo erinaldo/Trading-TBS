@@ -16,7 +16,8 @@
 #End Region
 
     Private Const _
-       cSave = 0, cClose = 1
+       cSave = 0, cClose = 1, _
+       cAdd = 0, cEdit = 1, cDelete = 2
 
     Private Sub prvSetGrid()
         UI.usForm.SetGrid(grdView, "ID", "ID", 100, UI.usDefGrid.gIntNum, False)
@@ -39,6 +40,14 @@
         End Try
     End Sub
 
+    Public Sub prvSetButton()
+        Dim bolEnable As Boolean = IIf(grdView.RowCount > 0, True, False)
+        With ToolBarDet.Buttons
+            .Item(cEdit).Enabled = bolEnable
+            .Item(cDelete).Enabled = bolEnable
+        End With
+    End Sub
+
     Private Sub prvQuery()
         Try
             dtData = BL.ChartOfAccountAssign.ListData(pubClsData.ID)
@@ -46,6 +55,8 @@
             grdView.BestFitColumns()
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
+        Finally
+            prvSetButton()
         End Try
     End Sub
 
@@ -103,6 +114,7 @@
             .StartPosition = FormStartPosition.CenterScreen
             .pubShowDialog(Me)
             grdView.BestFitColumns()
+            prvSetButton()
         End With
     End Sub
 
@@ -118,6 +130,7 @@
         Next
         dtData.AcceptChanges()
         grdView.BestFitColumns()
+        prvSetButton()
     End Sub
 
     Private Sub prvUserAccess()
@@ -151,9 +164,9 @@
 
     Private Sub ToolBarDet_ButtonClick(sender As Object, e As ToolBarButtonClickEventArgs) Handles ToolBarDet.ButtonClick
         Select Case e.Button.Text
-            Case "Add" : prvAdd()
+            Case "Tambah" : prvAdd()
             Case "Edit" : prvEdit()
-            Case "Delete" : prvDelete()
+            Case "Hapus" : prvDelete()
         End Select
     End Sub
 

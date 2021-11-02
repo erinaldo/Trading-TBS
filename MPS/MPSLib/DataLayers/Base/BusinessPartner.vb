@@ -1,6 +1,6 @@
 Namespace DL
     Public Class BusinessPartner
-        Public Shared Function ListData(ByVal decOnAmount As Decimal) As DataTable
+        Public Shared Function ListData(ByVal decOnAmount As Decimal, ByVal intCompanyID As Integer, ByVal intProgramID As Integer) As DataTable
             Dim sqlcmdExecute As New SqlCommand
             With sqlcmdExecute
                 .CommandText = _
@@ -21,11 +21,24 @@ Namespace DL
                     "		AND YEAR(TR.ReceiveDate)=YEAR(GETDATE())	" & vbNewLine & _
                     "	GROUP BY 	" & vbNewLine & _
                     "		TR.BPID 	" & vbNewLine & _
-                    ") TR ON A.ID=TR.BPID 	" & vbNewLine & _
+                    ") TR ON A.ID=TR.BPID 	" & vbNewLine
+
+
+                If intCompanyID <> 0 And intProgramID <> 0 Then
+                    .CommandText += _
+                        "INNER JOIN mstBusinessPartnerAssign MBPA ON  	" & vbNewLine & _
+                        "    A.ID=MBPA.BPID " & vbNewLine & _
+                        "    AND MBPA.CompanyID=@CompanyID " & vbNewLine & _
+                        "    AND MBPA.ProgramID=@ProgramID " & vbNewLine
+                End If
+
+                .CommandText += _
                     "WHERE 	" & vbNewLine & _
                     "	A.IsUsePurchaseLimit=0 OR (A.IsUsePurchaseLimit=1 AND A.MaxPurchaseLimit>=ISNULL(TR.TotalPrice1,0)+@OnAmount)	" & vbNewLine
 
                 .Parameters.Add("@OnAmount", SqlDbType.Decimal).Value = decOnAmount
+                .Parameters.Add("@CompanyID", SqlDbType.Int).Value = intCompanyID
+                .Parameters.Add("@ProgramID", SqlDbType.Int).Value = intProgramID
             End With
             Return SQL.QueryDataTable(sqlcmdExecute)
         End Function

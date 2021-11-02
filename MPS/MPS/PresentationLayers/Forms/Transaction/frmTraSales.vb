@@ -38,9 +38,9 @@ Public Class frmTraSales
         UI.usForm.SetGrid(grdView, "IsSplitReceive", "Split Pembelian", 100, UI.usDefGrid.gBoolean)
         UI.usForm.SetGrid(grdView, "ArrivalReturn", "Total Retur", 100, UI.usDefGrid.gReal2Num, False)
         UI.usForm.SetGrid(grdView, "TotalPayment", "Total Bayar", 100, UI.usDefGrid.gReal2Num, False)
-        UI.usForm.SetGrid(grdView, "IsPostedGL", "IsPostedGL", 100, UI.usDefGrid.gBoolean, False)
-        UI.usForm.SetGrid(grdView, "PostedBy", "PostedBy", 100, UI.usDefGrid.gString, False)
-        UI.usForm.SetGrid(grdView, "PostedDate", "PostedDate", 100, UI.usDefGrid.gFullDate, False)
+        UI.usForm.SetGrid(grdView, "IsPostedGL", "Posted GL", 100, UI.usDefGrid.gBoolean)
+        UI.usForm.SetGrid(grdView, "PostedBy", "Posted By", 100, UI.usDefGrid.gString)
+        UI.usForm.SetGrid(grdView, "PostedDate", "Posted Date", 100, UI.usDefGrid.gFullDate)
         UI.usForm.SetGrid(grdView, "IsDeleted", "IsDeleted", 100, UI.usDefGrid.gBoolean, False)
         UI.usForm.SetGrid(grdView, "Remarks", "Remarks", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "IDStatus", "IDStatus", 100, UI.usDefGrid.gIntNum, False)
@@ -255,7 +255,7 @@ Public Class frmTraSales
         Try
             Using cr As New rptBonTimbang
                 cr.CreateDocument(True)
-                cr.DataSource = BL.Sales.ListDataBonFaktur(clsData.ID)
+                cr.DataSource = BL.Sales.ListDataFakturPenjualan(clsData.ID)
                 cr.ShowPreviewMarginLines = False
 
                 Using tool As New ReportPrintTool(cr)

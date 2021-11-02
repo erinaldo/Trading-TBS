@@ -1,9 +1,9 @@
 Namespace BL
     Public Class ChartOfAccount
 
-        Public Shared Function ListData(ByVal enumFilterGroup As VO.ChartOfAccount.FilterGroup) As DataTable
+        Public Shared Function ListData(ByVal enumFilterGroup As VO.ChartOfAccount.FilterGroup, ByVal intCompanyID As Integer, ByVal intProgramID As Integer) As DataTable
             BL.Server.ServerDefault()
-            Return DL.ChartOfAccount.ListData(enumFilterGroup)
+            Return DL.ChartOfAccount.ListData(enumFilterGroup, intCompanyID, intProgramID)
         End Function
 
         Public Shared Function SaveData(ByVal bolNew As Boolean, ByVal clsData As VO.ChartOfAccount) As Integer

@@ -77,8 +77,8 @@ Partial Class frmSysMain
         Me.ssMain = New System.Windows.Forms.StatusStrip()
         Me.tssUserID = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tssVersion = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.tssCompany = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tssProgram = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.tssCompany = New System.Windows.Forms.ToolStripStatusLabel()
         Me.MenuStrip1.SuspendLayout()
         Me.ssMain.SuspendLayout()
         Me.SuspendLayout()
@@ -426,16 +426,6 @@ Partial Class frmSysMain
         Me.tssVersion.Size = New System.Drawing.Size(46, 17)
         Me.tssVersion.Text = "Version"
         '
-        'tssCompany
-        '
-        Me.tssCompany.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
-            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
-            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
-        Me.tssCompany.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter
-        Me.tssCompany.Name = "tssCompany"
-        Me.tssCompany.Size = New System.Drawing.Size(56, 17)
-        Me.tssCompany.Text = "Company"
-        '
         'tssProgram
         '
         Me.tssProgram.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
@@ -445,6 +435,16 @@ Partial Class frmSysMain
         Me.tssProgram.Name = "tssProgram"
         Me.tssProgram.Size = New System.Drawing.Size(51, 17)
         Me.tssProgram.Text = "Program"
+        '
+        'tssCompany
+        '
+        Me.tssCompany.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
+            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
+            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
+        Me.tssCompany.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter
+        Me.tssCompany.Name = "tssCompany"
+        Me.tssCompany.Size = New System.Drawing.Size(56, 17)
+        Me.tssCompany.Text = "Company"
         '
         'frmSysMain
         '

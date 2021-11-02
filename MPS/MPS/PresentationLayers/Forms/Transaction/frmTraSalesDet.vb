@@ -59,6 +59,7 @@ Public Class frmTraSalesDet
             UI.usForm.FillComboBox(cboStatus, BL.StatusModules.ListDataByModulesID(VO.Modules.Values.TransactionSales), "IDStatus", "StatusName")
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
+            Me.Close()
         End Try
     End Sub
 
@@ -67,6 +68,7 @@ Public Class frmTraSalesDet
             UI.usForm.FillComboBox(cboPaymentTerm, BL.PaymentTerm.ListDataForCombo, "ID", "Name")
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
+            Me.Close()
         End Try
     End Sub
 
@@ -75,6 +77,7 @@ Public Class frmTraSalesDet
             UI.usForm.FillComboBox(cboUOMID, BL.UOM.ListData, "ID", "Code")
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
+            Me.Close()
         End Try
     End Sub
 
@@ -169,6 +172,14 @@ Public Class frmTraSalesDet
         ElseIf grdSupplierView.RowCount = 0 Then
             UI.usForm.frmMessageBox("Pemasok harus diinput terlebih dahulu")
             tcHeader.SelectedTab = tpSupplier
+            Exit Sub
+        ElseIf cboStatus.Text.Trim = "" Then
+            UI.usForm.frmMessageBox("Status kosong. Mohon untuk tutup form dan buka kembali")
+            cboStatus.Focus()
+            Exit Sub
+        ElseIf cboUOMID.Text.Trim = "" Then
+            UI.usForm.frmMessageBox("Satuan kosong. Mohon untuk tutup form dan buka kembali")
+            cboUOMID.Focus()
             Exit Sub
         End If
 
@@ -298,6 +309,8 @@ Public Class frmTraSalesDet
         Dim frmDetail As New frmMstBusinessPartner
         With frmDetail
             .pubIsLookUp = True
+            .pubCompanyID = pubCS.CompanyID
+            .pubProgramID = pubCS.ProgramID
             .StartPosition = FormStartPosition.CenterScreen
             .ShowDialog()
             If .pubIsLookUpGet Then
@@ -309,7 +322,7 @@ Public Class frmTraSalesDet
     End Sub
 
     Private Sub prvUserAccess()
-        ToolBar.Buttons(cSave).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionSales, IIf(pubIsNew, VO.Access.Values.NewAccess, VO.Access.Values.EditAccess))
+        ToolBar.Buttons(cSave).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, pubCS.ProgramID, VO.Modules.Values.TransactionSales, IIf(pubIsNew, VO.Access.Values.NewAccess, VO.Access.Values.EditAccess))
     End Sub
 
 #Region "Item Handle"
@@ -365,6 +378,8 @@ Public Class frmTraSalesDet
         With frmDetail
             .pubOnAmount = txtTotalPrice.Value
             .pubIsLookUp = True
+            .pubCompanyID = pubCS.CompanyID
+            .pubProgramID = pubCS.ProgramID
             .StartPosition = FormStartPosition.CenterScreen
             .ShowDialog()
             If .pubIsLookUpGet Then

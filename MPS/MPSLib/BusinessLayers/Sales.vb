@@ -82,7 +82,7 @@ Namespace BL
 
                 '# Save Data Sales Supplier
                 For Each clsItem As VO.Receive In clsReceive
-                    BL.Receive.SaveDataDefault(True, clsItem)
+                    BL.Receive.SaveData(True, clsItem)
                 Next
 
                 DL.Sales.SetIsSplitReceive(clsData.ID, True)
@@ -145,16 +145,16 @@ Namespace BL
             Return DL.Sales.ListDataSplitReceive(strSalesID)
         End Function
 
-        Public Shared Sub PrintBonFaktur(ByVal clsData As VO.Sales)
+        Public Shared Sub PrintFakturPenjualan(ByVal clsData As VO.Sales)
             BL.Server.ServerDefault()
             Try
                 DL.SQL.OpenConnection()
                 DL.SQL.BeginTransaction()
 
-                DL.Sales.PrintBonFaktur(clsData.ID)
+                DL.Sales.PrintFakturPenjualan(clsData.ID)
 
                 '# Save Data Status
-                SaveDataStatus(clsData.ID, "PRINT BON FAKTUR", clsData.LogBy, clsData.Remarks)
+                SaveDataStatus(clsData.ID, "PRINT FAKTUR PENJUALAN", clsData.LogBy, clsData.Remarks)
 
                 DL.SQL.CommitTransaction()
             Catch ex As Exception
@@ -166,43 +166,11 @@ Namespace BL
 
         End Sub
 
-        Public Shared Function ListDataBonFaktur(ByVal strID As String) As DataTable
+        Public Shared Function ListDataFakturPenjualan(ByVal strID As String) As DataTable
             BL.Server.ServerDefault()
-            Return DL.Sales.ListDataBonFaktur(strID)
+            Return DL.Sales.ListDataFakturPenjualan(strID)
         End Function
 
-        Public Shared Function ListDataOutstanding() As DataTable
-            BL.Server.ServerDefault()
-            Return DL.Sales.ListDataOutstanding()
-        End Function
-
-        'Public Shared Function ListDataDeliveryOrder(ByVal strID As String) As DataTable
-        '    BL.Server.ServerDefault()
-        '    Return DL.Sales.ListDataDeliveryOrder(strID)
-        'End Function
-
-        'Public Shared Sub PrintDeliveryOrder(ByVal clsData As VO.Sales, ByVal doColor As List(Of String))
-        '    BL.Server.ServerDefault()
-        '    Try
-        '        DL.SQL.OpenConnection()
-        '        DL.SQL.BeginTransaction()
-
-        '        DL.Sales.PrintDeliveryOrder(clsData.ID)
-
-        '        '# Save Data Status
-        '        For i As Integer = 0 To doColor.Count - 1
-        '            SaveDataStatus(clsData.ID, "PRINT " & doColor(i).Trim, clsData.LogBy, clsData.Remarks)
-        '        Next
-
-        '        DL.SQL.CommitTransaction()
-        '    Catch ex As Exception
-        '        DL.SQL.RollBackTransaction()
-        '        Throw ex
-        '    Finally
-        '        DL.SQL.CloseConnection()
-        '    End Try
-
-        'End Sub
 
         'Public Shared Sub PostData(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime)
         '    Dim dtData As DataTable = DL.Sales.ListDataOutstandingPostGL(dtmDateFrom, dtmDateTo)

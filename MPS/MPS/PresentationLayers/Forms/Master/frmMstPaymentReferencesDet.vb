@@ -53,10 +53,14 @@ Public Class frmMstPaymentReferencesDet
     End Sub
 
     Private Sub prvSave()
-
+        txtName.Focus()
         If txtName.Text.Trim = "" Then
             UI.usForm.frmMessageBox("Nama belum diinput")
             txtName.Focus()
+            Exit Sub
+        ElseIf cboStatus.Text.Trim = "" Then
+            UI.usForm.frmMessageBox("Status kosong. Mohon untuk tutup form dan buka kembali")
+            cboStatus.Focus()
             Exit Sub
         End If
 

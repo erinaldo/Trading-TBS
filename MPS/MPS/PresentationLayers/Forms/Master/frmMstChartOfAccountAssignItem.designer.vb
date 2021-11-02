@@ -28,6 +28,9 @@ Partial Class frmMstChartOfAccountAssignItem
         Me.BarClose = New System.Windows.Forms.ToolBarButton()
         Me.lblInfo = New System.Windows.Forms.Label()
         Me.pnlDetail = New System.Windows.Forms.Panel()
+        Me.btnCompany = New DevExpress.XtraEditors.SimpleButton()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.txtCompanyName = New MPS.usTextBox()
         Me.btnProgram = New DevExpress.XtraEditors.SimpleButton()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtProgramName = New MPS.usTextBox()
@@ -35,9 +38,6 @@ Partial Class frmMstChartOfAccountAssignItem
         Me.lblAmount = New System.Windows.Forms.Label()
         Me.lblStartDate = New System.Windows.Forms.Label()
         Me.dtpFirstBalanceDate = New System.Windows.Forms.DateTimePicker()
-        Me.btnCompany = New DevExpress.XtraEditors.SimpleButton()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.txtCompanyName = New MPS.usTextBox()
         Me.pnlDetail.SuspendLayout()
         CType(Me.txtFirstBalance, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -76,7 +76,7 @@ Partial Class frmMstChartOfAccountAssignItem
         Me.lblInfo.Name = "lblInfo"
         Me.lblInfo.Size = New System.Drawing.Size(509, 22)
         Me.lblInfo.TabIndex = 1
-        Me.lblInfo.Text = "« Pilih Program"
+        Me.lblInfo.Text = "« Item"
         Me.lblInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'pnlDetail
@@ -97,6 +97,36 @@ Partial Class frmMstChartOfAccountAssignItem
         Me.pnlDetail.Name = "pnlDetail"
         Me.pnlDetail.Size = New System.Drawing.Size(509, 122)
         Me.pnlDetail.TabIndex = 2
+        '
+        'btnCompany
+        '
+        Me.btnCompany.Image = CType(resources.GetObject("btnCompany.Image"), System.Drawing.Image)
+        Me.btnCompany.Location = New System.Drawing.Point(463, 45)
+        Me.btnCompany.Name = "btnCompany"
+        Me.btnCompany.Size = New System.Drawing.Size(23, 23)
+        Me.btnCompany.TabIndex = 3
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.BackColor = System.Drawing.Color.Transparent
+        Me.Label2.ForeColor = System.Drawing.Color.Black
+        Me.Label2.Location = New System.Drawing.Point(20, 50)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(64, 13)
+        Me.Label2.TabIndex = 104
+        Me.Label2.Text = "Perusahaan"
+        '
+        'txtCompanyName
+        '
+        Me.txtCompanyName.BackColor = System.Drawing.Color.LightYellow
+        Me.txtCompanyName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCompanyName.Location = New System.Drawing.Point(96, 47)
+        Me.txtCompanyName.MaxLength = 250
+        Me.txtCompanyName.Name = "txtCompanyName"
+        Me.txtCompanyName.ReadOnly = True
+        Me.txtCompanyName.Size = New System.Drawing.Size(362, 21)
+        Me.txtCompanyName.TabIndex = 2
         '
         'btnProgram
         '
@@ -172,36 +202,6 @@ Partial Class frmMstChartOfAccountAssignItem
         Me.dtpFirstBalanceDate.TabIndex = 5
         Me.dtpFirstBalanceDate.Value = New Date(2000, 1, 1, 0, 0, 0, 0)
         '
-        'btnCompany
-        '
-        Me.btnCompany.Image = CType(resources.GetObject("btnCompany.Image"), System.Drawing.Image)
-        Me.btnCompany.Location = New System.Drawing.Point(463, 45)
-        Me.btnCompany.Name = "btnCompany"
-        Me.btnCompany.Size = New System.Drawing.Size(23, 23)
-        Me.btnCompany.TabIndex = 3
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.BackColor = System.Drawing.Color.Transparent
-        Me.Label2.ForeColor = System.Drawing.Color.Black
-        Me.Label2.Location = New System.Drawing.Point(20, 50)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(64, 13)
-        Me.Label2.TabIndex = 104
-        Me.Label2.Text = "Perusahaan"
-        '
-        'txtCompanyName
-        '
-        Me.txtCompanyName.BackColor = System.Drawing.Color.LightYellow
-        Me.txtCompanyName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCompanyName.Location = New System.Drawing.Point(96, 47)
-        Me.txtCompanyName.MaxLength = 250
-        Me.txtCompanyName.Name = "txtCompanyName"
-        Me.txtCompanyName.ReadOnly = True
-        Me.txtCompanyName.Size = New System.Drawing.Size(362, 21)
-        Me.txtCompanyName.TabIndex = 2
-        '
         'frmMstChartOfAccountAssignItem
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -214,7 +214,7 @@ Partial Class frmMstChartOfAccountAssignItem
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "frmMstChartOfAccountAssignItem"
-        Me.Text = "Program"
+        Me.Text = "Assign"
         Me.pnlDetail.ResumeLayout(False)
         Me.pnlDetail.PerformLayout()
         CType(Me.txtFirstBalance, System.ComponentModel.ISupportInitialize).EndInit()

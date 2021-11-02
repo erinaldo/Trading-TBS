@@ -53,6 +53,7 @@ Public Class frmTraReceiveDet
             UI.usForm.FillComboBox(cboStatus, BL.StatusModules.ListDataByModulesID(VO.Modules.Values.TransactionReceive), "IDStatus", "StatusName")
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
+            Me.Close()
         End Try
     End Sub
 
@@ -61,6 +62,7 @@ Public Class frmTraReceiveDet
             UI.usForm.FillComboBox(cboPaymentTerm, BL.PaymentTerm.ListDataForCombo, "ID", "Name")
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
+            Me.Close()
         End Try
     End Sub
 
@@ -69,6 +71,7 @@ Public Class frmTraReceiveDet
             UI.usForm.FillComboBox(cboUOMID, BL.UOM.ListData, "ID", "Code")
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
+            Me.Close()
         End Try
     End Sub
 
@@ -178,6 +181,14 @@ Public Class frmTraReceiveDet
             UI.usForm.frmMessageBox("Harga 2 harus lebih besar dari 0")
             txtPrice2.Focus()
             Exit Sub
+        ElseIf cboStatus.Text.Trim = "" Then
+            UI.usForm.frmMessageBox("Status kosong. Mohon untuk tutup form dan buka kembali")
+            cboStatus.Focus()
+            Exit Sub
+        ElseIf cboUOMID.Text.Trim = "" Then
+            UI.usForm.frmMessageBox("Satuan kosong. Mohon untuk tutup form dan buka kembali")
+            cboUOMID.Focus()
+            Exit Sub
         End If
 
         If Not UI.usForm.frmAskQuestion("Simpan data pembelian?") Then Exit Sub
@@ -216,20 +227,18 @@ Public Class frmTraReceiveDet
         pgMain.Value = 30
         Me.Cursor = Cursors.WaitCursor
         Try
-            Dim strID As String = BL.Receive.SaveData(pubIsNew, clsData)
+            Dim strID As String = BL.Receive.SaveDataDefault(pubIsNew, clsData)
             pgMain.Value = 50
             If strID.Trim <> "" Then
                 If pubIsNew Then
                     pgMain.Value = 100
-                    UI.usForm.frmMessageBox("Data berhasil disimpan. " & vbCrLf & "Nomor penjualan: " & strID)
+                    UI.usForm.frmMessageBox("Data berhasil disimpan. " & vbCrLf & "Nomor Pembelian: " & strID)
                     frmParent.pubRefresh(clsData.ID)
-                    'prvPrintBonFaktur()
                     prvClear()
                     prvQueryHistory()
                 Else
                     pgMain.Value = 100
                     pubIsSave = True
-                    'prvPrintBonFaktur()
                     Me.Close()
                 End If
             Else
@@ -279,6 +288,8 @@ Public Class frmTraReceiveDet
         Dim frmDetail As New frmMstBusinessPartner
         With frmDetail
             .pubIsLookUp = True
+            .pubCompanyID = pubCS.CompanyID
+            .pubProgramID = pubCS.ProgramID
             .StartPosition = FormStartPosition.CenterScreen
             .ShowDialog()
             If .pubIsLookUpGet Then
@@ -290,27 +301,27 @@ Public Class frmTraReceiveDet
     End Sub
 
     Private Sub prvChooseReferencesID()
-        Dim frmDetail As New frmTraReceiveListOutstandingUsage
-        With frmDetail
-            .StartPosition = FormStartPosition.CenterScreen
-            .ShowDialog()
-            If .pubIsLookUpGet Then
-                txtReferencesID.Text = .pubLUdtRow.Item("ID")
-                intItemID = .pubLUdtRow.Item("ItemID")
-                txtItemCode.Text = .pubLUdtRow.Item("ItemCode")
-                txtItemName.Text = .pubLUdtRow.Item("ItemName")
-                cboUOMID.SelectedValue = .pubLUdtRow.Item("UomID")
-                txtBrutto.Value = .pubLUdtRow.Item("MaxBrutto")
-                txtMaxBrutto.Value = .pubLUdtRow.Item("MaxBrutto")
-                txtPrice1.Value = 0
-                txtPrice2.Value = 0
-                txtBrutto.Focus()
-            End If
-        End With
+        'Dim frmDetail As New frmTraReceiveListOutstandingUsage
+        'With frmDetail
+        '    .StartPosition = FormStartPosition.CenterScreen
+        '    .ShowDialog()
+        '    If .pubIsLookUpGet Then
+        '        txtReferencesID.Text = .pubLUdtRow.Item("ID")
+        '        intItemID = .pubLUdtRow.Item("ItemID")
+        '        txtItemCode.Text = .pubLUdtRow.Item("ItemCode")
+        '        txtItemName.Text = .pubLUdtRow.Item("ItemName")
+        '        cboUOMID.SelectedValue = .pubLUdtRow.Item("UomID")
+        '        txtBrutto.Value = .pubLUdtRow.Item("MaxBrutto")
+        '        txtMaxBrutto.Value = .pubLUdtRow.Item("MaxBrutto")
+        '        txtPrice1.Value = 0
+        '        txtPrice2.Value = 0
+        '        txtBrutto.Focus()
+        '    End If
+        'End With
     End Sub
 
     Private Sub prvUserAccess()
-        ToolBar.Buttons(cSave).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionReceive, IIf(pubIsNew, VO.Access.Values.NewAccess, VO.Access.Values.EditAccess))
+        ToolBar.Buttons(cSave).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, pubCS.ProgramID, VO.Modules.Values.TransactionReceive, IIf(pubIsNew, VO.Access.Values.NewAccess, VO.Access.Values.EditAccess))
     End Sub
 
 #Region "Item Handle"

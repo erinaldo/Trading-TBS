@@ -27,8 +27,8 @@
     'Dim frmMainTraReceiveReturn As frmTraReceiveReturn
     'Dim frmMainTraAccountReceivable As frmTraAccountReceivable
     'Dim frmMainTraAccountPayable As frmTraAccountPayable
-    'Dim frmMainTraCost As frmTraCost
-    'Dim frmMainTraJournal As frmTraJournal
+    Dim frmMainTraCost As frmTraCost
+    Dim frmMainTraJournal As frmTraJournal
 
     ''# Reports
     'Dim frmMainRptSalesReport As frmRptSalesReport
@@ -249,13 +249,13 @@
     '    UI.usForm.frmOpen(frmMainTraAccountPayable, "frmTraAccountPayable", Me)
     'End Sub
 
-    'Private Sub mnuTransaksiBiaya_Click(sender As Object, e As EventArgs) Handles mnuTransaksiBiaya.Click
-    '    UI.usForm.frmOpen(frmMainTraCost, "frmTraCost", Me)
-    'End Sub
+    Private Sub mnuTransaksiBiaya_Click(sender As Object, e As EventArgs) Handles mnuTransaksiBiaya.Click
+        UI.usForm.frmOpen(frmMainTraCost, "frmTraCost", Me)
+    End Sub
 
-    'Private Sub mnuTransaksiJurnalUmum_Click(sender As Object, e As EventArgs) Handles mnuTransaksiJurnalUmum.Click
-    '    UI.usForm.frmOpen(frmMainTraJournal, "frmTraJournal", Me)
-    'End Sub
+    Private Sub mnuTransaksiJurnalUmum_Click(sender As Object, e As EventArgs) Handles mnuTransaksiJurnalUmum.Click
+        UI.usForm.frmOpen(frmMainTraJournal, "frmTraJournal", Me)
+    End Sub
 
 #End Region
 

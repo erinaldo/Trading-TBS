@@ -92,6 +92,10 @@ Public Class frmMstBusinessPartnerDet
             UI.usForm.frmMessageBox(chkIsUsePurchaseLimit.Text & " harus lebih besar dari 0 jika tercentang")
             txtMaxPurchaseLimit.Focus()
             Exit Sub
+        ElseIf cboStatus.Text.Trim = "" Then
+            UI.usForm.frmMessageBox("Status kosong. Mohon untuk tutup form dan buka kembali")
+            cboStatus.Focus()
+            Exit Sub
         End If
 
         If Not UI.usForm.frmAskQuestion("Simpan data?") Then Exit Sub
