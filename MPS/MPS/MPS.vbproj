@@ -422,6 +422,18 @@
     <Compile Include="PresentationLayers\Forms\Transaction\frmTraReceiveDet.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraReceiveReturn.Designer.vb">
+      <DependentUpon>frmTraReceiveReturn.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraReceiveReturn.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraReceiveReturnDet.Designer.vb">
+      <DependentUpon>frmTraReceiveReturnDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraReceiveReturnDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="PresentationLayers\Forms\Transaction\frmTraSales.designer.vb">
       <DependentUpon>frmTraSales.vb</DependentUpon>
     </Compile>
@@ -676,6 +688,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraReceiveDet.resx">
       <DependentUpon>frmTraReceiveDet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraReceiveReturn.resx">
+      <DependentUpon>frmTraReceiveReturn.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraReceiveReturnDet.resx">
+      <DependentUpon>frmTraReceiveReturnDet.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraSales.resx">
       <DependentUpon>frmTraSales.vb</DependentUpon>

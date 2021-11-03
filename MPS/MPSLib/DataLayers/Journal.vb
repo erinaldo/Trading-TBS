@@ -449,9 +449,9 @@ Namespace DL
                         "   ID=ISNULL(RIGHT(MAX(ID),3),0) " & vbNewLine & _
                         "FROM traJournalDet " & vbNewLine & _
                         "WHERE  " & vbNewLine & _
-                        "   LEFT(JournalID,21)=@JournalID " & vbNewLine
+                        "   JournalID=@JournalID " & vbNewLine
 
-                    .Parameters.Add("@JournalID", SqlDbType.VarChar, 21).Value = strJournalID
+                    .Parameters.Add("@JournalID", SqlDbType.VarChar, 30).Value = strJournalID
                     If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
                 End With
                 sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)
@@ -524,9 +524,9 @@ Namespace DL
                         "   ID=ISNULL(RIGHT(MAX(ID),3),0) " & vbNewLine & _
                         "FROM traJournalStatus " & vbNewLine & _
                         "WHERE  " & vbNewLine & _
-                        "   LEFT(JournalID,21)=@JournalID " & vbNewLine
+                        "   JournalID=@JournalID " & vbNewLine
 
-                    .Parameters.Add("@JournalID", SqlDbType.VarChar, 21).Value = strJournalID
+                    .Parameters.Add("@JournalID", SqlDbType.VarChar, 30).Value = strJournalID
 
                     If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
                 End With
@@ -535,7 +535,7 @@ Namespace DL
                     If .HasRows Then
                         .Read()
                         intReturn = .Item("ID") + 1
-                    End If 
+                    End If
                 End With
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()
             Catch ex As Exception

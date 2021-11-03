@@ -2,76 +2,30 @@ Namespace BL
     Public Class ReceiveReturn
 
 #Region "Main"
-
-        Public Shared Function ListData(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intIDStatus As Integer) As DataTable
+        
+        Public Shared Function ListData(ByVal intCompanyID As Integer, ByVal intProgramID As Integer, _
+                                        ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intIDStatus As Integer) As DataTable
             dtmDateTo = dtmDateTo.AddHours(23).AddMinutes(59).AddSeconds(59)
             BL.Server.ServerDefault()
-            Return DL.ReceiveReturn.ListData(dtmDateFrom, dtmDateTo, intIDStatus)
+            Return DL.ReceiveReturn.ListData(intCompanyID, intProgramID, dtmDateFrom, dtmDateTo, intIDStatus)
         End Function
 
-        Private Shared Function GetNewID(ByVal intCompanyID As Integer)
+        Public Shared Function GetNewID(ByVal intCompanyID As Integer, ByVal intProgramID As Integer)
             Dim clsCompany As VO.Company = DL.Company.GetDetail(intCompanyID)
-            Dim strReturn As String = "RR" & Format(Now, "yyMMdd") & "-" & clsCompany.CompanyInitial & "-"
+            Dim strReturn As String = "RR" & Format(Now, "yyMMdd") & "-" & clsCompany.CompanyInitial & "-" & Format(intProgramID, "00") & "-"
             strReturn = strReturn & Format(DL.ReceiveReturn.GetMaxID(strReturn), "000")
             Return strReturn
         End Function
 
-        Public Shared Function SaveData(ByVal bolNew As Boolean, ByVal clsData As VO.ReceiveReturn, ByVal clsDataDetail() As VO.ReceiveReturnDet) As String
-            BL.Server.ServerDefault()
-            Dim dtPreviousItem As New DataTable, dtListReceiveID As New DataTable
+        Public Shared Function SaveDataDefault(ByVal bolNew As Boolean, ByVal clsData As VO.ReceiveReturn) As String
             Try
                 DL.SQL.OpenConnection()
                 DL.SQL.BeginTransaction()
 
-                If bolNew Then
-                    clsData.ID = GetNewID(clsData.CompanyID)
-                    If DL.ReceiveReturn.DataExists(clsData.ID) Then
-                        Err.Raise(515, "", "ID sudah ada sebelumnya")
-                    ElseIf Format(clsData.ReceiveReturnDate, "yyyyMMdd") <= DL.PostGL.LastPostedDate Then
-                        Err.Raise(515, "", "Data tidak dapat disimpan. Dikarenakan tanggal transaksi lebih kecil atau sama dengan tanggal Posting Transaksi")
-                    End If
-                Else
-                    If DL.ReceiveReturn.IsDeleted(clsData.ID) Then
-                        Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dihapus")
-                    ElseIf DL.ReceiveReturn.IsPostedGL(clsData.ID) Then
-                        Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses posting data transaksi")
-                    End If
+                SaveData(bolNew, clsData)
 
-                    dtPreviousItem = DL.ReceiveReturn.ListDataDetail(clsData.ID)
-                    dtListReceiveID = DL.ReceiveReturn.ListDataReceiveID(clsData.ID)
-                    DL.ReceiveReturn.DeleteDataDetail(clsData.ID)
-
-                    '# Revert Return Qty
-                    For Each dr As DataRow In dtPreviousItem.Rows
-                        DL.Receive.CalculateReturnQty(dr.Item("ReceiveDetID"))
-                    Next
-
-                    '# Revert Total Return
-                    For Each dr As DataRow In dtListReceiveID.Rows
-                        DL.Receive.UpdateTotalReturn(dr.Item("ReceiveID"))
-                    Next
-                End If
-
-                DL.ReceiveReturn.SaveData(bolNew, clsData)
-
-                '# Save Data Detail
-                For Each clsDetail As VO.ReceiveReturnDet In clsDataDetail
-                    clsDetail.ID = clsData.ID & "-" & Format(DL.ReceiveReturn.GetMaxIDDetail(clsData.ID), "000")
-                    clsDetail.ReceiveReturnID = clsData.ID
-                    DL.ReceiveReturn.SaveDataDetail(clsDetail)
-
-                    '# Calculate
-                    DL.Receive.CalculateReturnQty(clsDetail.ReceiveDetID)
-                Next
-
-                '# Calculate Total Return
-                dtListReceiveID = DL.ReceiveReturn.ListDataReceiveID(clsData.ID)
-                For Each dr As DataRow In dtListReceiveID.Rows
-                    DL.Receive.UpdateTotalReturn(dr.Item("ReceiveID"))
-                Next
-
-                '# Save Data Status
-                SaveDataStatus(clsData.ID, IIf(bolNew, "BARU", "EDIT"), clsData.LogBy, clsData.Remarks)
+                '# CaLculate Return Value
+                DL.Receive.CalculateReturnValue(clsData.ReferencesID)
 
                 DL.SQL.CommitTransaction()
             Catch ex As Exception
@@ -83,54 +37,67 @@ Namespace BL
             Return clsData.ID
         End Function
 
+        Public Shared Function SaveData(ByVal bolNew As Boolean, ByVal clsData As VO.ReceiveReturn) As String
+            If bolNew Then
+                clsData.ID = GetNewID(clsData.CompanyID, clsData.ProgramID)
+                If DL.ReceiveReturn.DataExists(clsData.ID) Then
+                    Err.Raise(515, "", "ID sudah ada sebelumnya")
+                    'ElseIf Format(clsData.ReceiveReturnDate, "yyyyMMdd") <= DL.PostGL.LastPostedDate Then
+                    '    Err.Raise(515, "", "Data tidak dapat disimpan. Dikarenakan tanggal transaksi lebih kecil atau sama dengan tanggal Posting Transaksi")
+                End If
+            Else
+                'Dim strReturnID As String = DL.ReceiveReturnReturn.AlreadyCreatedReturn(clsData.ID)
+                'Dim strInvoiceID As String = DL.AccountReceivable.AlreadyCreatedInvoice(clsData.ID)
+
+                If DL.ReceiveReturn.IsDeleted(clsData.ID) Then
+                    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dihapus")
+                    'ElseIf strReturnID.Trim <> "" Then
+                    '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dibuat retur dengan nomor " & strReturnID)
+                    'ElseIf strInvoiceID.Trim <> "" Then
+                    '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses penagihan dengan nomor " & strInvoiceID)
+                ElseIf DL.ReceiveReturn.IsPostedGL(clsData.ID) Then
+                    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses posting data transaksi")
+                End If
+            End If
+
+            DL.ReceiveReturn.SaveData(bolNew, clsData)
+
+            '# Save Data Status
+            SaveDataStatus(clsData.ID, IIf(bolNew, "BARU", "EDIT"), clsData.LogBy, clsData.Remarks)
+            Return clsData.ID
+        End Function
+
         Public Shared Function GetDetail(ByVal strID As String) As VO.ReceiveReturn
             BL.Server.ServerDefault()
             Return DL.ReceiveReturn.GetDetail(strID)
         End Function
 
         Public Shared Sub DeleteData(ByVal clsData As VO.ReceiveReturn)
-            Dim dtPreviousItem As New DataTable, dtListReceiveID As New DataTable
             BL.Server.ServerDefault()
             Try
                 DL.SQL.OpenConnection()
                 DL.SQL.BeginTransaction()
 
+                'Dim strReturnID As String = DL.ReceiveReturnReturn.AlreadyCreatedReturn(clsData.ID)
+                'Dim strInvoiceID As String = DL.AccountReceivable.AlreadyCreatedInvoice(clsData.ID)
+
                 If DL.ReceiveReturn.IsDeleted(clsData.ID) Then
                     Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah dihapus sebelumnya")
+                    'ElseIf strReturnID.Trim <> "" Then
+                    '    Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah dibuat retur dengan nomor " & strReturnID)
+                    'ElseIf strInvoiceID.Trim <> "" Then
+                    '    Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah diproses penagihan dengan nomor " & strInvoiceID)
                 ElseIf DL.ReceiveReturn.IsPostedGL(clsData.ID) Then
                     Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah diproses posting data transaksi")
                 Else
-                    dtListReceiveID = DL.ReceiveReturn.ListDataReceiveID(clsData.ID)
-
                     DL.ReceiveReturn.DeleteData(clsData.ID)
 
                     '# Save Data Status
                     SaveDataStatus(clsData.ID, "DIHAPUS", clsData.LogBy, clsData.Remarks)
 
-                    '# Revert Return Qty
-                    dtPreviousItem = DL.ReceiveReturn.ListDataDetail(clsData.ID)
-                    For Each dr As DataRow In dtPreviousItem.Rows
-                        DL.Receive.CalculateReturnQty(dr.Item("ReceiveDetID"))
-                    Next
+                    '# CaLculate Return Value
+                    DL.Receive.CalculateReturnValue(clsData.ReferencesID)
 
-                    '# Revert Total Return
-                    For Each dr As DataRow In dtListReceiveID.Rows
-                        DL.Receive.UpdateTotalReturn(dr.Item("ReceiveID"))
-                    Next
-
-                    '# Delete Journal
-                    Dim clsJournal As VO.Journal = New VO.Journal
-                    clsJournal.CompanyID = clsData.CompanyID
-                    clsJournal.ID = clsData.JournalID
-                    clsJournal.ReferencesID = clsData.ID
-                    clsJournal.JournalDate = clsData.ReceiveReturnDate
-                    clsJournal.TotalAmount = clsData.SubTotal
-                    clsJournal.IsAutoGenerate = True
-                    clsJournal.IDStatus = clsData.IDStatus
-                    clsJournal.Remarks = clsData.Remarks
-                    clsJournal.LogBy = clsData.LogBy
-
-                    BL.Journal.DeleteData(clsJournal)
                 End If
 
                 DL.SQL.CommitTransaction()

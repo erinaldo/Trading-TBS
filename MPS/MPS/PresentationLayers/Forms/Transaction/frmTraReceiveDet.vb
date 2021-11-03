@@ -110,7 +110,7 @@ Public Class frmTraReceiveDet
                 txtNettoBefore.Value = clsData.ArrivalNettoBefore
                 txtDeduction.Value = clsData.ArrivalDeduction
                 txtNettoAfter.Value = clsData.ArrivalNettoAfter
-                txtMaxBrutto.Value = clsData.MaxBrutto + (clsData.ArrivalNettoAfterSales * clsData.Tolerance / 100)
+                txtMaxBrutto.Value = clsData.MaxNetto + (clsData.ArrivalNettoAfterSales * clsData.Tolerance / 100)
                 txtPrice1.Value = clsData.Price1
                 txtTotalPrice1.Value = clsData.TotalPrice1
                 txtPrice2.Value = clsData.Price2

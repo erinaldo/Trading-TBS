@@ -265,6 +265,59 @@ Namespace DL
             Return bolExists
         End Function
 
+        Public Shared Function IsPostedGL(ByVal strID As String) As Boolean
+            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
+            Dim bolExists As Boolean = False
+            Try
+                If Not SQL.bolUseTrans Then SQL.OpenConnection()
+                With sqlcmdExecute
+                    .Connection = SQL.sqlConn
+                    .CommandText = _
+                        "SELECT TOP 1 " & vbNewLine & _
+                        "   ID " & vbNewLine & _
+                        "FROM traCost " & vbNewLine & _
+                        "WHERE  " & vbNewLine & _
+                        "   ID=@ID " & vbNewLine & _
+                        "   AND IsPostedGL=1 " & vbNewLine
+
+                    .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
+                    If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
+                End With
+                sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)
+                With sqlrdData
+                    If .HasRows Then
+                        .Read()
+                        bolExists = True
+                    End If 
+                End With
+                If Not SQL.bolUseTrans Then SQL.CloseConnection()
+            Catch ex As Exception
+                Throw ex
+            Finally
+                If Not sqlrdData Is Nothing Then sqlrdData.Close()
+            End Try
+            Return bolExists
+        End Function
+
+        Public Shared Sub UpdateJournalID(ByVal strID As String, ByVal strJournalID As String)
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "UPDATE traCost " & vbNewLine & _
+                    "SET JournalID=@JournalID " & vbNewLine & _
+                    "WHERE " & vbNewLine & _
+                    "   ID=@ID " & vbNewLine
+
+                .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
+                .Parameters.Add("@JournalID", SqlDbType.VarChar, 30).Value = strJournalID
+            End With
+            Try
+                SQL.ExecuteNonQuery(sqlcmdExecute)
+            Catch ex As SqlException
+                Throw ex
+            End Try
+        End Sub
+
 
 
 
@@ -293,58 +346,6 @@ Namespace DL
             End With
             Return SQL.QueryDataTable(sqlcmdExecute)
         End Function
-
-        Public Shared Function IsPostedGL(ByVal strID As String) As Boolean
-            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader
-            Dim bolExists As Boolean = False
-            Try
-                If Not SQL.bolUseTrans Then SQL.OpenConnection()
-                With sqlcmdExecute
-                    .Connection = SQL.sqlConn
-                    .CommandText = _
-                        "SELECT TOP 1 " & vbNewLine & _
-                        "   ID " & vbNewLine & _
-                        "FROM traCost " & vbNewLine & _
-                        "WHERE  " & vbNewLine & _
-                        "   ID=@ID " & vbNewLine & _
-                        "   AND IsPostedGL=1 " & vbNewLine
-
-                    .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = strID
-                    If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
-                End With
-                sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)
-                With sqlrdData
-                    If .HasRows Then
-                        .Read()
-                        bolExists = True
-                    End If
-                    .Close()
-                End With
-                If Not SQL.bolUseTrans Then SQL.CloseConnection()
-            Catch ex As Exception
-                Throw ex
-            End Try
-            Return bolExists
-        End Function
-
-        Public Shared Sub UpdateJournalID(ByVal strID As String, ByVal strJournalID As String)
-            Dim sqlcmdExecute As New SqlCommand
-            With sqlcmdExecute
-                .CommandText = _
-                    "UPDATE traCost " & vbNewLine & _
-                    "SET JournalID=@JournalID " & vbNewLine & _
-                    "WHERE " & vbNewLine & _
-                    "   ID=@ID " & vbNewLine
-
-                .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = strID
-                .Parameters.Add("@JournalID", SqlDbType.VarChar, 20).Value = strJournalID
-            End With
-            Try
-                SQL.ExecuteNonQuery(sqlcmdExecute)
-            Catch ex As SqlException
-                Throw ex
-            End Try
-        End Sub
 
         Public Shared Sub PostGL(ByVal strID As String, ByVal strLogBy As String)
             Dim sqlcmdExecute As New SqlCommand
@@ -458,9 +459,9 @@ Namespace DL
                         "   ID=ISNULL(RIGHT(MAX(ID),3),0) " & vbNewLine & _
                         "FROM traCostDet " & vbNewLine & _
                         "WHERE  " & vbNewLine & _
-                        "   LEFT(CostID,21)=@CostID " & vbNewLine
+                        "   CostID=@CostID " & vbNewLine
 
-                    .Parameters.Add("@CostID", SqlDbType.VarChar, 21).Value = strCostID
+                    .Parameters.Add("@CostID", SqlDbType.VarChar, 30).Value = strCostID
                     If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
                 End With
                 sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)
@@ -534,9 +535,9 @@ Namespace DL
                         "   ID=ISNULL(RIGHT(MAX(ID),3),0) " & vbNewLine & _
                         "FROM traCostStatus " & vbNewLine & _
                         "WHERE  " & vbNewLine & _
-                        "   LEFT(CostID,21)=@CostID " & vbNewLine
+                        "   CostID=@CostID " & vbNewLine
 
-                    .Parameters.Add("@CostID", SqlDbType.VarChar, 21).Value = strCostID
+                    .Parameters.Add("@CostID", SqlDbType.VarChar, 30).Value = strCostID
 
                     If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
                 End With

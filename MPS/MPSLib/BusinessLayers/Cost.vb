@@ -34,8 +34,8 @@ Namespace BL
                 Else
                     If DL.Cost.IsDeleted(clsData.ID) Then
                         Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dihapus")
-                        'ElseIf DL.Cost.IsPostedGL(clsData.ID) Then
-                        '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses posting data transaksi")
+                    ElseIf DL.Cost.IsPostedGL(clsData.ID) Then
+                        Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses posting data transaksi")
                     End If
                     DL.Cost.DeleteDataDetail(clsData.ID)
                 End If
@@ -76,8 +76,8 @@ Namespace BL
 
                 If DL.Cost.IsDeleted(clsData.ID) Then
                     Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah dihapus sebelumnya")
-                    'ElseIf DL.Cost.IsPostedGL(clsData.ID) Then
-                    '    Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah diproses posting data transaksi")
+                ElseIf DL.Cost.IsPostedGL(clsData.ID) Then
+                    Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah diproses posting data transaksi")
                 Else
                     DL.Cost.DeleteData(clsData.ID)
 

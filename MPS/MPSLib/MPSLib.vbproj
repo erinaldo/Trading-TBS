@@ -88,6 +88,7 @@
     <Compile Include="BusinessLayers\PaymentReferences.vb" />
     <Compile Include="BusinessLayers\PaymentTerm.vb" />
     <Compile Include="BusinessLayers\Receive.vb" />
+    <Compile Include="BusinessLayers\ReceiveReturn.vb" />
     <Compile Include="BusinessLayers\Sales.vb" />
     <Compile Include="BusinessLayers\SalesDiscount.vb" />
     <Compile Include="BusinessLayers\UOM.vb" />
@@ -116,6 +117,7 @@
     <Compile Include="DataLayers\PaymentReferences.vb" />
     <Compile Include="DataLayers\PaymentTerm.vb" />
     <Compile Include="DataLayers\Receive.vb" />
+    <Compile Include="DataLayers\ReceiveReturn.vb" />
     <Compile Include="DataLayers\Sales.vb" />
     <Compile Include="DataLayers\SalesDiscount.vb" />
     <Compile Include="DataLayers\UOM.vb" />

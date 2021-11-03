@@ -55,8 +55,8 @@ Namespace BL
                     '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dibuat retur dengan nomor " & strReturnID)
                     'ElseIf strInvoiceID.Trim <> "" Then
                     '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses penagihan dengan nomor " & strInvoiceID)
-                    'ElseIf DL.Receive.IsPostedGL(clsData.ID) Then
-                    '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses posting data transaksi")
+                ElseIf DL.Receive.IsPostedGL(clsData.ID) Then
+                    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses posting data transaksi")
                 End If
             End If
 
@@ -87,8 +87,8 @@ Namespace BL
                     '    Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah dibuat retur dengan nomor " & strReturnID)
                     'ElseIf strInvoiceID.Trim <> "" Then
                     '    Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah diproses penagihan dengan nomor " & strInvoiceID)
-                    'ElseIf DL.Receive.IsPostedGL(clsData.ID) Then
-                    '    Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah diproses posting data transaksi")
+                ElseIf DL.Receive.IsPostedGL(clsData.ID) Then
+                    Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah diproses posting data transaksi")
                 Else
                     DL.Receive.DeleteData(clsData.ID)
 

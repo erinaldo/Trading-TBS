@@ -23,7 +23,7 @@ Namespace VO
         Property ArrivalNettoBefore As Decimal
         Property ArrivalDeduction As Decimal
         Property ArrivalNettoAfter As Decimal
-        Property MaxBrutto As Decimal
+        Property MaxNetto As Decimal
         Property Price1 As Decimal
         Property Price2 As Decimal
         Property TotalPrice1 As Decimal
