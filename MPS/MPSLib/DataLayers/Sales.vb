@@ -332,7 +332,8 @@ Namespace DL
                     "	TS.ProgramID, MP.Name AS ProgramName, TS.CompanyID, MC.Name AS CompanyName, TSS.ID, TSS.SalesID AS ReferencesID, TSS.BPID, MBP.Name AS BPName, GETDATE() AS ReceiveDate, 	" & vbNewLine & _
                     "	MBP.PaymentTermID AS PaymentTerm, GETDATE() AS DueDate, TS.DriverName, TS.PlatNumber, TS.PPN, TS.PPH, CAST(0 AS DECIMAL(18,2)) AS ArrivalBrutto, CAST(0 AS DECIMAL(18,2)) AS ArrivalTarra,	" & vbNewLine & _
                     "	CAST(0 AS DECIMAL(18,2)) AS ArrivalNettoBefore, CAST(0 AS DECIMAL(18,2)) AS ArrivalDeduction, CAST(0 AS DECIMAL(18,2)) AS ArrivalNettoAfter, MI.PurchasePrice1 AS Price1, MI.PurchasePrice2 AS Price2, 	" & vbNewLine & _
-                    "	CAST(0 AS DECIMAL(18,2)) AS TotalPrice1, CAST(0 AS DECIMAL(18,2)) AS TotalPrice2, CAST('' AS VARCHAR(250)) AS Remarks	" & vbNewLine & _
+                    "	CAST(0 AS DECIMAL(18,2)) AS TotalPrice1, CAST(0 AS DECIMAL(18,2)) AS TotalPrice2, CAST('' AS VARCHAR(250)) AS Remarks, CAST('' AS VARCHAR(250)) AS DONumber, CAST('' AS VARCHAR(250)) AS SPBNumber,	" & vbNewLine & _
+                    "	CAST('' AS VARCHAR(100)) AS SegelNumber, CAST('' AS VARCHAR(250)) AS Specification " & vbNewLine & _
                     "FROM traSales TS 	" & vbNewLine & _
                     "INNER JOIN traSalesSupplier TSS ON 	" & vbNewLine & _
                     "	TS.ID=TSS.SalesID 	" & vbNewLine & _

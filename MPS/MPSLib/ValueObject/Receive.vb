@@ -10,8 +10,12 @@ Namespace VO
         Property TimeOut As TimeSpan = Today.TimeOfDay
         Property PaymentTerm As Integer
         Property DueDate As DateTime
-        Property DriverName As String
         Property PlatNumber As String
+        Property DriverName As String
+        Property DONumber As String
+        Property SPBNumber As String
+        Property SegelNumber As String
+        Property Specification As String
         Property PPN As Decimal
         Property PPH As Decimal
         Property ItemID As Integer

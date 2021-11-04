@@ -461,7 +461,7 @@ Partial Class frmTraReceiveDet
         Me.txtSegelNumber.Location = New System.Drawing.Point(135, 290)
         Me.txtSegelNumber.MaxLength = 250
         Me.txtSegelNumber.Name = "txtSegelNumber"
-        Me.txtSegelNumber.Size = New System.Drawing.Size(160, 21)
+        Me.txtSegelNumber.Size = New System.Drawing.Size(220, 21)
         Me.txtSegelNumber.TabIndex = 12
         '
         'Label19
@@ -482,7 +482,7 @@ Partial Class frmTraReceiveDet
         Me.txtSPBNumber.Location = New System.Drawing.Point(135, 263)
         Me.txtSPBNumber.MaxLength = 250
         Me.txtSPBNumber.Name = "txtSPBNumber"
-        Me.txtSPBNumber.Size = New System.Drawing.Size(160, 21)
+        Me.txtSPBNumber.Size = New System.Drawing.Size(220, 21)
         Me.txtSPBNumber.TabIndex = 11
         '
         'Label18
@@ -503,7 +503,7 @@ Partial Class frmTraReceiveDet
         Me.txtDONumber.Location = New System.Drawing.Point(135, 236)
         Me.txtDONumber.MaxLength = 250
         Me.txtDONumber.Name = "txtDONumber"
-        Me.txtDONumber.Size = New System.Drawing.Size(160, 21)
+        Me.txtDONumber.Size = New System.Drawing.Size(220, 21)
         Me.txtDONumber.TabIndex = 10
         '
         'txtMaxBrutto

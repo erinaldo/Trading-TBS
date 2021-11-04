@@ -24,7 +24,7 @@
     Dim frmMainTraSales As frmTraSales
     'Dim frmMainTraSalesReturn As frmTraSalesReturn
     Dim frmMainTraReceive As frmTraReceive
-    'Dim frmMainTraReceiveReturn As frmTraReceiveReturn
+    Dim frmMainTraReceiveReturn As frmTraReceiveReturn
     'Dim frmMainTraAccountReceivable As frmTraAccountReceivable
     'Dim frmMainTraAccountPayable As frmTraAccountPayable
     Dim frmMainTraCost As frmTraCost
@@ -237,9 +237,9 @@
         UI.usForm.frmOpen(frmMainTraReceive, "frmTraReceive", Me)
     End Sub
 
-    'Private Sub mnuTransaksiReturPembelian_Click(sender As Object, e As EventArgs) Handles mnuTransaksiReturPembelian.Click
-    '    UI.usForm.frmOpen(frmMainTraReceiveReturn, "frmTraReceiveReturn", Me)
-    'End Sub
+    Private Sub mnuTransaksiReturPembelian_Click(sender As Object, e As EventArgs) Handles mnuTransaksiReturPembelian.Click
+        UI.usForm.frmOpen(frmMainTraReceiveReturn, "frmTraReceiveReturn", Me)
+    End Sub
 
     'Private Sub mnuTransaksiPenagihan_Click(sender As Object, e As EventArgs) Handles mnuTransaksiPenagihan.Click
     '    UI.usForm.frmOpen(frmMainTraAccountReceivable, "frmTraAccountReceivable", Me)

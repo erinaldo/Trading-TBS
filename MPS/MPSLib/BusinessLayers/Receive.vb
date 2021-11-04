@@ -141,6 +141,13 @@ Namespace BL
             Return DL.Receive.ListDataSlipTimbang(strID)
         End Function
 
+        Public Shared Function ListDataOutstandingReturn(ByVal intCompanyID As Integer, ByVal intProgramID As Integer, _
+                                        ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intBPID As Integer) As DataTable
+            dtmDateTo = dtmDateTo.AddHours(23).AddMinutes(59).AddSeconds(59)
+            BL.Server.ServerDefault()
+            Return DL.Receive.ListDataOutstandingReturn(intCompanyID, intProgramID, dtmDateFrom, dtmDateTo, intBPID)
+        End Function
+
         'Public Shared Sub PostData(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime)
         '    Dim dtData As DataTable = DL.Receive.ListDataOutstandingPostGL(dtmDateFrom, dtmDateTo)
         '    For Each dr As DataRow In dtData.Rows

@@ -40,7 +40,7 @@
     Private Sub prvGet()
         intPos = grdView.FocusedRowHandle
         If intPos < 0 Then Exit Sub
-        pubLUdtRow = grdView.GetDataRow(grdView.FocusedRowHandle)
+        pubLUdtRow = grdView.GetDataRow(intPos)
         pubIsLookUpGet = True
         Me.Close()
     End Sub

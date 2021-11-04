@@ -49,6 +49,10 @@ Public Class frmTraSalesSplitReceive
         UI.usForm.SetGrid(grdView, "Price2", "Price 2", 100, UI.usDefGrid.gReal2Num, True, False)
         UI.usForm.SetGrid(grdView, "TotalPrice1", "Total Price 1", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "TotalPrice2", "Total Price 2", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "DONumber", "Nomor DO", 100, UI.usDefGrid.gString, True, False)
+        UI.usForm.SetGrid(grdView, "SPBNumber", "Nomor SPB", 100, UI.usDefGrid.gString, True, False)
+        UI.usForm.SetGrid(grdView, "SegelNumber", "Nomor Segel", 100, UI.usDefGrid.gString, True, False)
+        UI.usForm.SetGrid(grdView, "Specification", "Spesifikasi", 100, UI.usDefGrid.gString, True, False)
         UI.usForm.SetGrid(grdView, "Remarks", "Remarks", 100, UI.usDefGrid.gString, True, False)
 
         grdView.Columns("ArrivalBrutto").ColumnEdit = rpiValue
@@ -304,6 +308,10 @@ Public Class frmTraSalesSplitReceive
                 clsReceive.Price2 = .Rows(i).Item("Price2")
                 clsReceive.TotalPrice2 = .Rows(i).Item("TotalPrice2")
                 clsReceive.Tolerance = txtTolerance.Value
+                clsReceive.DONumber = UCase(.Rows(i).Item("DONumber"))
+                clsReceive.SPBNumber = UCase(.Rows(i).Item("SPBNumber"))
+                clsReceive.SegelNumber = UCase(.Rows(i).Item("SegelNumber"))
+                clsReceive.Specification = UCase(.Rows(i).Item("Specification"))
                 clsReceive.IDStatus = VO.Status.Values.Draft
                 clsReceive.LogBy = MPSLib.UI.usUserApp.UserID
                 clsReceive.JournalID = ""
@@ -361,12 +369,12 @@ Public Class frmTraSalesSplitReceive
     Private Sub grdView_ValidatingEditor(sender As Object, e As DevExpress.XtraEditors.Controls.BaseContainerValidateEditorEventArgs) Handles grdView.ValidatingEditor
         With grdView
             bolValid = True
+            Dim intFocus As Integer = .FocusedRowHandle
             Dim col As GridColumn = .FocusedColumn
             If (col.Name = "ArrivalBrutto") Or (col.Name = "ArrivalTarra") Or (col.Name = "ArrivalDeduction") Or _
                (col.Name = "Price1") Or (col.Name = "Price2") Then
                 Dim oldValue As Decimal = IIf(.GetFocusedRowCellValue(col).Equals(DBNull.Value), 0, .GetFocusedRowCellValue(col))
                 Dim newValue As Decimal = IIf((e.Value = "") Or (e.Value.Equals(DBNull.Value) Or (e.Value = ".")), 0, e.Value)
-                Dim intFocus As Integer = .FocusedRowHandle
                 Dim strErrorMessage As String = ""
 
                 If newValue < 0 Then
@@ -391,6 +399,10 @@ Public Class frmTraSalesSplitReceive
                     .UpdateCurrentRow()
                     .BestFitColumns()
                 End If
+            ElseIf col.Name = "DONumber" Or col.Name = "SPBNumber" Or col.Name = "SegelNumber" Or col.Name = "Specification" Then
+                .SetRowCellValue(intFocus, col.Name, e.Value)
+                .UpdateCurrentRow()
+                .BestFitColumns()
             End If
 
         End With

@@ -32,6 +32,9 @@ Partial Class frmTraReceive
         Me.BarRefresh = New System.Windows.Forms.ToolBarButton()
         Me.BarClose = New System.Windows.Forms.ToolBarButton()
         Me.pnlMain = New DevExpress.XtraEditors.PanelControl()
+        Me.btnCompany = New DevExpress.XtraEditors.SimpleButton()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.txtCompanyName = New MPS.usTextBox()
         Me.btnClear = New DevExpress.XtraEditors.SimpleButton()
         Me.btnExecute = New DevExpress.XtraEditors.SimpleButton()
         Me.cboStatus = New MPS.usComboBox()
@@ -43,9 +46,6 @@ Partial Class frmTraReceive
         Me.Label1 = New System.Windows.Forms.Label()
         Me.grdMain = New DevExpress.XtraGrid.GridControl()
         Me.grdView = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.btnCompany = New DevExpress.XtraEditors.SimpleButton()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.txtCompanyName = New MPS.usTextBox()
         Me.pgMain = New System.Windows.Forms.ProgressBar()
         CType(Me.pnlMain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlMain.SuspendLayout()
@@ -125,6 +125,36 @@ Partial Class frmTraReceive
         Me.pnlMain.Name = "pnlMain"
         Me.pnlMain.Size = New System.Drawing.Size(984, 122)
         Me.pnlMain.TabIndex = 1
+        '
+        'btnCompany
+        '
+        Me.btnCompany.Image = CType(resources.GetObject("btnCompany.Image"), System.Drawing.Image)
+        Me.btnCompany.Location = New System.Drawing.Point(339, 45)
+        Me.btnCompany.Name = "btnCompany"
+        Me.btnCompany.Size = New System.Drawing.Size(23, 23)
+        Me.btnCompany.TabIndex = 1
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.BackColor = System.Drawing.Color.Transparent
+        Me.Label4.ForeColor = System.Drawing.Color.Black
+        Me.Label4.Location = New System.Drawing.Point(33, 50)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(64, 13)
+        Me.Label4.TabIndex = 107
+        Me.Label4.Text = "Perusahaan"
+        '
+        'txtCompanyName
+        '
+        Me.txtCompanyName.BackColor = System.Drawing.Color.LightYellow
+        Me.txtCompanyName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCompanyName.Location = New System.Drawing.Point(105, 47)
+        Me.txtCompanyName.MaxLength = 250
+        Me.txtCompanyName.Name = "txtCompanyName"
+        Me.txtCompanyName.ReadOnly = True
+        Me.txtCompanyName.Size = New System.Drawing.Size(228, 21)
+        Me.txtCompanyName.TabIndex = 0
         '
         'btnClear
         '
@@ -247,36 +277,6 @@ Partial Class frmTraReceive
         Me.grdView.OptionsBehavior.AutoExpandAllGroups = True
         Me.grdView.OptionsView.ColumnAutoWidth = False
         Me.grdView.OptionsView.ShowAutoFilterRow = True
-        '
-        'btnCompany
-        '
-        Me.btnCompany.Image = CType(resources.GetObject("btnCompany.Image"), System.Drawing.Image)
-        Me.btnCompany.Location = New System.Drawing.Point(339, 45)
-        Me.btnCompany.Name = "btnCompany"
-        Me.btnCompany.Size = New System.Drawing.Size(23, 23)
-        Me.btnCompany.TabIndex = 1
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.BackColor = System.Drawing.Color.Transparent
-        Me.Label4.ForeColor = System.Drawing.Color.Black
-        Me.Label4.Location = New System.Drawing.Point(33, 50)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(64, 13)
-        Me.Label4.TabIndex = 107
-        Me.Label4.Text = "Perusahaan"
-        '
-        'txtCompanyName
-        '
-        Me.txtCompanyName.BackColor = System.Drawing.Color.LightYellow
-        Me.txtCompanyName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCompanyName.Location = New System.Drawing.Point(105, 47)
-        Me.txtCompanyName.MaxLength = 250
-        Me.txtCompanyName.Name = "txtCompanyName"
-        Me.txtCompanyName.ReadOnly = True
-        Me.txtCompanyName.Size = New System.Drawing.Size(228, 21)
-        Me.txtCompanyName.TabIndex = 0
         '
         'pgMain
         '

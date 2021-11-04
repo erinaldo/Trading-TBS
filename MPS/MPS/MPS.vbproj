@@ -464,6 +464,12 @@
     <Compile Include="PresentationLayers\Forms\View\frmViewCompany.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="PresentationLayers\Forms\View\frmViewOutstandingReceiveForReturn.Designer.vb">
+      <DependentUpon>frmViewOutstandingReceiveForReturn.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\View\frmViewOutstandingReceiveForReturn.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="PresentationLayers\Forms\View\frmViewProgram.designer.vb">
       <DependentUpon>frmViewProgram.vb</DependentUpon>
     </Compile>
@@ -709,6 +715,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\View\frmViewCompany.resx">
       <DependentUpon>frmViewCompany.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\View\frmViewOutstandingReceiveForReturn.resx">
+      <DependentUpon>frmViewOutstandingReceiveForReturn.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\View\frmViewProgram.resx">
       <DependentUpon>frmViewProgram.vb</DependentUpon>

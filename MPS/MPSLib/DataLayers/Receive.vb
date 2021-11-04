@@ -10,7 +10,7 @@ Namespace DL
                 .CommandText = _
                    "SELECT " & vbNewLine & _
                    "    A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.ReferencesID, A.BPID, C.Name AS BPName, A.ReceiveDate, A.PaymentTerm, A.DriverName, " & vbNewLine & _
-                   "    A.PlatNumber, A.DueDate, A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MU.Code AS UomCode, A.ArrivalBrutto, A.ArrivalTarra, " & vbNewLine & _
+                   "    A.PlatNumber, A.DONumber, A.SPBNumber, A.SegelNumber, A.Specification, A.DueDate, A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MU.Code AS UomCode, A.ArrivalBrutto, A.ArrivalTarra, " & vbNewLine & _
                    "    A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, A.Price1, A.Price2, A.TotalPrice1, A.TotalPrice2, A.ArrivalReturn, A.TotalPayment, A.IsPostedGL,   " & vbNewLine & _
                    "    A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, B.Name AS StatusInfo, A.CreatedBy,   " & vbNewLine & _
                    "    A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID  " & vbNewLine & _
@@ -52,11 +52,11 @@ Namespace DL
                     .CommandText = _
                        "INSERT INTO traReceive " & vbNewLine & _
                        "    (CompanyID, ProgramID, ID, ReferencesID, BPID, ReceiveDate, PaymentTerm, DueDate, DriverName, PlatNumber, " & vbNewLine & _
-                       "     PPN, PPH, ItemID, ArrivalBrutto, ArrivalTarra, ArrivalNettoBefore, ArrivalDeduction, ArrivalNettoAfter, " & vbNewLine & _
+                       "     DONumber, SPBNumber, SegelNumber, Specification, PPN, PPH, ItemID, ArrivalBrutto, ArrivalTarra, ArrivalNettoBefore, ArrivalDeduction, ArrivalNettoAfter, " & vbNewLine & _
                        "     Price1, TotalPrice1, Price2, TotalPrice2, Tolerance, Remarks, IDStatus, CreatedBy, CreatedDate, LogBy, LogDate)   " & vbNewLine & _
                        "VALUES " & vbNewLine & _
                        "    (@CompanyID, @ProgramID, @ID, @ReferencesID, @BPID, @ReceiveDate, @PaymentTerm, @DueDate, @DriverName, @PlatNumber, " & vbNewLine & _
-                       "     @PPN, @PPH, @ItemID, @ArrivalBrutto, @ArrivalTarra, @ArrivalNettoBefore, @ArrivalDeduction, @ArrivalNettoAfter, " & vbNewLine & _
+                       "     @DONumber, @SPBNumber, @SegelNumber, @Specification, @PPN, @PPH, @ItemID, @ArrivalBrutto, @ArrivalTarra, @ArrivalNettoBefore, @ArrivalDeduction, @ArrivalNettoAfter, " & vbNewLine & _
                        "     @Price1, @TotalPrice1, @Price2, @TotalPrice2, @Tolerance, @Remarks, @IDStatus, @LogBy, GETDATE(), @LogBy, GETDATE())  " & vbNewLine
                 Else
                     .CommandText = _
@@ -70,6 +70,10 @@ Namespace DL
                         "    PlatNumber=@PlatNumber, " & vbNewLine & _
                         "    DriverName=@DriverName, " & vbNewLine & _
                         "    DueDate=@DueDate, " & vbNewLine & _
+                        "    DONumber=@DONumber, " & vbNewLine & _
+                        "    SPBNumber=@SPBNumber, " & vbNewLine & _
+                        "    SegelNumber=@SegelNumber, " & vbNewLine & _
+                        "    Specification=@Specification, " & vbNewLine & _
                         "    PPN=@PPN, " & vbNewLine & _
                         "    PPH=@PPH, " & vbNewLine & _
                         "    ItemID=@ItemID, " & vbNewLine & _
@@ -102,6 +106,10 @@ Namespace DL
                 .Parameters.Add("@DueDate", SqlDbType.DateTime).Value = clsData.DueDate
                 .Parameters.Add("@DriverName", SqlDbType.VarChar, 100).Value = clsData.DriverName
                 .Parameters.Add("@PlatNumber", SqlDbType.VarChar, 10).Value = clsData.PlatNumber
+                .Parameters.Add("@DONumber", SqlDbType.VarChar, 250).Value = clsData.DONumber
+                .Parameters.Add("@SPBNumber", SqlDbType.VarChar, 250).Value = clsData.SPBNumber
+                .Parameters.Add("@SegelNumber", SqlDbType.VarChar, 100).Value = clsData.SegelNumber
+                .Parameters.Add("@Specification", SqlDbType.VarChar, 250).Value = clsData.Specification
                 .Parameters.Add("@PPN", SqlDbType.Decimal).Value = clsData.PPN
                 .Parameters.Add("@PPH", SqlDbType.Decimal).Value = clsData.PPH
                 .Parameters.Add("@ItemID", SqlDbType.Int).Value = clsData.ItemID
@@ -136,9 +144,9 @@ Namespace DL
                     .CommandText = _
                         "SELECT 	" & vbNewLine & _
                         "   A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.ReferencesID, A.BPID, C.Name AS BPName, A.ReceiveDate, A.PaymentTerm, A.DriverName, A.PlatNumber, A.DueDate, 	" & vbNewLine & _
-                        "   A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MI.UomID AS UOMID, MU.Code AS UomCode, 	" & vbNewLine & _
+                        "   A.DONumber, A.SPBNumber, A.SegelNumber, A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MI.UomID AS UOMID, MU.Code AS UomCode, 	" & vbNewLine & _
                         "   A.ArrivalBrutto, A.ArrivalTarra, A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, TS.ArrivalUsage, (A.ArrivalNettoAfter+TS.ArrivalNettoAfter-TS.ArrivalUsage-TS.ArrivalReturn) AS MaxNetto, 	" & vbNewLine & _
-                        "   A.Price1, A.TotalPrice1, A.Price2, A.TotalPrice2, A.ArrivalReturn, A.TotalPayment, A.Tolerance, A.IsPostedGL, TS.ArrivalNettoAfter AS ArrivalNettoAfterSales, " & vbNewLine & _
+                        "   A.Specification, A.Price1, A.TotalPrice1, A.Price2, A.TotalPrice2, A.ArrivalReturn, A.TotalPayment, A.Tolerance, A.IsPostedGL, TS.ArrivalNettoAfter AS ArrivalNettoAfterSales, " & vbNewLine & _
                         "   A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, A.CreatedBy,   	" & vbNewLine & _
                         "   A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID  	" & vbNewLine & _
                         "FROM traReceive A 	" & vbNewLine & _
@@ -178,6 +186,9 @@ Namespace DL
                         voReturn.DueDate = .Item("DueDate")
                         voReturn.DriverName = .Item("DriverName")
                         voReturn.PlatNumber = .Item("PlatNumber")
+                        voReturn.DONumber = .Item("DONumber")
+                        voReturn.SPBNumber = .Item("SPBNumber")
+                        voReturn.SegelNumber = .Item("SegelNumber")
                         voReturn.PPN = .Item("PPN")
                         voReturn.PPH = .Item("PPH")
                         voReturn.ItemID = .Item("ItemID")
@@ -195,6 +206,7 @@ Namespace DL
                         voReturn.TotalPrice1 = .Item("TotalPrice1")
                         voReturn.TotalPrice2 = .Item("TotalPrice2")
                         voReturn.ArrivalNettoAfterSales = .Item("ArrivalNettoAfterSales")
+                        voReturn.Specification = .Item("Specification")
                         voReturn.ArrivalUsage = .Item("ArrivalUsage")
                         voReturn.ArrivalReturn = .Item("ArrivalReturn")
                         voReturn.TotalPayment = .Item("TotalPayment")
@@ -383,6 +395,47 @@ Namespace DL
                 Throw ex
             End Try
         End Sub
+
+        Public Shared Function ListDataOutstandingReturn(ByVal intCompanyID As Integer, ByVal intProgramID As Integer, _
+                                        ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intBPID As Integer) As DataTable
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "SELECT  	" & vbNewLine & _
+                    "   A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.BPID, C.Name AS BPName, A.ReceiveDate, A.PaymentTerm, A.PlatNumber, A.DriverName,  	" & vbNewLine & _
+                    "	A.DONumber, A.SPBNumber, A.SegelNumber, A.DueDate, A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MU.ID AS UOMID, MU.Code AS UomCode, A.ArrivalBrutto, A.ArrivalTarra,  	" & vbNewLine & _
+                    "   A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, A.Price1, A.Price2, A.TotalPrice1, A.TotalPrice2, A.Tolerance, A.ArrivalNettoAfter AS ArrivalNettoAfterReceive, 	" & vbNewLine & _
+                    "	A.ArrivalNettoAfter-A.ArrivalReturn AS MaxNetto, A.ArrivalReturn AS ArrivalNettoUsage, A.Specification, A.IsPostedGL, A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, B.Name AS StatusInfo, A.CreatedBy,    	" & vbNewLine & _
+                    "   A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID   	" & vbNewLine & _
+                    "FROM traReceive A  	" & vbNewLine & _
+                    "INNER JOIN mstStatus B ON  	" & vbNewLine & _
+                    "    A.IDStatus=B.ID  	" & vbNewLine & _
+                    "INNER JOIN mstBusinessPartner C ON  	" & vbNewLine & _
+                    "    A.BPID=C.ID  	" & vbNewLine & _
+                    "INNER JOIN mstItem MI ON  	" & vbNewLine & _
+                    "    A.ItemID=MI.ID  	" & vbNewLine & _
+                    "INNER JOIN mstUOM MU ON  	" & vbNewLine & _
+                    "    MI.UomID=MU.ID  	" & vbNewLine & _
+                    "INNER JOIN mstCompany MC ON  	" & vbNewLine & _
+                    "    A.CompanyID=MC.ID  	" & vbNewLine & _
+                    "INNER JOIN mstProgram MP ON  	" & vbNewLine & _
+                    "    A.ProgramID=MP.ID  	" & vbNewLine & _
+                    "WHERE   	" & vbNewLine & _
+                    "   A.CompanyID=@CompanyID  	" & vbNewLine & _
+                    "   AND A.ProgramID=@ProgramID  	" & vbNewLine & _
+                    "   AND A.BPID=@BPID  	" & vbNewLine & _
+                    "   AND A.ReceiveDate>=@DateFrom AND A.ReceiveDate<=@DateTo 	" & vbNewLine & _
+                    "	AND A.IsDeleted=0	" & vbNewLine & _
+                    "	AND A.ArrivalNettoAfter-A.ArrivalReturn>0	" & vbNewLine
+
+                .Parameters.Add("@CompanyID", SqlDbType.Int).Value = intCompanyID
+                .Parameters.Add("@ProgramID", SqlDbType.Int).Value = intProgramID
+                .Parameters.Add("@DateFrom", SqlDbType.DateTime).Value = dtmDateFrom
+                .Parameters.Add("@DateTo", SqlDbType.DateTime).Value = dtmDateTo
+                .Parameters.Add("@BPID", SqlDbType.Int).Value = intBPID
+            End With
+            Return SQL.QueryDataTable(sqlcmdExecute)
+        End Function
 
         Public Shared Sub CalculateReturnValue(ByVal strID As String)
             Dim sqlcmdExecute As New SqlCommand
@@ -774,30 +827,6 @@ Namespace DL
         '                   "    AND A.NettoAfter-A.UsageNettoAfter-A.ReturnNettoAfter>0 " & vbNewLine
 
         '                .Parameters.Add("@ReceiveID", SqlDbType.VarChar, 20).Value = strReceiveID
-        '            End With
-        '            Return SQL.QueryDataTable(sqlcmdExecute)
-        '        End Function
-
-        '        Public Shared Function ListDataOutstandingReturn(ByVal intBPID As Integer) As DataTable
-        '            Dim sqlcmdExecute As New SqlCommand
-        '            With sqlcmdExecute
-        '                .CommandText = _
-        '                   "SELECT " & vbNewLine & _
-        '                   "    CAST(0 AS BIT) Pick, A.ID, A.ReceiveID, A.ItemID, B.Code AS ItemCode, B.Name AS ItemName, A.UomID, C.Code AS UomCode, A.Qty-A.ReturnQty AS MaxQty, A.Price, A.Disc,   " & vbNewLine & _
-        '                   "    A.Tax, A.Remarks  " & vbNewLine & _
-        '                   "FROM traReceiveDet A " & vbNewLine & _
-        '                   "INNER JOIN traReceive AA ON " & vbNewLine & _
-        '                   "    A.ReceiveID=AA.ID " & vbNewLine & _
-        '                   "    AND AA.IsDeleted=0 " & vbNewLine & _
-        '                   "INNER JOIN mstItem B ON " & vbNewLine & _
-        '                   "    A.ItemID=B.ID " & vbNewLine & _
-        '                   "INNER JOIN mstUOM C ON " & vbNewLine & _
-        '                   "    A.UomID=C.ID " & vbNewLine & _
-        '                   "WHERE  " & vbNewLine & _
-        '                   "    AA.BPID=@BPID " & vbNewLine & _
-        '                   "    AND A.Qty-A.ReturnQty>0 " & vbNewLine
-
-        '                .Parameters.Add("@BPID", SqlDbType.Int).Value = intBPID
         '            End With
         '            Return SQL.QueryDataTable(sqlcmdExecute)
         '        End Function

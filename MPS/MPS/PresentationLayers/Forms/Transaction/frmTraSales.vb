@@ -25,7 +25,7 @@ Public Class frmTraSales
         UI.usForm.SetGrid(grdView, "PaymentTerm", "PaymentTerm", 100, UI.usDefGrid.gIntNum, False)
         UI.usForm.SetGrid(grdView, "DueDate", "Jatuh Tempo", 100, UI.usDefGrid.gFullDate)
         UI.usForm.SetGrid(grdView, "DriverName", "Nama Supir", 100, UI.usDefGrid.gString)
-        UI.usForm.SetGrid(grdView, "PlatNumber", "Nomor Plat", 100, UI.usDefGrid.gString)
+        UI.usForm.SetGrid(grdView, "PlatNumber", "Nomor Polisi", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "PPN", " PPN", 100, UI.usDefGrid.gReal2Num, False)
         UI.usForm.SetGrid(grdView, "PPH", " PPH", 100, UI.usDefGrid.gReal2Num, False)
         UI.usForm.SetGrid(grdView, "ArrivalBrutto", "Brutto", 100, UI.usDefGrid.gReal2Num)

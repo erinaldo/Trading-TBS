@@ -9,8 +9,8 @@ Namespace DL
             With sqlcmdExecute
                 .CommandText = _
                    "SELECT " & vbNewLine & _
-                   "    A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.ReferencesID, A.BPID, C.Name AS BPName, A.ReceiveDate, A.PaymentTerm, A.DriverName, " & vbNewLine & _
-                   "    A.PlatNumber, A.DueDate, A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MU.Code AS UomCode, A.ArrivalBrutto, A.ArrivalTarra, " & vbNewLine & _
+                   "    A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.ReferencesID, A.BPID, C.Name AS BPName, A.ReceiveReturnDate, A.PaymentTerm, A.DriverName, " & vbNewLine & _
+                   "    A.PlatNumber, A.DONumber, A.SPBNumber, A.SegelNumber, A.Specification, A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MU.Code AS UomCode, A.ArrivalBrutto, A.ArrivalTarra, " & vbNewLine & _
                    "    A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, A.Price1, A.Price2, A.TotalPrice1, A.TotalPrice2, A.IsPostedGL,   " & vbNewLine & _
                    "    A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, B.Name AS StatusInfo, A.CreatedBy,   " & vbNewLine & _
                    "    A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID  " & vbNewLine & _
@@ -30,7 +30,7 @@ Namespace DL
                    "WHERE  " & vbNewLine & _
                    "    A.CompanyID=@CompanyID " & vbNewLine & _
                    "    AND A.ProgramID=@ProgramID " & vbNewLine & _
-                   "    AND A.ReceiveDate>=@DateFrom AND A.ReceiveDate<=@DateTo " & vbNewLine
+                   "    AND A.ReceiveReturnDate>=@DateFrom AND A.ReceiveReturnDate<=@DateTo " & vbNewLine
 
                 If intIDStatus <> VO.Status.Values.All Then
                     .CommandText += "    AND A.IDStatus=@IDStatus" & vbNewLine
@@ -51,12 +51,12 @@ Namespace DL
                 If bolNew Then
                     .CommandText = _
                        "INSERT INTO traReceiveReturn " & vbNewLine & _
-                       "    (CompanyID, ProgramID, ID, ReferencesID, BPID, ReceiveReturnDate, PaymentTerm, DueDate, DriverName, PlatNumber, " & vbNewLine & _
-                       "     PPN, PPH, ItemID, ArrivalBrutto, ArrivalTarra, ArrivalNettoBefore, ArrivalDeduction, ArrivalNettoAfter, " & vbNewLine & _
+                       "    (CompanyID, ProgramID, ID, ReferencesID, BPID, ReceiveReturnDate, PaymentTerm, DriverName, PlatNumber, " & vbNewLine & _
+                       "     DONumber, SPBNumber, SegelNumber, Specification, PPN, PPH, ItemID, ArrivalBrutto, ArrivalTarra, ArrivalNettoBefore, ArrivalDeduction, ArrivalNettoAfter, " & vbNewLine & _
                        "     Price1, TotalPrice1, Price2, TotalPrice2, Tolerance, Remarks, IDStatus, CreatedBy, CreatedDate, LogBy, LogDate)   " & vbNewLine & _
                        "VALUES " & vbNewLine & _
-                       "    (@CompanyID, @ProgramID, @ID, @ReferencesID, @BPID, @ReceiveReturnDate, @PaymentTerm, @DueDate, @DriverName, @PlatNumber, " & vbNewLine & _
-                       "     @PPN, @PPH, @ItemID, @ArrivalBrutto, @ArrivalTarra, @ArrivalNettoBefore, @ArrivalDeduction, @ArrivalNettoAfter, " & vbNewLine & _
+                       "    (@CompanyID, @ProgramID, @ID, @ReferencesID, @BPID, @ReceiveReturnDate, @PaymentTerm, @DriverName, @PlatNumber, " & vbNewLine & _
+                       "     @DONumber, @SPBNumber, @SegelNumber, @Specification, @PPN, @PPH, @ItemID, @ArrivalBrutto, @ArrivalTarra, @ArrivalNettoBefore, @ArrivalDeduction, @ArrivalNettoAfter, " & vbNewLine & _
                        "     @Price1, @TotalPrice1, @Price2, @TotalPrice2, @Tolerance, @Remarks, @IDStatus, @LogBy, GETDATE(), @LogBy, GETDATE())  " & vbNewLine
                 Else
                     .CommandText = _
@@ -69,7 +69,10 @@ Namespace DL
                         "    PaymentTerm=@PaymentTerm, " & vbNewLine & _
                         "    PlatNumber=@PlatNumber, " & vbNewLine & _
                         "    DriverName=@DriverName, " & vbNewLine & _
-                        "    DueDate=@DueDate, " & vbNewLine & _
+                        "    DONumber=@DONumber, " & vbNewLine & _
+                        "    SPBNumber=@SPBNumber, " & vbNewLine & _
+                        "    SegelNumber=@SegelNumber, " & vbNewLine & _
+                        "    Specification=@Specification, " & vbNewLine & _
                         "    PPN=@PPN, " & vbNewLine & _
                         "    PPH=@PPH, " & vbNewLine & _
                         "    ItemID=@ItemID, " & vbNewLine & _
@@ -99,9 +102,12 @@ Namespace DL
                 .Parameters.Add("@BPID", SqlDbType.Int).Value = clsData.BPID
                 .Parameters.Add("@ReceiveReturnDate", SqlDbType.DateTime).Value = clsData.ReceiveReturnDate
                 .Parameters.Add("@PaymentTerm", SqlDbType.Int).Value = clsData.PaymentTerm
-                .Parameters.Add("@DueDate", SqlDbType.DateTime).Value = clsData.DueDate
                 .Parameters.Add("@DriverName", SqlDbType.VarChar, 100).Value = clsData.DriverName
                 .Parameters.Add("@PlatNumber", SqlDbType.VarChar, 10).Value = clsData.PlatNumber
+                .Parameters.Add("@DONumber", SqlDbType.VarChar, 250).Value = clsData.DONumber
+                .Parameters.Add("@SPBNumber", SqlDbType.VarChar, 250).Value = clsData.SPBNumber
+                .Parameters.Add("@SegelNumber", SqlDbType.VarChar, 100).Value = clsData.SegelNumber
+                .Parameters.Add("@Specification", SqlDbType.VarChar, 250).Value = clsData.Specification
                 .Parameters.Add("@PPN", SqlDbType.Decimal).Value = clsData.PPN
                 .Parameters.Add("@PPH", SqlDbType.Decimal).Value = clsData.PPH
                 .Parameters.Add("@ItemID", SqlDbType.Int).Value = clsData.ItemID
@@ -135,10 +141,10 @@ Namespace DL
                     .Connection = SQL.sqlConn
                     .CommandText = _
                         "SELECT 	" & vbNewLine & _
-                        "   A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.ReferencesID, A.BPID, C.Name AS BPName, A.ReceiveDate, A.PaymentTerm, A.DriverName, A.PlatNumber, A.DueDate, 	" & vbNewLine & _
-                        "   A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MI.UomID AS UOMID, MU.Code AS UomCode, 	" & vbNewLine & _
-                        "   A.ArrivalBrutto, A.ArrivalTarra, A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, TS.TotalReturn-A.ArrivalNettoAfter AS ArrivalUsage, (A.ArrivalNettoAfter+TS.ArrivalNettoAfter-TS.ArrivalReturn) AS MaxNetto, 	" & vbNewLine & _
-                        "   A.Price1, A.TotalPrice1, A.Price2, A.TotalPrice2, A.ArrivalReturn, A.TotalPayment, A.Tolerance, A.IsPostedGL, TS.ArrivalNettoAfter AS ArrivalNettoAfterSales, " & vbNewLine & _
+                        "   A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.ReferencesID, A.BPID, C.Name AS BPName, A.ReceiveReturnDate, A.PaymentTerm, A.DriverName, A.PlatNumber, 	" & vbNewLine & _
+                        "   A.DONumber, A.SPBNumber, A.SegelNumber, A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MI.UomID AS UOMID, MU.Code AS UomCode, 	" & vbNewLine & _
+                        "   A.ArrivalBrutto, A.ArrivalTarra, A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, TS.ArrivalReturn-A.ArrivalNettoAfter AS ArrivalUsage, (A.ArrivalNettoAfter+TS.ArrivalNettoAfter-TS.ArrivalReturn) AS MaxNetto, 	" & vbNewLine & _
+                        "   A.Specification, A.Price1, A.TotalPrice1, A.Price2, A.TotalPrice2, A.Tolerance, A.IsPostedGL, TS.ArrivalNettoAfter AS ArrivalNettoAfterReceive, " & vbNewLine & _
                         "   A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, A.CreatedBy,   	" & vbNewLine & _
                         "   A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID  	" & vbNewLine & _
                         "FROM traReceiveReturn A 	" & vbNewLine & _
@@ -175,9 +181,12 @@ Namespace DL
                         voReturn.BPName = .Item("BPName")
                         voReturn.ReceiveReturnDate = .Item("ReceiveReturnDate")
                         voReturn.PaymentTerm = .Item("PaymentTerm")
-                        voReturn.DueDate = .Item("DueDate")
                         voReturn.DriverName = .Item("DriverName")
                         voReturn.PlatNumber = .Item("PlatNumber")
+                        voReturn.DONumber = .Item("DONumber")
+                        voReturn.SPBNumber = .Item("SPBNumber")
+                        voReturn.SegelNumber = .Item("SegelNumber")
+                        voReturn.Remarks = .Item("Remarks")
                         voReturn.PPN = .Item("PPN")
                         voReturn.PPH = .Item("PPH")
                         voReturn.ItemID = .Item("ItemID")
@@ -190,17 +199,19 @@ Namespace DL
                         voReturn.ArrivalDeduction = .Item("ArrivalDeduction")
                         voReturn.ArrivalNettoAfter = .Item("ArrivalNettoAfter")
                         voReturn.MaxNetto = .Item("MaxNetto")
-                        voReturn.Price1 = .Item("Price1")
-                        voReturn.Price2 = .Item("Price2")
-                        voReturn.TotalPrice1 = .Item("TotalPrice1")
-                        voReturn.TotalPrice2 = .Item("TotalPrice2")
                         voReturn.ArrivalUsage = .Item("ArrivalUsage")
+                        voReturn.Specification = .Item("Specification")
+                        voReturn.Price1 = .Item("Price1")
+                        voReturn.TotalPrice1 = .Item("TotalPrice1")
+                        voReturn.Price2 = .Item("Price2")
+                        voReturn.TotalPrice2 = .Item("TotalPrice2")
                         voReturn.Tolerance = .Item("Tolerance")
+                        voReturn.ArrivalNettoAfterReceive = .Item("ArrivalNettoAfterReceive")
+                        voReturn.ArrivalUsage = .Item("ArrivalUsage")
                         voReturn.IsPostedGL = .Item("IsPostedGL")
                         voReturn.PostedBy = .Item("PostedBy")
                         voReturn.PostedDate = .Item("PostedDate")
                         voReturn.IsDeleted = .Item("IsDeleted")
-                        voReturn.Remarks = .Item("Remarks")
                         voReturn.IDStatus = .Item("IDStatus")
                         voReturn.LogBy = .Item("LogBy")
                         voReturn.LogInc = .Item("LogInc")
@@ -347,7 +358,7 @@ Namespace DL
                     .CommandText = _
                         "SELECT TOP 1 " & vbNewLine & _
                         "   ID " & vbNewLine & _
-                        "FROM traReceiveReturnReturn " & vbNewLine & _
+                        "FROM traReceiveReturn " & vbNewLine & _
                         "WHERE  " & vbNewLine & _
                         "   ID=@ID " & vbNewLine & _
                         "   AND IsPostedGL=1 " & vbNewLine
@@ -360,7 +371,7 @@ Namespace DL
                     If .HasRows Then
                         .Read()
                         bolExists = True
-                    End If 
+                    End If
                 End With
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()
             Catch ex As Exception
