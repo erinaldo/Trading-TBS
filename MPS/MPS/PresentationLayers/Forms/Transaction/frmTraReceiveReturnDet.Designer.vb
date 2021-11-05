@@ -45,7 +45,7 @@ Partial Class frmTraReceiveReturnDet
         Me.txtPrice2 = New MPS.usNumeric()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
-        Me.txtSpesification = New MPS.usTextBox()
+        Me.txtSpecification = New MPS.usTextBox()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.txtSegelNumber = New MPS.usTextBox()
         Me.Label19 = New System.Windows.Forms.Label()
@@ -238,7 +238,7 @@ Partial Class frmTraReceiveReturnDet
         Me.tpMain.Controls.Add(Me.txtPrice2)
         Me.tpMain.Controls.Add(Me.Label23)
         Me.tpMain.Controls.Add(Me.Label21)
-        Me.tpMain.Controls.Add(Me.txtSpesification)
+        Me.tpMain.Controls.Add(Me.txtSpecification)
         Me.tpMain.Controls.Add(Me.Label20)
         Me.tpMain.Controls.Add(Me.txtSegelNumber)
         Me.tpMain.Controls.Add(Me.Label19)
@@ -406,16 +406,16 @@ Partial Class frmTraReceiveReturnDet
         Me.Label21.TabIndex = 132
         Me.Label21.Text = "Spesifikasi"
         '
-        'txtSpesification
+        'txtSpecification
         '
-        Me.txtSpesification.BackColor = System.Drawing.Color.White
-        Me.txtSpesification.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtSpesification.Location = New System.Drawing.Point(502, 302)
-        Me.txtSpesification.MaxLength = 250
-        Me.txtSpesification.Multiline = True
-        Me.txtSpesification.Name = "txtSpesification"
-        Me.txtSpesification.Size = New System.Drawing.Size(449, 62)
-        Me.txtSpesification.TabIndex = 24
+        Me.txtSpecification.BackColor = System.Drawing.Color.White
+        Me.txtSpecification.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtSpecification.Location = New System.Drawing.Point(502, 302)
+        Me.txtSpecification.MaxLength = 250
+        Me.txtSpecification.Multiline = True
+        Me.txtSpecification.Name = "txtSpecification"
+        Me.txtSpecification.Size = New System.Drawing.Size(449, 62)
+        Me.txtSpecification.TabIndex = 24
         '
         'Label20
         '
@@ -1055,7 +1055,7 @@ Partial Class frmTraReceiveReturnDet
     Friend WithEvents txtPrice2 As MPS.usNumeric
     Friend WithEvents Label23 As System.Windows.Forms.Label
     Friend WithEvents Label21 As System.Windows.Forms.Label
-    Friend WithEvents txtSpesification As MPS.usTextBox
+    Friend WithEvents txtSpecification As MPS.usTextBox
     Friend WithEvents Label20 As System.Windows.Forms.Label
     Friend WithEvents txtSegelNumber As MPS.usTextBox
     Friend WithEvents Label19 As System.Windows.Forms.Label

@@ -38,12 +38,12 @@ Public Class frmTraReceive
         UI.usForm.SetGrid(grdView, "ArrivalNettoBefore", "Netto 1", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "ArrivalDeduction", "Potongan", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "ArrivalNettoAfter", "Netto 2", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "Price1", "Price 1", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "Price2", "Price 2", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "TotalPrice1", "Total Price 1", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "TotalPrice2", "Total Price 2", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "ArrivalReturn", "Total Retur", 100, UI.usDefGrid.gReal2Num, False)
-        UI.usForm.SetGrid(grdView, "TotalPayment", "Total Bayar", 100, UI.usDefGrid.gReal2Num, False)
+        UI.usForm.SetGrid(grdView, "Price1", "Harga 1", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "Price2", "Harga 2", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "TotalPrice1", "Total Harga 1", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "TotalPrice2", "Total Harga 2", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "ArrivalReturn", "Total Retur", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "TotalPayment", "Total Bayar", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "IsPostedGL", "Posted GL", 100, UI.usDefGrid.gBoolean)
         UI.usForm.SetGrid(grdView, "PostedBy", "Posted By", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "PostedDate", "Posted Date", 100, UI.usDefGrid.gFullDate)
@@ -209,6 +209,7 @@ Public Class frmTraReceive
         pgMain.Value = 40
         Try
             BL.Receive.DeleteData(clsData)
+            pgMain.Value = 100
             UI.usForm.frmMessageBox("Hapus data berhasil.")
             pubRefresh(grdView.GetRowCellValue(intPos, "ID"))
         Catch ex As Exception

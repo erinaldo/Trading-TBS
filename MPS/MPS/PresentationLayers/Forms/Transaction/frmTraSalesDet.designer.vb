@@ -265,9 +265,9 @@ Partial Class frmTraSalesDet
         Me.Label12.ForeColor = System.Drawing.Color.Black
         Me.Label12.Location = New System.Drawing.Point(29, 159)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(59, 13)
+        Me.Label12.Size = New System.Drawing.Size(64, 13)
         Me.Label12.TabIndex = 115
-        Me.Label12.Text = "Nomor Plat"
+        Me.Label12.Text = "Nomor Polisi"
         '
         'Label8
         '

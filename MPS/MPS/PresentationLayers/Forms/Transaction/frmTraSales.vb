@@ -33,11 +33,11 @@ Public Class frmTraSales
         UI.usForm.SetGrid(grdView, "ArrivalNettoBefore", "Netto 1", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "ArrivalDeduction", "Potongan", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "ArrivalNettoAfter", "Netto 2", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "Price", "Price", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "TotalPrice", "Total Price", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "Price", "Harga", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "TotalPrice", "Total Harga", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "IsSplitReceive", "Split Pembelian", 100, UI.usDefGrid.gBoolean)
-        UI.usForm.SetGrid(grdView, "ArrivalReturn", "Total Retur", 100, UI.usDefGrid.gReal2Num, False)
-        UI.usForm.SetGrid(grdView, "TotalPayment", "Total Bayar", 100, UI.usDefGrid.gReal2Num, False)
+        UI.usForm.SetGrid(grdView, "ArrivalReturn", "Total Retur", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "TotalPayment", "Total Bayar", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "IsPostedGL", "Posted GL", 100, UI.usDefGrid.gBoolean)
         UI.usForm.SetGrid(grdView, "PostedBy", "Posted By", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "PostedDate", "Posted Date", 100, UI.usDefGrid.gFullDate)
@@ -202,6 +202,7 @@ Public Class frmTraSales
         Try
             BL.Sales.DeleteData(clsData)
             UI.usForm.frmMessageBox("Hapus data berhasil.")
+            pgMain.Value = 100
             pubRefresh(grdView.GetRowCellValue(intPos, "ID"))
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
@@ -217,20 +218,6 @@ Public Class frmTraSales
         grdView.Columns.Clear()
         prvSetGrid()
         prvSetButton()
-    End Sub
-
-    Private Sub prvPrintDO()
-        'intPos = grdView.FocusedRowHandle
-        'If intPos < 0 Then Exit Sub
-        'clsData = prvGetData()
-        'clsData.LogBy = MPSLib.UI.usUserApp.UserID
-        'clsData.Remarks = ""
-        'Dim frmDetail As New frmTraSalesPrintDO
-        'With frmDetail
-        '    .pubData = clsData
-        '    .ShowDialog()
-        '    If .pubIsPrint Then pubRefresh(clsData.ID)
-        'End With
     End Sub
 
     Private Sub prvPrintBonFaktur()

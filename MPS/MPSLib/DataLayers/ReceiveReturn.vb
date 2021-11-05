@@ -348,6 +348,40 @@ Namespace DL
             Return bolExists
         End Function
 
+        Public Shared Function GetReturnID(ByVal strReferencesID As String) As String
+            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
+            Dim strReturn As String = ""
+            Try
+                If Not SQL.bolUseTrans Then SQL.OpenConnection()
+                With sqlcmdExecute
+                    .Connection = SQL.sqlConn
+                    .CommandText = _
+                        "SELECT TOP 1 " & vbNewLine & _
+                        "   ID " & vbNewLine & _
+                        "FROM traReceiveReturn " & vbNewLine & _
+                        "WHERE  " & vbNewLine & _
+                        "   ReferencesID=@ReferencesID " & vbNewLine
+
+                    .Parameters.Add("@ReferencesID", SqlDbType.VarChar, 30).Value = strReferencesID
+
+                    If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
+                End With
+                sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)
+                With sqlrdData
+                    If .HasRows Then
+                        .Read()
+                        strReturn = .Item("ID")
+                    End If
+                End With
+                If Not SQL.bolUseTrans Then SQL.CloseConnection()
+            Catch ex As Exception
+                Throw ex
+            Finally
+                If Not sqlrdData Is Nothing Then sqlrdData.Close()
+            End Try
+            Return strReturn
+        End Function
+
         Public Shared Function IsPostedGL(ByVal strID As String) As Boolean
             Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
             Dim bolExists As Boolean = False

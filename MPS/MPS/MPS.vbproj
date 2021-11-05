@@ -452,7 +452,19 @@
     <Compile Include="PresentationLayers\Forms\Transaction\frmTraSalesPrintBonFaktur.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PresentationLayers\Forms\Transaction\frmTraSalesSplitReceive.Designer.vb">
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraSalesReturn.Designer.vb">
+      <DependentUpon>frmTraSalesReturn.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraSalesReturn.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraSalesReturnDet.Designer.vb">
+      <DependentUpon>frmTraSalesReturnDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraSalesReturnDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraSalesSplitReceive.designer.vb">
       <DependentUpon>frmTraSalesSplitReceive.vb</DependentUpon>
     </Compile>
     <Compile Include="PresentationLayers\Forms\Transaction\frmTraSalesSplitReceive.vb">
@@ -468,6 +480,12 @@
       <DependentUpon>frmViewOutstandingReceiveForReturn.vb</DependentUpon>
     </Compile>
     <Compile Include="PresentationLayers\Forms\View\frmViewOutstandingReceiveForReturn.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\View\frmViewOutstandingSalesForReturn.Designer.vb">
+      <DependentUpon>frmViewOutstandingSalesForReturn.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\View\frmViewOutstandingSalesForReturn.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PresentationLayers\Forms\View\frmViewProgram.designer.vb">
@@ -710,6 +728,12 @@
     <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraSalesPrintBonFaktur.resx">
       <DependentUpon>frmTraSalesPrintBonFaktur.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraSalesReturn.resx">
+      <DependentUpon>frmTraSalesReturn.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraSalesReturnDet.resx">
+      <DependentUpon>frmTraSalesReturnDet.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraSalesSplitReceive.resx">
       <DependentUpon>frmTraSalesSplitReceive.vb</DependentUpon>
     </EmbeddedResource>
@@ -718,6 +742,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\View\frmViewOutstandingReceiveForReturn.resx">
       <DependentUpon>frmViewOutstandingReceiveForReturn.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\View\frmViewOutstandingSalesForReturn.resx">
+      <DependentUpon>frmViewOutstandingSalesForReturn.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\View\frmViewProgram.resx">
       <DependentUpon>frmViewProgram.vb</DependentUpon>

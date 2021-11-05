@@ -79,6 +79,10 @@ Partial Class frmSysMain
         Me.tssVersion = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tssProgram = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tssCompany = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.mnuWindowsVertical = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuWindowsHorizontal = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuWindowsCascade = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuWindowsCloseAll = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.ssMain.SuspendLayout()
         Me.SuspendLayout()
@@ -384,6 +388,7 @@ Partial Class frmSysMain
         '
         'mnuTampilan
         '
+        Me.mnuTampilan.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuWindowsVertical, Me.mnuWindowsHorizontal, Me.mnuWindowsCascade, Me.mnuWindowsCloseAll})
         Me.mnuTampilan.Name = "mnuTampilan"
         Me.mnuTampilan.Size = New System.Drawing.Size(67, 20)
         Me.mnuTampilan.Text = "Tampilan"
@@ -445,6 +450,30 @@ Partial Class frmSysMain
         Me.tssCompany.Name = "tssCompany"
         Me.tssCompany.Size = New System.Drawing.Size(56, 17)
         Me.tssCompany.Text = "Company"
+        '
+        'mnuWindowsVertical
+        '
+        Me.mnuWindowsVertical.Name = "mnuWindowsVertical"
+        Me.mnuWindowsVertical.Size = New System.Drawing.Size(152, 22)
+        Me.mnuWindowsVertical.Text = "Vertical"
+        '
+        'mnuWindowsHorizontal
+        '
+        Me.mnuWindowsHorizontal.Name = "mnuWindowsHorizontal"
+        Me.mnuWindowsHorizontal.Size = New System.Drawing.Size(152, 22)
+        Me.mnuWindowsHorizontal.Text = "Horizontal"
+        '
+        'mnuWindowsCascade
+        '
+        Me.mnuWindowsCascade.Name = "mnuWindowsCascade"
+        Me.mnuWindowsCascade.Size = New System.Drawing.Size(152, 22)
+        Me.mnuWindowsCascade.Text = "Cascade"
+        '
+        'mnuWindowsCloseAll
+        '
+        Me.mnuWindowsCloseAll.Name = "mnuWindowsCloseAll"
+        Me.mnuWindowsCloseAll.Size = New System.Drawing.Size(152, 22)
+        Me.mnuWindowsCloseAll.Text = "Close All"
         '
         'frmSysMain
         '
@@ -524,4 +553,8 @@ Partial Class frmSysMain
     Friend WithEvents mnuMasterProgram As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tssProgram As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents tssCompany As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents mnuWindowsVertical As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents mnuWindowsHorizontal As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents mnuWindowsCascade As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents mnuWindowsCloseAll As System.Windows.Forms.ToolStripMenuItem
 End Class

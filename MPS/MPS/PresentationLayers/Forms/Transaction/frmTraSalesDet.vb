@@ -145,7 +145,7 @@ Public Class frmTraSalesDet
             cboPaymentTerm.Focus()
             Exit Sub
         ElseIf txtPlatNumber.Text.Trim = "" Then
-            UI.usForm.frmMessageBox("Nomor plat harus diiisi terlebih dahulu")
+            UI.usForm.frmMessageBox("Nomor polisi harus diiisi terlebih dahulu")
             tcHeader.SelectedTab = tpMain
             txtPlatNumber.Focus()
             Exit Sub

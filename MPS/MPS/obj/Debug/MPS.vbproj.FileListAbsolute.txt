@@ -203,9 +203,12 @@ D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraReceiveReturnDet.r
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSales.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSalesDet.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSalesPrintBonFaktur.resources
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSalesReturn.resources
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSalesReturnDet.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSalesSplitReceive.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmViewCompany.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmViewOutstandingReceiveForReturn.resources
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmViewOutstandingSalesForReturn.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmViewProgram.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmViewProgramCompany.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.rptBonFaktur.resources

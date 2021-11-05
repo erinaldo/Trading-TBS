@@ -97,7 +97,6 @@ Namespace BL
 
                     '# CaLculate Return Value
                     DL.Receive.CalculateReturnValue(clsData.ReferencesID)
-
                 End If
 
                 DL.SQL.CommitTransaction()

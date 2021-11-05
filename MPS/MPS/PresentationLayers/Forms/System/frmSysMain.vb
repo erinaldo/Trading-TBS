@@ -22,7 +22,7 @@
 
     '# Transaction
     Dim frmMainTraSales As frmTraSales
-    'Dim frmMainTraSalesReturn As frmTraSalesReturn
+    Dim frmMainTraSalesReturn As frmTraSalesReturn
     Dim frmMainTraReceive As frmTraReceive
     Dim frmMainTraReceiveReturn As frmTraReceiveReturn
     'Dim frmMainTraAccountReceivable As frmTraAccountReceivable
@@ -229,9 +229,9 @@
         UI.usForm.frmOpen(frmMainTraSales, "frmTraSales", Me)
     End Sub
 
-    'Private Sub mnuTransaksiReturPenjualan_Click(sender As Object, e As EventArgs) Handles mnuTransaksiReturPenjualan.Click
-    '    UI.usForm.frmOpen(frmMainTraSalesReturn, "frmTraSalesReturn", Me)
-    'End Sub
+    Private Sub mnuTransaksiReturPenjualan_Click(sender As Object, e As EventArgs) Handles mnuTransaksiReturPenjualan.Click
+        UI.usForm.frmOpen(frmMainTraSalesReturn, "frmTraSalesReturn", Me)
+    End Sub
 
     Private Sub mnuTransaksiPembelian_Click(sender As Object, e As EventArgs) Handles mnuTransaksiPembelian.Click
         UI.usForm.frmOpen(frmMainTraReceive, "frmTraReceive", Me)
@@ -320,6 +320,28 @@
     'Private Sub mnuLaporanLaporanNeraca_Click(sender As Object, e As EventArgs) Handles mnuLaporanLaporanNeraca.Click
     '    UI.usForm.frmOpen(frmMainRptBalanceSheet, "frmRptBalanceSheet", Me)
     'End Sub
+
+#End Region
+
+#Region "Windows"
+
+    Private Sub mnuWindowsVertical_Click(sender As Object, e As EventArgs) Handles mnuWindowsVertical.Click
+        LayoutMdi(MdiLayout.TileVertical)
+    End Sub
+
+    Private Sub mnuWindowsHorizontal_Click(sender As Object, e As EventArgs) Handles mnuWindowsHorizontal.Click
+        LayoutMdi(MdiLayout.TileHorizontal)
+    End Sub
+
+    Private Sub mnuWindowsCascade_Click(sender As Object, e As EventArgs) Handles mnuWindowsCascade.Click
+        LayoutMdi(MdiLayout.Cascade)
+    End Sub
+
+    Private Sub mnuWindowsCloseAll_Click(sender As Object, e As EventArgs) Handles mnuWindowsCloseAll.Click
+        For Each Form As Form In Me.MdiChildren
+            Form.Close()
+        Next
+    End Sub
 
 #End Region
 

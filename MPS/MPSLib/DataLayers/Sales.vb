@@ -512,6 +512,109 @@ Namespace DL
             End Try
         End Sub
 
+        Public Shared Function ListDataOutstandingReturn(ByVal intCompanyID As Integer, ByVal intProgramID As Integer, _
+                                        ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intBPID As Integer) As DataTable
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "SELECT  	" & vbNewLine & _
+                    "   A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.BPID, C.Name AS BPName, A.SalesDate, A.PaymentTerm, A.PlatNumber, A.DriverName,  	" & vbNewLine & _
+                    "	A.DueDate, A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MU.ID AS UOMID, MU.Code AS UomCode, A.ArrivalBrutto, A.ArrivalTarra,  	" & vbNewLine & _
+                    "   A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, A.Price, A.TotalPrice, A.ArrivalNettoAfter AS ArrivalNettoAfterSales, 	" & vbNewLine & _
+                    "	A.ArrivalNettoAfter-A.ArrivalReturn AS MaxNetto, A.ArrivalReturn AS ArrivalNettoUsage, A.IsPostedGL, A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, B.Name AS StatusInfo, A.CreatedBy,    	" & vbNewLine & _
+                    "   A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID   	" & vbNewLine & _
+                    "FROM traSales A  	" & vbNewLine & _
+                    "INNER JOIN mstStatus B ON  	" & vbNewLine & _
+                    "    A.IDStatus=B.ID  	" & vbNewLine & _
+                    "INNER JOIN mstBusinessPartner C ON  	" & vbNewLine & _
+                    "    A.BPID=C.ID  	" & vbNewLine & _
+                    "INNER JOIN mstItem MI ON  	" & vbNewLine & _
+                    "    A.ItemID=MI.ID  	" & vbNewLine & _
+                    "INNER JOIN mstUOM MU ON  	" & vbNewLine & _
+                    "    MI.UomID=MU.ID  	" & vbNewLine & _
+                    "INNER JOIN mstCompany MC ON  	" & vbNewLine & _
+                    "    A.CompanyID=MC.ID  	" & vbNewLine & _
+                    "INNER JOIN mstProgram MP ON  	" & vbNewLine & _
+                    "    A.ProgramID=MP.ID  	" & vbNewLine & _
+                    "WHERE   	" & vbNewLine & _
+                    "   A.CompanyID=@CompanyID  	" & vbNewLine & _
+                    "   AND A.ProgramID=@ProgramID  	" & vbNewLine & _
+                    "   AND A.BPID=@BPID  	" & vbNewLine & _
+                    "   AND A.SalesDate>=@DateFrom AND A.SalesDate<=@DateTo 	" & vbNewLine & _
+                    "	AND A.IsDeleted=0	" & vbNewLine & _
+                    "	AND A.ArrivalNettoAfter-A.ArrivalReturn>0	" & vbNewLine
+
+                .Parameters.Add("@CompanyID", SqlDbType.Int).Value = intCompanyID
+                .Parameters.Add("@ProgramID", SqlDbType.Int).Value = intProgramID
+                .Parameters.Add("@DateFrom", SqlDbType.DateTime).Value = dtmDateFrom
+                .Parameters.Add("@DateTo", SqlDbType.DateTime).Value = dtmDateTo
+                .Parameters.Add("@BPID", SqlDbType.Int).Value = intBPID
+            End With
+            Return SQL.QueryDataTable(sqlcmdExecute)
+        End Function
+
+        Public Shared Sub CalculateReturnValue(ByVal strID As String)
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "UPDATE traSales SET " & vbNewLine & _
+                    "ArrivalReturn=	" & vbNewLine & _
+                    "	ISNULL(	" & vbNewLine & _
+                    "	(	" & vbNewLine & _
+                    "		SELECT ISNULL(SUM(A.ArrivalNettoAfter),0) AS Total " & vbNewLine & _
+                    "		FROM traSalesReturn A 	" & vbNewLine & _
+                    "		WHERE 	" & vbNewLine & _
+                    "			A.ReferencesID=@ReferencesID " & vbNewLine & _
+                    "			AND A.IsDeleted=0 	" & vbNewLine & _
+                    "	),0), " & vbNewLine & _
+                    "TotalReturn=	" & vbNewLine & _
+                    "	ISNULL(	" & vbNewLine & _
+                    "	(	" & vbNewLine & _
+                    "		SELECT ISNULL(SUM(A.TotalPrice),0) AS Total" & vbNewLine & _
+                    "		FROM traSalesReturn A 	" & vbNewLine & _
+                    "		WHERE 	" & vbNewLine & _
+                    "			A.ReferencesID=@ReferencesID " & vbNewLine & _
+                    "			AND A.IsDeleted=0 	" & vbNewLine & _
+                    "	),0) " & vbNewLine & _
+                    "WHERE " & vbNewLine & _
+                    "   ID=@ReferencesID " & vbNewLine
+
+                .Parameters.Add("@ReferencesID", SqlDbType.VarChar, 30).Value = strID
+            End With
+            Try
+                SQL.ExecuteNonQuery(sqlcmdExecute)
+            Catch ex As SqlException
+                Throw ex
+            End Try
+        End Sub
+
+        Public Shared Sub CalculateTotalPayment(ByVal strSalesID As String)
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "UPDATE traSales " & vbNewLine & _
+                    "SET TotalPayment=" & vbNewLine & _
+                    "	(" & vbNewLine & _
+                    "		SELECT " & vbNewLine & _
+                    "			ISNULL(SUM(ARD.Amount),0) AS Total" & vbNewLine & _
+                    "		FROM traAccountPayableDet ARD " & vbNewLine & _
+                    "		INNER JOIN traAccountPayable AR ON " & vbNewLine & _
+                    "            ARD.ARID =AR.ID" & vbNewLine & _
+                    "        WHERE" & vbNewLine & _
+                    "            AR.IsDeleted=0" & vbNewLine & _
+                    "			AND ARD.SalesID=@SalesID" & vbNewLine & _
+                    "	)" & vbNewLine & _
+                    "WHERE ID=@SalesID " & vbNewLine
+
+                .Parameters.Add("@SalesID", SqlDbType.VarChar, 30).Value = strSalesID
+            End With
+            Try
+                SQL.ExecuteNonQuery(sqlcmdExecute)
+            Catch ex As SqlException
+                Throw ex
+            End Try
+        End Sub
+
         Public Shared Function IsPostedGL(ByVal strID As String) As Boolean
             Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
             Dim bolExists As Boolean = False
@@ -535,7 +638,7 @@ Namespace DL
                     If .HasRows Then
                         .Read()
                         bolExists = True
-                    End If 
+                    End If
                 End With
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()
             Catch ex As Exception
@@ -695,7 +798,7 @@ Namespace DL
 #End Region
 
 #Region "Sales Supplier"
-        
+
         Public Shared Function ListDataSupplier(ByVal strSalesID As String) As DataTable
             Dim sqlcmdExecute As New SqlCommand
             With sqlcmdExecute
@@ -1054,8 +1157,8 @@ Namespace DL
         '                    "	(" & vbNewLine & _
         '                    "		SELECT " & vbNewLine & _
         '                    "			ISNULL(SUM(ARD.Amount),0) AS Total" & vbNewLine & _
-        '                    "		FROM traAccountReceivableDet ARD " & vbNewLine & _
-        '                    "		INNER JOIN traAccountReceivable AR ON " & vbNewLine & _
+        '                    "		FROM traAccountPayableDet ARD " & vbNewLine & _
+        '                    "		INNER JOIN traAccountPayable AR ON " & vbNewLine & _
         '                    "            ARD.ARID =AR.ID" & vbNewLine & _
         '                    "        WHERE" & vbNewLine & _
         '                    "            AR.IsDeleted=0" & vbNewLine & _

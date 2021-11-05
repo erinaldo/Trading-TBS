@@ -26,7 +26,7 @@
         UI.usForm.SetGrid(grdView, "PaymentTerm", "PaymentTerm", 100, UI.usDefGrid.gIntNum, False)
         UI.usForm.SetGrid(grdView, "DueDate", "Jatuh Tempo", 100, UI.usDefGrid.gFullDate)
         UI.usForm.SetGrid(grdView, "DriverName", "Nama Supir", 100, UI.usDefGrid.gString)
-        UI.usForm.SetGrid(grdView, "PlatNumber", "Nomor Plat", 100, UI.usDefGrid.gString)
+        UI.usForm.SetGrid(grdView, "PlatNumber", "Nomor Polisi", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "DONumber", "Nomor DO", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "SPBNumber", "Nomor SPB", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "SegelNumber", "Nomor Segel", 100, UI.usDefGrid.gString)
@@ -43,10 +43,10 @@
         UI.usForm.SetGrid(grdView, "ArrivalDeduction", "Potongan", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "ArrivalNettoAfter", "Netto 2", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "MaxNetto", "Max. Netto", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "Price1", "Price 1", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "Price2", "Price 2", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "TotalPrice1", "Total Price 1", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "TotalPrice2", "Total Price 2", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "Price1", "Harga 1", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "Price2", "Harga 2", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "TotalPrice1", "Total Harga 1", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "TotalPrice2", "Total Harga 2", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "Tolerance", "Toleransi", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "ArrivalNettoAfterReceive", "Netto 2 Beli", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "ArrivalNettoUsage", "Netto 2 Terpakai", 100, UI.usDefGrid.gReal2Num)
@@ -105,6 +105,20 @@
         prvSetButton()
     End Sub
 
+    Private Sub prvChooseCompany()
+        Dim frmDetail As New frmViewCompany
+        With frmDetail
+            .StartPosition = FormStartPosition.CenterScreen
+            .ShowDialog()
+            If .pubIsLookUpGet Then
+                pubCS.CompanyID = .pubLUdtRow.Item("CompanyID")
+                pubCS.CompanyName = .pubLUdtRow.Item("CompanyName")
+                txtCompanyName.Text = .pubLUdtRow.Item("CompanyName")
+                btnExecute.Focus()
+            End If
+        End With
+    End Sub
+
 #Region "Form Handle"
 
     Private Sub frmViewOutstandingReceiveForReturn_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
@@ -117,6 +131,7 @@
         UI.usForm.SetIcon(Me, "MyLogo")
         ToolBar.SetIcon(Me)
         prvSetGrid()
+        prvSetButton()
         dtpDateFrom.Value = Today.Date.AddDays(-7)
         dtpDateTo.Value = Today.Date
         txtCompanyName.Text = pubCS.CompanyName
@@ -131,6 +146,10 @@
 
     Private Sub grdView_DoubleClick(sender As Object, e As EventArgs) Handles grdView.DoubleClick
         prvGet()
+    End Sub
+
+    Private Sub btnCompany_Click(sender As Object, e As EventArgs) Handles btnCompany.Click
+        prvChooseCompany()
     End Sub
 
     Private Sub btnExecute_Click(sender As Object, e As EventArgs) Handles btnExecute.Click

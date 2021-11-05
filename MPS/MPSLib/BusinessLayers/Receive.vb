@@ -46,13 +46,13 @@ Namespace BL
                     '    Err.Raise(515, "", "Data tidak dapat disimpan. Dikarenakan tanggal transaksi lebih kecil atau sama dengan tanggal Posting Transaksi")
                 End If
             Else
-                'Dim strReturnID As String = DL.ReceiveReturn.AlreadyCreatedReturn(clsData.ID)
+                Dim strReturnID As String = DL.ReceiveReturn.GetReturnID(clsData.ID)
                 'Dim strInvoiceID As String = DL.AccountReceivable.AlreadyCreatedInvoice(clsData.ID)
 
                 If DL.Receive.IsDeleted(clsData.ID) Then
                     Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dihapus")
-                    'ElseIf strReturnID.Trim <> "" Then
-                    '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dibuat retur dengan nomor " & strReturnID)
+                ElseIf strReturnID.Trim <> "" Then
+                    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dibuat retur dengan nomor " & strReturnID)
                     'ElseIf strInvoiceID.Trim <> "" Then
                     '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses penagihan dengan nomor " & strInvoiceID)
                 ElseIf DL.Receive.IsPostedGL(clsData.ID) Then
@@ -78,13 +78,13 @@ Namespace BL
                 DL.SQL.OpenConnection()
                 DL.SQL.BeginTransaction()
 
-                'Dim strReturnID As String = DL.ReceiveReturn.AlreadyCreatedReturn(clsData.ID)
+                Dim strReturnID As String = DL.ReceiveReturn.GetReturnID(clsData.ID)
                 'Dim strInvoiceID As String = DL.AccountReceivable.AlreadyCreatedInvoice(clsData.ID)
 
                 If DL.Receive.IsDeleted(clsData.ID) Then
                     Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah dihapus sebelumnya")
-                    'ElseIf strReturnID.Trim <> "" Then
-                    '    Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah dibuat retur dengan nomor " & strReturnID)
+                ElseIf strReturnID.Trim <> "" Then
+                    Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah dibuat retur dengan nomor " & strReturnID)
                     'ElseIf strInvoiceID.Trim <> "" Then
                     '    Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah diproses penagihan dengan nomor " & strInvoiceID)
                 ElseIf DL.Receive.IsPostedGL(clsData.ID) Then

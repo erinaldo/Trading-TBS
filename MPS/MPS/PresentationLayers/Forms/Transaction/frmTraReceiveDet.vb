@@ -121,6 +121,7 @@ Public Class frmTraReceiveDet
                 txtTolerance.Value = clsData.Tolerance
                 txtArrivalNettoAfterSales.Value = clsData.ArrivalNettoAfterSales
                 txtArrivalNettoUsage.Value = clsData.ArrivalUsage
+                txtSpecification.Text = clsData.Specification
                 cboStatus.SelectedValue = clsData.IDStatus
                 ToolStripLogInc.Text = "Jumlah Edit : " & clsData.LogInc
                 ToolStripLogBy.Text = "Dibuat Oleh : " & clsData.LogBy
@@ -211,7 +212,7 @@ Public Class frmTraReceiveDet
         clsData.DONumber = txtDONumber.Text.Trim
         clsData.SPBNumber = txtSPBNumber.Text.Trim
         clsData.SegelNumber = txtSegelNumber.Text.Trim
-        clsData.Specification = txtSpesification.Text.Trim
+        clsData.Specification = txtSpecification.Text.Trim
         clsData.Remarks = txtRemarks.Text.Trim
         clsData.ItemID = intItemID
         clsData.ItemCode = txtItemCode.Text.Trim

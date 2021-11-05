@@ -90,13 +90,16 @@
                 clsData = New VO.ReceiveReturn
                 clsData = BL.ReceiveReturn.GetDetail(pubID)
                 txtID.Text = clsData.ID
+                dtpReceiveReturnDate.Value = clsData.ReceiveReturnDate
+                txtReferencesID.Text = clsData.ReferencesID
                 intBPID = clsData.BPID
                 txtBPName.Text = clsData.BPName
-                dtpReceiveReturnDate.Value = clsData.ReceiveReturnDate
                 cboPaymentTerm.SelectedValue = clsData.PaymentTerm
                 txtPlatNumber.Text = clsData.PlatNumber
                 txtDriverName.Text = clsData.DriverName
-                txtReferencesID.Text = clsData.ReferencesID
+                txtDONumber.Text = clsData.DONumber
+                txtSPBNumber.Text = clsData.SPBNumber
+                txtSegelNumber.Text = clsData.SegelNumber
                 txtRemarks.Text = clsData.Remarks
                 intItemID = clsData.ItemID
                 txtItemCode.Text = clsData.ItemCode
@@ -114,6 +117,7 @@
                 txtTotalPrice2.Value = clsData.TotalPrice2
                 txtArrivalNettoAfterReceive.Value = clsData.ArrivalNettoAfterReceive
                 txtArrivalNettoUsage.Value = clsData.ArrivalUsage
+                txtSpecification.Text = clsData.Specification
                 cboStatus.SelectedValue = clsData.IDStatus
                 ToolStripLogInc.Text = "Jumlah Edit : " & clsData.LogInc
                 ToolStripLogBy.Text = "Dibuat Oleh : " & clsData.LogBy
@@ -149,7 +153,7 @@
             cboPaymentTerm.Focus()
             Exit Sub
         ElseIf txtPlatNumber.Text.Trim = "" Then
-            UI.usForm.frmMessageBox("Nomor plat harus diiisi terlebih dahulu")
+            UI.usForm.frmMessageBox("Nomor polisi harus diiisi terlebih dahulu")
             tcHeader.SelectedTab = tpMain
             txtPlatNumber.Focus()
             Exit Sub
@@ -219,7 +223,7 @@
         clsData.Price2 = txtPrice2.Value
         clsData.TotalPrice2 = txtTotalPrice2.Value
         clsData.Tolerance = 0
-        clsData.Specification = txtSpesification.Text.Trim
+        clsData.Specification = txtSpecification.Text.Trim
         clsData.IDStatus = cboStatus.SelectedValue
         clsData.LogBy = MPSLib.UI.usUserApp.UserID
         clsData.JournalID = strJournalID
@@ -283,7 +287,7 @@
         txtTotalPrice2.Value = 0
         txtArrivalNettoAfterReceive.Value = 0
         txtArrivalNettoUsage.Value = 0
-        txtSpesification.Text = ""
+        txtSpecification.Text = ""
         cboStatus.SelectedValue = VO.Status.Values.Draft
         ToolStripLogInc.Text = "Jumlah Edit : -"
         ToolStripLogBy.Text = "Dibuat Oleh : -"
@@ -320,7 +324,7 @@
                 txtPrice2.Value = 0
                 txtArrivalNettoAfterReceive.Value = 0
                 txtArrivalNettoUsage.Value = 0
-                txtSpesification.Text = ""
+                txtSpecification.Text = ""
             End If
         End With
     End Sub
@@ -353,7 +357,7 @@
                 txtDeduction.Value = .pubLUdtRow.Item("ArrivalDeduction")
                 txtNettoAfter.Value = .pubLUdtRow.Item("ArrivalNettoAfter")
                 txtMaxNetto.Value = .pubLUdtRow.Item("MaxNetto")
-                txtSpesification.Text = .pubLUdtRow.Item("Specification")
+                txtSpecification.Text = .pubLUdtRow.Item("Specification")
                 txtPrice1.Value = .pubLUdtRow.Item("Price1")
                 txtTotalPrice1.Value = .pubLUdtRow.Item("TotalPrice1")
                 txtPrice2.Value = .pubLUdtRow.Item("Price2")

@@ -170,6 +170,7 @@
         pgMain.Value = 40
         Try
             BL.Cost.DeleteData(clsData)
+            pgMain.Value = 100
             UI.usForm.frmMessageBox("Hapus data berhasil.")
             pubRefresh(grdView.GetRowCellValue(intPos, "ID"))
         Catch ex As Exception

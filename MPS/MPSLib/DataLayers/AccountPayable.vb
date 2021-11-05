@@ -3,7 +3,8 @@
 
 #Region "Main"
 
-        Public Shared Function ListData(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intIDStatus As Integer) As DataTable
+        Public Shared Function ListData(ByVal intCompanyID As Integer, ByVal intProgramID As Integer, _
+                                        ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intIDStatus As Integer) As DataTable
             Dim sqlcmdExecute As New SqlCommand
             With sqlcmdExecute
                 .CommandText = _
@@ -19,41 +20,19 @@
                    "INNER JOIN mstPaymentReferences D ON " & vbNewLine & _
                    "    A.PaymentReferencesID=D.ID " & vbNewLine & _
                    "WHERE  " & vbNewLine & _
-                   "    A.APDate>=@DateFrom AND A.APDate<=@DateTo " & vbNewLine
+                   "    A.CompanyID=@CompanyID " & vbNewLine & _
+                   "    AND A.ProgramID=@ProgramID " & vbNewLine & _
+                   "    AND A.APDate>=@DateFrom AND A.APDate<=@DateTo " & vbNewLine
 
                 If intIDStatus <> VO.Status.Values.All Then
                     .CommandText += "    AND A.IDStatus=@IDStatus" & vbNewLine
                 End If
 
+                .Parameters.Add("@CompanyID", SqlDbType.Int).Value = intCompanyID
+                .Parameters.Add("@ProgramID", SqlDbType.Int).Value = intProgramID
                 .Parameters.Add("@DateFrom", SqlDbType.DateTime).Value = dtmDateFrom
                 .Parameters.Add("@DateTo", SqlDbType.DateTime).Value = dtmDateTo
                 .Parameters.Add("@IDStatus", SqlDbType.Int).Value = intIDStatus
-            End With
-            Return SQL.QueryDataTable(sqlcmdExecute)
-        End Function
-
-        Public Shared Function ListDataOutstandingPostGL(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime) As DataTable
-            Dim sqlcmdExecute As New SqlCommand
-            With sqlcmdExecute
-                .CommandText = _
-                   "SELECT " & vbNewLine & _
-                   "     A.CompanyID, A.ID, A.BPID, C.Name AS BPName, A.APDate, A.PaymentReferencesID, D.Name AS PaymentReferencesName, A.ReferencesNote, A.TotalAmount,   " & vbNewLine & _
-                   "     A.IsPostedGL, A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, B.Name AS StatusInfo,   " & vbNewLine & _
-                   "     A.CreatedBy, A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID, A.CoAIDOfOutgoingPayment  " & vbNewLine & _
-                   "FROM traAccountPayable A " & vbNewLine & _
-                   "INNER JOIN mstStatus B ON " & vbNewLine & _
-                   "    A.IDStatus=B.ID " & vbNewLine & _
-                   "INNER JOIN mstBusinessPartner C ON " & vbNewLine & _
-                   "    A.BPID=C.ID " & vbNewLine & _
-                   "INNER JOIN mstPaymentReferences D ON " & vbNewLine & _
-                   "    A.PaymentReferencesID=D.ID " & vbNewLine & _
-                   "WHERE  " & vbNewLine & _
-                   "    A.APDate>=@DateFrom AND A.APDate<=@DateTo " & vbNewLine & _
-                   "    AND A.IsDeleted=0 " & vbNewLine & _
-                   "    AND A.IsPostedGL=0 " & vbNewLine
-
-                .Parameters.Add("@DateFrom", SqlDbType.DateTime).Value = dtmDateFrom
-                .Parameters.Add("@DateTo", SqlDbType.DateTime).Value = dtmDateTo
             End With
             Return SQL.QueryDataTable(sqlcmdExecute)
         End Function
@@ -64,14 +43,15 @@
                 If bolNew Then
                     .CommandText = _
                        "INSERT INTO traAccountPayable " & vbNewLine & _
-                       "    (CompanyID, ID, BPID, APDate, PaymentReferencesID, ReferencesNote, TotalAmount,   " & vbNewLine & _
+                       "    (ProgramID, CompanyID, ID, BPID, APDate, PaymentReferencesID, ReferencesNote, TotalAmount,   " & vbNewLine & _
                        "     Remarks, IDStatus, CreatedBy, CreatedDate, LogBy, LogDate, CoAIDOfOutgoingPayment)   " & vbNewLine & _
                        "VALUES " & vbNewLine & _
-                       "    (@CompanyID, @ID, @BPID, @APDate, @PaymentReferencesID, @ReferencesNote, @TotalAmount,   " & vbNewLine & _
+                       "    (@ProgramID, @CompanyID, @ID, @BPID, @APDate, @PaymentReferencesID, @ReferencesNote, @TotalAmount,   " & vbNewLine & _
                        "     @Remarks, @IDStatus, @LogBy, GETDATE(), @LogBy, GETDATE(), @CoAIDOfOutgoingPayment)  " & vbNewLine
                 Else
                     .CommandText = _
                     "UPDATE traAccountPayable SET " & vbNewLine & _
+                    "    ProgramID=@ProgramID, " & vbNewLine & _
                     "    CompanyID=@CompanyID, " & vbNewLine & _
                     "    BPID=@BPID, " & vbNewLine & _
                     "    APDate=@APDate, " & vbNewLine & _
@@ -88,8 +68,9 @@
                     "    ID=@ID " & vbNewLine
                 End If
 
+                .Parameters.Add("@ProgramID", SqlDbType.Int).Value = clsData.ProgramID
                 .Parameters.Add("@CompanyID", SqlDbType.Int).Value = clsData.CompanyID
-                .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = clsData.ID
+                .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = clsData.ID
                 .Parameters.Add("@BPID", SqlDbType.Int).Value = clsData.BPID
                 .Parameters.Add("@APDate", SqlDbType.DateTime).Value = clsData.APDate
                 .Parameters.Add("@PaymentReferencesID", SqlDbType.Int).Value = clsData.PaymentReferencesID
@@ -108,7 +89,7 @@
         End Sub
 
         Public Shared Function GetDetail(ByVal strID As String) As VO.AccountPayable
-            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader
+            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
             Dim voReturn As New VO.AccountPayable
             Try
                 If Not SQL.bolUseTrans Then SQL.OpenConnection()
@@ -129,7 +110,7 @@
                        "WHERE " & vbNewLine & _
                        "    A.ID=@ID " & vbNewLine
 
-                    .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = strID
+                    .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
 
                     If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
                 End With
@@ -165,6 +146,8 @@
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()
             Catch ex As Exception
                 Throw ex
+            Finally
+                If Not sqlrdData Is Nothing Then sqlrdData.Close()
             End Try
             Return voReturn
         End Function
@@ -189,7 +172,7 @@
         End Sub
 
         Public Shared Function GetMaxID(ByVal strID As String) As Integer
-            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader
+            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
             Dim intReturn As Integer = 0
             Try
                 If Not SQL.bolUseTrans Then SQL.OpenConnection()
@@ -216,6 +199,8 @@
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()
             Catch ex As Exception
                 Throw ex
+            Finally
+                If Not sqlrdData Is Nothing Then sqlrdData.Close()
             End Try
             Return intReturn
         End Function
@@ -317,6 +302,32 @@
                 Throw ex
             End Try
             Return bolExists
+        End Function
+
+        Public Shared Function ListDataOutstandingPostGL(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime) As DataTable
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                   "SELECT " & vbNewLine & _
+                   "     A.CompanyID, A.ID, A.BPID, C.Name AS BPName, A.APDate, A.PaymentReferencesID, D.Name AS PaymentReferencesName, A.ReferencesNote, A.TotalAmount,   " & vbNewLine & _
+                   "     A.IsPostedGL, A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, B.Name AS StatusInfo,   " & vbNewLine & _
+                   "     A.CreatedBy, A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID, A.CoAIDOfOutgoingPayment  " & vbNewLine & _
+                   "FROM traAccountPayable A " & vbNewLine & _
+                   "INNER JOIN mstStatus B ON " & vbNewLine & _
+                   "    A.IDStatus=B.ID " & vbNewLine & _
+                   "INNER JOIN mstBusinessPartner C ON " & vbNewLine & _
+                   "    A.BPID=C.ID " & vbNewLine & _
+                   "INNER JOIN mstPaymentReferences D ON " & vbNewLine & _
+                   "    A.PaymentReferencesID=D.ID " & vbNewLine & _
+                   "WHERE  " & vbNewLine & _
+                   "    A.APDate>=@DateFrom AND A.APDate<=@DateTo " & vbNewLine & _
+                   "    AND A.IsDeleted=0 " & vbNewLine & _
+                   "    AND A.IsPostedGL=0 " & vbNewLine
+
+                .Parameters.Add("@DateFrom", SqlDbType.DateTime).Value = dtmDateFrom
+                .Parameters.Add("@DateTo", SqlDbType.DateTime).Value = dtmDateTo
+            End With
+            Return SQL.QueryDataTable(sqlcmdExecute)
         End Function
 
         Public Shared Sub UpdateJournalID(ByVal strID As String, ByVal strJournalID As String)

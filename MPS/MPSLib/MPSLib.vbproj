@@ -91,7 +91,9 @@
     <Compile Include="BusinessLayers\ReceiveReturn.vb" />
     <Compile Include="BusinessLayers\Sales.vb" />
     <Compile Include="BusinessLayers\SalesDiscount.vb" />
+    <Compile Include="BusinessLayers\SalesReturn.vb" />
     <Compile Include="BusinessLayers\UOM.vb" />
+    <Compile Include="DataLayers\AccountPayable.vb" />
     <Compile Include="DataLayers\Base\Access.vb" />
     <Compile Include="DataLayers\Base\BusinessPartnerAssign.vb" />
     <Compile Include="DataLayers\Base\ChartOfAccount.vb" />
@@ -120,6 +122,7 @@
     <Compile Include="DataLayers\ReceiveReturn.vb" />
     <Compile Include="DataLayers\Sales.vb" />
     <Compile Include="DataLayers\SalesDiscount.vb" />
+    <Compile Include="DataLayers\SalesReturn.vb" />
     <Compile Include="DataLayers\UOM.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -180,9 +183,7 @@
     <Compile Include="ValueObject\PaymentTerm.vb" />
     <Compile Include="ValueObject\PostGL.vb" />
     <Compile Include="ValueObject\Receive.vb" />
-    <Compile Include="ValueObject\ReceiveDet.vb" />
     <Compile Include="ValueObject\ReceiveReturn.vb" />
-    <Compile Include="ValueObject\ReceiveReturnDet.vb" />
     <Compile Include="ValueObject\ReceiveReturnStatus.vb" />
     <Compile Include="ValueObject\ReceiveStatus.vb" />
     <Compile Include="ValueObject\Reports\rptAccountPayableReport.vb" />
@@ -198,10 +199,8 @@
     <Compile Include="ValueObject\Reports\rptSalesReport.vb" />
     <Compile Include="ValueObject\Reports\rptSalesReturnReport.vb" />
     <Compile Include="ValueObject\Sales.vb" />
-    <Compile Include="ValueObject\SalesDet.vb" />
     <Compile Include="ValueObject\SalesDiscount.vb" />
     <Compile Include="ValueObject\SalesReturn.vb" />
-    <Compile Include="ValueObject\SalesReturnDet.vb" />
     <Compile Include="ValueObject\SalesReturnStatus.vb" />
     <Compile Include="ValueObject\SalesStatus.vb" />
     <Compile Include="ValueObject\SalesSupplier.vb" />

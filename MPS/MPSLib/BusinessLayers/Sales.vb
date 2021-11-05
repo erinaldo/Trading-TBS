@@ -31,15 +31,17 @@ Namespace BL
                         '    Err.Raise(515, "", "Data tidak dapat disimpan. Dikarenakan tanggal transaksi lebih kecil atau sama dengan tanggal Posting Transaksi")
                     End If
                 Else
-                    'Dim strReturnID As String = DL.SalesReturn.AlreadyCreatedReturn(clsData.ID)
+                    Dim strReturnID As String = DL.SalesReturn.GetReturnID(clsData.ID)
                     'Dim strInvoiceID As String = DL.AccountReceivable.AlreadyCreatedInvoice(clsData.ID)
 
                     If DL.Sales.IsDeleted(clsData.ID) Then
                         Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dihapus")
-                        'ElseIf strReturnID.Trim <> "" Then
-                        '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dibuat retur dengan nomor " & strReturnID)
+                    ElseIf strReturnID.Trim <> "" Then
+                        Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dibuat retur dengan nomor " & strReturnID)
                         'ElseIf strInvoiceID.Trim <> "" Then
                         '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses penagihan dengan nomor " & strInvoiceID)
+                    ElseIf DL.Sales.IsSplitReceive(clsData.ID) Then
+                        Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses split data pembelian")
                     ElseIf DL.Sales.IsPostedGL(clsData.ID) Then
                         Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses posting data transaksi")
                     End If
@@ -113,15 +115,17 @@ Namespace BL
                 DL.SQL.OpenConnection()
                 DL.SQL.BeginTransaction()
 
-                'Dim strReturnID As String = DL.SalesReturn.AlreadyCreatedReturn(clsData.ID)
+                Dim strReturnID As String = DL.SalesReturn.GetReturnID(clsData.ID)
                 'Dim strInvoiceID As String = DL.AccountReceivable.AlreadyCreatedInvoice(clsData.ID)
 
                 If DL.Sales.IsDeleted(clsData.ID) Then
                     Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah dihapus sebelumnya")
-                    'ElseIf strReturnID.Trim <> "" Then
-                    '    Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah dibuat retur dengan nomor " & strReturnID)
+                ElseIf strReturnID.Trim <> "" Then
+                    Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah dibuat retur dengan nomor " & strReturnID)
                     'ElseIf strInvoiceID.Trim <> "" Then
                     '    Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah diproses penagihan dengan nomor " & strInvoiceID)
+                ElseIf DL.Sales.IsSplitReceive(clsData.ID) Then
+                    Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah diproses split data pembelian")
                 ElseIf DL.Sales.IsPostedGL(clsData.ID) Then
                     Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah diproses posting data transaksi")
                 Else
@@ -169,6 +173,13 @@ Namespace BL
         Public Shared Function ListDataFakturPenjualan(ByVal strID As String) As DataTable
             BL.Server.ServerDefault()
             Return DL.Sales.ListDataFakturPenjualan(strID)
+        End Function
+
+        Public Shared Function ListDataOutstandingReturn(ByVal intCompanyID As Integer, ByVal intProgramID As Integer, _
+                                        ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intBPID As Integer) As DataTable
+            dtmDateTo = dtmDateTo.AddHours(23).AddMinutes(59).AddSeconds(59)
+            BL.Server.ServerDefault()
+            Return DL.Sales.ListDataOutstandingReturn(intCompanyID, intProgramID, dtmDateFrom, dtmDateTo, intBPID)
         End Function
 
 
