@@ -3,15 +3,16 @@
 
 #Region "Main"
 
-        Public Shared Function ListData(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intIDStatus As Integer) As DataTable
+        Public Shared Function ListData(ByVal intCompanyID As Integer, ByVal intProgramID As Integer, _
+                                        ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intIDStatus As Integer) As DataTable
             dtmDateTo = dtmDateTo.AddHours(23).AddMinutes(59).AddSeconds(59)
             BL.Server.ServerDefault()
-            Return DL.AccountPayable.ListData(dtmDateFrom, dtmDateTo, intIDStatus)
+            Return DL.AccountPayable.ListData(intCompanyID, intProgramID, dtmDateFrom, dtmDateTo, intIDStatus)
         End Function
 
-        Private Shared Function GetNewID(ByVal intCompanyID As Integer)
+        Private Shared Function GetNewID(ByVal intCompanyID As Integer, ByVal intProgramID As Integer)
             Dim clsCompany As VO.Company = DL.Company.GetDetail(intCompanyID)
-            Dim strReturn As String = "AP" & Format(Now, "yyMMdd") & "-" & clsCompany.CompanyInitial & "-"
+            Dim strReturn As String = "AP" & Format(Now, "yyMMdd") & "-" & clsCompany.CompanyInitial & "-" & Format(intProgramID, "00") & "-"
             strReturn = strReturn & Format(DL.AccountPayable.GetMaxID(strReturn), "000")
             Return strReturn
         End Function
@@ -24,11 +25,11 @@
                 DL.SQL.BeginTransaction()
 
                 If bolNew Then
-                    clsData.ID = GetNewID(clsData.CompanyID)
+                    clsData.ID = GetNewID(clsData.CompanyID, clsData.ProgramID)
                     If DL.AccountPayable.DataExists(clsData.ID) Then
                         Err.Raise(515, "", "ID sudah ada sebelumnya")
-                    ElseIf Format(clsData.APDate, "yyyyMMdd") <= DL.PostGL.LastPostedDate Then
-                        Err.Raise(515, "", "Data tidak dapat disimpan. Dikarenakan tanggal transaksi lebih kecil atau sama dengan tanggal Posting Transaksi")
+                        'ElseIf Format(clsData.APDate, "yyyyMMdd") <= DL.PostGL.LastPostedDate Then
+                        '    Err.Raise(515, "", "Data tidak dapat disimpan. Dikarenakan tanggal transaksi lebih kecil atau sama dengan tanggal Posting Transaksi")
                     End If
                 Else
                     If DL.AccountPayable.IsDeleted(clsData.ID) Then
@@ -122,63 +123,63 @@
             End Try
         End Sub
 
-        Public Shared Sub PostData(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime)
-            Dim dtData As DataTable = DL.AccountPayable.ListDataOutstandingPostGL(dtmDateFrom, dtmDateTo)
-            For Each dr As DataRow In dtData.Rows
-                '# Generate Journal
-                Dim clsJournal As VO.Journal = New VO.Journal
-                clsJournal.CompanyID = dr.Item("CompanyID")
-                clsJournal.ID = dr.Item("JournalID")
-                clsJournal.ReferencesID = dr.Item("ID")
-                clsJournal.JournalDate = dr.Item("APDate")
-                clsJournal.TotalAmount = dr.Item("TotalAmount")
-                clsJournal.IsAutoGenerate = True
-                clsJournal.IDStatus = VO.Status.Values.Draft
-                clsJournal.Remarks = dr.Item("Remarks")
-                clsJournal.LogBy = UI.usUserApp.UserID
+        'Public Shared Sub PostData(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime)
+        '    Dim dtData As DataTable = DL.AccountPayable.ListDataOutstandingPostGL(dtmDateFrom, dtmDateTo)
+        '    For Each dr As DataRow In dtData.Rows
+        '        '# Generate Journal
+        '        Dim clsJournal As VO.Journal = New VO.Journal
+        '        clsJournal.CompanyID = dr.Item("CompanyID")
+        '        clsJournal.ID = dr.Item("JournalID")
+        '        clsJournal.ReferencesID = dr.Item("ID")
+        '        clsJournal.JournalDate = dr.Item("APDate")
+        '        clsJournal.TotalAmount = dr.Item("TotalAmount")
+        '        clsJournal.IsAutoGenerate = True
+        '        clsJournal.IDStatus = VO.Status.Values.Draft
+        '        clsJournal.Remarks = dr.Item("Remarks")
+        '        clsJournal.LogBy = UI.usUserApp.UserID
 
-                Dim clsJournalDet As VO.JournalDet
-                Dim clsJournalDetAll(1) As VO.JournalDet
+        '        Dim clsJournalDet As VO.JournalDet
+        '        Dim clsJournalDetAll(1) As VO.JournalDet
 
-                '# Account Receivable
-                clsJournalDet = New VO.JournalDet
-                clsJournalDet.JournalID = dr.Item("JournalID")
-                clsJournalDet.CoAID = MPSLib.UI.usUserApp.JournalPost.CoAofAccountPayable
-                clsJournalDet.CoAName = MPSLib.UI.usUserApp.JournalPost.CoANameofAccountPayable
-                clsJournalDet.DebitAmount = dr.Item("TotalAmount")
-                clsJournalDet.CreditAmount = 0
-                clsJournalDetAll(0) = clsJournalDet
+        '        '# Account Receivable
+        '        clsJournalDet = New VO.JournalDet
+        '        clsJournalDet.JournalID = dr.Item("JournalID")
+        '        clsJournalDet.CoAID = MPSLib.UI.usUserApp.JournalPost.CoAofAccountPayable
+        '        clsJournalDet.CoAName = MPSLib.UI.usUserApp.JournalPost.CoANameofAccountPayable
+        '        clsJournalDet.DebitAmount = dr.Item("TotalAmount")
+        '        clsJournalDet.CreditAmount = 0
+        '        clsJournalDetAll(0) = clsJournalDet
 
-                '# Cash / Bank
-                clsJournalDet = New VO.JournalDet
-                clsJournalDet.JournalID = dr.Item("JournalID")
-                clsJournalDet.CoAID = dr.Item("CoAIDOfOutgoingPayment")
-                clsJournalDet.CoAName = ""
-                clsJournalDet.DebitAmount = 0
-                clsJournalDet.CreditAmount = dr.Item("TotalAmount")
-                clsJournalDetAll(1) = clsJournalDet
+        '        '# Cash / Bank
+        '        clsJournalDet = New VO.JournalDet
+        '        clsJournalDet.JournalID = dr.Item("JournalID")
+        '        clsJournalDet.CoAID = dr.Item("CoAIDOfOutgoingPayment")
+        '        clsJournalDet.CoAName = ""
+        '        clsJournalDet.DebitAmount = 0
+        '        clsJournalDet.CreditAmount = dr.Item("TotalAmount")
+        '        clsJournalDetAll(1) = clsJournalDet
 
-                Dim strJournalID As String = BL.Journal.SaveData(True, clsJournal, clsJournalDetAll)
-                '# End Of Generate Journal
+        '        Dim strJournalID As String = BL.Journal.SaveData(True, clsJournal, clsJournalDetAll)
+        '        '# End Of Generate Journal
 
-                '#Update Journal ID
-                If strJournalID.Trim <> "" Then DL.AccountPayable.UpdateJournalID(dr.Item("ID"), strJournalID)
+        '        '#Update Journal ID
+        '        If strJournalID.Trim <> "" Then DL.AccountPayable.UpdateJournalID(dr.Item("ID"), strJournalID)
 
-                DL.AccountPayable.PostGL(dr.Item("ID"), UI.usUserApp.UserID)
-            Next
-        End Sub
+        '        DL.AccountPayable.PostGL(dr.Item("ID"), UI.usUserApp.UserID)
+        '    Next
+        'End Sub
 
-        Public Shared Sub UnpostData(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime)
-            Dim dtData As DataTable = DL.AccountPayable.ListData(dtmDateFrom, dtmDateTo, VO.Status.Values.All)
-            For Each dr As DataRow In dtData.Rows
-                DL.Journal.DeleteDataDetail(dr.Item("JournalID"))
-                DL.Journal.DeleteDataPure(dr.Item("JournalID"))
+        'Public Shared Sub UnpostData(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime)
+        '    Dim dtData As DataTable = DL.AccountPayable.ListData(dtmDateFrom, dtmDateTo, VO.Status.Values.All)
+        '    For Each dr As DataRow In dtData.Rows
+        '        DL.Journal.DeleteDataDetail(dr.Item("JournalID"))
+        '        DL.Journal.DeleteDataPure(dr.Item("JournalID"))
 
-                '#Update Journal ID
-                DL.AccountPayable.UpdateJournalID(dr.Item("ID"), "")
-                DL.AccountPayable.UnpostGL(dr.Item("ID"))
-            Next
-        End Sub
+        '        '#Update Journal ID
+        '        DL.AccountPayable.UpdateJournalID(dr.Item("ID"), "")
+        '        DL.AccountPayable.UnpostGL(dr.Item("ID"))
+        '    Next
+        'End Sub
 
 #End Region
 

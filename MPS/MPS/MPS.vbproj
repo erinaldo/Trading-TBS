@@ -374,6 +374,18 @@
     <Compile Include="PresentationLayers\Forms\System\frmSysMain.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraAccountPayable.designer.vb">
+      <DependentUpon>frmTraAccountPayable.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraAccountPayable.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraAccountPayableDet.designer.vb">
+      <DependentUpon>frmTraAccountPayableDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraAccountPayableDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="PresentationLayers\Forms\Transaction\frmTraCost.designer.vb">
       <DependentUpon>frmTraCost.vb</DependentUpon>
     </Compile>
@@ -688,6 +700,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\System\frmSysMain.resx">
       <DependentUpon>frmSysMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraAccountPayable.resx">
+      <DependentUpon>frmTraAccountPayable.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraAccountPayableDet.resx">
+      <DependentUpon>frmTraAccountPayableDet.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraCost.resx">
       <DependentUpon>frmTraCost.vb</DependentUpon>

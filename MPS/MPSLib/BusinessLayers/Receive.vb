@@ -47,14 +47,14 @@ Namespace BL
                 End If
             Else
                 Dim strReturnID As String = DL.ReceiveReturn.GetReturnID(clsData.ID)
-                'Dim strInvoiceID As String = DL.AccountReceivable.AlreadyCreatedInvoice(clsData.ID)
+                Dim strInvoiceID As String = DL.AccountPayable.GetInvoiceID(clsData.ID)
 
                 If DL.Receive.IsDeleted(clsData.ID) Then
                     Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dihapus")
                 ElseIf strReturnID.Trim <> "" Then
                     Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dibuat retur dengan nomor " & strReturnID)
-                    'ElseIf strInvoiceID.Trim <> "" Then
-                    '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses penagihan dengan nomor " & strInvoiceID)
+                ElseIf strInvoiceID.Trim <> "" Then
+                    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses pembayaran dengan nomor " & strInvoiceID)
                 ElseIf DL.Receive.IsPostedGL(clsData.ID) Then
                     Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses posting data transaksi")
                 End If
@@ -79,14 +79,14 @@ Namespace BL
                 DL.SQL.BeginTransaction()
 
                 Dim strReturnID As String = DL.ReceiveReturn.GetReturnID(clsData.ID)
-                'Dim strInvoiceID As String = DL.AccountReceivable.AlreadyCreatedInvoice(clsData.ID)
+                Dim strInvoiceID As String = DL.AccountPayable.GetInvoiceID(clsData.ID)
 
                 If DL.Receive.IsDeleted(clsData.ID) Then
                     Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah dihapus sebelumnya")
                 ElseIf strReturnID.Trim <> "" Then
                     Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah dibuat retur dengan nomor " & strReturnID)
-                    'ElseIf strInvoiceID.Trim <> "" Then
-                    '    Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah diproses penagihan dengan nomor " & strInvoiceID)
+                ElseIf strInvoiceID.Trim <> "" Then
+                    Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah diproses pembayaran dengan nomor " & strInvoiceID)
                 ElseIf DL.Receive.IsPostedGL(clsData.ID) Then
                     Err.Raise(515, "", "Data tidak dapat dihapus. Dikarenakan data telah diproses posting data transaksi")
                 Else

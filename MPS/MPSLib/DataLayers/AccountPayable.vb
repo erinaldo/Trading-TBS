@@ -9,9 +9,8 @@
             With sqlcmdExecute
                 .CommandText = _
                    "SELECT " & vbNewLine & _
-                   "     A.CompanyID, A.ID, A.BPID, C.Name AS BPName, A.APDate, A.PaymentReferencesID, D.Name AS PaymentReferencesName, A.ReferencesNote, A.TotalAmount,   " & vbNewLine & _
-                   "     A.IsPostedGL, A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, B.Name AS StatusInfo,   " & vbNewLine & _
-                   "     A.CreatedBy, A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID  " & vbNewLine & _
+                   "     A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.BPID, C.Name AS BPName, A.APDate, A.PaymentReferencesID, D.Name AS PaymentReferencesName, A.ReferencesNote, A.TotalAmount,   " & vbNewLine & _
+                   "     A.IsPostedGL, A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, B.Name AS StatusInfo, A.CreatedBy, A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID  " & vbNewLine & _
                    "FROM traAccountPayable A " & vbNewLine & _
                    "INNER JOIN mstStatus B ON " & vbNewLine & _
                    "    A.IDStatus=B.ID " & vbNewLine & _
@@ -19,6 +18,10 @@
                    "    A.BPID=C.ID " & vbNewLine & _
                    "INNER JOIN mstPaymentReferences D ON " & vbNewLine & _
                    "    A.PaymentReferencesID=D.ID " & vbNewLine & _
+                   "INNER JOIN mstCompany MC ON " & vbNewLine & _
+                   "    A.CompanyID=MC.ID " & vbNewLine & _
+                   "INNER JOIN mstProgram MP ON " & vbNewLine & _
+                   "    A.ProgramID=MP.ID " & vbNewLine & _
                    "WHERE  " & vbNewLine & _
                    "    A.CompanyID=@CompanyID " & vbNewLine & _
                    "    AND A.ProgramID=@ProgramID " & vbNewLine & _
@@ -96,22 +99,24 @@
                 With sqlcmdExecute
                     .Connection = SQL.sqlConn
                     .CommandText = _
-                       "SELECT TOP 1 " & vbNewLine & _
-                       "    A.CompanyID, A.ID, A.BPID, C.Name AS BPName, A.APDate, A.PaymentReferencesID, D.Name AS PaymentReferencesName, A.ReferencesNote, A.TotalAmount,   " & vbNewLine & _
-                       "    A.IsPostedGL, A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus,   " & vbNewLine & _
-                       "    A.LogBy, A.LogDate, A.LogInc, A.JournalID, A.CoAIDOfOutgoingPayment, COA.Code AS CoACodeOfOutgoingPayment, COA.Name AS CoANameOfOutgoingPayment " & vbNewLine & _
-                       "FROM traAccountPayable A " & vbNewLine & _
-                       "INNER JOIN mstBusinessPartner C ON " & vbNewLine & _
-                       "    A.BPID=C.ID " & vbNewLine & _
-                       "INNER JOIN mstPaymentReferences D ON " & vbNewLine & _
-                       "    A.PaymentReferencesID=D.ID " & vbNewLine & _
-                       "INNER JOIN mstChartOfAccount COA ON " & vbNewLine & _
-                       "    A.CoAIDOfOutgoingPayment=COA.ID " & vbNewLine & _
-                       "WHERE " & vbNewLine & _
-                       "    A.ID=@ID " & vbNewLine
+                        "SELECT TOP 1 " & vbNewLine & _
+                        "    A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.BPID, C.Name AS BPName, A.APDate, A.PaymentReferencesID, D.Name AS PaymentReferencesName, A.ReferencesNote, A.TotalAmount,   " & vbNewLine & _
+                        "    A.IsPostedGL, A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, A.LogBy, A.LogDate, A.LogInc, A.JournalID, A.CoAIDOfOutgoingPayment, COA.Code AS CoACodeOfOutgoingPayment, COA.Name AS CoANameOfOutgoingPayment " & vbNewLine & _
+                        "FROM traAccountPayable A " & vbNewLine & _
+                        "INNER JOIN mstBusinessPartner C ON " & vbNewLine & _
+                        "    A.BPID=C.ID " & vbNewLine & _
+                        "INNER JOIN mstPaymentReferences D ON " & vbNewLine & _
+                        "    A.PaymentReferencesID=D.ID " & vbNewLine & _
+                        "INNER JOIN mstChartOfAccount COA ON " & vbNewLine & _
+                        "    A.CoAIDOfOutgoingPayment=COA.ID " & vbNewLine & _
+                        "INNER JOIN mstCompany MC ON " & vbNewLine & _
+                        "   A.CompanyID=MC.ID " & vbNewLine & _
+                        "INNER JOIN mstProgram MP ON " & vbNewLine & _
+                        "   A.ProgramID=MP.ID " & vbNewLine & _
+                        "WHERE " & vbNewLine & _
+                        "    A.ID=@ID " & vbNewLine
 
                     .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
-
                     If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
                 End With
                 sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)
@@ -119,6 +124,9 @@
                     If .HasRows Then
                         .Read()
                         voReturn.CompanyID = .Item("CompanyID")
+                        voReturn.CompanyName = .Item("CompanyName")
+                        voReturn.ProgramID = .Item("ProgramID")
+                        voReturn.ProgramName = .Item("ProgramName")
                         voReturn.ID = .Item("ID")
                         voReturn.BPID = .Item("BPID")
                         voReturn.BPName = .Item("BPName")
@@ -173,7 +181,7 @@
 
         Public Shared Function GetMaxID(ByVal strID As String) As Integer
             Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
-            Dim intReturn As Integer = 0
+            Dim intReturn As Integer = 1
             Try
                 If Not SQL.bolUseTrans Then SQL.OpenConnection()
                 With sqlcmdExecute
@@ -183,9 +191,9 @@
                         "   ID=ISNULL(RIGHT(MAX(ID),3),0) " & vbNewLine & _
                         "FROM traAccountPayable " & vbNewLine & _
                         "WHERE  " & vbNewLine & _
-                        "   LEFT(ID,13)=@ID " & vbNewLine
+                        "   LEFT(ID,16)=@ID " & vbNewLine
 
-                    .Parameters.Add("@ID", SqlDbType.VarChar, 13).Value = strID
+                    .Parameters.Add("@ID", SqlDbType.VarChar, 16).Value = strID
                     If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
                 End With
                 sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)
@@ -206,7 +214,7 @@
         End Function
 
         Public Shared Function DataExists(ByVal strID As String) As Boolean
-            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader
+            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
             Dim bolExists As Boolean = False
             Try
                 If Not SQL.bolUseTrans Then SQL.OpenConnection()
@@ -219,7 +227,7 @@
                         "WHERE  " & vbNewLine & _
                         "   ID=@ID " & vbNewLine
 
-                    .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = strID
+                    .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
 
                     If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
                 End With
@@ -228,18 +236,19 @@
                     If .HasRows Then
                         .Read()
                         bolExists = True
-                    End If
-                    .Close()
+                    End If 
                 End With
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()
             Catch ex As Exception
                 Throw ex
+            Finally
+                If Not sqlrdData Is Nothing Then sqlrdData.Close()
             End Try
             Return bolExists
         End Function
 
         Public Shared Function IsDeleted(ByVal strID As String) As Boolean
-            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader
+            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
             Dim bolExists As Boolean = False
             Try
                 If Not SQL.bolUseTrans Then SQL.OpenConnection()
@@ -253,7 +262,7 @@
                         "   ID=@ID " & vbNewLine & _
                         "   AND IsDeleted=1 " & vbNewLine
 
-                    .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = strID
+                    .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
                     If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
                 End With
                 sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)
@@ -261,18 +270,19 @@
                     If .HasRows Then
                         .Read()
                         bolExists = True
-                    End If
-                    .Close()
+                    End If 
                 End With
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()
             Catch ex As Exception
                 Throw ex
+            Finally
+                If Not sqlrdData Is Nothing Then sqlrdData.Close()
             End Try
             Return bolExists
         End Function
 
         Public Shared Function IsPostedGL(ByVal strID As String) As Boolean
-            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader
+            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
             Dim bolExists As Boolean = False
             Try
                 If Not SQL.bolUseTrans Then SQL.OpenConnection()
@@ -286,7 +296,7 @@
                         "   ID=@ID " & vbNewLine & _
                         "   AND IsPostedGL=1 " & vbNewLine
 
-                    .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = strID
+                    .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
                     If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
                 End With
                 sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)
@@ -294,15 +304,77 @@
                     If .HasRows Then
                         .Read()
                         bolExists = True
-                    End If
-                    .Close()
+                    End If 
                 End With
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()
             Catch ex As Exception
                 Throw ex
+            Finally
+                If Not sqlrdData Is Nothing Then sqlrdData.Close()
             End Try
             Return bolExists
         End Function
+
+        Public Shared Sub UpdateJournalID(ByVal strID As String, ByVal strJournalID As String)
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "UPDATE traAccountPayable " & vbNewLine & _
+                    "SET JournalID=@JournalID " & vbNewLine & _
+                    "WHERE " & vbNewLine & _
+                    "   ID=@ID " & vbNewLine
+
+                .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
+                .Parameters.Add("@JournalID", SqlDbType.VarChar, 30).Value = strJournalID
+            End With
+            Try
+                SQL.ExecuteNonQuery(sqlcmdExecute)
+            Catch ex As SqlException
+                Throw ex
+            End Try
+        End Sub
+
+
+
+        Public Shared Sub PostGL(ByVal strID As String, ByVal strLogBy As String)
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "UPDATE traAccountPayable SET" & vbNewLine & _
+                    "   IsPostedGL=1, " & vbNewLine & _
+                    "   PostedBy=@LogBy, " & vbNewLine & _
+                    "   PostedDate=GETDATE() " & vbNewLine & _
+                    "WHERE " & vbNewLine & _
+                    "   ID=@ID " & vbNewLine
+
+                .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
+                .Parameters.Add("@LogBy", SqlDbType.VarChar, 30).Value = strLogBy
+            End With
+            Try
+                SQL.ExecuteNonQuery(sqlcmdExecute)
+            Catch ex As SqlException
+                Throw ex
+            End Try
+        End Sub
+
+        Public Shared Sub UnpostGL(ByVal strID As String)
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "UPDATE traAccountPayable SET" & vbNewLine & _
+                    "   IsPostedGL=0, " & vbNewLine & _
+                    "   PostedBy='' " & vbNewLine & _
+                    "WHERE " & vbNewLine & _
+                    "   ID=@ID " & vbNewLine
+
+                .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
+            End With
+            Try
+                SQL.ExecuteNonQuery(sqlcmdExecute)
+            Catch ex As SqlException
+                Throw ex
+            End Try
+        End Sub
 
         Public Shared Function ListDataOutstandingPostGL(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime) As DataTable
             Dim sqlcmdExecute As New SqlCommand
@@ -329,65 +401,6 @@
             End With
             Return SQL.QueryDataTable(sqlcmdExecute)
         End Function
-
-        Public Shared Sub UpdateJournalID(ByVal strID As String, ByVal strJournalID As String)
-            Dim sqlcmdExecute As New SqlCommand
-            With sqlcmdExecute
-                .CommandText = _
-                    "UPDATE traAccountPayable " & vbNewLine & _
-                    "SET JournalID=@JournalID " & vbNewLine & _
-                    "WHERE " & vbNewLine & _
-                    "   ID=@ID " & vbNewLine
-
-                .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = strID
-                .Parameters.Add("@JournalID", SqlDbType.VarChar, 20).Value = strJournalID
-            End With
-            Try
-                SQL.ExecuteNonQuery(sqlcmdExecute)
-            Catch ex As SqlException
-                Throw ex
-            End Try
-        End Sub
-
-        Public Shared Sub PostGL(ByVal strID As String, ByVal strLogBy As String)
-            Dim sqlcmdExecute As New SqlCommand
-            With sqlcmdExecute
-                .CommandText = _
-                    "UPDATE traAccountPayable SET" & vbNewLine & _
-                    "   IsPostedGL=1, " & vbNewLine & _
-                    "   PostedBy=@LogBy, " & vbNewLine & _
-                    "   PostedDate=GETDATE() " & vbNewLine & _
-                    "WHERE " & vbNewLine & _
-                    "   ID=@ID " & vbNewLine
-
-                .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = strID
-                .Parameters.Add("@LogBy", SqlDbType.VarChar, 20).Value = strLogBy
-            End With
-            Try
-                SQL.ExecuteNonQuery(sqlcmdExecute)
-            Catch ex As SqlException
-                Throw ex
-            End Try
-        End Sub
-
-        Public Shared Sub UnpostGL(ByVal strID As String)
-            Dim sqlcmdExecute As New SqlCommand
-            With sqlcmdExecute
-                .CommandText = _
-                    "UPDATE traAccountPayable SET" & vbNewLine & _
-                    "   IsPostedGL=0, " & vbNewLine & _
-                    "   PostedBy='' " & vbNewLine & _
-                    "WHERE " & vbNewLine & _
-                    "   ID=@ID " & vbNewLine
-
-                .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = strID
-            End With
-            Try
-                SQL.ExecuteNonQuery(sqlcmdExecute)
-            Catch ex As SqlException
-                Throw ex
-            End Try
-        End Sub
 
 #End Region
 
@@ -425,7 +438,7 @@
                     "                AND AR.BPID=@BPID " & vbNewLine & _
                     "        )" & vbNewLine
 
-                .Parameters.Add("@APID", SqlDbType.VarChar, 20).Value = strAPID
+                .Parameters.Add("@APID", SqlDbType.VarChar, 30).Value = strAPID
                 .Parameters.Add("@BPID", SqlDbType.Int).Value = intBPID
             End With
             Return SQL.QueryDataTable(sqlcmdExecute)
@@ -443,7 +456,7 @@
                    "WHERE  " & vbNewLine & _
                    "    A.APID=@APID" & vbNewLine
 
-                .Parameters.Add("@APID", SqlDbType.VarChar, 20).Value = strAPID
+                .Parameters.Add("@APID", SqlDbType.VarChar, 30).Value = strAPID
             End With
             Return SQL.QueryDataTable(sqlcmdExecute)
         End Function
@@ -474,9 +487,9 @@
                    "VALUES " & vbNewLine & _
                    "    (@ID, @APID, @ReceiveID, @Amount)  " & vbNewLine
 
-                .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = clsData.ID
-                .Parameters.Add("@APID", SqlDbType.VarChar, 20).Value = clsData.APID
-                .Parameters.Add("@ReceiveID", SqlDbType.VarChar, 20).Value = clsData.ReceiveID
+                .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = clsData.ID
+                .Parameters.Add("@APID", SqlDbType.VarChar, 30).Value = clsData.APID
+                .Parameters.Add("@ReceiveID", SqlDbType.VarChar, 30).Value = clsData.ReceiveID
                 .Parameters.Add("@Amount", SqlDbType.Decimal).Value = clsData.Amount
             End With
             Try
@@ -494,7 +507,7 @@
                     "WHERE " & vbNewLine & _
                     "   APID=@APID " & vbNewLine
 
-                .Parameters.Add("@APID", SqlDbType.VarChar, 20).Value = strAPID
+                .Parameters.Add("@APID", SqlDbType.VarChar, 30).Value = strAPID
             End With
             Try
                 SQL.ExecuteNonQuery(sqlcmdExecute)
@@ -504,7 +517,7 @@
         End Sub
 
         Public Shared Function GetMaxIDDetail(ByVal strAPID As String) As Integer
-            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader
+            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
             Dim intReturn As Integer = 1
             Try
                 If Not SQL.bolUseTrans Then SQL.OpenConnection()
@@ -515,9 +528,9 @@
                         "   ID=ISNULL(RIGHT(MAX(ID),3),0) " & vbNewLine & _
                         "FROM traAccountPayableDet " & vbNewLine & _
                         "WHERE  " & vbNewLine & _
-                        "   LEFT(APID,17)=@APID " & vbNewLine
+                        "   APID=@APID " & vbNewLine
 
-                    .Parameters.Add("@APID", SqlDbType.VarChar, 17).Value = strAPID
+                    .Parameters.Add("@APID", SqlDbType.VarChar, 30).Value = strAPID
                     If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
                 End With
                 sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)
@@ -531,12 +544,14 @@
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()
             Catch ex As Exception
                 Throw ex
+            Finally
+                If Not sqlrdData Is Nothing Then sqlrdData.Close()
             End Try
             Return intReturn
         End Function
 
-        Public Shared Function AlreadyCreatedInvoice(ByVal strReceiveID As String) As String
-            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader
+        Public Shared Function GetInvoiceID(ByVal strReceiveID As String) As String
+            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
             Dim strReturn As String = ""
             Try
                 If Not SQL.bolUseTrans Then SQL.OpenConnection()
@@ -552,7 +567,7 @@
                         "	A.IsDeleted=0 	" & vbNewLine & _
                         "	AND B.ReceiveID=@ReceiveID	" & vbNewLine
 
-                    .Parameters.Add("@ReceiveID", SqlDbType.VarChar, 20).Value = strReceiveID
+                    .Parameters.Add("@ReceiveID", SqlDbType.VarChar, 30).Value = strReceiveID
                     If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
                 End With
                 sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)
@@ -566,6 +581,8 @@
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()
             Catch ex As Exception
                 Throw ex
+            Finally
+                If Not sqlrdData Is Nothing Then sqlrdData.Close()
             End Try
             Return strReturn
         End Function
@@ -584,7 +601,7 @@
                    "WHERE  " & vbNewLine & _
                    "    A.APID=@APID " & vbNewLine
 
-                .Parameters.Add("@APID", SqlDbType.VarChar, 20).Value = strAPID
+                .Parameters.Add("@APID", SqlDbType.VarChar, 30).Value = strAPID
             End With
             Return SQL.QueryDataTable(sqlcmdExecute)
         End Function
@@ -598,8 +615,8 @@
                    "VALUES " & vbNewLine & _
                    "    (@ID, @APID, @Status, @StatusBy, @StatusDate, @Remarks)  " & vbNewLine
 
-                .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = clsData.ID
-                .Parameters.Add("@APID", SqlDbType.VarChar, 20).Value = clsData.APID
+                .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = clsData.ID
+                .Parameters.Add("@APID", SqlDbType.VarChar, 30).Value = clsData.APID
                 .Parameters.Add("@Status", SqlDbType.VarChar, 100).Value = clsData.Status
                 .Parameters.Add("@StatusBy", SqlDbType.VarChar, 20).Value = clsData.StatusBy
                 .Parameters.Add("@StatusDate", SqlDbType.DateTime).Value = clsData.StatusDate
@@ -613,7 +630,7 @@
         End Sub
 
         Public Shared Function GetMaxIDStatus(ByVal strAPID As String) As Integer
-            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader
+            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
             Dim intReturn As Integer = 1
             Try
                 If Not SQL.bolUseTrans Then SQL.OpenConnection()
@@ -624,9 +641,9 @@
                         "   ID=ISNULL(RIGHT(MAX(ID),3),0) " & vbNewLine & _
                         "FROM traAccountPayableStatus " & vbNewLine & _
                         "WHERE  " & vbNewLine & _
-                        "   LEFT(APID,17)=@APID " & vbNewLine
+                        "   APID=@APID " & vbNewLine
 
-                    .Parameters.Add("@APID", SqlDbType.VarChar, 17).Value = strAPID
+                    .Parameters.Add("@APID", SqlDbType.VarChar, 30).Value = strAPID
 
                     If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
                 End With
@@ -635,12 +652,13 @@
                     If .HasRows Then
                         .Read()
                         intReturn = .Item("ID") + 1
-                    End If
-                    .Close()
+                    End If 
                 End With
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()
             Catch ex As Exception
                 Throw ex
+            Finally
+                If Not sqlrdData Is Nothing Then sqlrdData.Close()
             End Try
             Return intReturn
         End Function

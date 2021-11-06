@@ -63,6 +63,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLayers\AccountPayable.vb" />
     <Compile Include="BusinessLayers\Base\Access.vb" />
     <Compile Include="BusinessLayers\Base\BusinessPartnerAssign.vb" />
     <Compile Include="BusinessLayers\Base\ChartOfAccount.vb" />
