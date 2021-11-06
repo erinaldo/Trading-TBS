@@ -15,6 +15,7 @@ Public Class frmTraAccountPayableDet
     Property pubIsSave As Boolean = False
     Private bolValid As Boolean = True
     Private intCoAIDOfOutgoingPayment As Integer = 0
+    Property pubCS As New VO.CS
 
     Public Sub pubShowDialog(ByVal frmGetParent As Form)
         frmParent = frmGetParent
@@ -33,6 +34,10 @@ Public Class frmTraAccountPayableDet
         Else
             Me.Text += " [edit] "
         End If
+    End Sub
+
+    Private Sub prvResetProgressBar()
+        pgMain.Value = 0
     End Sub
 
     Private Sub prvSetGrid()
@@ -76,6 +81,8 @@ Public Class frmTraAccountPayableDet
     End Sub
 
     Private Sub prvFillForm()
+        pgMain.Value = 30
+        Me.Cursor = Cursors.WaitCursor
         prvFillCombo()
         Try
             If pubIsNew Then
@@ -105,6 +112,10 @@ Public Class frmTraAccountPayableDet
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
             Me.Close()
+        Finally
+            Me.Cursor = Cursors.Default
+            pgMain.Value = 100
+            prvResetProgressBar()
         End Try
     End Sub
 
@@ -154,7 +165,8 @@ Public Class frmTraAccountPayableDet
         If Not UI.usForm.frmAskQuestion("Simpan data pembayaran?") Then Exit Sub
 
         clsData = New VO.AccountPayable
-        clsData.CompanyID = MPSLib.UI.usUserApp.CompanyID
+        clsData.ProgramID = pubCS.ProgramID
+        clsData.CompanyID = pubCS.CompanyID
         clsData.ID = txtID.Text.Trim
         clsData.BPID = intBPID
         clsData.BPName = txtBPName.Text.Trim
@@ -181,18 +193,20 @@ Public Class frmTraAccountPayableDet
         Next
 
         Me.Cursor = Cursors.WaitCursor
-        progressBar.Visible = True
-
+        pgMain.Value = 30
         Try
             Dim strID As String = BL.AccountPayable.SaveData(pubIsNew, clsData, clsDataDetailAll)
+            pgMain.Value = 50
             If strID.Trim <> "" Then
                 If pubIsNew Then
+                    pgMain.Value = 100
                     UI.usForm.frmMessageBox("Data berhasil disimpan. " & vbCrLf & "Nomor Pembayaran: " & strID)
                     frmParent.pubRefresh(clsData.ID)
                     prvClear()
                     prvQueryItem()
                     prvQueryHistory()
                 Else
+                    pgMain.Value = 100
                     pubIsSave = True
                     Me.Close()
                 End If
@@ -204,7 +218,8 @@ Public Class frmTraAccountPayableDet
             UI.usForm.frmMessageBox(ex.Message)
         Finally
             Me.Cursor = Cursors.Default
-            progressBar.Visible = False
+            pgMain.Value = 100
+            prvResetProgressBar()
         End Try
     End Sub
 
@@ -241,7 +256,7 @@ Public Class frmTraAccountPayableDet
     End Sub
 
     Private Sub prvUserAccess()
-        ToolBar.Buttons(cSave).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, VO.Modules.Values.TransactionAccountPayable, IIf(pubIsNew, VO.Access.Values.NewAccess, VO.Access.Values.EditAccess))
+        ToolBar.Buttons(cSave).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, pubCS.ProgramID, VO.Modules.Values.TransactionAccountPayable, IIf(pubIsNew, VO.Access.Values.NewAccess, VO.Access.Values.EditAccess))
     End Sub
 
 #Region "Item Handle"
@@ -255,6 +270,8 @@ Public Class frmTraAccountPayableDet
     End Sub
 
     Private Sub prvQueryItem()
+        Me.Cursor = Cursors.WaitCursor
+        pgMain.Value = 30
         Try
             If pubIsNew Then
                 dtItem = BL.AccountPayable.ListDataDetailOutstanding(intBPID)
@@ -270,6 +287,9 @@ Public Class frmTraAccountPayableDet
             UI.usForm.frmMessageBox(ex.Message)
             Me.Close()
         Finally
+            Me.Cursor = Cursors.Default
+            pgMain.Value = 100
+            prvResetProgressBar()
             prvSetButton()
         End Try
     End Sub
@@ -305,11 +325,17 @@ Public Class frmTraAccountPayableDet
 #Region "History Handle"
 
     Private Sub prvQueryHistory()
+        Me.Cursor = Cursors.WaitCursor
+        pgMain.Value = 30
         Try
             grdStatus.DataSource = BL.AccountPayable.ListDataStatus(txtID.Text.Trim)
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
             Me.Close()
+        Finally
+            Me.Cursor = Cursors.Default
+            pgMain.Value = 100
+            prvResetProgressBar()
         End Try
     End Sub
 

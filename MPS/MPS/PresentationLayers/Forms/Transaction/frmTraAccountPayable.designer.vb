@@ -30,8 +30,12 @@ Partial Class frmTraAccountPayable
         Me.BarSep1 = New System.Windows.Forms.ToolBarButton()
         Me.BarRefresh = New System.Windows.Forms.ToolBarButton()
         Me.BarClose = New System.Windows.Forms.ToolBarButton()
+        Me.grdMain = New DevExpress.XtraGrid.GridControl()
+        Me.grdView = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.pnlMain = New DevExpress.XtraEditors.PanelControl()
-        Me.progressBar = New DevExpress.XtraWaitForm.ProgressPanel()
+        Me.btnCompany = New DevExpress.XtraEditors.SimpleButton()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.txtCompanyName = New MPS.usTextBox()
         Me.btnClear = New DevExpress.XtraEditors.SimpleButton()
         Me.btnExecute = New DevExpress.XtraEditors.SimpleButton()
         Me.cboStatus = New MPS.usComboBox()
@@ -41,12 +45,11 @@ Partial Class frmTraAccountPayable
         Me.dtpDateFrom = New System.Windows.Forms.DateTimePicker()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.grdMain = New DevExpress.XtraGrid.GridControl()
-        Me.grdView = New DevExpress.XtraGrid.Views.Grid.GridView()
-        CType(Me.pnlMain, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.pnlMain.SuspendLayout()
+        Me.pgMain = New System.Windows.Forms.ProgressBar()
         CType(Me.grdMain, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.grdView, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.pnlMain, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnlMain.SuspendLayout()
         Me.SuspendLayout()
         '
         'ToolBar
@@ -96,127 +99,6 @@ Partial Class frmTraAccountPayable
         Me.BarClose.Tag = "Close"
         Me.BarClose.Text = "Tutup"
         '
-        'pnlMain
-        '
-        Me.pnlMain.Controls.Add(Me.progressBar)
-        Me.pnlMain.Controls.Add(Me.btnClear)
-        Me.pnlMain.Controls.Add(Me.btnExecute)
-        Me.pnlMain.Controls.Add(Me.cboStatus)
-        Me.pnlMain.Controls.Add(Me.lblIDStatus)
-        Me.pnlMain.Controls.Add(Me.Label3)
-        Me.pnlMain.Controls.Add(Me.dtpDateTo)
-        Me.pnlMain.Controls.Add(Me.dtpDateFrom)
-        Me.pnlMain.Controls.Add(Me.Label2)
-        Me.pnlMain.Controls.Add(Me.Label1)
-        Me.pnlMain.Dock = System.Windows.Forms.DockStyle.Top
-        Me.pnlMain.Location = New System.Drawing.Point(0, 28)
-        Me.pnlMain.Name = "pnlMain"
-        Me.pnlMain.Size = New System.Drawing.Size(984, 118)
-        Me.pnlMain.TabIndex = 1
-        '
-        'progressBar
-        '
-        Me.progressBar.Appearance.BackColor = System.Drawing.Color.Transparent
-        Me.progressBar.Appearance.Options.UseBackColor = True
-        Me.progressBar.BarAnimationElementThickness = 2
-        Me.progressBar.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.progressBar.Caption = "Mohon tunggu"
-        Me.progressBar.Description = "Sedang diproses ..."
-        Me.progressBar.Location = New System.Drawing.Point(486, 18)
-        Me.progressBar.Name = "progressBar"
-        Me.progressBar.Size = New System.Drawing.Size(208, 48)
-        Me.progressBar.TabIndex = 99
-        Me.progressBar.Visible = False
-        '
-        'btnClear
-        '
-        Me.btnClear.Image = CType(resources.GetObject("btnClear.Image"), System.Drawing.Image)
-        Me.btnClear.Location = New System.Drawing.Point(591, 72)
-        Me.btnClear.Name = "btnClear"
-        Me.btnClear.Size = New System.Drawing.Size(151, 23)
-        Me.btnClear.TabIndex = 4
-        Me.btnClear.Text = "Clear"
-        '
-        'btnExecute
-        '
-        Me.btnExecute.Image = CType(resources.GetObject("btnExecute.Image"), System.Drawing.Image)
-        Me.btnExecute.Location = New System.Drawing.Point(422, 72)
-        Me.btnExecute.Name = "btnExecute"
-        Me.btnExecute.Size = New System.Drawing.Size(151, 23)
-        Me.btnExecute.TabIndex = 3
-        Me.btnExecute.Text = "Execute"
-        '
-        'cboStatus
-        '
-        Me.cboStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboStatus.FormattingEnabled = True
-        Me.cboStatus.Location = New System.Drawing.Point(103, 72)
-        Me.cboStatus.Name = "cboStatus"
-        Me.cboStatus.Size = New System.Drawing.Size(228, 21)
-        Me.cboStatus.TabIndex = 2
-        '
-        'lblIDStatus
-        '
-        Me.lblIDStatus.AutoSize = True
-        Me.lblIDStatus.BackColor = System.Drawing.Color.Transparent
-        Me.lblIDStatus.ForeColor = System.Drawing.Color.Black
-        Me.lblIDStatus.Location = New System.Drawing.Point(40, 75)
-        Me.lblIDStatus.Name = "lblIDStatus"
-        Me.lblIDStatus.Size = New System.Drawing.Size(38, 13)
-        Me.lblIDStatus.TabIndex = 97
-        Me.lblIDStatus.Text = "Status"
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(212, 49)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(11, 13)
-        Me.Label3.TabIndex = 5
-        Me.Label3.Text = "-"
-        '
-        'dtpDateTo
-        '
-        Me.dtpDateTo.CustomFormat = "dd/MM/yyyy"
-        Me.dtpDateTo.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtpDateTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpDateTo.Location = New System.Drawing.Point(230, 45)
-        Me.dtpDateTo.Name = "dtpDateTo"
-        Me.dtpDateTo.Size = New System.Drawing.Size(101, 21)
-        Me.dtpDateTo.TabIndex = 1
-        Me.dtpDateTo.Value = New Date(2019, 5, 1, 0, 0, 0, 0)
-        '
-        'dtpDateFrom
-        '
-        Me.dtpDateFrom.CustomFormat = "dd/MM/yyyy"
-        Me.dtpDateFrom.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtpDateFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpDateFrom.Location = New System.Drawing.Point(103, 45)
-        Me.dtpDateFrom.Name = "dtpDateFrom"
-        Me.dtpDateFrom.Size = New System.Drawing.Size(101, 21)
-        Me.dtpDateFrom.TabIndex = 0
-        Me.dtpDateFrom.Value = New Date(2019, 5, 1, 0, 0, 0, 0)
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(40, 49)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(45, 13)
-        Me.Label2.TabIndex = 1
-        Me.Label2.Text = "Tanggal"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Tahoma", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Label1.Location = New System.Drawing.Point(21, 18)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(145, 17)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Query berdasarkan:"
-        '
         'grdMain
         '
         Me.grdMain.Dock = System.Windows.Forms.DockStyle.Fill
@@ -234,11 +116,11 @@ Partial Class frmTraAccountPayable
         Me.grdMain.EmbeddedNavigator.Buttons.PrevPage.Visible = False
         Me.grdMain.EmbeddedNavigator.Buttons.Remove.Enabled = False
         Me.grdMain.EmbeddedNavigator.Buttons.Remove.Visible = False
-        Me.grdMain.Location = New System.Drawing.Point(0, 146)
+        Me.grdMain.Location = New System.Drawing.Point(0, 150)
         Me.grdMain.MainView = Me.grdView
         Me.grdMain.Name = "grdMain"
-        Me.grdMain.Size = New System.Drawing.Size(984, 466)
-        Me.grdMain.TabIndex = 3
+        Me.grdMain.Size = New System.Drawing.Size(984, 439)
+        Me.grdMain.TabIndex = 2
         Me.grdMain.UseEmbeddedNavigator = True
         Me.grdMain.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.grdView})
         '
@@ -252,23 +134,171 @@ Partial Class frmTraAccountPayable
         Me.grdView.OptionsView.ShowAutoFilterRow = True
         Me.grdView.OptionsView.ShowGroupPanel = False
         '
+        'pnlMain
+        '
+        Me.pnlMain.Controls.Add(Me.btnCompany)
+        Me.pnlMain.Controls.Add(Me.Label4)
+        Me.pnlMain.Controls.Add(Me.txtCompanyName)
+        Me.pnlMain.Controls.Add(Me.btnClear)
+        Me.pnlMain.Controls.Add(Me.btnExecute)
+        Me.pnlMain.Controls.Add(Me.cboStatus)
+        Me.pnlMain.Controls.Add(Me.lblIDStatus)
+        Me.pnlMain.Controls.Add(Me.Label3)
+        Me.pnlMain.Controls.Add(Me.dtpDateTo)
+        Me.pnlMain.Controls.Add(Me.dtpDateFrom)
+        Me.pnlMain.Controls.Add(Me.Label2)
+        Me.pnlMain.Controls.Add(Me.Label1)
+        Me.pnlMain.Dock = System.Windows.Forms.DockStyle.Top
+        Me.pnlMain.Location = New System.Drawing.Point(0, 28)
+        Me.pnlMain.Name = "pnlMain"
+        Me.pnlMain.Size = New System.Drawing.Size(984, 122)
+        Me.pnlMain.TabIndex = 1
+        '
+        'btnCompany
+        '
+        Me.btnCompany.Image = CType(resources.GetObject("btnCompany.Image"), System.Drawing.Image)
+        Me.btnCompany.Location = New System.Drawing.Point(339, 45)
+        Me.btnCompany.Name = "btnCompany"
+        Me.btnCompany.Size = New System.Drawing.Size(23, 23)
+        Me.btnCompany.TabIndex = 1
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.BackColor = System.Drawing.Color.Transparent
+        Me.Label4.ForeColor = System.Drawing.Color.Black
+        Me.Label4.Location = New System.Drawing.Point(33, 50)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(64, 13)
+        Me.Label4.TabIndex = 107
+        Me.Label4.Text = "Perusahaan"
+        '
+        'txtCompanyName
+        '
+        Me.txtCompanyName.BackColor = System.Drawing.Color.LightYellow
+        Me.txtCompanyName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCompanyName.Location = New System.Drawing.Point(105, 47)
+        Me.txtCompanyName.MaxLength = 250
+        Me.txtCompanyName.Name = "txtCompanyName"
+        Me.txtCompanyName.ReadOnly = True
+        Me.txtCompanyName.Size = New System.Drawing.Size(228, 21)
+        Me.txtCompanyName.TabIndex = 0
+        '
+        'btnClear
+        '
+        Me.btnClear.Image = CType(resources.GetObject("btnClear.Image"), System.Drawing.Image)
+        Me.btnClear.Location = New System.Drawing.Point(645, 75)
+        Me.btnClear.Name = "btnClear"
+        Me.btnClear.Size = New System.Drawing.Size(151, 23)
+        Me.btnClear.TabIndex = 6
+        Me.btnClear.Text = "Clear"
+        '
+        'btnExecute
+        '
+        Me.btnExecute.Image = CType(resources.GetObject("btnExecute.Image"), System.Drawing.Image)
+        Me.btnExecute.Location = New System.Drawing.Point(483, 75)
+        Me.btnExecute.Name = "btnExecute"
+        Me.btnExecute.Size = New System.Drawing.Size(151, 23)
+        Me.btnExecute.TabIndex = 5
+        Me.btnExecute.Text = "Execute"
+        '
+        'cboStatus
+        '
+        Me.cboStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboStatus.FormattingEnabled = True
+        Me.cboStatus.Location = New System.Drawing.Point(483, 45)
+        Me.cboStatus.Name = "cboStatus"
+        Me.cboStatus.Size = New System.Drawing.Size(228, 21)
+        Me.cboStatus.TabIndex = 4
+        '
+        'lblIDStatus
+        '
+        Me.lblIDStatus.AutoSize = True
+        Me.lblIDStatus.BackColor = System.Drawing.Color.Transparent
+        Me.lblIDStatus.ForeColor = System.Drawing.Color.Black
+        Me.lblIDStatus.Location = New System.Drawing.Point(411, 48)
+        Me.lblIDStatus.Name = "lblIDStatus"
+        Me.lblIDStatus.Size = New System.Drawing.Size(38, 13)
+        Me.lblIDStatus.TabIndex = 97
+        Me.lblIDStatus.Text = "Status"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(214, 78)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(11, 13)
+        Me.Label3.TabIndex = 5
+        Me.Label3.Text = "-"
+        '
+        'dtpDateTo
+        '
+        Me.dtpDateTo.CustomFormat = "dd/MM/yyyy"
+        Me.dtpDateTo.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtpDateTo.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtpDateTo.Location = New System.Drawing.Point(232, 74)
+        Me.dtpDateTo.Name = "dtpDateTo"
+        Me.dtpDateTo.Size = New System.Drawing.Size(101, 21)
+        Me.dtpDateTo.TabIndex = 3
+        Me.dtpDateTo.Value = New Date(2019, 5, 1, 0, 0, 0, 0)
+        '
+        'dtpDateFrom
+        '
+        Me.dtpDateFrom.CustomFormat = "dd/MM/yyyy"
+        Me.dtpDateFrom.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtpDateFrom.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.dtpDateFrom.Location = New System.Drawing.Point(105, 74)
+        Me.dtpDateFrom.Name = "dtpDateFrom"
+        Me.dtpDateFrom.Size = New System.Drawing.Size(101, 21)
+        Me.dtpDateFrom.TabIndex = 2
+        Me.dtpDateFrom.Value = New Date(2019, 5, 1, 0, 0, 0, 0)
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(33, 78)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(45, 13)
+        Me.Label2.TabIndex = 1
+        Me.Label2.Text = "Tanggal"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Tahoma", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.Label1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label1.Location = New System.Drawing.Point(21, 18)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(145, 17)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "Query berdasarkan:"
+        '
+        'pgMain
+        '
+        Me.pgMain.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.pgMain.Location = New System.Drawing.Point(0, 589)
+        Me.pgMain.Name = "pgMain"
+        Me.pgMain.Size = New System.Drawing.Size(984, 23)
+        Me.pgMain.TabIndex = 3
+        '
         'frmTraAccountPayable
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(984, 612)
         Me.Controls.Add(Me.grdMain)
+        Me.Controls.Add(Me.pgMain)
         Me.Controls.Add(Me.pnlMain)
         Me.Controls.Add(Me.ToolBar)
         Me.Font = New System.Drawing.Font("Tahoma", 8.25!)
         Me.KeyPreview = True
         Me.Name = "frmTraAccountPayable"
         Me.Text = "Pembayaran"
+        CType(Me.grdMain, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.grdView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pnlMain, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlMain.ResumeLayout(False)
         Me.pnlMain.PerformLayout()
-        CType(Me.grdMain, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.grdView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -280,8 +310,12 @@ Partial Class frmTraAccountPayable
     Friend WithEvents BarSep1 As System.Windows.Forms.ToolBarButton
     Friend WithEvents BarRefresh As System.Windows.Forms.ToolBarButton
     Friend WithEvents BarClose As System.Windows.Forms.ToolBarButton
+    Friend WithEvents grdMain As DevExpress.XtraGrid.GridControl
+    Friend WithEvents grdView As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents pnlMain As DevExpress.XtraEditors.PanelControl
-    Friend WithEvents progressBar As DevExpress.XtraWaitForm.ProgressPanel
+    Friend WithEvents btnCompany As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents txtCompanyName As MPS.usTextBox
     Friend WithEvents btnClear As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents btnExecute As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents cboStatus As MPS.usComboBox
@@ -291,6 +325,5 @@ Partial Class frmTraAccountPayable
     Friend WithEvents dtpDateFrom As System.Windows.Forms.DateTimePicker
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents grdMain As DevExpress.XtraGrid.GridControl
-    Friend WithEvents grdView As DevExpress.XtraGrid.Views.Grid.GridView
+    Friend WithEvents pgMain As System.Windows.Forms.ProgressBar
 End Class

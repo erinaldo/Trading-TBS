@@ -35,7 +35,6 @@ Partial Class frmTraAccountPayableDet
         Me.Label4 = New System.Windows.Forms.Label()
         Me.cboPaymentReferences = New MPS.usComboBox()
         Me.txtReferencesNote = New MPS.usTextBox()
-        Me.progressBar = New DevExpress.XtraWaitForm.ProgressPanel()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.txtRemarks = New MPS.usTextBox()
         Me.txtTotalAmount = New MPS.usNumeric()
@@ -67,6 +66,7 @@ Partial Class frmTraAccountPayableDet
         Me.grdItem = New DevExpress.XtraGrid.GridControl()
         Me.grdItemView = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.rpiValue = New DevExpress.XtraEditors.Repository.RepositoryItemTextEdit()
+        Me.pgMain = New System.Windows.Forms.ProgressBar()
         Me.tcHeader.SuspendLayout()
         Me.tpMain.SuspendLayout()
         CType(Me.txtTotalAmount, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -137,7 +137,6 @@ Partial Class frmTraAccountPayableDet
         Me.tpMain.Controls.Add(Me.Label4)
         Me.tpMain.Controls.Add(Me.cboPaymentReferences)
         Me.tpMain.Controls.Add(Me.txtReferencesNote)
-        Me.tpMain.Controls.Add(Me.progressBar)
         Me.tpMain.Controls.Add(Me.Label10)
         Me.tpMain.Controls.Add(Me.txtRemarks)
         Me.tpMain.Controls.Add(Me.txtTotalAmount)
@@ -222,20 +221,6 @@ Partial Class frmTraAccountPayableDet
         Me.txtReferencesNote.Name = "txtReferencesNote"
         Me.txtReferencesNote.Size = New System.Drawing.Size(220, 21)
         Me.txtReferencesNote.TabIndex = 6
-        '
-        'progressBar
-        '
-        Me.progressBar.Appearance.BackColor = System.Drawing.Color.Transparent
-        Me.progressBar.Appearance.Options.UseBackColor = True
-        Me.progressBar.BarAnimationElementThickness = 2
-        Me.progressBar.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.progressBar.Caption = "Mohon tunggu"
-        Me.progressBar.Description = "Sedang diproses ..."
-        Me.progressBar.Location = New System.Drawing.Point(329, 80)
-        Me.progressBar.Name = "progressBar"
-        Me.progressBar.Size = New System.Drawing.Size(208, 43)
-        Me.progressBar.TabIndex = 112
-        Me.progressBar.Visible = False
         '
         'Label10
         '
@@ -480,7 +465,7 @@ Partial Class frmTraAccountPayableDet
         '
         Me.StatusStrip.Font = New System.Drawing.Font("Tahoma", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripEmpty, Me.ToolStripLogInc, Me.ToolStripLogBy, Me.ToolStripStatusLabel1, Me.ToolStripLogDate})
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 603)
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 580)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.Size = New System.Drawing.Size(1133, 22)
         Me.StatusStrip.TabIndex = 6
@@ -548,7 +533,7 @@ Partial Class frmTraAccountPayableDet
         Me.grdItem.MainView = Me.grdItemView
         Me.grdItem.Name = "grdItem"
         Me.grdItem.RepositoryItems.AddRange(New DevExpress.XtraEditors.Repository.RepositoryItem() {Me.rpiValue})
-        Me.grdItem.Size = New System.Drawing.Size(1133, 321)
+        Me.grdItem.Size = New System.Drawing.Size(1133, 298)
         Me.grdItem.TabIndex = 5
         Me.grdItem.UseEmbeddedNavigator = True
         Me.grdItem.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.grdItemView})
@@ -571,6 +556,14 @@ Partial Class frmTraAccountPayableDet
         Me.rpiValue.Name = "rpiValue"
         Me.rpiValue.NullText = "0.00"
         '
+        'pgMain
+        '
+        Me.pgMain.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.pgMain.Location = New System.Drawing.Point(0, 602)
+        Me.pgMain.Name = "pgMain"
+        Me.pgMain.Size = New System.Drawing.Size(1133, 23)
+        Me.pgMain.TabIndex = 7
+        '
         'frmTraAccountPayableDet
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -578,6 +571,7 @@ Partial Class frmTraAccountPayableDet
         Me.ClientSize = New System.Drawing.Size(1133, 625)
         Me.Controls.Add(Me.grdItem)
         Me.Controls.Add(Me.StatusStrip)
+        Me.Controls.Add(Me.pgMain)
         Me.Controls.Add(Me.ToolBarDetail)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.tcHeader)
@@ -611,7 +605,6 @@ Partial Class frmTraAccountPayableDet
     Friend WithEvents lblInfo As System.Windows.Forms.Label
     Friend WithEvents tcHeader As System.Windows.Forms.TabControl
     Friend WithEvents tpMain As System.Windows.Forms.TabPage
-    Friend WithEvents progressBar As DevExpress.XtraWaitForm.ProgressPanel
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents txtRemarks As MPS.usTextBox
     Friend WithEvents cboStatus As MPS.usComboBox
@@ -649,4 +642,5 @@ Partial Class frmTraAccountPayableDet
     Friend WithEvents btnCoAOfOutgoingPayment As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents txtCoANameOfOutgoingPayment As MPS.usTextBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents pgMain As System.Windows.Forms.ProgressBar
 End Class

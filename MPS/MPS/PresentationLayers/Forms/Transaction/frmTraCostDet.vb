@@ -149,8 +149,8 @@
             Next
         End With
 
-        pgMain.Value = 30
         Me.Cursor = Cursors.WaitCursor
+        pgMain.Value = 30
         Try
             Dim strID As String = BL.Cost.SaveData(pubIsNew, clsData, clsDataDetailAll)
             pgMain.Value = 50
