@@ -21,9 +21,9 @@ Namespace BL
             Return bolReturn
         End Function
 
-        Public Shared Function GetDetail() As VO.JournalPost
+        Public Shared Function GetDetail(ByVal intProgramID As Integer) As VO.JournalPost
             BL.Server.ServerDefault()
-            Return DL.JournalPost.GetDetail
+            Return DL.JournalPost.GetDetail(intProgramID)
         End Function
 
     End Class

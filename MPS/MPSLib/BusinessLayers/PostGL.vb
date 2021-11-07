@@ -1,13 +1,16 @@
 Namespace BL
     Public Class PostGL
-        Public Shared Function ListData() As DataTable
+        Public Shared Function ListData(ByVal intCompanyID As Integer, ByVal intProgramID As Integer, _
+                                        ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime) As DataTable
+            dtmDateTo = dtmDateTo.AddHours(23).AddMinutes(59).AddSeconds(59)
             BL.Server.ServerDefault()
-            Return DL.PostGL.ListData()
+            Return DL.PostGL.ListData(intCompanyID, intProgramID, dtmDateFrom, dtmDateTo)
         End Function
 
-        Public Shared Function ListDataForUnpost() As DataTable
-            BL.Server.ServerDefault()
-            Return DL.PostGL.ListDataForUnpost
+        Private Shared Function GetNewID(ByVal intCompanyID As Integer, ByVal intProgramID As Integer, _
+                                         ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime)
+            Dim clsCompany As VO.Company = DL.Company.GetDetail(intCompanyID)
+            Return clsCompany.CompanyInitial & "-" & Format(intProgramID, "00") & "-" & Format(dtmDateFrom, "yyMMdd") & "-" & Format(dtmDateTo, "yyMMdd")
         End Function
 
         Public Shared Function PostData(ByVal clsData As VO.PostGL) As Boolean
@@ -17,23 +20,27 @@ Namespace BL
                 DL.SQL.OpenConnection()
                 DL.SQL.BeginTransaction()
 
-                If Format(clsData.DateTo, "yyyyMMdd") <= DL.PostGL.LastPostedDate Then
+                If MPSLib.UI.usUserApp.JournalPost.LogBy Is Nothing Then
+                    Err.Raise(515, "", "Mohon agar Setup Posting Jurnal Transaksi terlebih dahulu melalui menu Setting -> Setup Posting Jurnal Transaksi")
+                End If
+
+                If Format(clsData.DateTo, "yyyyMMdd") <= DL.PostGL.LastPostedDate(clsData.CompanyID, clsData.ProgramID) Then
                     Err.Raise(515, "", "Periode posting harus lebih besar dari tanggal terakhir posting")
                 End If
 
-                clsData.ID = Format(clsData.DateFrom, "yyyyMMdd") & "-" & Format(clsData.DateTo, "yyyyMMdd")
+                clsData.ID = GetNewID(clsData.CompanyID, clsData.ProgramID, clsData.DateFrom, clsData.DateTo)
                 If DL.PostGL.DataExists(clsData.ID) Then
                     Err.Raise(515, "", "ID telah ada sebelumnya")
                 End If
 
-                BL.Receive.PostData(clsData.DateFrom, clsData.DateTo)
-                BL.Sales.PostData(clsData.DateFrom, clsData.DateTo)
-                BL.SalesReturn.PostData(clsData.DateFrom, clsData.DateTo)
-                BL.ReceiveReturn.PostData(clsData.DateFrom, clsData.DateTo)
-                BL.AccountReceivable.PostData(clsData.DateFrom, clsData.DateTo)
-                BL.AccountPayable.PostData(clsData.DateFrom, clsData.DateTo)
-                BL.Cost.PostData(clsData.DateFrom, clsData.DateTo)
-                BL.Journal.PostData(clsData.DateFrom, clsData.DateTo)
+                BL.Receive.PostData(clsData.CompanyID, clsData.ProgramID, clsData.DateFrom, clsData.DateTo)
+                BL.Sales.PostData(clsData.CompanyID, clsData.ProgramID, clsData.DateFrom, clsData.DateTo)
+                BL.SalesReturn.PostData(clsData.CompanyID, clsData.ProgramID, clsData.DateFrom, clsData.DateTo)
+                BL.ReceiveReturn.PostData(clsData.CompanyID, clsData.ProgramID, clsData.DateFrom, clsData.DateTo)
+                BL.AccountReceivable.PostData(clsData.CompanyID, clsData.ProgramID, clsData.DateFrom, clsData.DateTo)
+                BL.AccountPayable.PostData(clsData.CompanyID, clsData.ProgramID, clsData.DateFrom, clsData.DateTo)
+                BL.Cost.PostData(clsData.CompanyID, clsData.ProgramID, clsData.DateFrom, clsData.DateTo)
+                BL.Journal.PostData(clsData.CompanyID, clsData.ProgramID, clsData.DateFrom, clsData.DateTo)
 
                 DL.PostGL.SaveData(clsData)
 
@@ -55,18 +62,18 @@ Namespace BL
                 DL.SQL.OpenConnection()
                 DL.SQL.BeginTransaction()
 
-                If Format(clsData.DateTo, "yyyyMMdd") < DL.PostGL.LastPostedDate Then
+                If Format(clsData.DateTo, "yyyyMMdd") < DL.PostGL.LastPostedDate(clsData.CompanyID, clsData.ProgramID) Then
                     Err.Raise(515, "", "Periode posting harus mulai dari tanggal terakhir posting")
                 End If
 
-                BL.ReceiveReturn.UnpostData(clsData.DateFrom, clsData.DateTo)
-                BL.SalesReturn.UnpostData(clsData.DateFrom, clsData.DateTo)
-                BL.Sales.UnpostData(clsData.DateFrom, clsData.DateTo)
-                BL.Receive.UnpostData(clsData.DateFrom, clsData.DateTo)
-                BL.AccountReceivable.UnpostData(clsData.DateFrom, clsData.DateTo)
-                BL.AccountPayable.UnpostData(clsData.DateFrom, clsData.DateTo)
-                BL.Cost.UnpostData(clsData.DateFrom, clsData.DateTo)
-                BL.Journal.UnpostData(clsData.DateFrom, clsData.DateTo)
+                BL.ReceiveReturn.UnpostData(clsData.CompanyID, clsData.ProgramID, clsData.DateFrom, clsData.DateTo)
+                BL.SalesReturn.UnpostData(clsData.CompanyID, clsData.ProgramID, clsData.DateFrom, clsData.DateTo)
+                BL.Sales.UnpostData(clsData.CompanyID, clsData.ProgramID, clsData.DateFrom, clsData.DateTo)
+                BL.Receive.UnpostData(clsData.CompanyID, clsData.ProgramID, clsData.DateFrom, clsData.DateTo)
+                BL.AccountReceivable.UnpostData(clsData.CompanyID, clsData.ProgramID, clsData.DateFrom, clsData.DateTo)
+                BL.AccountPayable.UnpostData(clsData.CompanyID, clsData.ProgramID, clsData.DateFrom, clsData.DateTo)
+                BL.Cost.UnpostData(clsData.CompanyID, clsData.ProgramID, clsData.DateFrom, clsData.DateTo)
+                BL.Journal.UnpostData(clsData.CompanyID, clsData.ProgramID, clsData.DateFrom, clsData.DateTo)
 
                 DL.PostGL.DeleteData(clsData.ID)
 
@@ -86,27 +93,10 @@ Namespace BL
             Return DL.PostGL.GetDetail(strID)
         End Function 
 
-        Public Shared Function GetDetailLast() As VO.PostGL
+        Public Shared Function GetDetailLast(ByVal intCompanyID As Integer, ByVal intProgramID As Integer) As VO.PostGL
             BL.Server.ServerDefault()
-            Return DL.PostGL.GetDetailLast
+            Return DL.PostGL.GetDetailLast(intCompanyID, intProgramID)
         End Function
-
-        Public Shared Sub DeleteData(ByVal strID As String)
-            BL.Server.ServerDefault() 
-            Try
-                DL.SQL.OpenConnection() 
-                DL.SQL.BeginTransaction() 
-
-                DL.PostGL.DeleteData(strID)
-
-                DL.SQL.CommitTransaction() 
-            Catch ex As Exception
-                DL.SQL.RollBackTransaction() 
-                Throw ex 
-            Finally 
-                DL.SQL.CloseConnection() 
-            End Try
-        End Sub
 
     End Class 
 

@@ -69,20 +69,19 @@ Partial Class frmSysMain
         Me.mnuLaporanLaporanNeraca = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuSetting = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuSettingUbahPassword = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnuSettingPostingJurnalTransaksi = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnuSysPostingDataTransaksi = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnuSettingUnpostingDataTransaksi = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuSettingSetupPostingJurnalTransaksi = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuSysPostingAndCancelPostingDataTransaksi = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuTampilan = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuWindowsVertical = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuWindowsHorizontal = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuWindowsCascade = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuWindowsCloseAll = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuLogout = New System.Windows.Forms.ToolStripMenuItem()
         Me.ssMain = New System.Windows.Forms.StatusStrip()
         Me.tssUserID = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tssVersion = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tssProgram = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tssCompany = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.mnuWindowsVertical = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnuWindowsHorizontal = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnuWindowsCascade = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnuWindowsCloseAll = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.ssMain.SuspendLayout()
         Me.SuspendLayout()
@@ -357,7 +356,7 @@ Partial Class frmSysMain
         '
         'mnuSetting
         '
-        Me.mnuSetting.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuSettingUbahPassword, Me.mnuSettingPostingJurnalTransaksi, Me.mnuSysPostingDataTransaksi, Me.mnuSettingUnpostingDataTransaksi})
+        Me.mnuSetting.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuSettingUbahPassword, Me.mnuSettingSetupPostingJurnalTransaksi, Me.mnuSysPostingAndCancelPostingDataTransaksi})
         Me.mnuSetting.Name = "mnuSetting"
         Me.mnuSetting.Size = New System.Drawing.Size(56, 20)
         Me.mnuSetting.Text = "Setting"
@@ -365,26 +364,20 @@ Partial Class frmSysMain
         'mnuSettingUbahPassword
         '
         Me.mnuSettingUbahPassword.Name = "mnuSettingUbahPassword"
-        Me.mnuSettingUbahPassword.Size = New System.Drawing.Size(206, 22)
+        Me.mnuSettingUbahPassword.Size = New System.Drawing.Size(281, 22)
         Me.mnuSettingUbahPassword.Text = "Ubah Password"
         '
-        'mnuSettingPostingJurnalTransaksi
+        'mnuSettingSetupPostingJurnalTransaksi
         '
-        Me.mnuSettingPostingJurnalTransaksi.Name = "mnuSettingPostingJurnalTransaksi"
-        Me.mnuSettingPostingJurnalTransaksi.Size = New System.Drawing.Size(206, 22)
-        Me.mnuSettingPostingJurnalTransaksi.Text = "Posting Jurnal Transaksi"
+        Me.mnuSettingSetupPostingJurnalTransaksi.Name = "mnuSettingSetupPostingJurnalTransaksi"
+        Me.mnuSettingSetupPostingJurnalTransaksi.Size = New System.Drawing.Size(281, 22)
+        Me.mnuSettingSetupPostingJurnalTransaksi.Text = "Setup Posting Jurnal Transaksi"
         '
-        'mnuSysPostingDataTransaksi
+        'mnuSysPostingAndCancelPostingDataTransaksi
         '
-        Me.mnuSysPostingDataTransaksi.Name = "mnuSysPostingDataTransaksi"
-        Me.mnuSysPostingDataTransaksi.Size = New System.Drawing.Size(206, 22)
-        Me.mnuSysPostingDataTransaksi.Text = "Posting Data Transaksi"
-        '
-        'mnuSettingUnpostingDataTransaksi
-        '
-        Me.mnuSettingUnpostingDataTransaksi.Name = "mnuSettingUnpostingDataTransaksi"
-        Me.mnuSettingUnpostingDataTransaksi.Size = New System.Drawing.Size(206, 22)
-        Me.mnuSettingUnpostingDataTransaksi.Text = "Unposting Data Transaksi"
+        Me.mnuSysPostingAndCancelPostingDataTransaksi.Name = "mnuSysPostingAndCancelPostingDataTransaksi"
+        Me.mnuSysPostingAndCancelPostingDataTransaksi.Size = New System.Drawing.Size(281, 22)
+        Me.mnuSysPostingAndCancelPostingDataTransaksi.Text = "Posting / Cancel Posting Data Transaksi"
         '
         'mnuTampilan
         '
@@ -392,6 +385,30 @@ Partial Class frmSysMain
         Me.mnuTampilan.Name = "mnuTampilan"
         Me.mnuTampilan.Size = New System.Drawing.Size(67, 20)
         Me.mnuTampilan.Text = "Tampilan"
+        '
+        'mnuWindowsVertical
+        '
+        Me.mnuWindowsVertical.Name = "mnuWindowsVertical"
+        Me.mnuWindowsVertical.Size = New System.Drawing.Size(129, 22)
+        Me.mnuWindowsVertical.Text = "Vertical"
+        '
+        'mnuWindowsHorizontal
+        '
+        Me.mnuWindowsHorizontal.Name = "mnuWindowsHorizontal"
+        Me.mnuWindowsHorizontal.Size = New System.Drawing.Size(129, 22)
+        Me.mnuWindowsHorizontal.Text = "Horizontal"
+        '
+        'mnuWindowsCascade
+        '
+        Me.mnuWindowsCascade.Name = "mnuWindowsCascade"
+        Me.mnuWindowsCascade.Size = New System.Drawing.Size(129, 22)
+        Me.mnuWindowsCascade.Text = "Cascade"
+        '
+        'mnuWindowsCloseAll
+        '
+        Me.mnuWindowsCloseAll.Name = "mnuWindowsCloseAll"
+        Me.mnuWindowsCloseAll.Size = New System.Drawing.Size(129, 22)
+        Me.mnuWindowsCloseAll.Text = "Close All"
         '
         'mnuLogout
         '
@@ -450,30 +467,6 @@ Partial Class frmSysMain
         Me.tssCompany.Name = "tssCompany"
         Me.tssCompany.Size = New System.Drawing.Size(56, 17)
         Me.tssCompany.Text = "Company"
-        '
-        'mnuWindowsVertical
-        '
-        Me.mnuWindowsVertical.Name = "mnuWindowsVertical"
-        Me.mnuWindowsVertical.Size = New System.Drawing.Size(152, 22)
-        Me.mnuWindowsVertical.Text = "Vertical"
-        '
-        'mnuWindowsHorizontal
-        '
-        Me.mnuWindowsHorizontal.Name = "mnuWindowsHorizontal"
-        Me.mnuWindowsHorizontal.Size = New System.Drawing.Size(152, 22)
-        Me.mnuWindowsHorizontal.Text = "Horizontal"
-        '
-        'mnuWindowsCascade
-        '
-        Me.mnuWindowsCascade.Name = "mnuWindowsCascade"
-        Me.mnuWindowsCascade.Size = New System.Drawing.Size(152, 22)
-        Me.mnuWindowsCascade.Text = "Cascade"
-        '
-        'mnuWindowsCloseAll
-        '
-        Me.mnuWindowsCloseAll.Name = "mnuWindowsCloseAll"
-        Me.mnuWindowsCloseAll.Size = New System.Drawing.Size(152, 22)
-        Me.mnuWindowsCloseAll.Text = "Close All"
         '
         'frmSysMain
         '
@@ -544,9 +537,8 @@ Partial Class frmSysMain
     Friend WithEvents mnuMasterAkses As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents mnuSetting As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents mnuSettingUbahPassword As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents mnuSettingPostingJurnalTransaksi As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents mnuSysPostingDataTransaksi As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents mnuSettingUnpostingDataTransaksi As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents mnuSettingSetupPostingJurnalTransaksi As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents mnuSysPostingAndCancelPostingDataTransaksi As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents mnuLaporanSep4 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents mnuLaporanLaporanLabaRugi As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents mnuLaporanLaporanNeraca As System.Windows.Forms.ToolStripMenuItem

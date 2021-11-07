@@ -420,13 +420,92 @@ Namespace DL
             Dim sqlcmdExecute As New SqlCommand
             With sqlcmdExecute
                 .CommandText = _
-                    "UPDATE traReceiveReturnReturn " & vbNewLine & _
+                    "UPDATE traReceiveReturn " & vbNewLine & _
                     "SET JournalID=@JournalID " & vbNewLine & _
                     "WHERE " & vbNewLine & _
                     "   ID=@ID " & vbNewLine
 
                 .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
                 .Parameters.Add("@JournalID", SqlDbType.VarChar, 30).Value = strJournalID
+            End With
+            Try
+                SQL.ExecuteNonQuery(sqlcmdExecute)
+            Catch ex As SqlException
+                Throw ex
+            End Try
+        End Sub
+
+        Public Shared Function ListDataOutstandingPostGL(ByVal intCompanyID As Integer, ByVal intProgramID As Integer, _
+                                        ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime) As DataTable
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                   "SELECT " & vbNewLine & _
+                   "    A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.ReferencesID, A.BPID, C.Name AS BPName, A.ReceiveReturnDate, A.PaymentTerm, A.DriverName, " & vbNewLine & _
+                   "    A.PlatNumber, A.DONumber, A.SPBNumber, A.SegelNumber, A.Specification, A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MU.Code AS UomCode, A.ArrivalBrutto, A.ArrivalTarra, " & vbNewLine & _
+                   "    A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, A.Price1, A.Price2, A.TotalPrice1, A.TotalPrice2, A.IsPostedGL,   " & vbNewLine & _
+                   "    A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, B.Name AS StatusInfo, A.CreatedBy,   " & vbNewLine & _
+                   "    A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID  " & vbNewLine & _
+                   "FROM traReceiveReturn A " & vbNewLine & _
+                   "INNER JOIN mstStatus B ON " & vbNewLine & _
+                   "    A.IDStatus=B.ID " & vbNewLine & _
+                   "INNER JOIN mstBusinessPartner C ON " & vbNewLine & _
+                   "    A.BPID=C.ID " & vbNewLine & _
+                   "INNER JOIN mstItem MI ON " & vbNewLine & _
+                   "    A.ItemID=MI.ID " & vbNewLine & _
+                   "INNER JOIN mstUOM MU ON " & vbNewLine & _
+                   "    MI.UomID=MU.ID " & vbNewLine & _
+                   "INNER JOIN mstCompany MC ON " & vbNewLine & _
+                   "    A.CompanyID=MC.ID " & vbNewLine & _
+                   "INNER JOIN mstProgram MP ON " & vbNewLine & _
+                   "    A.ProgramID=MP.ID " & vbNewLine & _
+                   "WHERE  " & vbNewLine & _
+                   "    A.CompanyID=@CompanyID " & vbNewLine & _
+                   "    AND A.ProgramID=@ProgramID " & vbNewLine & _
+                   "    AND A.ReceiveReturnDate>=@DateFrom AND A.ReceiveReturnDate<=@DateTo " & vbNewLine & _
+                   "    AND A.IsDeleted=0 " & vbNewLine & _
+                   "    AND A.IsPostedGL=0 " & vbNewLine
+
+                .Parameters.Add("@CompanyID", SqlDbType.Int).Value = intCompanyID
+                .Parameters.Add("@ProgramID", SqlDbType.Int).Value = intProgramID
+                .Parameters.Add("@DateFrom", SqlDbType.DateTime).Value = dtmDateFrom
+                .Parameters.Add("@DateTo", SqlDbType.DateTime).Value = dtmDateTo
+            End With
+            Return SQL.QueryDataTable(sqlcmdExecute)
+        End Function
+
+        Public Shared Sub PostGL(ByVal strID As String, ByVal strLogBy As String)
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "UPDATE traReceiveReturn SET" & vbNewLine & _
+                    "   IsPostedGL=1, " & vbNewLine & _
+                    "   PostedBy=@LogBy, " & vbNewLine & _
+                    "   PostedDate=GETDATE() " & vbNewLine & _
+                    "WHERE " & vbNewLine & _
+                    "   ID=@ID " & vbNewLine
+
+                .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
+                .Parameters.Add("@LogBy", SqlDbType.VarChar, 20).Value = strLogBy
+            End With
+            Try
+                SQL.ExecuteNonQuery(sqlcmdExecute)
+            Catch ex As SqlException
+                Throw ex
+            End Try
+        End Sub
+
+        Public Shared Sub UnpostGL(ByVal strID As String)
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "UPDATE traReceiveReturn SET" & vbNewLine & _
+                    "   IsPostedGL=0, " & vbNewLine & _
+                    "   PostedBy='' " & vbNewLine & _
+                    "WHERE " & vbNewLine & _
+                    "   ID=@ID " & vbNewLine
+
+                .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
             End With
             Try
                 SQL.ExecuteNonQuery(sqlcmdExecute)
@@ -444,8 +523,8 @@ Namespace DL
                    "SELECT " & vbNewLine & _
                    "    SH.CompanyID, 'RETUR PEMBELIAN' AS Trans, SH.ID, SH.ReceiveReturnDate AS TransactionDate, SH.BPID, BP.Name AS BPName, A.Qty, A.UomID, C.Code AS UomCode, A.Price, A.Disc,   " & vbNewLine & _
                    "    A.Tax, A.TotalPrice, A.Remarks, SH.IDStatus, MS.Name AS StatusInfo, SH.CreatedBy, SH.CreatedDate, SH.LogInc, SH.LogBy, SH.LogDate, SH.JournalID  " & vbNewLine & _
-                   "FROM traReceiveReturnReturnDet A " & vbNewLine & _
-                   "INNER JOIN traReceiveReturnReturn SH ON " & vbNewLine & _
+                   "FROM traReceiveReturnDet A " & vbNewLine & _
+                   "INNER JOIN traReceiveReturn SH ON " & vbNewLine & _
                    "    A.ReceiveReturnID=SH.ID " & vbNewLine & _
                    "INNER JOIN mstItem B ON " & vbNewLine & _
                    "    A.ItemID=B.ID " & vbNewLine & _
@@ -474,8 +553,8 @@ Namespace DL
                    "SELECT " & vbNewLine & _
                    "    SH.CompanyID, 'RETUR PEMBELIAN' AS Trans, SH.ID, SH.ReceiveReturnDate AS TransactionDate, A.ItemID, B.Code AS ItemCode, B.Name AS ItemName, A.Qty, A.UomID, C.Code AS UomCode, A.Price, A.Disc,   " & vbNewLine & _
                    "    A.Tax, A.TotalPrice, A.Remarks, SH.IDStatus, MS.Name AS StatusInfo, SH.CreatedBy, SH.CreatedDate, SH.LogInc, SH.LogBy, SH.LogDate, SH.JournalID  " & vbNewLine & _
-                   "FROM traReceiveReturnReturnDet A " & vbNewLine & _
-                   "INNER JOIN traReceiveReturnReturn SH ON " & vbNewLine & _
+                   "FROM traReceiveReturnDet A " & vbNewLine & _
+                   "INNER JOIN traReceiveReturn SH ON " & vbNewLine & _
                    "    A.ReceiveReturnID=SH.ID " & vbNewLine & _
                    "INNER JOIN mstItem B ON " & vbNewLine & _
                    "    A.ItemID=B.ID " & vbNewLine & _
@@ -494,46 +573,6 @@ Namespace DL
             End With
             Return SQL.QueryDataTable(sqlcmdExecute)
         End Function
-
-        Public Shared Sub PostGL(ByVal strID As String, ByVal strLogBy As String)
-            Dim sqlcmdExecute As New SqlCommand
-            With sqlcmdExecute
-                .CommandText = _
-                    "UPDATE traReceiveReturnReturn SET" & vbNewLine & _
-                    "   IsPostedGL=1, " & vbNewLine & _
-                    "   PostedBy=@LogBy, " & vbNewLine & _
-                    "   PostedDate=GETDATE() " & vbNewLine & _
-                    "WHERE " & vbNewLine & _
-                    "   ID=@ID " & vbNewLine
-
-                .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = strID
-                .Parameters.Add("@LogBy", SqlDbType.VarChar, 20).Value = strLogBy
-            End With
-            Try
-                SQL.ExecuteNonQuery(sqlcmdExecute)
-            Catch ex As SqlException
-                Throw ex
-            End Try
-        End Sub
-
-        Public Shared Sub UnpostGL(ByVal strID As String)
-            Dim sqlcmdExecute As New SqlCommand
-            With sqlcmdExecute
-                .CommandText = _
-                    "UPDATE traReceiveReturnReturn SET" & vbNewLine & _
-                    "   IsPostedGL=0, " & vbNewLine & _
-                    "   PostedBy='' " & vbNewLine & _
-                    "WHERE " & vbNewLine & _
-                    "   ID=@ID " & vbNewLine
-
-                .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = strID
-            End With
-            Try
-                SQL.ExecuteNonQuery(sqlcmdExecute)
-            Catch ex As SqlException
-                Throw ex
-            End Try
-        End Sub
 
 #End Region
 

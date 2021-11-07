@@ -25,8 +25,8 @@
     Dim frmMainTraSalesReturn As frmTraSalesReturn
     Dim frmMainTraReceive As frmTraReceive
     Dim frmMainTraReceiveReturn As frmTraReceiveReturn
-    'Dim frmMainTraAccountReceivable As frmTraAccountReceivable
-    'Dim frmMainTraAccountPayable As frmTraAccountPayable
+    Dim frmMainTraAccountReceivable As frmTraAccountReceivable
+    Dim frmMainTraAccountPayable As frmTraAccountPayable
     Dim frmMainTraCost As frmTraCost
     Dim frmMainTraJournal As frmTraJournal
 
@@ -42,11 +42,10 @@
     'Dim frmMainRptProfitAndLossReport As frmRptProfitAndLossReport
     'Dim frmMainRptBalanceSheet As frmRptBalanceSheet
 
-    ''# Setting
-    'Dim frmMainMstUserChangePassword As frmMstUserChangePassword
-    'Dim frmMainSysJournalPost As frmSysJournalPost
-    'Dim frmMainSysPostingGL As frmSysPostingGL
-    'Dim frmMainSysUnpostingGL As frmSysUnpostingGL
+    '# Setting
+    Dim frmMainMstUserChangePassword As frmMstUserChangePassword
+    Dim frmMainSysJournalPost As frmSysJournalPost
+    Dim frmMainSysPostingOrCancelPostingGL As frmSysPostingOrCancelPostingGL
 
 #End Region
 
@@ -139,7 +138,8 @@
         mnuLaporanLaporanNeraca.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.ReportBalanceSheet, VO.Access.Values.ViewAccess)
 
         '# Settings
-        mnuSettingPostingJurnalTransaksi.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.MasterPostingJournalTransaction, VO.Access.Values.PrintReportAccess)
+        mnuSettingSetupPostingJurnalTransaksi.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.SettingSetupPostingJournalTransaction, VO.Access.Values.ViewAccess)
+        mnuSysPostingAndCancelPostingDataTransaksi.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.SettingPostingTransaction, VO.Access.Values.ViewAccess)
     End Sub
 
 #Region "Form Handle"
@@ -241,13 +241,13 @@
         UI.usForm.frmOpen(frmMainTraReceiveReturn, "frmTraReceiveReturn", Me)
     End Sub
 
-    'Private Sub mnuTransaksiPenagihan_Click(sender As Object, e As EventArgs) Handles mnuTransaksiPenagihan.Click
-    '    UI.usForm.frmOpen(frmMainTraAccountReceivable, "frmTraAccountReceivable", Me)
-    'End Sub
+    Private Sub mnuTransaksiPenagihan_Click(sender As Object, e As EventArgs) Handles mnuTransaksiPenagihan.Click
+        UI.usForm.frmOpen(frmMainTraAccountReceivable, "frmTraAccountReceivable", Me)
+    End Sub
 
-    'Private Sub mnuTransaksiPembayaran_Click(sender As Object, e As EventArgs) Handles mnuTransaksiPembayaran.Click
-    '    UI.usForm.frmOpen(frmMainTraAccountPayable, "frmTraAccountPayable", Me)
-    'End Sub
+    Private Sub mnuTransaksiPembayaran_Click(sender As Object, e As EventArgs) Handles mnuTransaksiPembayaran.Click
+        UI.usForm.frmOpen(frmMainTraAccountPayable, "frmTraAccountPayable", Me)
+    End Sub
 
     Private Sub mnuTransaksiBiaya_Click(sender As Object, e As EventArgs) Handles mnuTransaksiBiaya.Click
         UI.usForm.frmOpen(frmMainTraCost, "frmTraCost", Me)
@@ -261,21 +261,17 @@
 
 #Region "Settings"
 
-    'Private Sub mnuSettingUbahPassword_Click(sender As Object, e As EventArgs) Handles mnuSettingUbahPassword.Click
-    '    UI.usForm.frmOpen(frmMainMstUserChangePassword, "frmMstUserChangePassword", Me)
-    'End Sub
+    Private Sub mnuSettingUbahPassword_Click(sender As Object, e As EventArgs) Handles mnuSettingUbahPassword.Click
+        UI.usForm.frmOpen(frmMainMstUserChangePassword, "frmMstUserChangePassword", Me)
+    End Sub
 
-    'Private Sub mnuSettingPostingJurnalTransaksi_Click(sender As Object, e As EventArgs) Handles mnuSettingPostingJurnalTransaksi.Click
-    '    UI.usForm.frmOpen(frmMainSysJournalPost, "frmSysJournalPost", Me)
-    'End Sub
+    Private Sub mnuSettingPostingJurnalTransaksi_Click(sender As Object, e As EventArgs) Handles mnuSettingSetupPostingJurnalTransaksi.Click
+        UI.usForm.frmOpen(frmMainSysJournalPost, "frmSysJournalPost", Me)
+    End Sub
 
-    'Private Sub mnuSysPostingDataTransaksi_Click(sender As Object, e As EventArgs) Handles mnuSysPostingDataTransaksi.Click
-    '    UI.usForm.frmOpen(frmMainSysPostingGL, "frmSysPostingGL", Me)
-    'End Sub
-
-    'Private Sub mnuSettingUnpostingDataTransaksi_Click(sender As Object, e As EventArgs) Handles mnuSettingUnpostingDataTransaksi.Click
-    '    UI.usForm.frmOpen(frmMainSysUnpostingGL, "frmSysUnpostingGL", Me)
-    'End Sub
+    Private Sub mnuSysPostingAndCancelPostingDataTransaksi_Click(sender As Object, e As EventArgs) Handles mnuSysPostingAndCancelPostingDataTransaksi.Click
+        UI.usForm.frmOpen(frmMainSysPostingOrCancelPostingGL, "frmSysPostingOrCancelPostingGL", Me)
+    End Sub
 
 #End Region
 

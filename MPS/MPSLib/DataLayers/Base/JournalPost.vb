@@ -8,14 +8,15 @@ Namespace DL
                 If bolNew Then
                     .CommandText = _
                        "INSERT INTO sysJournalPost " & vbNewLine & _
-                       "    (CoAofRevenue, CoAofAccountReceivable, CoAofSalesDisc, CoAofCOGS, CoAofStock, CoAofCash, CoAofAccountPayable,   " & vbNewLine & _
-                       "      CoAofPurchaseDisc, CoAofPurchaseEquipments, Remarks, CreatedBy, CreatedDate, LogBy, LogDate)   " & vbNewLine & _
+                       "    (ProgramID, CoAofRevenue, CoAofAccountReceivable, CoAofSalesDisc, CoAofCOGS, CoAofStock, CoAofCash, CoAofAccountPayable,   " & vbNewLine & _
+                       "     CoAofPurchaseDisc, CoAofPurchaseEquipments, Remarks, CreatedBy, CreatedDate, LogBy, LogDate)   " & vbNewLine & _
                        "VALUES " & vbNewLine & _
-                       "    (@CoAofRevenue, @CoAofAccountReceivable, @CoAofSalesDisc, @CoAofCOGS, @CoAofStock, @CoAofCash, @CoAofAccountPayable,   " & vbNewLine & _
-                       "      @CoAofPurchaseDisc, @CoAofPurchaseEquipments, @Remarks, @LogBy, GETDATE(), @LogBy, GETDATE())  " & vbNewLine
+                       "    (@ProgramID, @CoAofRevenue, @CoAofAccountReceivable, @CoAofSalesDisc, @CoAofCOGS, @CoAofStock, @CoAofCash, @CoAofAccountPayable,   " & vbNewLine & _
+                       "     @CoAofPurchaseDisc, @CoAofPurchaseEquipments, @Remarks, @LogBy, GETDATE(), @LogBy, GETDATE())  " & vbNewLine
                 Else
                     .CommandText = _
                     "UPDATE sysJournalPost SET " & vbNewLine & _
+                    "    ProgramID=@ProgramID, " & vbNewLine & _
                     "    CoAofRevenue=@CoAofRevenue, " & vbNewLine & _
                     "    CoAofAccountReceivable=@CoAofAccountReceivable, " & vbNewLine & _
                     "    CoAofSalesDisc=@CoAofSalesDisc, " & vbNewLine & _
@@ -28,9 +29,10 @@ Namespace DL
                     "    Remarks=@Remarks, " & vbNewLine & _
                     "    LogInc=LogInc+1, " & vbNewLine & _
                     "    LogBy=@LogBy, " & vbNewLine & _
-                    "    LogDate=GETDATE() " & vbNewLine 
+                    "    LogDate=GETDATE() " & vbNewLine
                 End If
 
+                .Parameters.Add("@ProgramID", SqlDbType.Int).Value = clsData.ProgramID
                 .Parameters.Add("@CoAofRevenue", SqlDbType.Int).Value = clsData.CoAofRevenue
                 .Parameters.Add("@CoAofAccountReceivable", SqlDbType.Int).Value = clsData.CoAofAccountReceivable
                 .Parameters.Add("@CoAofSalesDisc", SqlDbType.Int).Value = clsData.CoAofSalesDisc
@@ -50,7 +52,7 @@ Namespace DL
             End Try
         End Sub
 
-        Public Shared Function GetDetail() As VO.JournalPost
+        Public Shared Function GetDetail(ByVal intProgramID As Integer) As VO.JournalPost
             Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
             Dim voReturn As New VO.JournalPost
             Try
@@ -87,8 +89,11 @@ Namespace DL
                         "INNER JOIN mstChartOfAccount CPD ON 	" & vbNewLine & _
                         "	A.CoAofPurchaseDisc=CPD.ID 	" & vbNewLine & _
                         "INNER JOIN mstChartOfAccount CPE ON 	" & vbNewLine & _
-                        "	A.CoAofPurchaseEquipments=CPE.ID	" & vbNewLine
+                        "	A.CoAofPurchaseEquipments=CPE.ID	" & vbNewLine & _
+                        "WHERE " & vbNewLine & _
+                        "	A.ProgramID=@ProgramID " & vbNewLine
 
+                    .Parameters.Add("@ProgramID", SqlDbType.Int).Value = intProgramID
                     If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
                 End With
                 sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)

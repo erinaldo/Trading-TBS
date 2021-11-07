@@ -38,7 +38,6 @@
             MPSLib.UI.usUserApp.UserID = txtUserID.Text.Trim
             MPSLib.UI.usUserApp.IsSuperUser = dtUserValid.Rows(0).Item("IsSuperUser")
             MPSLib.UI.usUserApp.IsFirstCreated = dtUserValid.Rows(0).Item("IsFirstCreated")
-            MPSLib.UI.usUserApp.JournalPost = BL.JournalPost.GetDetail
             MPSLib.UI.usUserApp.AccessList = BL.UserAccess.ListDataWithCompany(MPSLib.UI.usUserApp.UserID)
 
             Me.Hide()
@@ -53,6 +52,7 @@
                     MPSLib.UI.usUserApp.CompanyName = .pubLUdtRow.Item("CompanyName")
                     MPSLib.UI.usUserApp.CompanyAddress = .pubLUdtRow.Item("Address")
                     MPSLib.UI.usUserApp.CompanyInitial = .pubLUdtRow.Item("CompanyInitial")
+                    MPSLib.UI.usUserApp.JournalPost = BL.JournalPost.GetDetail(MPSLib.UI.usUserApp.ProgramID)
                     frmSysMain.Show()
                 End If
             End With

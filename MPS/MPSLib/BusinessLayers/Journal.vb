@@ -40,8 +40,8 @@ Namespace BL
                 clsData.ID = GetNewID(clsData.CompanyID, clsData.IsAutoGenerate, clsData.ProgramID)
                 If DL.Journal.DataExists(clsData.ID) Then
                     Err.Raise(515, "", "ID sudah ada sebelumnya")
-                    'ElseIf Format(clsData.JournalDate, "yyyyMMdd") <= DL.PostGL.LastPostedDate Then
-                    '    Err.Raise(515, "", "Data tidak dapat disimpan. Dikarenakan tanggal transaksi lebih kecil atau sama dengan tanggal Posting Transaksi")
+                ElseIf Format(clsData.JournalDate, "yyyyMMdd") <= DL.PostGL.LastPostedDate(clsData.CompanyID, clsData.ProgramID) Then
+                    Err.Raise(515, "", "Data tidak dapat disimpan. Dikarenakan tanggal transaksi lebih kecil atau sama dengan tanggal Posting Transaksi")
                 End If
             Else
                 If DL.Journal.IsDeleted(clsData.ID) Then
@@ -109,6 +109,9 @@ Namespace BL
             Dim dtData As DataTable = DL.Journal.ListDataOutstandingPostGL(intCompanyID, intProgramID, dtmDateFrom, dtmDateTo)
             For Each dr As DataRow In dtData.Rows
                 DL.Journal.PostGL(dr.Item("ID"), UI.usUserApp.UserID)
+
+                '# Save Data Status
+                SaveDataStatus(dr.Item("ID"), "POSTING DATA TRANSAKSI", UI.usUserApp.UserID, "")
             Next
         End Sub
 
@@ -117,6 +120,9 @@ Namespace BL
             Dim dtData As DataTable = DL.Journal.ListData(intCompanyID, intProgramID, dtmDateFrom, dtmDateTo, VO.Status.Values.All)
             For Each dr As DataRow In dtData.Rows
                 DL.Journal.UnpostGL(dr.Item("ID"))
+
+                '# Save Data Status
+                SaveDataStatus(dr.Item("ID"), "CANCEL POSTING DATA TRANSAKSI", UI.usUserApp.UserID, "")
             Next
         End Sub
 

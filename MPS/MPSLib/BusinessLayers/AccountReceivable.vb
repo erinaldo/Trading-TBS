@@ -3,15 +3,16 @@ Namespace BL
 
 #Region "Main"
 
-        Public Shared Function ListData(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intIDStatus As Integer) As DataTable
+        Public Shared Function ListData(ByVal intCompanyID As Integer, ByVal intProgramID As Integer, _
+                                                ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intIDStatus As Integer) As DataTable
             dtmDateTo = dtmDateTo.AddHours(23).AddMinutes(59).AddSeconds(59)
             BL.Server.ServerDefault()
-            Return DL.AccountReceivable.ListData(dtmDateFrom, dtmDateTo, intIDStatus)
+            Return DL.AccountReceivable.ListData(intCompanyID, intProgramID, dtmDateFrom, dtmDateTo, intIDStatus)
         End Function
 
-        Private Shared Function GetNewID(ByVal intCompanyID As Integer)
+        Private Shared Function GetNewID(ByVal intCompanyID As Integer, ByVal intProgramID As Integer)
             Dim clsCompany As VO.Company = DL.Company.GetDetail(intCompanyID)
-            Dim strReturn As String = "AR" & Format(Now, "yyMMdd") & "-" & clsCompany.CompanyInitial & "-"
+            Dim strReturn As String = "AR" & Format(Now, "yyMMdd") & "-" & clsCompany.CompanyInitial & "-" & Format(intProgramID, "00") & "-"
             strReturn = strReturn & Format(DL.AccountReceivable.GetMaxID(strReturn), "000")
             Return strReturn
         End Function
@@ -24,10 +25,10 @@ Namespace BL
                 DL.SQL.BeginTransaction()
 
                 If bolNew Then
-                    clsData.ID = GetNewID(clsData.CompanyID)
+                    clsData.ID = GetNewID(clsData.CompanyID, clsData.ProgramID)
                     If DL.AccountReceivable.DataExists(clsData.ID) Then
                         Err.Raise(515, "", "ID sudah ada sebelumnya")
-                    ElseIf Format(clsData.ARDate, "yyyyMMdd") <= DL.PostGL.LastPostedDate Then
+                    ElseIf Format(clsData.ARDate, "yyyyMMdd") <= DL.PostGL.LastPostedDate(clsData.CompanyID, clsData.ProgramID) Then
                         Err.Raise(515, "", "Data tidak dapat disimpan. Dikarenakan tanggal transaksi lebih kecil atau sama dengan tanggal Posting Transaksi")
                     End If
                 Else
@@ -89,28 +90,14 @@ Namespace BL
                 Else
                     DL.AccountReceivable.DeleteData(clsData.ID)
 
-                    dtPreviousItem = DL.AccountReceivable.ListDataDetail(clsData.ID)
                     '# Revert Total Payment
+                    dtPreviousItem = DL.AccountReceivable.ListDataDetail(clsData.ID)
                     For Each dr As DataRow In dtPreviousItem.Rows
                         DL.Sales.CalculateTotalPayment(dr.Item("SalesID"))
                     Next
 
                     '# Save Data Status
                     SaveDataStatus(clsData.ID, "DIHAPUS", clsData.LogBy, clsData.Remarks)
-
-                    '# Delete Journal
-                    Dim clsJournal As VO.Journal = New VO.Journal
-                    clsJournal.CompanyID = clsData.CompanyID
-                    clsJournal.ID = clsData.JournalID
-                    clsJournal.ReferencesID = clsData.ID
-                    clsJournal.JournalDate = clsData.ARDate
-                    clsJournal.TotalAmount = clsData.TotalAmount
-                    clsJournal.IsAutoGenerate = True
-                    clsJournal.IDStatus = clsData.IDStatus
-                    clsJournal.Remarks = clsData.Remarks
-                    clsJournal.LogBy = clsData.LogBy
-
-                    BL.Journal.DeleteData(clsJournal)
                 End If
 
                 DL.SQL.CommitTransaction()
@@ -122,12 +109,15 @@ Namespace BL
             End Try
         End Sub
 
-        Public Shared Sub PostData(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime)
-            Dim dtData As DataTable = DL.AccountReceivable.ListDataOutstandingPostGL(dtmDateFrom, dtmDateTo)
+        Public Shared Sub PostData(ByVal intCompanyID As Integer, ByVal intProgramID As Integer, _
+                                   ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime)
+            dtmDateTo = dtmDateTo.AddHours(23).AddMinutes(59).AddSeconds(59)
+            Dim dtData As DataTable = DL.AccountReceivable.ListDataOutstandingPostGL(intCompanyID, intProgramID, dtmDateFrom, dtmDateTo)
             For Each dr As DataRow In dtData.Rows
                 '# Generate Journal
                 Dim clsJournal As VO.Journal = New VO.Journal
-                clsJournal.CompanyID = dr.Item("CompanyID")
+                clsJournal.CompanyID = intCompanyID
+                clsJournal.ProgramID = intProgramID
                 clsJournal.ID = dr.Item("JournalID")
                 clsJournal.ReferencesID = dr.Item("ID")
                 clsJournal.JournalDate = dr.Item("ARDate")
@@ -161,22 +151,31 @@ Namespace BL
                 Dim strJournalID As String = BL.Journal.SaveData(True, clsJournal, clsJournalDetAll)
                 '# End Of Generate Journal
 
-                '#Update Journal ID
+                '# Update Journal ID
                 If strJournalID.Trim <> "" Then DL.AccountReceivable.UpdateJournalID(dr.Item("ID"), strJournalID)
 
                 DL.AccountReceivable.PostGL(dr.Item("ID"), UI.usUserApp.UserID)
+
+                '# Save Data Status
+                SaveDataStatus(dr.Item("ID"), "POSTING DATA TRANSAKSI", UI.usUserApp.UserID, "")
             Next
         End Sub
 
-        Public Shared Sub UnpostData(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime)
-            Dim dtData As DataTable = DL.AccountReceivable.ListData(dtmDateFrom, dtmDateTo, VO.Status.Values.All)
+        Public Shared Sub UnpostData(ByVal intCompanyID As Integer, ByVal intProgramID As Integer, _
+                                     ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime)
+            dtmDateTo = dtmDateTo.AddHours(23).AddMinutes(59).AddSeconds(59)
+            Dim dtData As DataTable = DL.AccountReceivable.ListData(intCompanyID, intCompanyID, dtmDateFrom, dtmDateTo, VO.Status.Values.All)
             For Each dr As DataRow In dtData.Rows
+                '# Delete Journal
                 DL.Journal.DeleteDataDetail(dr.Item("JournalID"))
                 DL.Journal.DeleteDataPure(dr.Item("JournalID"))
 
-                '#Update Journal ID
+                '# Update Journal ID
                 DL.AccountReceivable.UpdateJournalID(dr.Item("ID"), "")
                 DL.AccountReceivable.UnpostGL(dr.Item("ID"))
+
+                '# Save Data Status
+                SaveDataStatus(dr.Item("ID"), "CANCEL POSTING DATA TRANSAKSI", UI.usUserApp.UserID, "")
             Next
         End Sub
 
@@ -203,13 +202,13 @@ Namespace BL
 
 #Region "Status"
 
-        Public Shared Function ListDataStatus(ByVal strSalesReturnID As String) As DataTable
+        Public Shared Function ListDataStatus(ByVal strARID As String) As DataTable
             BL.Server.ServerDefault()
-            Return DL.AccountReceivable.ListDataStatus(strSalesReturnID)
+            Return DL.AccountReceivable.ListDataStatus(strARID)
         End Function
 
         Private Shared Sub SaveDataStatus(ByVal strARID As String, ByVal strStatus As String, ByVal strStatusBy As String, _
-                                         ByVal strRemarks As String)
+                                          ByVal strRemarks As String)
             Dim clsData As New VO.AccountReceivableStatus
             clsData.ID = strARID & "-" & Format(DL.AccountReceivable.GetMaxIDStatus(strARID), "000")
             clsData.ARID = strARID

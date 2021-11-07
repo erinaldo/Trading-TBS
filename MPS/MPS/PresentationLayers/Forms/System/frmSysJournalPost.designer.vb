@@ -23,45 +23,24 @@ Partial Class frmSysJournalPost
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSysJournalPost))
-        Me.ToolBar = New MPS.usToolBar()
-        Me.BarRefresh = New System.Windows.Forms.ToolBarButton()
-        Me.BarClose = New System.Windows.Forms.ToolBarButton()
         Me.lblInfo = New System.Windows.Forms.Label()
         Me.pnlDetail = New System.Windows.Forms.Panel()
-        Me.txtCoACodeOfEquipments = New MPS.usTextBox()
         Me.btnCoAOfEquipments = New DevExpress.XtraEditors.SimpleButton()
-        Me.txtCoANameOfEquipments = New MPS.usTextBox()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.txtCoACodeOfPurchaseDiscount = New MPS.usTextBox()
         Me.btnCoAOfPurchaseDiscount = New DevExpress.XtraEditors.SimpleButton()
-        Me.txtCoANameOfPurchaseDiscount = New MPS.usTextBox()
-        Me.txtCoACodeOfAccountPayable = New MPS.usTextBox()
         Me.btnCoAOfAccountPayable = New DevExpress.XtraEditors.SimpleButton()
-        Me.txtCoANameOfAccountPayable = New MPS.usTextBox()
-        Me.txtCoACodeOfCashOrBank = New MPS.usTextBox()
         Me.btnCoAOfCashOrBank = New DevExpress.XtraEditors.SimpleButton()
-        Me.txtCoANameOfCashOrBank = New MPS.usTextBox()
-        Me.txtCoACodeOfStock = New MPS.usTextBox()
         Me.btnCoAOfStock = New DevExpress.XtraEditors.SimpleButton()
-        Me.txtCoANameOfStock = New MPS.usTextBox()
-        Me.txtCoACodeOfCOGS = New MPS.usTextBox()
         Me.btnCoAOfCOGS = New DevExpress.XtraEditors.SimpleButton()
-        Me.txtCoANameOfCOGS = New MPS.usTextBox()
-        Me.txtCoACodeOfSalesDiscount = New MPS.usTextBox()
         Me.btnCoAOfSalesDiscount = New DevExpress.XtraEditors.SimpleButton()
-        Me.txtCoANameOfSalesDiscount = New MPS.usTextBox()
-        Me.txtCoACodeOfAccountReceivable = New MPS.usTextBox()
         Me.btnCoAOfAccountReceivable = New DevExpress.XtraEditors.SimpleButton()
-        Me.txtCoANameOfAccountReceivable = New MPS.usTextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.txtCoACodeOfRevenue = New MPS.usTextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btnCoAOfRevenue = New DevExpress.XtraEditors.SimpleButton()
         Me.lblCode = New System.Windows.Forms.Label()
-        Me.txtCoANameOfRevenue = New MPS.usTextBox()
         Me.lblUomID1 = New System.Windows.Forms.Label()
         Me.lblQty = New System.Windows.Forms.Label()
         Me.StatusStrip = New System.Windows.Forms.StatusStrip()
@@ -70,33 +49,31 @@ Partial Class frmSysJournalPost
         Me.ToolStripLogBy = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripLogDate = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.txtCoACodeOfEquipments = New MPS.usTextBox()
+        Me.txtCoANameOfEquipments = New MPS.usTextBox()
+        Me.txtCoACodeOfPurchaseDiscount = New MPS.usTextBox()
+        Me.txtCoANameOfPurchaseDiscount = New MPS.usTextBox()
+        Me.txtCoACodeOfAccountPayable = New MPS.usTextBox()
+        Me.txtCoANameOfAccountPayable = New MPS.usTextBox()
+        Me.txtCoACodeOfCashOrBank = New MPS.usTextBox()
+        Me.txtCoANameOfCashOrBank = New MPS.usTextBox()
+        Me.txtCoACodeOfStock = New MPS.usTextBox()
+        Me.txtCoANameOfStock = New MPS.usTextBox()
+        Me.txtCoACodeOfCOGS = New MPS.usTextBox()
+        Me.txtCoANameOfCOGS = New MPS.usTextBox()
+        Me.txtCoACodeOfSalesDiscount = New MPS.usTextBox()
+        Me.txtCoANameOfSalesDiscount = New MPS.usTextBox()
+        Me.txtCoACodeOfAccountReceivable = New MPS.usTextBox()
+        Me.txtCoANameOfAccountReceivable = New MPS.usTextBox()
+        Me.txtCoACodeOfRevenue = New MPS.usTextBox()
+        Me.txtCoANameOfRevenue = New MPS.usTextBox()
+        Me.ToolBar = New MPS.usToolBar()
+        Me.BarRefresh = New System.Windows.Forms.ToolBarButton()
+        Me.BarClose = New System.Windows.Forms.ToolBarButton()
+        Me.pgMain = New System.Windows.Forms.ProgressBar()
         Me.pnlDetail.SuspendLayout()
         Me.StatusStrip.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'ToolBar
-        '
-        Me.ToolBar.Appearance = System.Windows.Forms.ToolBarAppearance.Flat
-        Me.ToolBar.Buttons.AddRange(New System.Windows.Forms.ToolBarButton() {Me.BarRefresh, Me.BarClose})
-        Me.ToolBar.DropDownArrows = True
-        Me.ToolBar.Location = New System.Drawing.Point(0, 0)
-        Me.ToolBar.Name = "ToolBar"
-        Me.ToolBar.ShowToolTips = True
-        Me.ToolBar.Size = New System.Drawing.Size(644, 28)
-        Me.ToolBar.TabIndex = 0
-        Me.ToolBar.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right
-        '
-        'BarRefresh
-        '
-        Me.BarRefresh.Name = "BarRefresh"
-        Me.BarRefresh.Tag = "Save"
-        Me.BarRefresh.Text = "Simpan"
-        '
-        'BarClose
-        '
-        Me.BarClose.Name = "BarClose"
-        Me.BarClose.Tag = "Close"
-        Me.BarClose.Text = "Tutup"
         '
         'lblInfo
         '
@@ -153,20 +130,8 @@ Partial Class frmSysJournalPost
         Me.pnlDetail.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pnlDetail.Location = New System.Drawing.Point(0, 50)
         Me.pnlDetail.Name = "pnlDetail"
-        Me.pnlDetail.Size = New System.Drawing.Size(644, 269)
+        Me.pnlDetail.Size = New System.Drawing.Size(644, 326)
         Me.pnlDetail.TabIndex = 2
-        '
-        'txtCoACodeOfEquipments
-        '
-        Me.txtCoACodeOfEquipments.BackColor = System.Drawing.Color.Azure
-        Me.txtCoACodeOfEquipments.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCoACodeOfEquipments.Location = New System.Drawing.Point(156, 232)
-        Me.txtCoACodeOfEquipments.MaxLength = 250
-        Me.txtCoACodeOfEquipments.Name = "txtCoACodeOfEquipments"
-        Me.txtCoACodeOfEquipments.ReadOnly = True
-        Me.txtCoACodeOfEquipments.Size = New System.Drawing.Size(63, 21)
-        Me.txtCoACodeOfEquipments.TabIndex = 24
-        Me.txtCoACodeOfEquipments.TabStop = False
         '
         'btnCoAOfEquipments
         '
@@ -175,18 +140,6 @@ Partial Class frmSysJournalPost
         Me.btnCoAOfEquipments.Name = "btnCoAOfEquipments"
         Me.btnCoAOfEquipments.Size = New System.Drawing.Size(23, 23)
         Me.btnCoAOfEquipments.TabIndex = 26
-        '
-        'txtCoANameOfEquipments
-        '
-        Me.txtCoANameOfEquipments.BackColor = System.Drawing.Color.Azure
-        Me.txtCoANameOfEquipments.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCoANameOfEquipments.Location = New System.Drawing.Point(220, 232)
-        Me.txtCoANameOfEquipments.MaxLength = 250
-        Me.txtCoANameOfEquipments.Name = "txtCoANameOfEquipments"
-        Me.txtCoANameOfEquipments.ReadOnly = True
-        Me.txtCoANameOfEquipments.Size = New System.Drawing.Size(341, 21)
-        Me.txtCoANameOfEquipments.TabIndex = 25
-        Me.txtCoANameOfEquipments.TabStop = False
         '
         'Label6
         '
@@ -199,18 +152,6 @@ Partial Class frmSysJournalPost
         Me.Label6.TabIndex = 103
         Me.Label6.Text = "Peralatan"
         '
-        'txtCoACodeOfPurchaseDiscount
-        '
-        Me.txtCoACodeOfPurchaseDiscount.BackColor = System.Drawing.Color.Azure
-        Me.txtCoACodeOfPurchaseDiscount.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCoACodeOfPurchaseDiscount.Location = New System.Drawing.Point(156, 205)
-        Me.txtCoACodeOfPurchaseDiscount.MaxLength = 250
-        Me.txtCoACodeOfPurchaseDiscount.Name = "txtCoACodeOfPurchaseDiscount"
-        Me.txtCoACodeOfPurchaseDiscount.ReadOnly = True
-        Me.txtCoACodeOfPurchaseDiscount.Size = New System.Drawing.Size(63, 21)
-        Me.txtCoACodeOfPurchaseDiscount.TabIndex = 21
-        Me.txtCoACodeOfPurchaseDiscount.TabStop = False
-        '
         'btnCoAOfPurchaseDiscount
         '
         Me.btnCoAOfPurchaseDiscount.Image = CType(resources.GetObject("btnCoAOfPurchaseDiscount.Image"), System.Drawing.Image)
@@ -218,30 +159,6 @@ Partial Class frmSysJournalPost
         Me.btnCoAOfPurchaseDiscount.Name = "btnCoAOfPurchaseDiscount"
         Me.btnCoAOfPurchaseDiscount.Size = New System.Drawing.Size(23, 23)
         Me.btnCoAOfPurchaseDiscount.TabIndex = 23
-        '
-        'txtCoANameOfPurchaseDiscount
-        '
-        Me.txtCoANameOfPurchaseDiscount.BackColor = System.Drawing.Color.Azure
-        Me.txtCoANameOfPurchaseDiscount.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCoANameOfPurchaseDiscount.Location = New System.Drawing.Point(220, 205)
-        Me.txtCoANameOfPurchaseDiscount.MaxLength = 250
-        Me.txtCoANameOfPurchaseDiscount.Name = "txtCoANameOfPurchaseDiscount"
-        Me.txtCoANameOfPurchaseDiscount.ReadOnly = True
-        Me.txtCoANameOfPurchaseDiscount.Size = New System.Drawing.Size(341, 21)
-        Me.txtCoANameOfPurchaseDiscount.TabIndex = 22
-        Me.txtCoANameOfPurchaseDiscount.TabStop = False
-        '
-        'txtCoACodeOfAccountPayable
-        '
-        Me.txtCoACodeOfAccountPayable.BackColor = System.Drawing.Color.Azure
-        Me.txtCoACodeOfAccountPayable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCoACodeOfAccountPayable.Location = New System.Drawing.Point(156, 178)
-        Me.txtCoACodeOfAccountPayable.MaxLength = 250
-        Me.txtCoACodeOfAccountPayable.Name = "txtCoACodeOfAccountPayable"
-        Me.txtCoACodeOfAccountPayable.ReadOnly = True
-        Me.txtCoACodeOfAccountPayable.Size = New System.Drawing.Size(63, 21)
-        Me.txtCoACodeOfAccountPayable.TabIndex = 18
-        Me.txtCoACodeOfAccountPayable.TabStop = False
         '
         'btnCoAOfAccountPayable
         '
@@ -251,30 +168,6 @@ Partial Class frmSysJournalPost
         Me.btnCoAOfAccountPayable.Size = New System.Drawing.Size(23, 23)
         Me.btnCoAOfAccountPayable.TabIndex = 20
         '
-        'txtCoANameOfAccountPayable
-        '
-        Me.txtCoANameOfAccountPayable.BackColor = System.Drawing.Color.Azure
-        Me.txtCoANameOfAccountPayable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCoANameOfAccountPayable.Location = New System.Drawing.Point(220, 178)
-        Me.txtCoANameOfAccountPayable.MaxLength = 250
-        Me.txtCoANameOfAccountPayable.Name = "txtCoANameOfAccountPayable"
-        Me.txtCoANameOfAccountPayable.ReadOnly = True
-        Me.txtCoANameOfAccountPayable.Size = New System.Drawing.Size(341, 21)
-        Me.txtCoANameOfAccountPayable.TabIndex = 19
-        Me.txtCoANameOfAccountPayable.TabStop = False
-        '
-        'txtCoACodeOfCashOrBank
-        '
-        Me.txtCoACodeOfCashOrBank.BackColor = System.Drawing.Color.Azure
-        Me.txtCoACodeOfCashOrBank.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCoACodeOfCashOrBank.Location = New System.Drawing.Point(156, 151)
-        Me.txtCoACodeOfCashOrBank.MaxLength = 250
-        Me.txtCoACodeOfCashOrBank.Name = "txtCoACodeOfCashOrBank"
-        Me.txtCoACodeOfCashOrBank.ReadOnly = True
-        Me.txtCoACodeOfCashOrBank.Size = New System.Drawing.Size(63, 21)
-        Me.txtCoACodeOfCashOrBank.TabIndex = 15
-        Me.txtCoACodeOfCashOrBank.TabStop = False
-        '
         'btnCoAOfCashOrBank
         '
         Me.btnCoAOfCashOrBank.Image = CType(resources.GetObject("btnCoAOfCashOrBank.Image"), System.Drawing.Image)
@@ -282,30 +175,6 @@ Partial Class frmSysJournalPost
         Me.btnCoAOfCashOrBank.Name = "btnCoAOfCashOrBank"
         Me.btnCoAOfCashOrBank.Size = New System.Drawing.Size(23, 23)
         Me.btnCoAOfCashOrBank.TabIndex = 17
-        '
-        'txtCoANameOfCashOrBank
-        '
-        Me.txtCoANameOfCashOrBank.BackColor = System.Drawing.Color.Azure
-        Me.txtCoANameOfCashOrBank.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCoANameOfCashOrBank.Location = New System.Drawing.Point(220, 151)
-        Me.txtCoANameOfCashOrBank.MaxLength = 250
-        Me.txtCoANameOfCashOrBank.Name = "txtCoANameOfCashOrBank"
-        Me.txtCoANameOfCashOrBank.ReadOnly = True
-        Me.txtCoANameOfCashOrBank.Size = New System.Drawing.Size(341, 21)
-        Me.txtCoANameOfCashOrBank.TabIndex = 16
-        Me.txtCoANameOfCashOrBank.TabStop = False
-        '
-        'txtCoACodeOfStock
-        '
-        Me.txtCoACodeOfStock.BackColor = System.Drawing.Color.Azure
-        Me.txtCoACodeOfStock.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCoACodeOfStock.Location = New System.Drawing.Point(156, 124)
-        Me.txtCoACodeOfStock.MaxLength = 250
-        Me.txtCoACodeOfStock.Name = "txtCoACodeOfStock"
-        Me.txtCoACodeOfStock.ReadOnly = True
-        Me.txtCoACodeOfStock.Size = New System.Drawing.Size(63, 21)
-        Me.txtCoACodeOfStock.TabIndex = 12
-        Me.txtCoACodeOfStock.TabStop = False
         '
         'btnCoAOfStock
         '
@@ -315,30 +184,6 @@ Partial Class frmSysJournalPost
         Me.btnCoAOfStock.Size = New System.Drawing.Size(23, 23)
         Me.btnCoAOfStock.TabIndex = 14
         '
-        'txtCoANameOfStock
-        '
-        Me.txtCoANameOfStock.BackColor = System.Drawing.Color.Azure
-        Me.txtCoANameOfStock.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCoANameOfStock.Location = New System.Drawing.Point(220, 124)
-        Me.txtCoANameOfStock.MaxLength = 250
-        Me.txtCoANameOfStock.Name = "txtCoANameOfStock"
-        Me.txtCoANameOfStock.ReadOnly = True
-        Me.txtCoANameOfStock.Size = New System.Drawing.Size(341, 21)
-        Me.txtCoANameOfStock.TabIndex = 13
-        Me.txtCoANameOfStock.TabStop = False
-        '
-        'txtCoACodeOfCOGS
-        '
-        Me.txtCoACodeOfCOGS.BackColor = System.Drawing.Color.Azure
-        Me.txtCoACodeOfCOGS.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCoACodeOfCOGS.Location = New System.Drawing.Point(156, 97)
-        Me.txtCoACodeOfCOGS.MaxLength = 250
-        Me.txtCoACodeOfCOGS.Name = "txtCoACodeOfCOGS"
-        Me.txtCoACodeOfCOGS.ReadOnly = True
-        Me.txtCoACodeOfCOGS.Size = New System.Drawing.Size(63, 21)
-        Me.txtCoACodeOfCOGS.TabIndex = 9
-        Me.txtCoACodeOfCOGS.TabStop = False
-        '
         'btnCoAOfCOGS
         '
         Me.btnCoAOfCOGS.Image = CType(resources.GetObject("btnCoAOfCOGS.Image"), System.Drawing.Image)
@@ -346,30 +191,6 @@ Partial Class frmSysJournalPost
         Me.btnCoAOfCOGS.Name = "btnCoAOfCOGS"
         Me.btnCoAOfCOGS.Size = New System.Drawing.Size(23, 23)
         Me.btnCoAOfCOGS.TabIndex = 11
-        '
-        'txtCoANameOfCOGS
-        '
-        Me.txtCoANameOfCOGS.BackColor = System.Drawing.Color.Azure
-        Me.txtCoANameOfCOGS.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCoANameOfCOGS.Location = New System.Drawing.Point(220, 97)
-        Me.txtCoANameOfCOGS.MaxLength = 250
-        Me.txtCoANameOfCOGS.Name = "txtCoANameOfCOGS"
-        Me.txtCoANameOfCOGS.ReadOnly = True
-        Me.txtCoANameOfCOGS.Size = New System.Drawing.Size(341, 21)
-        Me.txtCoANameOfCOGS.TabIndex = 10
-        Me.txtCoANameOfCOGS.TabStop = False
-        '
-        'txtCoACodeOfSalesDiscount
-        '
-        Me.txtCoACodeOfSalesDiscount.BackColor = System.Drawing.Color.Azure
-        Me.txtCoACodeOfSalesDiscount.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCoACodeOfSalesDiscount.Location = New System.Drawing.Point(156, 70)
-        Me.txtCoACodeOfSalesDiscount.MaxLength = 250
-        Me.txtCoACodeOfSalesDiscount.Name = "txtCoACodeOfSalesDiscount"
-        Me.txtCoACodeOfSalesDiscount.ReadOnly = True
-        Me.txtCoACodeOfSalesDiscount.Size = New System.Drawing.Size(63, 21)
-        Me.txtCoACodeOfSalesDiscount.TabIndex = 6
-        Me.txtCoACodeOfSalesDiscount.TabStop = False
         '
         'btnCoAOfSalesDiscount
         '
@@ -379,30 +200,6 @@ Partial Class frmSysJournalPost
         Me.btnCoAOfSalesDiscount.Size = New System.Drawing.Size(23, 23)
         Me.btnCoAOfSalesDiscount.TabIndex = 8
         '
-        'txtCoANameOfSalesDiscount
-        '
-        Me.txtCoANameOfSalesDiscount.BackColor = System.Drawing.Color.Azure
-        Me.txtCoANameOfSalesDiscount.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCoANameOfSalesDiscount.Location = New System.Drawing.Point(220, 70)
-        Me.txtCoANameOfSalesDiscount.MaxLength = 250
-        Me.txtCoANameOfSalesDiscount.Name = "txtCoANameOfSalesDiscount"
-        Me.txtCoANameOfSalesDiscount.ReadOnly = True
-        Me.txtCoANameOfSalesDiscount.Size = New System.Drawing.Size(341, 21)
-        Me.txtCoANameOfSalesDiscount.TabIndex = 7
-        Me.txtCoANameOfSalesDiscount.TabStop = False
-        '
-        'txtCoACodeOfAccountReceivable
-        '
-        Me.txtCoACodeOfAccountReceivable.BackColor = System.Drawing.Color.Azure
-        Me.txtCoACodeOfAccountReceivable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCoACodeOfAccountReceivable.Location = New System.Drawing.Point(156, 43)
-        Me.txtCoACodeOfAccountReceivable.MaxLength = 250
-        Me.txtCoACodeOfAccountReceivable.Name = "txtCoACodeOfAccountReceivable"
-        Me.txtCoACodeOfAccountReceivable.ReadOnly = True
-        Me.txtCoACodeOfAccountReceivable.Size = New System.Drawing.Size(63, 21)
-        Me.txtCoACodeOfAccountReceivable.TabIndex = 3
-        Me.txtCoACodeOfAccountReceivable.TabStop = False
-        '
         'btnCoAOfAccountReceivable
         '
         Me.btnCoAOfAccountReceivable.Image = CType(resources.GetObject("btnCoAOfAccountReceivable.Image"), System.Drawing.Image)
@@ -410,18 +207,6 @@ Partial Class frmSysJournalPost
         Me.btnCoAOfAccountReceivable.Name = "btnCoAOfAccountReceivable"
         Me.btnCoAOfAccountReceivable.Size = New System.Drawing.Size(23, 23)
         Me.btnCoAOfAccountReceivable.TabIndex = 5
-        '
-        'txtCoANameOfAccountReceivable
-        '
-        Me.txtCoANameOfAccountReceivable.BackColor = System.Drawing.Color.Azure
-        Me.txtCoANameOfAccountReceivable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCoANameOfAccountReceivable.Location = New System.Drawing.Point(220, 43)
-        Me.txtCoANameOfAccountReceivable.MaxLength = 250
-        Me.txtCoANameOfAccountReceivable.Name = "txtCoANameOfAccountReceivable"
-        Me.txtCoANameOfAccountReceivable.ReadOnly = True
-        Me.txtCoANameOfAccountReceivable.Size = New System.Drawing.Size(341, 21)
-        Me.txtCoANameOfAccountReceivable.TabIndex = 4
-        Me.txtCoANameOfAccountReceivable.TabStop = False
         '
         'Label5
         '
@@ -467,18 +252,6 @@ Partial Class frmSysJournalPost
         Me.Label2.TabIndex = 96
         Me.Label2.Text = "Persediaan"
         '
-        'txtCoACodeOfRevenue
-        '
-        Me.txtCoACodeOfRevenue.BackColor = System.Drawing.Color.Azure
-        Me.txtCoACodeOfRevenue.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCoACodeOfRevenue.Location = New System.Drawing.Point(156, 16)
-        Me.txtCoACodeOfRevenue.MaxLength = 250
-        Me.txtCoACodeOfRevenue.Name = "txtCoACodeOfRevenue"
-        Me.txtCoACodeOfRevenue.ReadOnly = True
-        Me.txtCoACodeOfRevenue.Size = New System.Drawing.Size(63, 21)
-        Me.txtCoACodeOfRevenue.TabIndex = 0
-        Me.txtCoACodeOfRevenue.TabStop = False
-        '
         'Label1
         '
         Me.Label1.AutoSize = True
@@ -509,18 +282,6 @@ Partial Class frmSysJournalPost
         Me.lblCode.TabIndex = 93
         Me.lblCode.Text = "Pendapatan"
         '
-        'txtCoANameOfRevenue
-        '
-        Me.txtCoANameOfRevenue.BackColor = System.Drawing.Color.Azure
-        Me.txtCoANameOfRevenue.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtCoANameOfRevenue.Location = New System.Drawing.Point(220, 16)
-        Me.txtCoANameOfRevenue.MaxLength = 250
-        Me.txtCoANameOfRevenue.Name = "txtCoANameOfRevenue"
-        Me.txtCoANameOfRevenue.ReadOnly = True
-        Me.txtCoANameOfRevenue.Size = New System.Drawing.Size(341, 21)
-        Me.txtCoANameOfRevenue.TabIndex = 1
-        Me.txtCoANameOfRevenue.TabStop = False
-        '
         'lblUomID1
         '
         Me.lblUomID1.AutoSize = True
@@ -547,10 +308,10 @@ Partial Class frmSysJournalPost
         '
         Me.StatusStrip.Font = New System.Drawing.Font("Tahoma", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripEmpty, Me.ToolStripLogInc, Me.ToolStripLogBy, Me.ToolStripStatusLabel1, Me.ToolStripLogDate})
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 319)
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 331)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.Size = New System.Drawing.Size(644, 22)
-        Me.StatusStrip.TabIndex = 8
+        Me.StatusStrip.TabIndex = 3
         Me.StatusStrip.Text = "StatusStrip1"
         '
         'ToolStripEmpty
@@ -594,19 +355,268 @@ Partial Class frmSysJournalPost
         Me.ToolStripLogDate.Size = New System.Drawing.Size(12, 17)
         Me.ToolStripLogDate.Text = "-"
         '
+        'txtCoACodeOfEquipments
+        '
+        Me.txtCoACodeOfEquipments.BackColor = System.Drawing.Color.Azure
+        Me.txtCoACodeOfEquipments.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCoACodeOfEquipments.Location = New System.Drawing.Point(156, 232)
+        Me.txtCoACodeOfEquipments.MaxLength = 250
+        Me.txtCoACodeOfEquipments.Name = "txtCoACodeOfEquipments"
+        Me.txtCoACodeOfEquipments.ReadOnly = True
+        Me.txtCoACodeOfEquipments.Size = New System.Drawing.Size(63, 21)
+        Me.txtCoACodeOfEquipments.TabIndex = 24
+        Me.txtCoACodeOfEquipments.TabStop = False
+        '
+        'txtCoANameOfEquipments
+        '
+        Me.txtCoANameOfEquipments.BackColor = System.Drawing.Color.Azure
+        Me.txtCoANameOfEquipments.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCoANameOfEquipments.Location = New System.Drawing.Point(220, 232)
+        Me.txtCoANameOfEquipments.MaxLength = 250
+        Me.txtCoANameOfEquipments.Name = "txtCoANameOfEquipments"
+        Me.txtCoANameOfEquipments.ReadOnly = True
+        Me.txtCoANameOfEquipments.Size = New System.Drawing.Size(341, 21)
+        Me.txtCoANameOfEquipments.TabIndex = 25
+        Me.txtCoANameOfEquipments.TabStop = False
+        '
+        'txtCoACodeOfPurchaseDiscount
+        '
+        Me.txtCoACodeOfPurchaseDiscount.BackColor = System.Drawing.Color.Azure
+        Me.txtCoACodeOfPurchaseDiscount.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCoACodeOfPurchaseDiscount.Location = New System.Drawing.Point(156, 205)
+        Me.txtCoACodeOfPurchaseDiscount.MaxLength = 250
+        Me.txtCoACodeOfPurchaseDiscount.Name = "txtCoACodeOfPurchaseDiscount"
+        Me.txtCoACodeOfPurchaseDiscount.ReadOnly = True
+        Me.txtCoACodeOfPurchaseDiscount.Size = New System.Drawing.Size(63, 21)
+        Me.txtCoACodeOfPurchaseDiscount.TabIndex = 21
+        Me.txtCoACodeOfPurchaseDiscount.TabStop = False
+        '
+        'txtCoANameOfPurchaseDiscount
+        '
+        Me.txtCoANameOfPurchaseDiscount.BackColor = System.Drawing.Color.Azure
+        Me.txtCoANameOfPurchaseDiscount.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCoANameOfPurchaseDiscount.Location = New System.Drawing.Point(220, 205)
+        Me.txtCoANameOfPurchaseDiscount.MaxLength = 250
+        Me.txtCoANameOfPurchaseDiscount.Name = "txtCoANameOfPurchaseDiscount"
+        Me.txtCoANameOfPurchaseDiscount.ReadOnly = True
+        Me.txtCoANameOfPurchaseDiscount.Size = New System.Drawing.Size(341, 21)
+        Me.txtCoANameOfPurchaseDiscount.TabIndex = 22
+        Me.txtCoANameOfPurchaseDiscount.TabStop = False
+        '
+        'txtCoACodeOfAccountPayable
+        '
+        Me.txtCoACodeOfAccountPayable.BackColor = System.Drawing.Color.Azure
+        Me.txtCoACodeOfAccountPayable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCoACodeOfAccountPayable.Location = New System.Drawing.Point(156, 178)
+        Me.txtCoACodeOfAccountPayable.MaxLength = 250
+        Me.txtCoACodeOfAccountPayable.Name = "txtCoACodeOfAccountPayable"
+        Me.txtCoACodeOfAccountPayable.ReadOnly = True
+        Me.txtCoACodeOfAccountPayable.Size = New System.Drawing.Size(63, 21)
+        Me.txtCoACodeOfAccountPayable.TabIndex = 18
+        Me.txtCoACodeOfAccountPayable.TabStop = False
+        '
+        'txtCoANameOfAccountPayable
+        '
+        Me.txtCoANameOfAccountPayable.BackColor = System.Drawing.Color.Azure
+        Me.txtCoANameOfAccountPayable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCoANameOfAccountPayable.Location = New System.Drawing.Point(220, 178)
+        Me.txtCoANameOfAccountPayable.MaxLength = 250
+        Me.txtCoANameOfAccountPayable.Name = "txtCoANameOfAccountPayable"
+        Me.txtCoANameOfAccountPayable.ReadOnly = True
+        Me.txtCoANameOfAccountPayable.Size = New System.Drawing.Size(341, 21)
+        Me.txtCoANameOfAccountPayable.TabIndex = 19
+        Me.txtCoANameOfAccountPayable.TabStop = False
+        '
+        'txtCoACodeOfCashOrBank
+        '
+        Me.txtCoACodeOfCashOrBank.BackColor = System.Drawing.Color.Azure
+        Me.txtCoACodeOfCashOrBank.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCoACodeOfCashOrBank.Location = New System.Drawing.Point(156, 151)
+        Me.txtCoACodeOfCashOrBank.MaxLength = 250
+        Me.txtCoACodeOfCashOrBank.Name = "txtCoACodeOfCashOrBank"
+        Me.txtCoACodeOfCashOrBank.ReadOnly = True
+        Me.txtCoACodeOfCashOrBank.Size = New System.Drawing.Size(63, 21)
+        Me.txtCoACodeOfCashOrBank.TabIndex = 15
+        Me.txtCoACodeOfCashOrBank.TabStop = False
+        '
+        'txtCoANameOfCashOrBank
+        '
+        Me.txtCoANameOfCashOrBank.BackColor = System.Drawing.Color.Azure
+        Me.txtCoANameOfCashOrBank.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCoANameOfCashOrBank.Location = New System.Drawing.Point(220, 151)
+        Me.txtCoANameOfCashOrBank.MaxLength = 250
+        Me.txtCoANameOfCashOrBank.Name = "txtCoANameOfCashOrBank"
+        Me.txtCoANameOfCashOrBank.ReadOnly = True
+        Me.txtCoANameOfCashOrBank.Size = New System.Drawing.Size(341, 21)
+        Me.txtCoANameOfCashOrBank.TabIndex = 16
+        Me.txtCoANameOfCashOrBank.TabStop = False
+        '
+        'txtCoACodeOfStock
+        '
+        Me.txtCoACodeOfStock.BackColor = System.Drawing.Color.Azure
+        Me.txtCoACodeOfStock.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCoACodeOfStock.Location = New System.Drawing.Point(156, 124)
+        Me.txtCoACodeOfStock.MaxLength = 250
+        Me.txtCoACodeOfStock.Name = "txtCoACodeOfStock"
+        Me.txtCoACodeOfStock.ReadOnly = True
+        Me.txtCoACodeOfStock.Size = New System.Drawing.Size(63, 21)
+        Me.txtCoACodeOfStock.TabIndex = 12
+        Me.txtCoACodeOfStock.TabStop = False
+        '
+        'txtCoANameOfStock
+        '
+        Me.txtCoANameOfStock.BackColor = System.Drawing.Color.Azure
+        Me.txtCoANameOfStock.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCoANameOfStock.Location = New System.Drawing.Point(220, 124)
+        Me.txtCoANameOfStock.MaxLength = 250
+        Me.txtCoANameOfStock.Name = "txtCoANameOfStock"
+        Me.txtCoANameOfStock.ReadOnly = True
+        Me.txtCoANameOfStock.Size = New System.Drawing.Size(341, 21)
+        Me.txtCoANameOfStock.TabIndex = 13
+        Me.txtCoANameOfStock.TabStop = False
+        '
+        'txtCoACodeOfCOGS
+        '
+        Me.txtCoACodeOfCOGS.BackColor = System.Drawing.Color.Azure
+        Me.txtCoACodeOfCOGS.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCoACodeOfCOGS.Location = New System.Drawing.Point(156, 97)
+        Me.txtCoACodeOfCOGS.MaxLength = 250
+        Me.txtCoACodeOfCOGS.Name = "txtCoACodeOfCOGS"
+        Me.txtCoACodeOfCOGS.ReadOnly = True
+        Me.txtCoACodeOfCOGS.Size = New System.Drawing.Size(63, 21)
+        Me.txtCoACodeOfCOGS.TabIndex = 9
+        Me.txtCoACodeOfCOGS.TabStop = False
+        '
+        'txtCoANameOfCOGS
+        '
+        Me.txtCoANameOfCOGS.BackColor = System.Drawing.Color.Azure
+        Me.txtCoANameOfCOGS.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCoANameOfCOGS.Location = New System.Drawing.Point(220, 97)
+        Me.txtCoANameOfCOGS.MaxLength = 250
+        Me.txtCoANameOfCOGS.Name = "txtCoANameOfCOGS"
+        Me.txtCoANameOfCOGS.ReadOnly = True
+        Me.txtCoANameOfCOGS.Size = New System.Drawing.Size(341, 21)
+        Me.txtCoANameOfCOGS.TabIndex = 10
+        Me.txtCoANameOfCOGS.TabStop = False
+        '
+        'txtCoACodeOfSalesDiscount
+        '
+        Me.txtCoACodeOfSalesDiscount.BackColor = System.Drawing.Color.Azure
+        Me.txtCoACodeOfSalesDiscount.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCoACodeOfSalesDiscount.Location = New System.Drawing.Point(156, 70)
+        Me.txtCoACodeOfSalesDiscount.MaxLength = 250
+        Me.txtCoACodeOfSalesDiscount.Name = "txtCoACodeOfSalesDiscount"
+        Me.txtCoACodeOfSalesDiscount.ReadOnly = True
+        Me.txtCoACodeOfSalesDiscount.Size = New System.Drawing.Size(63, 21)
+        Me.txtCoACodeOfSalesDiscount.TabIndex = 6
+        Me.txtCoACodeOfSalesDiscount.TabStop = False
+        '
+        'txtCoANameOfSalesDiscount
+        '
+        Me.txtCoANameOfSalesDiscount.BackColor = System.Drawing.Color.Azure
+        Me.txtCoANameOfSalesDiscount.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCoANameOfSalesDiscount.Location = New System.Drawing.Point(220, 70)
+        Me.txtCoANameOfSalesDiscount.MaxLength = 250
+        Me.txtCoANameOfSalesDiscount.Name = "txtCoANameOfSalesDiscount"
+        Me.txtCoANameOfSalesDiscount.ReadOnly = True
+        Me.txtCoANameOfSalesDiscount.Size = New System.Drawing.Size(341, 21)
+        Me.txtCoANameOfSalesDiscount.TabIndex = 7
+        Me.txtCoANameOfSalesDiscount.TabStop = False
+        '
+        'txtCoACodeOfAccountReceivable
+        '
+        Me.txtCoACodeOfAccountReceivable.BackColor = System.Drawing.Color.Azure
+        Me.txtCoACodeOfAccountReceivable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCoACodeOfAccountReceivable.Location = New System.Drawing.Point(156, 43)
+        Me.txtCoACodeOfAccountReceivable.MaxLength = 250
+        Me.txtCoACodeOfAccountReceivable.Name = "txtCoACodeOfAccountReceivable"
+        Me.txtCoACodeOfAccountReceivable.ReadOnly = True
+        Me.txtCoACodeOfAccountReceivable.Size = New System.Drawing.Size(63, 21)
+        Me.txtCoACodeOfAccountReceivable.TabIndex = 3
+        Me.txtCoACodeOfAccountReceivable.TabStop = False
+        '
+        'txtCoANameOfAccountReceivable
+        '
+        Me.txtCoANameOfAccountReceivable.BackColor = System.Drawing.Color.Azure
+        Me.txtCoANameOfAccountReceivable.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCoANameOfAccountReceivable.Location = New System.Drawing.Point(220, 43)
+        Me.txtCoANameOfAccountReceivable.MaxLength = 250
+        Me.txtCoANameOfAccountReceivable.Name = "txtCoANameOfAccountReceivable"
+        Me.txtCoANameOfAccountReceivable.ReadOnly = True
+        Me.txtCoANameOfAccountReceivable.Size = New System.Drawing.Size(341, 21)
+        Me.txtCoANameOfAccountReceivable.TabIndex = 4
+        Me.txtCoANameOfAccountReceivable.TabStop = False
+        '
+        'txtCoACodeOfRevenue
+        '
+        Me.txtCoACodeOfRevenue.BackColor = System.Drawing.Color.Azure
+        Me.txtCoACodeOfRevenue.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCoACodeOfRevenue.Location = New System.Drawing.Point(156, 16)
+        Me.txtCoACodeOfRevenue.MaxLength = 250
+        Me.txtCoACodeOfRevenue.Name = "txtCoACodeOfRevenue"
+        Me.txtCoACodeOfRevenue.ReadOnly = True
+        Me.txtCoACodeOfRevenue.Size = New System.Drawing.Size(63, 21)
+        Me.txtCoACodeOfRevenue.TabIndex = 0
+        Me.txtCoACodeOfRevenue.TabStop = False
+        '
+        'txtCoANameOfRevenue
+        '
+        Me.txtCoANameOfRevenue.BackColor = System.Drawing.Color.Azure
+        Me.txtCoANameOfRevenue.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtCoANameOfRevenue.Location = New System.Drawing.Point(220, 16)
+        Me.txtCoANameOfRevenue.MaxLength = 250
+        Me.txtCoANameOfRevenue.Name = "txtCoANameOfRevenue"
+        Me.txtCoANameOfRevenue.ReadOnly = True
+        Me.txtCoANameOfRevenue.Size = New System.Drawing.Size(341, 21)
+        Me.txtCoANameOfRevenue.TabIndex = 1
+        Me.txtCoANameOfRevenue.TabStop = False
+        '
+        'ToolBar
+        '
+        Me.ToolBar.Appearance = System.Windows.Forms.ToolBarAppearance.Flat
+        Me.ToolBar.Buttons.AddRange(New System.Windows.Forms.ToolBarButton() {Me.BarRefresh, Me.BarClose})
+        Me.ToolBar.DropDownArrows = True
+        Me.ToolBar.Location = New System.Drawing.Point(0, 0)
+        Me.ToolBar.Name = "ToolBar"
+        Me.ToolBar.ShowToolTips = True
+        Me.ToolBar.Size = New System.Drawing.Size(644, 28)
+        Me.ToolBar.TabIndex = 0
+        Me.ToolBar.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right
+        '
+        'BarRefresh
+        '
+        Me.BarRefresh.Name = "BarRefresh"
+        Me.BarRefresh.Tag = "Save"
+        Me.BarRefresh.Text = "Simpan"
+        '
+        'BarClose
+        '
+        Me.BarClose.Name = "BarClose"
+        Me.BarClose.Tag = "Close"
+        Me.BarClose.Text = "Tutup"
+        '
+        'pgMain
+        '
+        Me.pgMain.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.pgMain.Location = New System.Drawing.Point(0, 353)
+        Me.pgMain.Name = "pgMain"
+        Me.pgMain.Size = New System.Drawing.Size(644, 23)
+        Me.pgMain.TabIndex = 4
+        '
         'frmSysJournalPost
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(644, 341)
-        Me.Controls.Add(Me.pnlDetail)
+        Me.ClientSize = New System.Drawing.Size(644, 376)
         Me.Controls.Add(Me.StatusStrip)
+        Me.Controls.Add(Me.pgMain)
+        Me.Controls.Add(Me.pnlDetail)
         Me.Controls.Add(Me.lblInfo)
         Me.Controls.Add(Me.ToolBar)
         Me.Font = New System.Drawing.Font("Tahoma", 8.25!)
         Me.Name = "frmSysJournalPost"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Posting Jurnal Transaksi"
+        Me.Text = "Setup Posting Jurnal Transaksi"
         Me.pnlDetail.ResumeLayout(False)
         Me.pnlDetail.PerformLayout()
         Me.StatusStrip.ResumeLayout(False)
@@ -662,4 +672,5 @@ Partial Class frmSysJournalPost
     Friend WithEvents ToolStripLogBy As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents ToolStripStatusLabel1 As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents ToolStripLogDate As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents pgMain As System.Windows.Forms.ProgressBar
 End Class

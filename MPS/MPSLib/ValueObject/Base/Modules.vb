@@ -21,9 +21,9 @@ Namespace VO
             MasterItem = 10
 
             '# Settings
-            MasterPostingTransaction = 11
-            MasterUnPostingTransaction = 12
-            MasterPostingJournalTransaction = 13
+            SettingPostingTransaction = 11
+            SettingUnPostingTransaction = 12
+            SettingSetupPostingJournalTransaction = 13
 
             '# Transactions
             TransactionSales = 14

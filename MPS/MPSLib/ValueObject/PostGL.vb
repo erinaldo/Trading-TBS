@@ -1,5 +1,6 @@
 Namespace VO
     Public Class PostGL
+        Inherits Common
         Property ID As String
         Property DateFrom As DateTime
         Property DateTo As DateTime

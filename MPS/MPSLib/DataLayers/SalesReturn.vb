@@ -412,6 +412,84 @@ Namespace DL
             End Try
         End Sub
 
+        Public Shared Function ListDataOutstandingPostGL(ByVal intCompanyID As Integer, ByVal intProgramID As Integer, _
+                                                         ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime) As DataTable
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                   "SELECT " & vbNewLine & _
+                   "    A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.ReferencesID, A.BPID, A.SalesReturnDate, A.PaymentTerm,   " & vbNewLine & _
+                   "    A.DriverName, A.PlatNumber, A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MI.UomID AS UOMID, MU.Code AS UomCode, " & vbNewLine & _
+                   "    A.ArrivalBrutto, A.ArrivalTarra, A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, A.Price, A.TotalPrice, A.IsPostedGL, " & vbNewLine & _
+                   "    A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, A.CreatedBy, A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID  " & vbNewLine & _
+                   "FROM traSalesReturn A " & vbNewLine & _
+                   "INNER JOIN mstStatus B ON " & vbNewLine & _
+                   "    A.IDStatus=B.ID " & vbNewLine & _
+                   "INNER JOIN mstBusinessPartner C ON " & vbNewLine & _
+                   "    A.BPID=C.ID " & vbNewLine & _
+                   "INNER JOIN mstItem MI ON " & vbNewLine & _
+                   "    A.ItemID=MI.ID " & vbNewLine & _
+                   "INNER JOIN mstUOM MU ON " & vbNewLine & _
+                   "    MI.UomID=MU.ID " & vbNewLine & _
+                   "INNER JOIN mstCompany MC ON " & vbNewLine & _
+                   "    A.CompanyID=MC.ID " & vbNewLine & _
+                   "INNER JOIN mstProgram MP ON " & vbNewLine & _
+                   "    A.ProgramID=MP.ID " & vbNewLine & _
+                   "WHERE  " & vbNewLine & _
+                   "    A.CompanyID=@CompanyID " & vbNewLine & _
+                   "    AND A.ProgramID=@ProgramID " & vbNewLine & _
+                   "    AND A.SalesReturnDate>=@DateFrom AND A.SalesReturnDate<=@DateTo " & vbNewLine & _
+                   "    AND A.IsDeleted=0 " & vbNewLine & _
+                   "    AND A.IsPostedGL=0 " & vbNewLine
+
+                .Parameters.Add("@CompanyID", SqlDbType.Int).Value = intCompanyID
+                .Parameters.Add("@ProgramID", SqlDbType.Int).Value = intProgramID
+                .Parameters.Add("@DateFrom", SqlDbType.DateTime).Value = dtmDateFrom
+                .Parameters.Add("@DateTo", SqlDbType.DateTime).Value = dtmDateTo
+            End With
+            Return SQL.QueryDataTable(sqlcmdExecute)
+        End Function
+
+        Public Shared Sub PostGL(ByVal strID As String, ByVal strLogBy As String)
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "UPDATE traSalesReturn SET" & vbNewLine & _
+                    "   IsPostedGL=1, " & vbNewLine & _
+                    "   PostedBy=@LogBy, " & vbNewLine & _
+                    "   PostedDate=GETDATE() " & vbNewLine & _
+                    "WHERE " & vbNewLine & _
+                    "   ID=@ID " & vbNewLine
+
+                .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
+                .Parameters.Add("@LogBy", SqlDbType.VarChar, 20).Value = strLogBy
+            End With
+            Try
+                SQL.ExecuteNonQuery(sqlcmdExecute)
+            Catch ex As SqlException
+                Throw ex
+            End Try
+        End Sub
+
+        Public Shared Sub UnpostGL(ByVal strID As String)
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "UPDATE traSalesReturn SET" & vbNewLine & _
+                    "   IsPostedGL=0, " & vbNewLine & _
+                    "   PostedBy='' " & vbNewLine & _
+                    "WHERE " & vbNewLine & _
+                    "   ID=@ID " & vbNewLine
+
+                .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
+            End With
+            Try
+                SQL.ExecuteNonQuery(sqlcmdExecute)
+            Catch ex As SqlException
+                Throw ex
+            End Try
+        End Sub
+
 
 
 
@@ -472,46 +550,6 @@ Namespace DL
             End With
             Return SQL.QueryDataTable(sqlcmdExecute)
         End Function
-
-        Public Shared Sub PostGL(ByVal strID As String, ByVal strLogBy As String)
-            Dim sqlcmdExecute As New SqlCommand
-            With sqlcmdExecute
-                .CommandText = _
-                    "UPDATE traSalesReturn SET" & vbNewLine & _
-                    "   IsPostedGL=1, " & vbNewLine & _
-                    "   PostedBy=@LogBy, " & vbNewLine & _
-                    "   PostedDate=GETDATE() " & vbNewLine & _
-                    "WHERE " & vbNewLine & _
-                    "   ID=@ID " & vbNewLine
-
-                .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = strID
-                .Parameters.Add("@LogBy", SqlDbType.VarChar, 20).Value = strLogBy
-            End With
-            Try
-                SQL.ExecuteNonQuery(sqlcmdExecute)
-            Catch ex As SqlException
-                Throw ex
-            End Try
-        End Sub
-
-        Public Shared Sub UnpostGL(ByVal strID As String)
-            Dim sqlcmdExecute As New SqlCommand
-            With sqlcmdExecute
-                .CommandText = _
-                    "UPDATE traSalesReturn SET" & vbNewLine & _
-                    "   IsPostedGL=0, " & vbNewLine & _
-                    "   PostedBy='' " & vbNewLine & _
-                    "WHERE " & vbNewLine & _
-                    "   ID=@ID " & vbNewLine
-
-                .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = strID
-            End With
-            Try
-                SQL.ExecuteNonQuery(sqlcmdExecute)
-            Catch ex As SqlException
-                Throw ex
-            End Try
-        End Sub
 
 #End Region
 

@@ -28,7 +28,7 @@
                    "    AND A.APDate>=@DateFrom AND A.APDate<=@DateTo " & vbNewLine
 
                 If intIDStatus <> VO.Status.Values.All Then
-                    .CommandText += "    AND A.IDStatus=@IDStatus" & vbNewLine
+                    .CommandText += "   AND A.IDStatus=@IDStatus" & vbNewLine
                 End If
 
                 .Parameters.Add("@CompanyID", SqlDbType.Int).Value = intCompanyID
@@ -169,7 +169,7 @@
                     "WHERE " & vbNewLine & _
                     "   ID=@ID " & vbNewLine
 
-                .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = strID
+                .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
                 .Parameters.Add("@IDStatus", SqlDbType.Int).Value = VO.Status.Values.Deleted
             End With
             Try
@@ -334,8 +334,6 @@
             End Try
         End Sub
 
-
-
         Public Shared Sub PostGL(ByVal strID As String, ByVal strLogBy As String)
             Dim sqlcmdExecute As New SqlCommand
             With sqlcmdExecute
@@ -348,7 +346,7 @@
                     "   ID=@ID " & vbNewLine
 
                 .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = strID
-                .Parameters.Add("@LogBy", SqlDbType.VarChar, 30).Value = strLogBy
+                .Parameters.Add("@LogBy", SqlDbType.VarChar, 20).Value = strLogBy
             End With
             Try
                 SQL.ExecuteNonQuery(sqlcmdExecute)
@@ -376,12 +374,13 @@
             End Try
         End Sub
 
-        Public Shared Function ListDataOutstandingPostGL(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime) As DataTable
+        Public Shared Function ListDataOutstandingPostGL(ByVal intCompanyID As Integer, ByVal intProgramID As Integer, _
+                                                         ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime) As DataTable
             Dim sqlcmdExecute As New SqlCommand
             With sqlcmdExecute
                 .CommandText = _
                    "SELECT " & vbNewLine & _
-                   "     A.CompanyID, A.ID, A.BPID, C.Name AS BPName, A.APDate, A.PaymentReferencesID, D.Name AS PaymentReferencesName, A.ReferencesNote, A.TotalAmount,   " & vbNewLine & _
+                   "     A.CompanyID, A.ProgramID, A.ID, A.BPID, C.Name AS BPName, A.APDate, A.PaymentReferencesID, D.Name AS PaymentReferencesName, A.ReferencesNote, A.TotalAmount,   " & vbNewLine & _
                    "     A.IsPostedGL, A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, B.Name AS StatusInfo,   " & vbNewLine & _
                    "     A.CreatedBy, A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID, A.CoAIDOfOutgoingPayment  " & vbNewLine & _
                    "FROM traAccountPayable A " & vbNewLine & _
@@ -393,9 +392,13 @@
                    "    A.PaymentReferencesID=D.ID " & vbNewLine & _
                    "WHERE  " & vbNewLine & _
                    "    A.APDate>=@DateFrom AND A.APDate<=@DateTo " & vbNewLine & _
+                   "    AND A.CompanyID=@CompanyID " & vbNewLine & _
+                   "    AND A.ProgramID=@ProgramID " & vbNewLine & _
                    "    AND A.IsDeleted=0 " & vbNewLine & _
                    "    AND A.IsPostedGL=0 " & vbNewLine
 
+                .Parameters.Add("@CompanyID", SqlDbType.Int).Value = intCompanyID
+                .Parameters.Add("@ProgramID", SqlDbType.Int).Value = intProgramID
                 .Parameters.Add("@DateFrom", SqlDbType.DateTime).Value = dtmDateFrom
                 .Parameters.Add("@DateTo", SqlDbType.DateTime).Value = dtmDateTo
             End With
@@ -411,7 +414,7 @@
             With sqlcmdExecute
                 .CommandText = _
                    "SELECT " & vbNewLine & _
-                   "     CAST(1 AS BIT) AS Pick, A.ID, A.APID, A.ReceiveID, A.Amount, TS.GrandTotal-TS.TotalReturn-TS.TotalPayment+A.Amount AS MaxAmount " & vbNewLine & _
+                   "     CAST(1 AS BIT) AS Pick, A.ID, A.APID, A.ReceiveID, A.Amount, TS.TotalPrice1-TS.TotalReturn1-TS.TotalPayment+A.Amount AS MaxAmount " & vbNewLine & _
                    "FROM traAccountPayableDet A " & vbNewLine & _
                    "INNER JOIN traReceive TS ON " & vbNewLine & _
                    "    A.ReceiveID=TS.ID " & vbNewLine & _
@@ -422,7 +425,7 @@
                 .CommandText += _
                     "UNION ALL" & vbNewLine & _
                     "SELECT " & vbNewLine & _
-                    "     CAST(0 AS BIT) AS Pick, CAST(NEWID() AS VARCHAR(40)) AS ID, CAST('' AS VARCHAR(20)) AS APID, TS.ID AS ReceiveID, CAST(0 AS DECIMAL(18,2)) Amount, TS.GrandTotal-TS.TotalReturn-TS.TotalPayment AS MaxAmount " & vbNewLine & _
+                    "     CAST(0 AS BIT) AS Pick, CAST(NEWID() AS VARCHAR(40)) AS ID, CAST('' AS VARCHAR(20)) AS APID, TS.ID AS ReceiveID, CAST(0 AS DECIMAL(18,2)) Amount, TS.TotalPrice1-TS.TotalReturn1-TS.TotalPayment AS MaxAmount " & vbNewLine & _
                     "FROM traReceive TS " & vbNewLine & _
                     "WHERE  " & vbNewLine & _
                     "    TS.BPID=@BPID" & vbNewLine & _
@@ -449,7 +452,7 @@
             With sqlcmdExecute
                 .CommandText = _
                    "SELECT " & vbNewLine & _
-                   "     CAST(1 AS BIT) AS Pick, A.ID, A.APID, A.ReceiveID, A.Amount, TS.GrandTotal-TS.TotalReturn-TS.TotalPayment AS MaxAmount " & vbNewLine & _
+                   "     CAST(1 AS BIT) AS Pick, A.ID, A.APID, A.ReceiveID, A.Amount, TS.TotalPrice1-TS.TotalReturn1-TS.TotalPayment AS MaxAmount " & vbNewLine & _
                    "FROM traAccountPayableDet A " & vbNewLine & _
                    "INNER JOIN traReceive TS ON " & vbNewLine & _
                    "    A.ReceiveID=TS.ID " & vbNewLine & _
@@ -466,12 +469,12 @@
             With sqlcmdExecute
                 .CommandText = _
                    "SELECT " & vbNewLine & _
-                   "     CAST(0 AS BIT) AS Pick, CAST(NEWID() AS VARCHAR(40)) AS ID, CAST('' AS VARCHAR(20)) AS APID, TS.ID AS ReceiveID, CAST(0 AS DECIMAL(18,2)) Amount, TS.GrandTotal-TS.TotalReturn-TS.TotalPayment AS MaxAmount " & vbNewLine & _
+                   "     CAST(0 AS BIT) AS Pick, CAST(NEWID() AS VARCHAR(40)) AS ID, CAST('' AS VARCHAR(20)) AS APID, TS.ID AS ReceiveID, CAST(0 AS DECIMAL(18,2)) Amount, TS.TotalPrice1-TS.TotalReturn1-TS.TotalPayment AS MaxAmount " & vbNewLine & _
                    "FROM traReceive TS " & vbNewLine & _
                    "WHERE  " & vbNewLine & _
                    "    TS.BPID=@BPID" & vbNewLine & _
                    "    AND TS.IsDeleted=0 " & vbNewLine & _
-                   "    AND TS.GrandTotal-TS.TotalReturn-TS.TotalPayment>0 " & vbNewLine
+                   "    AND TS.TotalPrice1-TS.TotalReturn1-TS.TotalPayment>0 " & vbNewLine
 
                 .Parameters.Add("@BPID", SqlDbType.Int).Value = intBPID
             End With
@@ -539,7 +542,6 @@
                         .Read()
                         intReturn = .Item("ID") + 1
                     End If
-                    .Close()
                 End With
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()
             Catch ex As Exception
@@ -576,7 +578,6 @@
                         .Read()
                         strReturn = .Item("ID")
                     End If
-                    .Close()
                 End With
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()
             Catch ex As Exception

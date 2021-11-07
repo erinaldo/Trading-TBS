@@ -42,19 +42,12 @@ Namespace BL
                 clsData.ID = GetNewID(clsData.CompanyID, clsData.ProgramID)
                 If DL.ReceiveReturn.DataExists(clsData.ID) Then
                     Err.Raise(515, "", "ID sudah ada sebelumnya")
-                    'ElseIf Format(clsData.ReceiveReturnDate, "yyyyMMdd") <= DL.PostGL.LastPostedDate Then
-                    '    Err.Raise(515, "", "Data tidak dapat disimpan. Dikarenakan tanggal transaksi lebih kecil atau sama dengan tanggal Posting Transaksi")
+                ElseIf Format(clsData.ReceiveReturnDate, "yyyyMMdd") <= DL.PostGL.LastPostedDate(clsData.CompanyID, clsData.ProgramID) Then
+                    Err.Raise(515, "", "Data tidak dapat disimpan. Dikarenakan tanggal transaksi lebih kecil atau sama dengan tanggal Posting Transaksi")
                 End If
             Else
-                'Dim strReturnID As String = DL.ReceiveReturnReturn.AlreadyCreatedReturn(clsData.ID)
-                'Dim strInvoiceID As String = DL.AccountReceivable.AlreadyCreatedInvoice(clsData.ID)
-
                 If DL.ReceiveReturn.IsDeleted(clsData.ID) Then
                     Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dihapus")
-                    'ElseIf strReturnID.Trim <> "" Then
-                    '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah dibuat retur dengan nomor " & strReturnID)
-                    'ElseIf strInvoiceID.Trim <> "" Then
-                    '    Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses penagihan dengan nomor " & strInvoiceID)
                 ElseIf DL.ReceiveReturn.IsPostedGL(clsData.ID) Then
                     Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses posting data transaksi")
                 End If
@@ -108,78 +101,81 @@ Namespace BL
             End Try
         End Sub
 
-        'Public Shared Sub PostData(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime)
-        '    Dim dtData As DataTable = DL.ReceiveReturn.ListDataOutstandingPostGL(dtmDateFrom, dtmDateTo)
-        '    For Each dr As DataRow In dtData.Rows
-        '        Dim dtItem As DataTable = DL.ReceiveReturn.ListDataDetail(dr.Item("ID"))
-        '        Dim decCOGS As Decimal = BL.COGS.CalculateCOGS(dtItem, dr.Item("ID"), dr.Item("ReceiveReturnDate"))
+        Public Shared Sub PostData(ByVal intCompanyID As Integer, ByVal intProgramID As Integer, _
+                                   ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime)
+            dtmDateTo = dtmDateTo.AddHours(23).AddMinutes(59).AddSeconds(59)
+            Dim dtData As DataTable = DL.ReceiveReturn.ListDataOutstandingPostGL(intCompanyID, intProgramID, dtmDateFrom, dtmDateTo)
+            For Each dr As DataRow In dtData.Rows
+                Dim decCOGS As Decimal = BL.COGS.CalculateCOGS(intCompanyID, intProgramID, _
+                                                               dr.Item("ItemID"), dr.Item("ArrivalNettoAfter"), _
+                                                               dr.Item("ID"), dr.Item("ReceiveReturnDate"))
+                '# Generate Journal
+                Dim clsJournal As VO.Journal = New VO.Journal
+                clsJournal.CompanyID = intCompanyID
+                clsJournal.ProgramID = intProgramID
+                clsJournal.ID = dr.Item("JournalID")
+                clsJournal.ReferencesID = dr.Item("ID")
+                clsJournal.JournalDate = dr.Item("ReceiveReturnDate")
+                clsJournal.TotalAmount = dr.Item("TotalPrice1")
+                clsJournal.IsAutoGenerate = True
+                clsJournal.IDStatus = VO.Status.Values.Draft
+                clsJournal.Remarks = dr.Item("Remarks")
+                clsJournal.LogBy = UI.usUserApp.UserID
 
-        '        '# Generate Journal
-        '        Dim clsJournal As VO.Journal = New VO.Journal
-        '        clsJournal.CompanyID = dr.Item("CompanyID")
-        '        clsJournal.ID = dr.Item("JournalID")
-        '        clsJournal.ReferencesID = dr.Item("ID")
-        '        clsJournal.JournalDate = dr.Item("ReceiveReturnDate")
-        '        clsJournal.TotalAmount = dr.Item("SubTotal")
-        '        clsJournal.IsAutoGenerate = True
-        '        clsJournal.IDStatus = VO.Status.Values.Draft
-        '        clsJournal.Remarks = dr.Item("Remarks")
-        '        clsJournal.LogBy = UI.usUserApp.UserID
+                Dim clsJournalDet As VO.JournalDet
+                Dim clsJournalDetAll(1) As VO.JournalDet
 
-        '        Dim clsJournalDet As VO.JournalDet
-        '        Dim clsJournalDetAll(2) As VO.JournalDet
+                '# Account Payable
+                clsJournalDet = New VO.JournalDet
+                clsJournalDet.JournalID = dr.Item("JournalID")
+                clsJournalDet.CoAID = MPSLib.UI.usUserApp.JournalPost.CoAofAccountPayable
+                clsJournalDet.CoAName = MPSLib.UI.usUserApp.JournalPost.CoANameofAccountPayable
+                clsJournalDet.DebitAmount = dr.Item("TotalPrice1")
+                clsJournalDet.CreditAmount = 0
+                clsJournalDetAll(0) = clsJournalDet
 
-        '        '# Account Payable
-        '        clsJournalDet = New VO.JournalDet
-        '        clsJournalDet.JournalID = dr.Item("JournalID")
-        '        clsJournalDet.CoAID = MPSLib.UI.usUserApp.JournalPost.CoAofAccountPayable
-        '        clsJournalDet.CoAName = MPSLib.UI.usUserApp.JournalPost.CoANameofAccountPayable
-        '        clsJournalDet.DebitAmount = dr.Item("GrandTotal")
-        '        clsJournalDet.CreditAmount = 0
-        '        clsJournalDetAll(0) = clsJournalDet
+                '# Stock
+                clsJournalDet = New VO.JournalDet
+                clsJournalDet.JournalID = dr.Item("JournalID")
+                clsJournalDet.CoAID = MPSLib.UI.usUserApp.JournalPost.CoAofStock
+                clsJournalDet.CoAName = MPSLib.UI.usUserApp.JournalPost.CoANameofStock
+                clsJournalDet.DebitAmount = 0
+                clsJournalDet.CreditAmount = dr.Item("TotalPrice1")
+                clsJournalDetAll(1) = clsJournalDet
 
-        '        '# Purchase Discount
-        '        clsJournalDet = New VO.JournalDet
-        '        clsJournalDet.JournalID = dr.Item("JournalID")
-        '        clsJournalDet.CoAID = MPSLib.UI.usUserApp.JournalPost.CoAofPurchaseDisc
-        '        clsJournalDet.CoAName = MPSLib.UI.usUserApp.JournalPost.CoANameofPurchaseDisc
-        '        clsJournalDet.DebitAmount = dr.Item("TotalDiscount")
-        '        clsJournalDet.CreditAmount = 0
-        '        clsJournalDetAll(1) = clsJournalDet
+                Dim strJournalID As String = BL.Journal.SaveData(True, clsJournal, clsJournalDetAll)
+                '# End Of Generate Journal
 
-        '        '# Stock
-        '        clsJournalDet = New VO.JournalDet
-        '        clsJournalDet.JournalID = dr.Item("JournalID")
-        '        clsJournalDet.CoAID = MPSLib.UI.usUserApp.JournalPost.CoAofStock
-        '        clsJournalDet.CoAName = MPSLib.UI.usUserApp.JournalPost.CoANameofStock
-        '        clsJournalDet.DebitAmount = 0
-        '        clsJournalDet.CreditAmount = dr.Item("SubTotal")
-        '        clsJournalDetAll(2) = clsJournalDet
+                '#Update Journal ID
+                If strJournalID.Trim <> "" Then DL.ReceiveReturn.UpdateJournalID(dr.Item("ID"), strJournalID)
 
-        '        Dim strJournalID As String = BL.Journal.SaveData(True, clsJournal, clsJournalDetAll)
-        '        '# End Of Generate Journal
+                DL.ReceiveReturn.PostGL(dr.Item("ID"), UI.usUserApp.UserID)
 
-        '        '#Update Journal ID
-        '        If strJournalID.Trim <> "" Then DL.ReceiveReturn.UpdateJournalID(dr.Item("ID"), strJournalID)
+                '# Save Data Status
+                SaveDataStatus(dr.Item("ID"), "POSTING DATA TRANSAKSI", UI.usUserApp.UserID, "")
+            Next
+        End Sub
 
-        '        DL.ReceiveReturn.PostGL(dr.Item("ID"), UI.usUserApp.UserID)
-        '    Next
-        'End Sub
+        Public Shared Sub UnpostData(ByVal intCompanyID As Integer, ByVal intProgramID As Integer, _
+                                     ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime)
+            dtmDateTo = dtmDateTo.AddHours(23).AddMinutes(59).AddSeconds(59)
+            Dim dtData As DataTable = DL.ReceiveReturn.ListData(intCompanyID, intProgramID, dtmDateFrom, dtmDateTo, VO.Status.Values.All)
+            For Each dr As DataRow In dtData.Rows
+                BL.COGS.UnpostCOGS(intCompanyID, intProgramID, dr.Item("ID"))
+                DL.StockOut.DeleteDataByReferencesID(intCompanyID, intProgramID, dr.Item("ID"))
 
-        'Public Shared Sub UnpostData(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime)
-        '    Dim dtData As DataTable = DL.ReceiveReturn.ListData(dtmDateFrom, dtmDateTo, VO.Status.Values.All)
-        '    For Each dr As DataRow In dtData.Rows
-        '        BL.COGS.UnpostCOGS(dr.Item("ID"))
-        '        DL.StockOut.DeleteDataByReferencesID(dr.Item("ID"))
+                '# Delete Journal
+                DL.Journal.DeleteDataDetail(dr.Item("JournalID"))
+                DL.Journal.DeleteDataPure(dr.Item("JournalID"))
 
-        '        DL.Journal.DeleteDataDetail(dr.Item("JournalID"))
-        '        DL.Journal.DeleteDataPure(dr.Item("JournalID"))
+                '# Update Journal ID
+                DL.ReceiveReturn.UpdateJournalID(dr.Item("ID"), "")
+                DL.ReceiveReturn.UnpostGL(dr.Item("ID"))
 
-        '        '#Update Journal ID
-        '        DL.ReceiveReturn.UpdateJournalID(dr.Item("ID"), "")
-        '        DL.ReceiveReturn.UnpostGL(dr.Item("ID"))
-        '    Next
-        'End Sub
+                '# Save Data Status
+                SaveDataStatus(dr.Item("ID"), "CANCEL POSTING DATA TRANSAKSI", UI.usUserApp.UserID, "")
+            Next
+        End Sub
 
 #End Region
 

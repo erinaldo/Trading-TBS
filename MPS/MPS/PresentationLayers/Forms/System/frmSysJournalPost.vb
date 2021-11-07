@@ -15,7 +15,7 @@
 
     Private Sub prvFillForm()
         Try
-            clsData = DL.JournalPost.GetDetail
+            clsData = BL.JournalPost.GetDetail(MPSLib.UI.usUserApp.ProgramID)
             intCoAIDofRevenue = clsData.CoAofRevenue
             txtCoACodeOfRevenue.Text = clsData.CoACodeofRevenue
             txtCoANameOfRevenue.Text = clsData.CoANameofRevenue
@@ -53,8 +53,8 @@
             txtCoANameOfEquipments.Text = clsData.CoANameofPurchaseEquipments
 
             ToolStripLogInc.Text = "Jumlah Edit : " & clsData.LogInc
-            ToolStripLogBy.Text = "Dibuat Oleh : " & clsData.LogBy
-            ToolStripLogDate.Text = Format(clsData.LogDate, UI.usDefCons.DateFull)
+            ToolStripLogBy.Text = "Dibuat Oleh : " & IIf(clsData.LogBy Is Nothing, MPSLib.UI.usUserApp.UserID, clsData.LogBy)
+            ToolStripLogDate.Text = Format(IIf(clsData.LogBy Is Nothing, Now(), clsData.LogDate), UI.usDefCons.DateFull)
 
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
@@ -101,6 +101,7 @@
         End If
 
         clsData = New VO.JournalPost
+        clsData.ProgramID = MPSLib.UI.usUserApp.ProgramID
         clsData.CoAofRevenue = intCoAIDofRevenue
         clsData.CoAofAccountReceivable = intCoAIDofAccountReceivable
         clsData.CoAofSalesDisc = intCoAIDofSalesDiscount
@@ -117,6 +118,7 @@
         Try
             If BL.JournalPost.SaveData(clsData) Then
                 UI.usForm.frmMessageBox("Simpan data berhasil.")
+                MPSLib.UI.usUserApp.JournalPost = BL.JournalPost.GetDetail(MPSLib.UI.usUserApp.ProgramID)
                 Me.Close()
             End If
         Catch ex As Exception
@@ -127,7 +129,7 @@
     End Sub
 
     Private Sub prvUserAccess()
-        ToolBar.Buttons(cSave).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.MasterPostingJournalTransaction, VO.Access.Values.EditAccess)
+        ToolBar.Buttons(cSave).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.SettingSetupPostingJournalTransaction, VO.Access.Values.EditAccess)
     End Sub
 
 #Region "Form Handle"

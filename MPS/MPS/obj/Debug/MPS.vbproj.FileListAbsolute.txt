@@ -220,3 +220,8 @@ D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.exe.licenses
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.exe
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.xml
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.pdb
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraAccountPayable.resources
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraAccountPayableDet.resources
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraAccountReceivable.resources
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraAccountReceivableDet.resources
+D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmSysPostingOrCancelPostingGL.resources
