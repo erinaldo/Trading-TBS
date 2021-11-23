@@ -15,17 +15,17 @@
                                           "DataBase=" & strDatabase & ";" & _
                                           "Application Name=" & strAplicationName & ";"
             Dim bolSuccess As Boolean = False
-            'strSqlConnect += "Trusted_Connection=FALSE;" & _
-            '                     "User Id=admin;" & _
-            '                     "Password=123456;"
+            'If strSAID = "" Then
+            '    strSqlConnect += "Trusted_Connection=SSPI;"
+            'Else
+            '    strSqlConnect += "Trusted_Connection=FALSE;" & _
+            '                     "User Id=" & strSAID & ";" & _
+            '                     "Password=" & strSAPassword & ";"
+            'End If
 
-            If strSAID = "" Then
-                strSqlConnect += "Trusted_Connection=SSPI;"
-            Else
-                strSqlConnect += "Trusted_Connection=FALSE;" & _
-                                 "User Id=" & strSAID & ";" & _
+            strSqlConnect += "Trusted_Connection=FALSE;" & _
+                                 "User Id=" & MPSLib.UI.usUserApp.UserID & ";" & _
                                  "Password=" & strSAPassword & ";"
-            End If
 
             Try
                 sqlConn = New SqlConnection(strSqlConnect)

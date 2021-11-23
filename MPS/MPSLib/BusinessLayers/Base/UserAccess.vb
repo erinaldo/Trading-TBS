@@ -57,6 +57,7 @@ Namespace BL
                     clsData = New VO.UserAccess
                     clsData.ID = DL.UserAccess.GetMaxID
                     clsData.UserID = strNewUserID
+                    clsData.ProgramID = dr.Item("ProgramID")
                     clsData.ModulesID = dr.Item("ModulesID")
                     clsData.AccessID = dr.Item("AccessID")
                     DL.UserAccess.SaveData(clsData)

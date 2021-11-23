@@ -5,7 +5,7 @@ Public Class frmMstUserDet
     Private frmParent As frmMstUser
     Private clsData As VO.User
     Private dtCompany As New DataTable
-    Property pubID As String
+    Property pubID As String = ""
     Property pubIsNew As Boolean = False
     Property pubIsSave As Boolean = False
 
@@ -26,6 +26,13 @@ Public Class frmMstUserDet
         Else
             Me.Text += " [edit] "
         End If
+    End Sub
+
+    Private Sub prvSetButton()
+        Dim bolEnable As Boolean = IIf(grdItemView.RowCount > 0, True, False)
+        With ToolBarDetail.Buttons
+            .Item(cDelete).Enabled = bolEnable
+        End With
     End Sub
 
     Private Sub prvSetGrid()
@@ -158,6 +165,8 @@ Public Class frmMstUserDet
             grdItem.DataSource = dtCompany
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
+        Finally
+            prvSetButton()
         End Try
     End Sub
 
@@ -168,9 +177,9 @@ Public Class frmMstUserDet
             .StartPosition = FormStartPosition.CenterScreen
             .ShowDialog()
             If .pubIsLookUpGet Then
-                Dim drExists() = dtCompany.Select("CompanyID=" & .pubLUdtRow.Item("ID"))
+                Dim drExists() = dtCompany.Select("CompanyID=" & .pubLUdtRow.Item("CompanyID"))
                 If drExists.Count > 0 Then
-                    UI.usForm.frmMessageBox("Nama " & .pubLUdtRow.Item("Name") & " telah ada sebelumnya")
+                    UI.usForm.frmMessageBox("Nama " & .pubLUdtRow.Item("CompanyName") & " telah ada sebelumnya")
                     Exit Sub
                 End If
 
@@ -178,8 +187,8 @@ Public Class frmMstUserDet
                 drNew = dtCompany.NewRow
                 With drNew
                     .BeginEdit()
-                    .Item("CompanyID") = frmDetail.pubLUdtRow.Item("ID")
-                    .Item("CompanyName") = frmDetail.pubLUdtRow.Item("Name")
+                    .Item("CompanyID") = frmDetail.pubLUdtRow.Item("CompanyID")
+                    .Item("CompanyName") = frmDetail.pubLUdtRow.Item("CompanyName")
                     .Item("Address") = frmDetail.pubLUdtRow.Item("Address")
                     .Item("CompanyInitial") = frmDetail.pubLUdtRow.Item("CompanyInitial")
                     .EndEdit()

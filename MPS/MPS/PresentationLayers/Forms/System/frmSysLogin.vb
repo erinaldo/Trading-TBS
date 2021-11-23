@@ -32,10 +32,10 @@
             Exit Sub
         End If
 
+        MPSLib.UI.usUserApp.UserID = txtUserID.Text.Trim
         Dim strPassword As String = Encryption.Encrypt(txtPassword.Text.Trim)
         Dim dtUserValid As DataTable = BL.User.ListDataByUserIDAndPassword(txtUserID.Text.Trim, Encryption.Encrypt(txtPassword.Text.Trim))
         If dtUserValid.Rows.Count > 0 Then
-            MPSLib.UI.usUserApp.UserID = txtUserID.Text.Trim
             MPSLib.UI.usUserApp.IsSuperUser = dtUserValid.Rows(0).Item("IsSuperUser")
             MPSLib.UI.usUserApp.IsFirstCreated = dtUserValid.Rows(0).Item("IsFirstCreated")
             MPSLib.UI.usUserApp.AccessList = BL.UserAccess.ListDataWithCompany(MPSLib.UI.usUserApp.UserID)

@@ -25,14 +25,21 @@
         End If
 
         If Not UI.usForm.frmAskQuestion("Salin user akses dari " & txtBaseUserID.Text.Trim & " ke user " & txtNewUserID.Text.Trim & "?") Then Exit Sub
+        Me.Cursor = Cursors.WaitCursor
+        pgMain.Value += 30
 
         Try
             If BL.UserAccess.DuplicateUserAccess(txtBaseUserID.Text.Trim, txtNewUserID.Text.Trim) Then
+                pgMain.Value = 100
+                Me.Cursor = Cursors.Default
                 UI.usForm.frmMessageBox("Proses salin user akses berhasil")
                 Me.Close()
             End If
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
+        Finally
+            pgMain.Value = 100
+            Me.Cursor = Cursors.Default
         End Try
     End Sub
 

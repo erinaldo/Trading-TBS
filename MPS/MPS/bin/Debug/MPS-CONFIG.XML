@@ -1,9 +1,9 @@
 <configuration>
   <CONNECTION>
-    <SERVER>localhost</SERVER>
+    <SERVER>49.50.9.151</SERVER>
     <DATABASE>TMS</DATABASE>
-	<USERID></USERID>
-	<PASSWORD></PASSWORD>
+	<USERID>admin</USERID>
+	<PASSWORD>Mantul#0001</PASSWORD>
     <COMPANY>MM</COMPANY>
     <USE2FA>0</USE2FA>
 	<DSPATH>H:\Software\Andi.Wiradinata\Template\Original Image</DSPATH>
