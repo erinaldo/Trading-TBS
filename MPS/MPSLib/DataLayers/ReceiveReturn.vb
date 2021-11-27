@@ -514,30 +514,27 @@ Namespace DL
             End Try
         End Sub
 
-
-
         Public Shared Function ListDataHistoryBussinessPartners(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intItemID As Integer) As DataTable
             Dim sqlcmdExecute As New SqlCommand
             With sqlcmdExecute
                 .CommandText = _
                    "SELECT " & vbNewLine & _
-                   "    SH.CompanyID, 'RETUR PEMBELIAN' AS Trans, SH.ID, SH.ReceiveReturnDate AS TransactionDate, SH.BPID, BP.Name AS BPName, A.Qty, A.UomID, C.Code AS UomCode, A.Price, A.Disc,   " & vbNewLine & _
-                   "    A.Tax, A.TotalPrice, A.Remarks, SH.IDStatus, MS.Name AS StatusInfo, SH.CreatedBy, SH.CreatedDate, SH.LogInc, SH.LogBy, SH.LogDate, SH.JournalID  " & vbNewLine & _
-                   "FROM traReceiveReturnDet A " & vbNewLine & _
-                   "INNER JOIN traReceiveReturn SH ON " & vbNewLine & _
-                   "    A.ReceiveReturnID=SH.ID " & vbNewLine & _
-                   "INNER JOIN mstItem B ON " & vbNewLine & _
-                   "    A.ItemID=B.ID " & vbNewLine & _
-                   "INNER JOIN mstUOM C ON " & vbNewLine & _
-                   "    A.UomID=C.ID " & vbNewLine & _
-                   "INNER JOIN mstStatus MS ON " & vbNewLine & _
-                   "    SH.IDStatus=MS.ID " & vbNewLine & _
+                   "    RH.CompanyID, 'RETUR PEMBELIAN' AS Trans, RH.ID, RH.BPID, BP.Name AS BPName, RH.ReceiveReturnDate AS TransactionDate, RH.ItemID, B.Code AS ItemCode, B.Name AS ItemName, RH.ArrivalBrutto, " & vbNewLine & _
+                   "    RH.ArrivalTarra, RH.ArrivalNettoBefore, RH.ArrivalDeduction, RH.ArrivalNettoAfter, B.UomID, C.Code AS UomCode, RH.Price1 AS Price, " & vbNewLine & _
+                   "    RH.TotalPrice1 AS TotalPrice, RH.Remarks, RH.IDStatus, MS.Name AS StatusInfo, RH.CreatedBy, RH.CreatedDate, RH.LogInc, RH.LogBy, RH.LogDate, RH.JournalID  " & vbNewLine & _
+                   "FROM traReceiveReturn RH " & vbNewLine & _
                    "INNER JOIN mstBusinessPartner BP ON " & vbNewLine & _
-                   "    SH.BPID=BP.ID " & vbNewLine & _
+                   "    RH.BPID=BP.ID " & vbNewLine & _
+                   "INNER JOIN mstItem B ON " & vbNewLine & _
+                   "    RH.ItemID=B.ID " & vbNewLine & _
+                   "INNER JOIN mstUOM C ON " & vbNewLine & _
+                   "    B.UomID=C.ID " & vbNewLine & _
+                   "INNER JOIN mstStatus MS ON " & vbNewLine & _
+                   "    RH.IDStatus=MS.ID " & vbNewLine & _
                    "WHERE  " & vbNewLine & _
-                   "    SH.ReceiveReturnDate>=@DateFrom AND SH.ReceiveReturnDate<=@DateTo " & vbNewLine & _
-                   "    AND SH.IsDeleted=0 " & vbNewLine & _
-                   "    AND A.ItemID=@ItemID " & vbNewLine
+                   "    RH.ReceiveReturnDate>=@DateFrom AND RH.ReceiveReturnDate<=@DateTo " & vbNewLine & _
+                   "    AND RH.IsDeleted=0 " & vbNewLine & _
+                   "    AND RH.ItemID=@ItemID " & vbNewLine
 
                 .Parameters.Add("@DateFrom", SqlDbType.DateTime).Value = dtmDateFrom
                 .Parameters.Add("@DateTo", SqlDbType.DateTime).Value = dtmDateTo
@@ -551,21 +548,20 @@ Namespace DL
             With sqlcmdExecute
                 .CommandText = _
                    "SELECT " & vbNewLine & _
-                   "    SH.CompanyID, 'RETUR PEMBELIAN' AS Trans, SH.ID, SH.ReceiveReturnDate AS TransactionDate, A.ItemID, B.Code AS ItemCode, B.Name AS ItemName, A.Qty, A.UomID, C.Code AS UomCode, A.Price, A.Disc,   " & vbNewLine & _
-                   "    A.Tax, A.TotalPrice, A.Remarks, SH.IDStatus, MS.Name AS StatusInfo, SH.CreatedBy, SH.CreatedDate, SH.LogInc, SH.LogBy, SH.LogDate, SH.JournalID  " & vbNewLine & _
-                   "FROM traReceiveReturnDet A " & vbNewLine & _
-                   "INNER JOIN traReceiveReturn SH ON " & vbNewLine & _
-                   "    A.ReceiveReturnID=SH.ID " & vbNewLine & _
+                   "    RH.CompanyID, 'RETUR PEMBELIAN' AS Trans, RH.ID, RH.ReceiveReturnDate AS TransactionDate, RH.ItemID, B.Code AS ItemCode, B.Name AS ItemName, RH.ArrivalBrutto, " & vbNewLine & _
+                   "    RH.ArrivalTarra, RH.ArrivalNettoBefore, RH.ArrivalDeduction, RH.ArrivalNettoAfter, B.UomID, C.Code AS UomCode, RH.Price1 AS Price, " & vbNewLine & _
+                   "    RH.TotalPrice1 AS TotalPrice, RH.Remarks, RH.IDStatus, MS.Name AS StatusInfo, RH.CreatedBy, RH.CreatedDate, RH.LogInc, RH.LogBy, RH.LogDate, RH.JournalID  " & vbNewLine & _
+                   "FROM traReceiveReturn RH " & vbNewLine & _
                    "INNER JOIN mstItem B ON " & vbNewLine & _
-                   "    A.ItemID=B.ID " & vbNewLine & _
+                   "    RH.ItemID=B.ID " & vbNewLine & _
                    "INNER JOIN mstUOM C ON " & vbNewLine & _
-                   "    A.UomID=C.ID " & vbNewLine & _
+                   "    B.UomID=C.ID " & vbNewLine & _
                    "INNER JOIN mstStatus MS ON " & vbNewLine & _
-                   "    SH.IDStatus=MS.ID " & vbNewLine & _
+                   "    RH.IDStatus=MS.ID " & vbNewLine & _
                    "WHERE  " & vbNewLine & _
-                   "    SH.ReceiveReturnDate>=@DateFrom AND SH.ReceiveReturnDate<=@DateTo " & vbNewLine & _
-                   "    AND SH.IsDeleted=0 " & vbNewLine & _
-                   "    AND SH.BPID=@BPID " & vbNewLine
+                   "    RH.ReceiveReturnDate>=@DateFrom AND RH.ReceiveReturnDate<=@DateTo " & vbNewLine & _
+                   "    AND RH.IsDeleted=0 " & vbNewLine & _
+                   "    AND RH.BPID=@BPID " & vbNewLine
 
                 .Parameters.Add("@DateFrom", SqlDbType.DateTime).Value = dtmDateFrom
                 .Parameters.Add("@DateTo", SqlDbType.DateTime).Value = dtmDateTo

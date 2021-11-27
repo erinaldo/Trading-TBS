@@ -6,6 +6,7 @@
         Public Shared ReportingServer As Integer
         Public Shared DSPath As String
         Public Shared DSTempPath As String
+        Public Shared StartFrom As DateTime
     End Class
 
 End Namespace

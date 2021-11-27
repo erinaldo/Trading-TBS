@@ -15,6 +15,7 @@
             VO.DefaultServer.Database = .GetConfigInfo("CONNECTION", "DATABASE", "").Item(1)
             VO.DefaultServer.UserID = .GetConfigInfo("CONNECTION", "USERID", "").Item(1)
             VO.DefaultServer.Password = .GetConfigInfo("CONNECTION", "PASSWORD", "").Item(1)
+            VO.DefaultServer.StartFrom = .GetConfigInfo("CONNECTION", "STARTFROM", "2021/01/01").Item(1)
             VO.DefaultServer.DSPath = .GetConfigInfo("CONNECTION", "DSPATH", "C:\DATA").Item(1)
             VO.DefaultServer.DSTempPath = .GetConfigInfo("CONNECTION", "DSTEMPPATH", "C:\DATA").Item(1)
             VO.DefaultServer.Use2FA = CBool(.GetConfigInfo("CONNECTION", "USE2FA", "0").Item(1))

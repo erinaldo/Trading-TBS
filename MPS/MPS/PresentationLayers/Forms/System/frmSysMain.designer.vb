@@ -418,8 +418,8 @@ Partial Class frmSysMain
         '
         'ssMain
         '
-        Me.ssMain.Font = New System.Drawing.Font("Tahoma", 8.25!)
-        Me.ssMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tssUserID, Me.tssVersion, Me.tssProgram, Me.tssCompany})
+        Me.ssMain.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.ssMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tssUserID, Me.tssProgram, Me.tssCompany, Me.tssVersion})
         Me.ssMain.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow
         Me.ssMain.Location = New System.Drawing.Point(0, 252)
         Me.ssMain.Name = "ssMain"
@@ -434,8 +434,11 @@ Partial Class frmSysMain
             Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
             Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
         Me.tssUserID.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter
+        Me.tssUserID.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.tssUserID.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.tssUserID.ForeColor = System.Drawing.Color.DimGray
         Me.tssUserID.Name = "tssUserID"
-        Me.tssUserID.Size = New System.Drawing.Size(44, 17)
+        Me.tssUserID.Size = New System.Drawing.Size(50, 17)
         Me.tssUserID.Text = "UserID"
         '
         'tssVersion
@@ -444,8 +447,10 @@ Partial Class frmSysMain
             Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
             Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
         Me.tssVersion.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter
+        Me.tssVersion.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.tssVersion.ForeColor = System.Drawing.Color.DimGray
         Me.tssVersion.Name = "tssVersion"
-        Me.tssVersion.Size = New System.Drawing.Size(46, 17)
+        Me.tssVersion.Size = New System.Drawing.Size(53, 17)
         Me.tssVersion.Text = "Version"
         '
         'tssProgram
@@ -454,8 +459,10 @@ Partial Class frmSysMain
             Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
             Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
         Me.tssProgram.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter
+        Me.tssProgram.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.tssProgram.ForeColor = System.Drawing.Color.DimGray
         Me.tssProgram.Name = "tssProgram"
-        Me.tssProgram.Size = New System.Drawing.Size(51, 17)
+        Me.tssProgram.Size = New System.Drawing.Size(60, 17)
         Me.tssProgram.Text = "Program"
         '
         'tssCompany
@@ -464,8 +471,10 @@ Partial Class frmSysMain
             Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
             Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
         Me.tssCompany.BorderStyle = System.Windows.Forms.Border3DStyle.SunkenOuter
+        Me.tssCompany.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.tssCompany.ForeColor = System.Drawing.Color.DimGray
         Me.tssCompany.Name = "tssCompany"
-        Me.tssCompany.Size = New System.Drawing.Size(56, 17)
+        Me.tssCompany.Size = New System.Drawing.Size(64, 17)
         Me.tssCompany.Text = "Company"
         '
         'frmSysMain

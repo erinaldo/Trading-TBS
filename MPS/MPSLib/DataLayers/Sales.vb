@@ -11,7 +11,7 @@ Namespace DL
                    "SELECT " & vbNewLine & _
                    "    A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.BPID, C.Name AS BPName, A.SalesDate, A.PaymentTerm, A.DriverName, A.PlatNumber, A.DueDate, " & vbNewLine & _
                    "    A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MU.Code AS UomCode, A.ArrivalBrutto, A.ArrivalTarra, " & vbNewLine & _
-                   "    A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, A.Price, A.TotalPrice, A.ArrivalReturn, A.IsSplitReceive, A.TotalPayment, A.IsPostedGL,   " & vbNewLine & _
+                   "    A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, A.Price, A.TotalPrice, A.ArrivalReturn, A.IsSplitReceive, A.TotalReturn, A.TotalPayment, A.IsPostedGL,   " & vbNewLine & _
                    "    A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, B.Name AS StatusInfo, A.CreatedBy,   " & vbNewLine & _
                    "    A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID  " & vbNewLine & _
                    "FROM traSales A " & vbNewLine & _
@@ -747,63 +747,61 @@ Namespace DL
             End Try
         End Sub
 
-        'Public Shared Function ListDataHistoryBussinessPartners(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intItemID As Integer) As DataTable
-        '    Dim sqlcmdExecute As New SqlCommand
-        '    With sqlcmdExecute
-        '        .CommandText = _
-        '           "SELECT " & vbNewLine & _
-        '           "    SH.CompanyID, 'PENJUALAN' AS Trans, SH.ID, SH.SalesDate AS TransactionDate, SH.BPID, BP.Name AS BPName, A.Qty, A.UomID, C.Code AS UomCode, A.Price, A.Disc,   " & vbNewLine & _
-        '           "    A.Tax, A.TotalPrice, A.Remarks, SH.IDStatus, MS.Name AS StatusInfo, SH.CreatedBy, SH.CreatedDate, SH.LogInc, SH.LogBy, SH.LogDate, SH.JournalID  " & vbNewLine & _
-        '           "FROM traSalesDet A " & vbNewLine & _
-        '           "INNER JOIN traSales SH ON " & vbNewLine & _
-        '           "    A.SalesID=SH.ID " & vbNewLine & _
-        '           "INNER JOIN mstItem B ON " & vbNewLine & _
-        '           "    A.ItemID=B.ID " & vbNewLine & _
-        '           "INNER JOIN mstUOM C ON " & vbNewLine & _
-        '           "    A.UomID=C.ID " & vbNewLine & _
-        '           "INNER JOIN mstStatus MS ON " & vbNewLine & _
-        '           "    SH.IDStatus=MS.ID " & vbNewLine & _
-        '           "INNER JOIN mstBusinessPartner BP ON " & vbNewLine & _
-        '           "    SH.BPID=BP.ID " & vbNewLine & _
-        '           "WHERE  " & vbNewLine & _
-        '           "    SH.SalesDate>=@DateFrom AND SH.SalesDate<=@DateTo " & vbNewLine & _
-        '           "    AND SH.IsDeleted=0 " & vbNewLine & _
-        '           "    AND A.ItemID=@ItemID " & vbNewLine
+        Public Shared Function ListDataHistoryBussinessPartners(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intItemID As Integer) As DataTable
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                   "SELECT " & vbNewLine & _
+                   "    SH.CompanyID, 'PENJUALAN' AS Trans, SH.ID, SH.BPID, BP.Name AS BPName, SH.SalesDate AS TransactionDate, SH.ItemID, B.Code AS ItemCode, B.Name AS ItemName, SH.ArrivalBrutto, " & vbNewLine & _
+                   "    SH.ArrivalTarra, SH.ArrivalNettoBefore, SH.ArrivalDeduction, SH.ArrivalNettoAfter, B.UomID, C.Code AS UomCode, SH.Price, " & vbNewLine & _
+                   "    SH.TotalPrice, SH.Remarks, SH.IDStatus, MS.Name AS StatusInfo, SH.CreatedBy, SH.CreatedDate, SH.LogInc, SH.LogBy, SH.LogDate, SH.JournalID  " & vbNewLine & _
+                   "FROM traSales SH " & vbNewLine & _
+                   "INNER JOIN mstBusinessPartner BP ON " & vbNewLine & _
+                   "    SH.BPID=BP.ID " & vbNewLine & _
+                   "INNER JOIN mstItem B ON " & vbNewLine & _
+                   "    SH.ItemID=B.ID " & vbNewLine & _
+                   "INNER JOIN mstUOM C ON " & vbNewLine & _
+                   "    B.UomID=C.ID " & vbNewLine & _
+                   "INNER JOIN mstStatus MS ON " & vbNewLine & _
+                   "    SH.IDStatus=MS.ID " & vbNewLine & _
+                   "WHERE  " & vbNewLine & _
+                   "    SH.SalesDate>=@DateFrom AND SH.SalesDate<=@DateTo " & vbNewLine & _
+                   "    AND SH.IsDeleted=0 " & vbNewLine & _
+                   "    AND SH.ItemID=@ItemID " & vbNewLine
 
-        '        .Parameters.Add("@DateFrom", SqlDbType.DateTime).Value = dtmDateFrom
-        '        .Parameters.Add("@DateTo", SqlDbType.DateTime).Value = dtmDateTo
-        '        .Parameters.Add("@ItemID", SqlDbType.Int).Value = intItemID
-        '    End With
-        '    Return SQL.QueryDataTable(sqlcmdExecute)
-        'End Function
+                .Parameters.Add("@DateFrom", SqlDbType.DateTime).Value = dtmDateFrom
+                .Parameters.Add("@DateTo", SqlDbType.DateTime).Value = dtmDateTo
+                .Parameters.Add("@ItemID", SqlDbType.Int).Value = intItemID
+            End With
+            Return SQL.QueryDataTable(sqlcmdExecute)
+        End Function
 
-        'Public Shared Function ListDataHistoryItem(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intBPID As Integer) As DataTable
-        '    Dim sqlcmdExecute As New SqlCommand
-        '    With sqlcmdExecute
-        '        .CommandText = _
-        '           "SELECT " & vbNewLine & _
-        '           "    SH.CompanyID, 'PENJUALAN' AS Trans, SH.ID, SH.SalesDate AS TransactionDate, A.ItemID, B.Code AS ItemCode, B.Name AS ItemName, A.Qty, A.UomID, C.Code AS UomCode, A.Price, A.Disc,   " & vbNewLine & _
-        '           "    A.Tax, A.TotalPrice, A.Remarks, SH.IDStatus, MS.Name AS StatusInfo, SH.CreatedBy, SH.CreatedDate, SH.LogInc, SH.LogBy, SH.LogDate, SH.JournalID  " & vbNewLine & _
-        '           "FROM traSalesDet A " & vbNewLine & _
-        '           "INNER JOIN traSales SH ON " & vbNewLine & _
-        '           "    A.SalesID=SH.ID " & vbNewLine & _
-        '           "INNER JOIN mstItem B ON " & vbNewLine & _
-        '           "    A.ItemID=B.ID " & vbNewLine & _
-        '           "INNER JOIN mstUOM C ON " & vbNewLine & _
-        '           "    A.UomID=C.ID " & vbNewLine & _
-        '           "INNER JOIN mstStatus MS ON " & vbNewLine & _
-        '           "    SH.IDStatus=MS.ID " & vbNewLine & _
-        '           "WHERE  " & vbNewLine & _
-        '           "    SH.SalesDate>=@DateFrom AND SH.SalesDate<=@DateTo " & vbNewLine & _
-        '           "    AND SH.IsDeleted=0 " & vbNewLine & _
-        '           "    AND SH.BPID=@BPID " & vbNewLine
+        Public Shared Function ListDataHistoryItem(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intBPID As Integer) As DataTable
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                   "SELECT " & vbNewLine & _
+                   "    SH.CompanyID, 'PENJUALAN' AS Trans, SH.ID, SH.SalesDate AS TransactionDate, SH.ItemID, B.Code AS ItemCode, B.Name AS ItemName, SH.ArrivalBrutto, " & vbNewLine & _
+                   "    SH.ArrivalTarra, SH.ArrivalNettoBefore, SH.ArrivalDeduction, SH.ArrivalNettoAfter, B.UomID, C.Code AS UomCode, SH.Price, " & vbNewLine & _
+                   "    SH.TotalPrice, SH.Remarks, SH.IDStatus, MS.Name AS StatusInfo, SH.CreatedBy, SH.CreatedDate, SH.LogInc, SH.LogBy, SH.LogDate, SH.JournalID  " & vbNewLine & _
+                   "FROM traSales SH " & vbNewLine & _
+                   "INNER JOIN mstItem B ON " & vbNewLine & _
+                   "    SH.ItemID=B.ID " & vbNewLine & _
+                   "INNER JOIN mstUOM C ON " & vbNewLine & _
+                   "    B.UomID=C.ID " & vbNewLine & _
+                   "INNER JOIN mstStatus MS ON " & vbNewLine & _
+                   "    SH.IDStatus=MS.ID " & vbNewLine & _
+                   "WHERE  " & vbNewLine & _
+                   "    SH.SalesDate>=@DateFrom AND SH.SalesDate<=@DateTo " & vbNewLine & _
+                   "    AND SH.IsDeleted=0 " & vbNewLine & _
+                   "    AND SH.BPID=@BPID " & vbNewLine
 
-        '        .Parameters.Add("@DateFrom", SqlDbType.DateTime).Value = dtmDateFrom
-        '        .Parameters.Add("@DateTo", SqlDbType.DateTime).Value = dtmDateTo
-        '        .Parameters.Add("@BPID", SqlDbType.Int).Value = intBPID
-        '    End With
-        '    Return SQL.QueryDataTable(sqlcmdExecute)
-        'End Function
+                .Parameters.Add("@DateFrom", SqlDbType.DateTime).Value = dtmDateFrom
+                .Parameters.Add("@DateTo", SqlDbType.DateTime).Value = dtmDateTo
+                .Parameters.Add("@BPID", SqlDbType.Int).Value = intBPID
+            End With
+            Return SQL.QueryDataTable(sqlcmdExecute)
+        End Function
 
 #End Region
 
@@ -974,218 +972,6 @@ Namespace DL
         End Function
 
 #End Region
-
-        '#Region "Detail"
-
-        '        Public Shared Function ListDataDetail(ByVal strSalesID As String) As DataTable
-        '            Dim sqlcmdExecute As New SqlCommand
-        '            With sqlcmdExecute
-        '                .CommandText = _
-        '                   "SELECT " & vbNewLine & _
-        '                   "    A.ID, A.ItemID, B.Code AS ItemCode, B.Name AS ItemName, A.UomID, C.Code AS UomCode, A.Brutto, A.Tarra, A.NettoBefore, A.Deduction, A.NettoAfter, A.ReturnNettoAfter, A.Price, A.Disc,   " & vbNewLine & _
-        '                   "    A.PPN, A.PPH, A.TotalPrice, A.Remarks  " & vbNewLine & _
-        '                   "FROM traSalesDet A " & vbNewLine & _
-        '                   "INNER JOIN mstItem B ON " & vbNewLine & _
-        '                   "    A.ItemID=B.ID " & vbNewLine & _
-        '                   "INNER JOIN mstUOM C ON " & vbNewLine & _
-        '                   "    A.UomID=C.ID " & vbNewLine & _
-        '                   "WHERE  " & vbNewLine & _
-        '                   "    A.SalesID=@SalesID" & vbNewLine
-
-        '                .Parameters.Add("@SalesID", SqlDbType.VarChar, 20).Value = strSalesID
-        '            End With
-        '            Return SQL.QueryDataTable(sqlcmdExecute)
-        '        End Function
-
-        '        Public Shared Function ListDataOutstandingUsage(ByVal strSalesID As String) As DataTable
-        '            Dim sqlcmdExecute As New SqlCommand
-        '            With sqlcmdExecute
-        '                .CommandText = _
-        '                   "SELECT " & vbNewLine & _
-        '                   "    A.ID, A.ItemID, B.Code AS ItemCode, B.Name AS ItemName, A.UomID, C.Code AS UomCode, A.NettoAfter-A.UsageNettoAfter-A.ReturnNettoAfter AS MaxBrutto, " & vbNewLine & _
-        '                   "    A.Price, A.Disc, A.PPN, A.PPH, A.Remarks  " & vbNewLine & _
-        '                   "FROM traSalesDet A " & vbNewLine & _
-        '                   "INNER JOIN traSales AA ON " & vbNewLine & _
-        '                   "    A.SalesID=AA.ID " & vbNewLine & _
-        '                   "    AND AA.IsDeleted=0 " & vbNewLine & _
-        '                   "INNER JOIN mstItem B ON " & vbNewLine & _
-        '                   "    A.ItemID=B.ID " & vbNewLine & _
-        '                   "INNER JOIN mstUOM C ON " & vbNewLine & _
-        '                   "    A.UomID=C.ID " & vbNewLine & _
-        '                   "WHERE  " & vbNewLine & _
-        '                   "    AA.ID=@SalesID " & vbNewLine & _
-        '                   "    AND A.NettoAfter-A.UsageNettoAfter-A.ReturnNettoAfter>0 " & vbNewLine
-
-        '                .Parameters.Add("@SalesID", SqlDbType.VarChar, 20).Value = strSalesID
-        '            End With
-        '            Return SQL.QueryDataTable(sqlcmdExecute)
-        '        End Function
-
-        '        Public Shared Function ListDataOutstandingReturn(ByVal intBPID As Integer) As DataTable
-        '            Dim sqlcmdExecute As New SqlCommand
-        '            With sqlcmdExecute
-        '                .CommandText = _
-        '                   "SELECT " & vbNewLine & _
-        '                   "    CAST(0 AS BIT) Pick, A.ID, A.SalesID, A.ItemID, B.Code AS ItemCode, B.Name AS ItemName, A.UomID, C.Code AS UomCode, A.Qty-A.ReturnQty AS MaxQty, A.Price, A.Disc,   " & vbNewLine & _
-        '                   "    A.Tax, A.Remarks  " & vbNewLine & _
-        '                   "FROM traSalesDet A " & vbNewLine & _
-        '                   "INNER JOIN traSales AA ON " & vbNewLine & _
-        '                   "    A.SalesID=AA.ID " & vbNewLine & _
-        '                   "    AND AA.IsDeleted=0 " & vbNewLine & _
-        '                   "INNER JOIN mstItem B ON " & vbNewLine & _
-        '                   "    A.ItemID=B.ID " & vbNewLine & _
-        '                   "INNER JOIN mstUOM C ON " & vbNewLine & _
-        '                   "    A.UomID=C.ID " & vbNewLine & _
-        '                   "WHERE  " & vbNewLine & _
-        '                   "    AA.BPID=@BPID " & vbNewLine & _
-        '                   "    AND A.Qty-A.ReturnQty>0 " & vbNewLine
-
-        '                .Parameters.Add("@BPID", SqlDbType.Int).Value = intBPID
-        '            End With
-        '            Return SQL.QueryDataTable(sqlcmdExecute)
-        '        End Function
-
-        '        Public Shared Sub SaveDataDetail(ByVal clsData As VO.SalesDet)
-        '            Dim sqlcmdExecute As New SqlCommand
-        '            With sqlcmdExecute
-        '                .CommandText = _
-        '                    "INSERT INTO traSalesDet " & vbNewLine & _
-        '                    "    (ID, SalesID, ItemID, UomID, Brutto, Tarra, NettoBefore, Deduction, NettoAfter, Price, Disc,   " & vbNewLine & _
-        '                    "     PPN, PPH, TotalPrice, Remarks)   " & vbNewLine & _
-        '                    "VALUES " & vbNewLine & _
-        '                    "    (@ID, @SalesID, @ItemID, @UomID, @Brutto, @Tarra, @NettoBefore, @Deduction, @NettoAfter, @Price, @Disc,   " & vbNewLine & _
-        '                    "     @PPN, @PPH, @TotalPrice, @Remarks)  " & vbNewLine
-
-        '                .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = clsData.ID
-        '                .Parameters.Add("@SalesID", SqlDbType.VarChar, 20).Value = clsData.SalesID
-        '                .Parameters.Add("@ItemID", SqlDbType.Int).Value = clsData.ItemID
-        '                .Parameters.Add("@UomID", SqlDbType.Int).Value = clsData.UomID
-        '                .Parameters.Add("@Brutto", SqlDbType.Decimal).Value = clsData.Brutto
-        '                .Parameters.Add("@Tarra", SqlDbType.Decimal).Value = clsData.Tarra
-        '                .Parameters.Add("@NettoBefore", SqlDbType.Decimal).Value = clsData.NettoBefore
-        '                .Parameters.Add("@Deduction", SqlDbType.Decimal).Value = clsData.Deduction
-        '                .Parameters.Add("@NettoAfter", SqlDbType.Decimal).Value = clsData.NettoAfter
-        '                .Parameters.Add("@Price", SqlDbType.Decimal).Value = clsData.Price
-        '                .Parameters.Add("@Disc", SqlDbType.Decimal).Value = clsData.Disc
-        '                .Parameters.Add("@PPN", SqlDbType.Decimal).Value = clsData.PPN
-        '                .Parameters.Add("@PPH", SqlDbType.Decimal).Value = clsData.PPH
-        '                .Parameters.Add("@TotalPrice", SqlDbType.Decimal).Value = clsData.TotalPrice
-        '                .Parameters.Add("@Remarks", SqlDbType.VarChar, 250).Value = clsData.Remarks
-        '            End With
-        '            Try
-        '                SQL.ExecuteNonQuery(sqlcmdExecute)
-        '            Catch ex As SqlException
-        '                Throw ex
-        '            End Try
-        '        End Sub
-
-        '        Public Shared Sub DeleteDataDetail(ByVal strSalesID As String)
-        '            Dim sqlcmdExecute As New SqlCommand
-        '            With sqlcmdExecute
-        '                .CommandText = _
-        '                    "DELETE FROM traSalesDet " & vbNewLine & _
-        '                    "WHERE " & vbNewLine & _
-        '                    "   SalesID=@SalesID " & vbNewLine
-
-        '                .Parameters.Add("@SalesID", SqlDbType.VarChar, 20).Value = strSalesID
-        '            End With
-        '            Try
-        '                SQL.ExecuteNonQuery(sqlcmdExecute)
-        '            Catch ex As SqlException
-        '                Throw ex
-        '            End Try
-        '        End Sub
-
-        '        Public Shared Function GetMaxIDDetail(ByVal strSalesID As String) As Integer
-        '            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader
-        '            Dim intReturn As Integer = 1
-        '            Try
-        '                If Not SQL.bolUseTrans Then SQL.OpenConnection()
-        '                With sqlcmdExecute
-        '                    .Connection = SQL.sqlConn
-        '                    .CommandText = _
-        '                        "SELECT TOP 1 " & vbNewLine & _
-        '                        "   ID=ISNULL(RIGHT(MAX(ID),3),0) " & vbNewLine & _
-        '                        "FROM traSalesDet " & vbNewLine & _
-        '                        "WHERE  " & vbNewLine & _
-        '                        "   LEFT(SalesID,17)=@SalesID " & vbNewLine
-
-        '                    .Parameters.Add("@SalesID", SqlDbType.VarChar, 20).Value = strSalesID
-        '                    If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
-        '                End With
-        '                sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)
-        '                With sqlrdData
-        '                    If .HasRows Then
-        '                        .Read()
-        '                        intReturn = .Item("ID") + 1
-        '                    End If
-        '                    .Close()
-        '                End With
-        '                If Not SQL.bolUseTrans Then SQL.CloseConnection()
-        '            Catch ex As Exception
-        '                Throw ex
-        '            End Try
-        '            Return intReturn
-        '        End Function
-
-        '        Public Shared Sub UpdateTotalReturn(ByVal strID As String)
-        '            Dim sqlcmdExecute As New SqlCommand
-        '            With sqlcmdExecute
-        '                .CommandText = _
-        '                    "UPDATE traSales 	" & vbNewLine & _
-        '                    "SET TotalReturn= 	" & vbNewLine & _
-        '                    "	ISNULL(	" & vbNewLine & _
-        '                    "		(SELECT 	" & vbNewLine & _
-        '                    "			SUM(SRD.TotalPrice) TotalPrice 	" & vbNewLine & _
-        '                    "		FROM traSalesReturnDet SRD	" & vbNewLine & _
-        '                    "		INNER JOIN traSalesReturn SR ON 	" & vbNewLine & _
-        '                    "			SRD.SalesReturnID=SR.ID 	" & vbNewLine & _
-        '                    "		INNER JOIN traSalesDet SD ON 	" & vbNewLine & _
-        '                    "			SRD.SalesDetID=SD.ID 	" & vbNewLine & _
-        '                    "		WHERE 	" & vbNewLine & _
-        '                    "			SR.IsDeleted=0 	" & vbNewLine & _
-        '                    "			AND SD.SalesID=@ID	" & vbNewLine & _
-        '                    "		GROUP BY SD.SalesID)	" & vbNewLine & _
-        '                    "	,0)	" & vbNewLine & _
-        '                    "WHERE ID=@ID " & vbNewLine
-
-        '                .Parameters.Add("@ID", SqlDbType.VarChar, 20).Value = strID
-        '            End With
-        '            Try
-        '                SQL.ExecuteNonQuery(sqlcmdExecute)
-        '            Catch ex As SqlException
-        '                Throw ex
-        '            End Try
-        '        End Sub
-
-        '        Public Shared Sub CalculateTotalPayment(ByVal strSalesID As String)
-        '            Dim sqlcmdExecute As New SqlCommand
-        '            With sqlcmdExecute
-        '                .CommandText = _
-        '                    "UPDATE traSales " & vbNewLine & _
-        '                    "SET TotalPayment=" & vbNewLine & _
-        '                    "	(" & vbNewLine & _
-        '                    "		SELECT " & vbNewLine & _
-        '                    "			ISNULL(SUM(ARD.Amount),0) AS Total" & vbNewLine & _
-        '                    "		FROM traAccountReceivableDet ARD " & vbNewLine & _
-        '                    "		INNER JOIN traAccountReceivable AR ON " & vbNewLine & _
-        '                    "            ARD.ARID =AR.ID" & vbNewLine & _
-        '                    "        WHERE" & vbNewLine & _
-        '                    "            AR.IsDeleted=0" & vbNewLine & _
-        '                    "			AND ARD.SalesID=@SalesID" & vbNewLine & _
-        '                    "	)" & vbNewLine & _
-        '                    "WHERE ID=@SalesID " & vbNewLine
-
-        '                .Parameters.Add("@SalesID", SqlDbType.VarChar, 20).Value = strSalesID
-        '            End With
-        '            Try
-        '                SQL.ExecuteNonQuery(sqlcmdExecute)
-        '            Catch ex As SqlException
-        '                Throw ex
-        '            End Try
-        '        End Sub
-
-        '#End Region
 
     End Class
 

@@ -4,6 +4,7 @@
     <DATABASE>TMS</DATABASE>
 	<USERID>admin</USERID>
 	<PASSWORD>Mantul#0001</PASSWORD>
+	<STARTFROM>2021/11/27</STARTFROM>
     <COMPANY>MM</COMPANY>
     <USE2FA>0</USE2FA>
 	<DSPATH>H:\Software\Andi.Wiradinata\Template\Original Image</DSPATH>

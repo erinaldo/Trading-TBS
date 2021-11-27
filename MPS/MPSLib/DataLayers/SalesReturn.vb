@@ -490,31 +490,27 @@ Namespace DL
             End Try
         End Sub
 
-
-
-
         Public Shared Function ListDataHistoryBussinessPartners(ByVal dtmDateFrom As DateTime, ByVal dtmDateTo As DateTime, ByVal intItemID As Integer) As DataTable
             Dim sqlcmdExecute As New SqlCommand
             With sqlcmdExecute
                 .CommandText = _
                    "SELECT " & vbNewLine & _
-                   "    SH.CompanyID, 'RETUR PENJUALAN' AS Trans, SH.ID, SH.SalesReturnDate AS TransactionDate, SH.BPID, BP.Name AS BPName, A.Qty, A.UomID, C.Code AS UomCode, A.Price, A.Disc,   " & vbNewLine & _
-                   "    A.Tax, A.TotalPrice, A.Remarks, SH.IDStatus, MS.Name AS StatusInfo, SH.CreatedBy, SH.CreatedDate, SH.LogInc, SH.LogBy, SH.LogDate, SH.JournalID  " & vbNewLine & _
-                   "FROM traSalesReturnDet A " & vbNewLine & _
-                   "INNER JOIN traSalesReturn SH ON " & vbNewLine & _
-                   "    A.SalesReturnID=SH.ID " & vbNewLine & _
-                   "INNER JOIN mstItem B ON " & vbNewLine & _
-                   "    A.ItemID=B.ID " & vbNewLine & _
-                   "INNER JOIN mstUOM C ON " & vbNewLine & _
-                   "    A.UomID=C.ID " & vbNewLine & _
-                   "INNER JOIN mstStatus MS ON " & vbNewLine & _
-                   "    SH.IDStatus=MS.ID " & vbNewLine & _
+                   "    SH.CompanyID, 'RETUR PENJUALAN' AS Trans, SH.ID, SH.BPID, BP.Name AS BPName, SH.SalesReturnDate AS TransactionDate, SH.ItemID, B.Code AS ItemCode, B.Name AS ItemName, SH.ArrivalBrutto, " & vbNewLine & _
+                   "    SH.ArrivalTarra, SH.ArrivalNettoBefore, SH.ArrivalDeduction, SH.ArrivalNettoAfter, B.UomID, C.Code AS UomCode, SH.Price, " & vbNewLine & _
+                   "    SH.TotalPrice, SH.Remarks, SH.IDStatus, MS.Name AS StatusInfo, SH.CreatedBy, SH.CreatedDate, SH.LogInc, SH.LogBy, SH.LogDate, SH.JournalID  " & vbNewLine & _
+                   "FROM traSalesReturn SH " & vbNewLine & _
                    "INNER JOIN mstBusinessPartner BP ON " & vbNewLine & _
                    "    SH.BPID=BP.ID " & vbNewLine & _
+                   "INNER JOIN mstItem B ON " & vbNewLine & _
+                   "    SH.ItemID=B.ID " & vbNewLine & _
+                   "INNER JOIN mstUOM C ON " & vbNewLine & _
+                   "    B.UomID=C.ID " & vbNewLine & _
+                   "INNER JOIN mstStatus MS ON " & vbNewLine & _
+                   "    SH.IDStatus=MS.ID " & vbNewLine & _
                    "WHERE  " & vbNewLine & _
                    "    SH.SalesReturnDate>=@DateFrom AND SH.SalesReturnDate<=@DateTo " & vbNewLine & _
                    "    AND SH.IsDeleted=0 " & vbNewLine & _
-                   "    AND A.ItemID=@ItemID " & vbNewLine
+                   "    AND SH.ItemID=@ItemID " & vbNewLine
 
                 .Parameters.Add("@DateFrom", SqlDbType.DateTime).Value = dtmDateFrom
                 .Parameters.Add("@DateTo", SqlDbType.DateTime).Value = dtmDateTo
@@ -528,15 +524,14 @@ Namespace DL
             With sqlcmdExecute
                 .CommandText = _
                    "SELECT " & vbNewLine & _
-                   "    SH.CompanyID, 'RETUR PENJUALAN' AS Trans, SH.ID, SH.SalesReturnDate AS TransactionDate, A.ItemID, B.Code AS ItemCode, B.Name AS ItemName, A.Qty, A.UomID, C.Code AS UomCode, A.Price, A.Disc,   " & vbNewLine & _
-                   "    A.Tax, A.TotalPrice, A.Remarks, SH.IDStatus, MS.Name AS StatusInfo, SH.CreatedBy, SH.CreatedDate, SH.LogInc, SH.LogBy, SH.LogDate, SH.JournalID  " & vbNewLine & _
-                   "FROM traSalesReturnDet A " & vbNewLine & _
-                   "INNER JOIN traSalesReturn SH ON " & vbNewLine & _
-                   "    A.SalesReturnID=SH.ID " & vbNewLine & _
+                   "    SH.CompanyID, 'RETUR PENJUALAN' AS Trans, SH.ID, SH.SalesReturnDate AS TransactionDate, SH.ItemID, B.Code AS ItemCode, B.Name AS ItemName, SH.ArrivalBrutto, " & vbNewLine & _
+                   "    SH.ArrivalTarra, SH.ArrivalNettoBefore, SH.ArrivalDeduction, SH.ArrivalNettoAfter, B.UomID, C.Code AS UomCode, SH.Price, " & vbNewLine & _
+                   "    SH.TotalPrice, SH.Remarks, SH.IDStatus, MS.Name AS StatusInfo, SH.CreatedBy, SH.CreatedDate, SH.LogInc, SH.LogBy, SH.LogDate, SH.JournalID  " & vbNewLine & _
+                   "FROM traSalesReturn SH " & vbNewLine & _
                    "INNER JOIN mstItem B ON " & vbNewLine & _
-                   "    A.ItemID=B.ID " & vbNewLine & _
+                   "    SH.ItemID=B.ID " & vbNewLine & _
                    "INNER JOIN mstUOM C ON " & vbNewLine & _
-                   "    A.UomID=C.ID " & vbNewLine & _
+                   "    B.UomID=C.ID " & vbNewLine & _
                    "INNER JOIN mstStatus MS ON " & vbNewLine & _
                    "    SH.IDStatus=MS.ID " & vbNewLine & _
                    "WHERE  " & vbNewLine & _

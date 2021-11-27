@@ -14,12 +14,14 @@ Public Class frmMstItemHistory
         UI.usForm.SetGrid(grdView, "BPID", "BPID", 100, UI.usDefGrid.gIntNum, False)
         UI.usForm.SetGrid(grdView, "BPName", "Pelanggan", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "TransactionDate", "Tanggal", 100, UI.usDefGrid.gFullDate)
-        UI.usForm.SetGrid(grdView, "Qty", "Jumlah", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "ArrivalBrutto", "Brutto", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "ArrivalTarra", "Tarra", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "ArrivalNettoBefore", "Netto 1", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "ArrivalDeduction", "Potongan", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "ArrivalNettoAfter", "Netto 2", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "UomID", "UomID", 100, UI.usDefGrid.gIntNum, False)
         UI.usForm.SetGrid(grdView, "UomCode", "Satuan", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "Price", "Harga", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "Disc", "Disc %", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "Tax", "Tax", 100, UI.usDefGrid.gReal2Num, False)
         UI.usForm.SetGrid(grdView, "TotalPrice", "Total Harga", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "Remarks", "Remarks", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "IDStatus", "IDStatus", 100, UI.usDefGrid.gIntNum, False)
@@ -53,15 +55,30 @@ Public Class frmMstItemHistory
     End Sub
     
     Private Sub prvSumGrid()
-        Dim SumQty As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Qty", "Total Jumlah: {0:#,##0.00}")
-        Dim SumTotalPrice As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalPrice", "Total Harga: {0:#,##0.00}")
+        Dim SumArrivalBrutto As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalBrutto", "Total Brutto: {0:#,##0.00}")
+        Dim SumArrivalTarra As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalTarra", "Total Tarra: {0:#,##0.00}")
+        Dim SumArrivalNettoBefore As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalNettoBefore", "Total Netto 1: {0:#,##0.00}")
+        Dim SumArrivalDeduction As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalDeduction", "Total Potongan: {0:#,##0.00}")
+        Dim SumArrivalNettoAfter As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalNettoAfter", "Total Netto 2: {0:#,##0.00}")
 
-        If grdView.Columns("Qty").SummaryText.Trim = "" Then
-            grdView.Columns("Qty").Summary.Add(SumQty)
+        If grdView.Columns("ArrivalBrutto").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalBrutto").Summary.Add(SumArrivalBrutto)
         End If
 
-        If grdView.Columns("TotalPrice").SummaryText.Trim = "" Then
-            grdView.Columns("TotalPrice").Summary.Add(SumTotalPrice)
+        If grdView.Columns("ArrivalTarra").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalTarra").Summary.Add(SumArrivalTarra)
+        End If
+
+        If grdView.Columns("ArrivalNettoBefore").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalNettoBefore").Summary.Add(SumArrivalNettoBefore)
+        End If
+
+        If grdView.Columns("ArrivalDeduction").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalDeduction").Summary.Add(SumArrivalDeduction)
+        End If
+
+        If grdView.Columns("ArrivalNettoAfter").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalNettoAfter").Summary.Add(SumArrivalNettoAfter)
         End If
     End Sub
 

@@ -48,7 +48,7 @@
                 dtpDateTo.Value = clsData.DateTo.Date.AddDays(1)
             Else
                 dtpDateFrom.MinDate = "2000/01/01"
-                dtpDateFrom.Value = "2000/01/01"
+                dtpDateFrom.Value = VO.DefaultServer.StartFrom
                 dtpDateFrom.Enabled = False
                 dtpDateTo.Value = Today.Date
             End If

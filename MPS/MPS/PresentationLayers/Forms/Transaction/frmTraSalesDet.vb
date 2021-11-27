@@ -41,6 +41,13 @@ Public Class frmTraSalesDet
         pgMain.Value = 0
     End Sub
 
+    Private Sub prvSetButton()
+        Dim bolEnabled As Boolean = IIf(grdSupplierView.RowCount = 0, False, True)
+        With ToolBarSupplier
+            .Buttons(cDelete).Enabled = bolEnabled
+        End With
+    End Sub
+
     Private Sub prvSetGrid()
         UI.usForm.SetGrid(grdSupplierView, "BPID", "BPID", 100, UI.usDefGrid.gString, False)
         UI.usForm.SetGrid(grdSupplierView, "BPName", "Pemasok", 250, UI.usDefGrid.gString)
@@ -240,7 +247,6 @@ Public Class frmTraSalesDet
                             frmParent.pubRefresh(strID)
                         End If
                     End If
-
                 Else
                     pubIsSave = True
                     prvPrintBonFaktur()
@@ -258,15 +264,6 @@ Public Class frmTraSalesDet
             pgMain.Value = 100
             prvResetProgressBar()
         End Try
-    End Sub
-
-    Private Sub prvPrint()
-        'Dim frmDetail As New frmTraSalesPrintDO
-        'With frmDetail
-        '    .pubData = clsData
-        '    .ShowDialog()
-        '    If .pubIsPrint Then frmParent.pubRefresh(clsData.ID)
-        'End With
     End Sub
 
     Private Sub prvPrintBonFaktur()
@@ -366,6 +363,7 @@ Public Class frmTraSalesDet
             Me.Cursor = Cursors.Default
             pgMain.Value = 100
             prvResetProgressBar()
+            prvSetButton()
         End Try
     End Sub
 
