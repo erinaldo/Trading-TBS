@@ -24,7 +24,7 @@
         UI.usForm.SetGrid(grdView, "GroupAccount", "Group", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "Code", "Kode Akun", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "Name", "Nama Akun", 100, UI.usDefGrid.gString)
-        UI.usForm.SetGrid(grdView, "Balance", "Saldo", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "Balance", "Saldo", 100, UI.usDefGrid.gReal2Num, False)
         UI.usForm.SetGrid(grdView, "IDStatus", "IDStatus", 100, UI.usDefGrid.gIntNum, False)
         UI.usForm.SetGrid(grdView, "CreatedBy", "Dibuat Oleh", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "CreatedDate", "Tanggal Buat", 100, UI.usDefGrid.gFullDate)
