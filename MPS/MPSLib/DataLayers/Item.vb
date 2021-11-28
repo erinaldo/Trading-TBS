@@ -26,8 +26,8 @@ Namespace DL
                     .CommandText = _
                        "INSERT INTO mstItem " & vbNewLine & _
                        "    (ID, Code, Name, UomID, MinQty,   " & vbNewLine & _
-                       "      BalanceQty, SalesPrice, PurchasePrice1, PurchasePrice2, Tolerance, IDStatus, CreatedBy, CreatedDate, LogBy,   " & vbNewLine & _
-                       "      LogDate, Tolerance)   " & vbNewLine & _
+                       "     BalanceQty, SalesPrice, PurchasePrice1, PurchasePrice2, Tolerance, IDStatus, CreatedBy, CreatedDate, LogBy,   " & vbNewLine & _
+                       "     LogDate)   " & vbNewLine & _
                        "VALUES " & vbNewLine & _
                        "    (@ID, @Code, @Name, @UomID, @MinQty,   " & vbNewLine & _
                        "     @BalanceQty, @SalesPrice, @PurchasePrice1, @PurchasePrice2, @Tolerance, @IDStatus, @LogBy, GETDATE(), @LogBy,   " & vbNewLine & _
@@ -88,6 +88,52 @@ Namespace DL
                        "    ID=@ID " & vbNewLine
 
                     .Parameters.Add("@ID", SqlDbType.Int).Value = intID
+                    If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
+                End With
+                sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)
+                With sqlrdData
+                    If .HasRows Then
+                        .Read()
+                        voReturn.ID = .Item("ID")
+                        voReturn.Code = .Item("Code")
+                        voReturn.Name = .Item("Name")
+                        voReturn.UomID = .Item("UomID")
+                        voReturn.MinQty = .Item("MinQty")
+                        voReturn.BalanceQty = .Item("BalanceQty")
+                        voReturn.SalesPrice = .Item("SalesPrice")
+                        voReturn.PurchasePrice1 = .Item("PurchasePrice1")
+                        voReturn.PurchasePrice2 = .Item("PurchasePrice2")
+                        voReturn.Tolerance = .Item("Tolerance")
+                        voReturn.IDStatus = .Item("IDStatus")
+                        voReturn.LogBy = .Item("LogBy")
+                        voReturn.LogDate = .Item("LogDate")
+                    End If
+                End With
+                If Not SQL.bolUseTrans Then SQL.CloseConnection()
+            Catch ex As Exception
+                Throw ex
+            Finally
+                If Not sqlrdData Is Nothing Then sqlrdData.Close()
+            End Try
+            Return voReturn
+        End Function
+
+        Public Shared Function GetDetail(ByVal strItemCode As String) As VO.Item
+            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
+            Dim voReturn As New VO.Item
+            Try
+                If Not SQL.bolUseTrans Then SQL.OpenConnection()
+                With sqlcmdExecute
+                    .Connection = SQL.sqlConn
+                    .CommandText = _
+                       "SELECT TOP 1 " & vbNewLine & _
+                       "    A.ID, A.Code, A.Name, A.UomID, A.MinQty,   " & vbNewLine & _
+                       "    A.BalanceQty, A.SalesPrice, A.PurchasePrice1, A.PurchasePrice2, A.Tolerance, A.IDStatus, A.LogBy, A.LogDate " & vbNewLine & _
+                       "FROM mstItem A " & vbNewLine & _
+                       "WHERE " & vbNewLine & _
+                       "    Code=@Code " & vbNewLine
+
+                    .Parameters.Add("@Code", SqlDbType.VarChar, 10).Value = strItemCode
                     If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
                 End With
                 sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)

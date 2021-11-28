@@ -7,7 +7,8 @@ Namespace DL
                     "SELECT  	" & vbNewLine & _
                     "     A.ID, A.Name, A.Address, A.PICName, A.PICPhoneNumber, A.PaymentTermID, A.IsUsePurchaseLimit, A.MaxPurchaseLimit, 	" & vbNewLine & _
                     "	 ISNULL(TR.TotalPrice1,0) AS TotalPurchase1, ISNULL(TR.TotalPrice2,0) AS TotalPurchase2, A.APBalance, A.ARBalance, 	" & vbNewLine & _
-                    "	 A.IDStatus, B.Name AS StatusInfo, A.CreatedBy, A.CreatedDate, A.LogBy, A.LogDate   	" & vbNewLine & _
+                    "	 A.IDStatus, B.Name AS StatusInfo, A.CreatedBy, A.CreatedDate, A.LogBy, A.LogDate,   	" & vbNewLine & _
+                    "	 IsAssign=CAST(CASE WHEN ISNULL((SELECT TOP 1 ID FROM mstBusinessPartnerAssign WHERE BPID=A.ID),0)=0 THEN 0 ELSE 1 END AS BIT)" & vbNewLine & _
                     "FROM mstBusinessPartner A  	" & vbNewLine & _
                     "INNER JOIN mstStatus B ON   	" & vbNewLine & _
                     "    A.IDStatus=B.ID 	" & vbNewLine & _

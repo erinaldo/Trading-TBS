@@ -594,7 +594,6 @@ Partial Class frmTraSalesDet
         Me.txtItemCode.Location = New System.Drawing.Point(499, 16)
         Me.txtItemCode.MaxLength = 250
         Me.txtItemCode.Name = "txtItemCode"
-        Me.txtItemCode.ReadOnly = True
         Me.txtItemCode.Size = New System.Drawing.Size(160, 21)
         Me.txtItemCode.TabIndex = 9
         Me.txtItemCode.TabStop = False

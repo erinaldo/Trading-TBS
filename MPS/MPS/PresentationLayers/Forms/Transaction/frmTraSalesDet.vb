@@ -491,6 +491,21 @@ Public Class frmTraSalesDet
         txtTotalPrice.Value = txtNettoAfter.Value * txtPrice.Value
     End Sub
 
+    Private Sub txtItemCode_KeyDown(sender As Object, e As KeyEventArgs) Handles txtItemCode.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            Dim clsItem As VO.Item = BL.Item.GetDetail(txtItemCode.Text.Trim)
+            If clsItem.ID = 0 Then
+                UI.usForm.frmMessageBox("Kode barang " & txtItemCode.Text.Trim & " tidak tersedia")
+                Exit Sub
+            End If
+            intItemID = clsItem.ID
+            txtItemCode.Text = clsItem.Code
+            txtItemName.Text = clsItem.Name
+            cboUOMID.SelectedValue = clsItem.UomID
+            txtPrice.Value = clsItem.SalesPrice
+            txtBrutto.Focus()
+        End If
+    End Sub
 #End Region
 
 End Class

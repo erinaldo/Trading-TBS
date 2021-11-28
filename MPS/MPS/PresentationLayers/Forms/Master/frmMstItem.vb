@@ -19,7 +19,7 @@ Public Class frmMstItem
         UI.usForm.SetGrid(grdView, "Code", "Kode Barang", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "Name", "Name Barang", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "UomID", "UomID", 100, UI.usDefGrid.gString, False)
-        UI.usForm.SetGrid(grdView, "UomCode1", "Satuan", 100, UI.usDefGrid.gString)
+        UI.usForm.SetGrid(grdView, "UomCode", "Satuan", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "MinQty", "Min Qty", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "BalanceQty", "Saldo", 100, UI.usDefGrid.gReal2Num, False)
         UI.usForm.SetGrid(grdView, "SalesPrice", "Harga Jual", 100, UI.usDefGrid.gReal2Num)

@@ -14,7 +14,7 @@ Namespace BL
 
                 If bolNew Then
                     clsData.ID = DL.Item.GetMaxID()
-                    clsData.Code = Format(clsData.ID, "000000000")
+                    clsData.Code = Format(clsData.ID, "000")
                     If DL.Item.DataExists(clsData.ID) Then
                         Err.Raise(515, "", "ID sudah ada sebelumnya")
                     End If
@@ -35,6 +35,11 @@ Namespace BL
         Public Shared Function GetDetail(ByVal intID As Integer) As VO.Item
             BL.Server.ServerDefault()
             Return DL.Item.GetDetail(intID)
+        End Function
+
+        Public Shared Function GetDetail(ByVal strItemCode As String) As VO.Item
+            BL.Server.ServerDefault()
+            Return DL.Item.GetDetail(strItemCode)
         End Function
 
         Public Shared Sub DeleteData(ByVal intID As Integer)

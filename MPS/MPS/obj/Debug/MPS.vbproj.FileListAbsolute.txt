@@ -120,7 +120,6 @@ C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmSysLogin.resources
 C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmSysMain.resources
 C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraReceive.resources
 C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraReceiveDet.resources
-C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraReceiveListOutstandingUsage.resources
 C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSales.resources
 C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSalesDet.resources
 C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSalesPrintBonFaktur.resources
@@ -225,3 +224,22 @@ D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraAccountPayableDet.
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraAccountReceivable.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraAccountReceivableDet.resources
 D:\My Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmSysPostingOrCancelPostingGL.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmMstBusinessPartnerAssign.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmMstBusinessPartnerAssignItem.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmSysPostingOrCancelPostingGL.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraAccountPayable.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraAccountPayableDet.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraAccountReceivable.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraAccountReceivableDet.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraCost.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraCostDet.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraCostItem.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraJournal.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraJournalDet.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraJournalItem.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraReceiveReturn.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraReceiveReturnDet.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSalesReturn.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmTraSalesReturnDet.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmViewOutstandingReceiveForReturn.resources
+C:\Project\Desktop\Trading-TBS\MPS\MPS\obj\Debug\MPS.frmViewOutstandingSalesForReturn.resources
