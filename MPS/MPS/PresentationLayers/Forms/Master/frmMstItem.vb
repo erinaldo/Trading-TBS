@@ -22,9 +22,9 @@ Public Class frmMstItem
         UI.usForm.SetGrid(grdView, "UomCode", "Satuan", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "MinQty", "Min Qty", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "BalanceQty", "Saldo", 100, UI.usDefGrid.gReal2Num, False)
-        UI.usForm.SetGrid(grdView, "SalesPrice", "Harga Jual", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "PurchasePrice1", "Harga Beli 1", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "PurchasePrice2", "Harga Beli 2", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "SalesPrice", "Harga Jual", 100, UI.usDefGrid.gReal2Num, False)
+        UI.usForm.SetGrid(grdView, "PurchasePrice1", "Harga Beli 1", 100, UI.usDefGrid.gReal2Num, False)
+        UI.usForm.SetGrid(grdView, "PurchasePrice2", "Harga Beli 2", 100, UI.usDefGrid.gReal2Num, False)
         UI.usForm.SetGrid(grdView, "Tolerance", "Toleransi", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "IDStatus", "IDStatus", 100, UI.usDefGrid.gIntNum, False)
         UI.usForm.SetGrid(grdView, "CreatedBy", "Dibuat Oleh", 100, UI.usDefGrid.gString)
@@ -148,6 +148,7 @@ Public Class frmMstItem
         prvSetGrid()
         prvQuery()
         prvUserAccess()
+        If Not pubIsLookUp Then Me.WindowState = FormWindowState.Maximized
     End Sub
 
     Private Sub ToolBar_ButtonClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ToolBarButtonClickEventArgs) Handles ToolBar.ButtonClick

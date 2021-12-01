@@ -24,7 +24,6 @@ Partial Class frmMstChartOfAccountAssignItem
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMstChartOfAccountAssignItem))
         Me.ToolBar = New MPS.usToolBar()
-        Me.BarRefresh = New System.Windows.Forms.ToolBarButton()
         Me.BarClose = New System.Windows.Forms.ToolBarButton()
         Me.lblInfo = New System.Windows.Forms.Label()
         Me.pnlDetail = New System.Windows.Forms.Panel()
@@ -38,6 +37,7 @@ Partial Class frmMstChartOfAccountAssignItem
         Me.lblAmount = New System.Windows.Forms.Label()
         Me.lblStartDate = New System.Windows.Forms.Label()
         Me.dtpFirstBalanceDate = New System.Windows.Forms.DateTimePicker()
+        Me.BarSave = New System.Windows.Forms.ToolBarButton()
         Me.pnlDetail.SuspendLayout()
         CType(Me.txtFirstBalance, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -45,7 +45,7 @@ Partial Class frmMstChartOfAccountAssignItem
         'ToolBar
         '
         Me.ToolBar.Appearance = System.Windows.Forms.ToolBarAppearance.Flat
-        Me.ToolBar.Buttons.AddRange(New System.Windows.Forms.ToolBarButton() {Me.BarRefresh, Me.BarClose})
+        Me.ToolBar.Buttons.AddRange(New System.Windows.Forms.ToolBarButton() {Me.BarSave, Me.BarClose})
         Me.ToolBar.DropDownArrows = True
         Me.ToolBar.Location = New System.Drawing.Point(0, 0)
         Me.ToolBar.Name = "ToolBar"
@@ -53,12 +53,6 @@ Partial Class frmMstChartOfAccountAssignItem
         Me.ToolBar.Size = New System.Drawing.Size(509, 28)
         Me.ToolBar.TabIndex = 0
         Me.ToolBar.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right
-        '
-        'BarRefresh
-        '
-        Me.BarRefresh.Name = "BarRefresh"
-        Me.BarRefresh.Tag = "Save"
-        Me.BarRefresh.Text = "Simpan"
         '
         'BarClose
         '
@@ -202,6 +196,12 @@ Partial Class frmMstChartOfAccountAssignItem
         Me.dtpFirstBalanceDate.TabIndex = 5
         Me.dtpFirstBalanceDate.Value = New Date(2000, 1, 1, 0, 0, 0, 0)
         '
+        'BarSave
+        '
+        Me.BarSave.Name = "BarSave"
+        Me.BarSave.Tag = "Save"
+        Me.BarSave.Text = "Simpan"
+        '
         'frmMstChartOfAccountAssignItem
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -223,7 +223,6 @@ Partial Class frmMstChartOfAccountAssignItem
 
     End Sub
     Friend WithEvents ToolBar As MPS.usToolBar
-    Friend WithEvents BarRefresh As System.Windows.Forms.ToolBarButton
     Friend WithEvents BarClose As System.Windows.Forms.ToolBarButton
     Friend WithEvents lblInfo As System.Windows.Forms.Label
     Friend WithEvents pnlDetail As System.Windows.Forms.Panel
@@ -237,4 +236,5 @@ Partial Class frmMstChartOfAccountAssignItem
     Friend WithEvents btnCompany As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents txtCompanyName As MPS.usTextBox
+    Friend WithEvents BarSave As System.Windows.Forms.ToolBarButton
 End Class

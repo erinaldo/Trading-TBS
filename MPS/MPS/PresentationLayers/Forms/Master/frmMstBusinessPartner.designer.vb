@@ -31,10 +31,11 @@ Partial Class frmMstBusinessPartner
         Me.BarDetail = New System.Windows.Forms.ToolBarButton()
         Me.BarDelete = New System.Windows.Forms.ToolBarButton()
         Me.BarHistory = New System.Windows.Forms.ToolBarButton()
+        Me.BarAssign = New System.Windows.Forms.ToolBarButton()
         Me.BarSep2 = New System.Windows.Forms.ToolBarButton()
         Me.BarRefresh = New System.Windows.Forms.ToolBarButton()
         Me.BarClose = New System.Windows.Forms.ToolBarButton()
-        Me.BarAssign = New System.Windows.Forms.ToolBarButton()
+        Me.BarUpdatePrice = New System.Windows.Forms.ToolBarButton()
         CType(Me.grdMain, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.grdView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -77,7 +78,7 @@ Partial Class frmMstBusinessPartner
         'ToolBar
         '
         Me.ToolBar.Appearance = System.Windows.Forms.ToolBarAppearance.Flat
-        Me.ToolBar.Buttons.AddRange(New System.Windows.Forms.ToolBarButton() {Me.BarGet, Me.BarSep1, Me.BarNew, Me.BarDetail, Me.BarDelete, Me.BarHistory, Me.BarAssign, Me.BarSep2, Me.BarRefresh, Me.BarClose})
+        Me.ToolBar.Buttons.AddRange(New System.Windows.Forms.ToolBarButton() {Me.BarGet, Me.BarSep1, Me.BarNew, Me.BarDetail, Me.BarDelete, Me.BarHistory, Me.BarAssign, Me.BarUpdatePrice, Me.BarSep2, Me.BarRefresh, Me.BarClose})
         Me.ToolBar.DropDownArrows = True
         Me.ToolBar.Location = New System.Drawing.Point(0, 0)
         Me.ToolBar.Name = "ToolBar"
@@ -121,6 +122,12 @@ Partial Class frmMstBusinessPartner
         Me.BarHistory.Tag = "History"
         Me.BarHistory.Text = "History"
         '
+        'BarAssign
+        '
+        Me.BarAssign.Name = "BarAssign"
+        Me.BarAssign.Tag = "Approved"
+        Me.BarAssign.Text = "Assign"
+        '
         'BarSep2
         '
         Me.BarSep2.Name = "BarSep2"
@@ -138,11 +145,11 @@ Partial Class frmMstBusinessPartner
         Me.BarClose.Tag = "Close"
         Me.BarClose.Text = "Tutup"
         '
-        'BarAssign
+        'BarUpdatePrice
         '
-        Me.BarAssign.Name = "BarAssign"
-        Me.BarAssign.Tag = "Approved"
-        Me.BarAssign.Text = "Assign"
+        Me.BarUpdatePrice.Name = "BarUpdatePrice"
+        Me.BarUpdatePrice.Tag = "Price"
+        Me.BarUpdatePrice.Text = "Ubah Harga"
         '
         'frmMstBusinessPartner
         '
@@ -174,6 +181,7 @@ Partial Class frmMstBusinessPartner
     Friend WithEvents BarClose As System.Windows.Forms.ToolBarButton
     Friend WithEvents BarHistory As System.Windows.Forms.ToolBarButton
     Friend WithEvents BarAssign As System.Windows.Forms.ToolBarButton
+    Friend WithEvents BarUpdatePrice As System.Windows.Forms.ToolBarButton
 End Class
 
 

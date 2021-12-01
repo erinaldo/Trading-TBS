@@ -1,4 +1,5 @@
 Imports DevExpress.XtraReports.UI
+Imports DevExpress.XtraGrid
 
 Public Class frmTraSales
 
@@ -96,6 +97,7 @@ Public Class frmTraSales
         pgMain.Value = 30
         Try
             grdMain.DataSource = BL.Sales.ListData(intCompanyID, MPSLib.UI.usUserApp.ProgramID, dtpDateFrom.Value.Date, dtpDateTo.Value.Date, cboStatus.SelectedValue)
+            prvSumGrid()
             grdView.BestFitColumns()
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
@@ -283,10 +285,55 @@ Public Class frmTraSales
         End With
     End Sub
 
+    Private Sub prvSumGrid()
+        Dim SumTotalBrutto As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalBrutto", "Total Brutto: {0:#,##0.00}")
+        Dim SumTotalTarra As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalTarra", "Total Tarra: {0:#,##0.00}")
+        Dim SumTotalNetto1 As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalNettoBefore", "Total Netto 1: {0:#,##0.00}")
+        Dim SumTotalPotongan As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalDeduction", "Total Potongan: {0:#,##0.00}")
+        Dim SumTotalNetto2 As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalNettoAfter", "Total Netto 2: {0:#,##0.00}")
+        Dim SumTotalPrice As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalPrice", "Total Price: {0:#,##0.00}")
+        Dim SumTotalReturn As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalReturn", "Total Retur: {0:#,##0.00}")
+        Dim SumTotalPayment As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalPayment", "Total Bayar: {0:#,##0.00}")
+
+        If grdView.Columns("ArrivalBrutto").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalBrutto").Summary.Add(SumTotalBrutto)
+        End If
+
+        If grdView.Columns("ArrivalTarra").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalTarra").Summary.Add(SumTotalTarra)
+        End If
+
+        If grdView.Columns("ArrivalNettoBefore").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalNettoBefore").Summary.Add(SumTotalNetto1)
+        End If
+
+        If grdView.Columns("ArrivalDeduction").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalDeduction").Summary.Add(SumTotalPotongan)
+        End If
+
+        If grdView.Columns("ArrivalNettoAfter").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalNettoAfter").Summary.Add(SumTotalNetto2)
+        End If
+
+        If grdView.Columns("TotalPrice").SummaryText.Trim = "" Then
+            grdView.Columns("TotalPrice").Summary.Add(SumTotalPrice)
+        End If
+
+        If grdView.Columns("TotalReturn").SummaryText.Trim = "" Then
+            grdView.Columns("TotalReturn").Summary.Add(SumTotalReturn)
+        End If
+
+        If grdView.Columns("TotalPayment").SummaryText.Trim = "" Then
+            grdView.Columns("TotalPayment").Summary.Add(SumTotalPayment)
+        End If
+    End Sub
+
     Private Sub prvUserAccess()
         With ToolBar.Buttons
             .Item(cNew).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionSales, VO.Access.Values.NewAccess)
             .Item(cDelete).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionSales, VO.Access.Values.DeleteAccess)
+
+            .Item(cSplitReceive).Visible = False
         End With
     End Sub
 
@@ -309,6 +356,7 @@ Public Class frmTraSales
         prvDefaultFilter()
         prvQuery()
         prvUserAccess()
+        Me.WindowState = FormWindowState.Maximized
     End Sub
 
     Private Sub ToolBar_ButtonClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ToolBarButtonClickEventArgs) Handles ToolBar.ButtonClick

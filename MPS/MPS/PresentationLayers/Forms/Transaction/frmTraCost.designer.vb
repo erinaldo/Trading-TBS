@@ -132,6 +132,7 @@ Partial Class frmTraCost
         Me.grdView.OptionsCustomization.AllowGroup = False
         Me.grdView.OptionsView.ColumnAutoWidth = False
         Me.grdView.OptionsView.ShowAutoFilterRow = True
+        Me.grdView.OptionsView.ShowFooter = True
         Me.grdView.OptionsView.ShowGroupPanel = False
         '
         'pgMain

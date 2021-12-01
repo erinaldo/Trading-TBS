@@ -36,10 +36,6 @@ Partial Class frmMstChartOfAccountDet
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtCode = New MPS.usTextBox()
-        Me.txtFirstBalance = New MPS.usNumeric()
-        Me.lblAmount = New System.Windows.Forms.Label()
-        Me.lblStartDate = New System.Windows.Forms.Label()
-        Me.dtpFirstBalanceDate = New System.Windows.Forms.DateTimePicker()
         Me.cboStatus = New MPS.usComboBox()
         Me.lblIDStatus = New System.Windows.Forms.Label()
         Me.lblName = New System.Windows.Forms.Label()
@@ -47,7 +43,6 @@ Partial Class frmMstChartOfAccountDet
         Me.lblInfo = New System.Windows.Forms.Label()
         Me.StatusStrip.SuspendLayout()
         Me.pnlDetail.SuspendLayout()
-        CType(Me.txtFirstBalance, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'ToolBar
@@ -78,7 +73,7 @@ Partial Class frmMstChartOfAccountDet
         '
         Me.StatusStrip.Font = New System.Drawing.Font("Tahoma", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripEmpty, Me.ToolStripLogInc, Me.ToolStripLogBy, Me.ToolStripStatusLabel1, Me.ToolStripLogDate})
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 202)
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 173)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.Size = New System.Drawing.Size(484, 22)
         Me.StatusStrip.TabIndex = 3
@@ -132,10 +127,6 @@ Partial Class frmMstChartOfAccountDet
         Me.pnlDetail.Controls.Add(Me.Label2)
         Me.pnlDetail.Controls.Add(Me.Label1)
         Me.pnlDetail.Controls.Add(Me.txtCode)
-        Me.pnlDetail.Controls.Add(Me.txtFirstBalance)
-        Me.pnlDetail.Controls.Add(Me.lblAmount)
-        Me.pnlDetail.Controls.Add(Me.lblStartDate)
-        Me.pnlDetail.Controls.Add(Me.dtpFirstBalanceDate)
         Me.pnlDetail.Controls.Add(Me.cboStatus)
         Me.pnlDetail.Controls.Add(Me.lblIDStatus)
         Me.pnlDetail.Controls.Add(Me.lblName)
@@ -143,7 +134,7 @@ Partial Class frmMstChartOfAccountDet
         Me.pnlDetail.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pnlDetail.Location = New System.Drawing.Point(0, 50)
         Me.pnlDetail.Name = "pnlDetail"
-        Me.pnlDetail.Size = New System.Drawing.Size(484, 152)
+        Me.pnlDetail.Size = New System.Drawing.Size(484, 123)
         Me.pnlDetail.TabIndex = 2
         '
         'cboChartOfAccountGroup
@@ -187,66 +178,22 @@ Partial Class frmMstChartOfAccountDet
         Me.txtCode.Size = New System.Drawing.Size(101, 21)
         Me.txtCode.TabIndex = 0
         '
-        'txtFirstBalance
-        '
-        Me.txtFirstBalance.Location = New System.Drawing.Point(96, 74)
-        Me.txtFirstBalance.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
-        Me.txtFirstBalance.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
-        Me.txtFirstBalance.Name = "txtFirstBalance"
-        Me.txtFirstBalance.Size = New System.Drawing.Size(101, 21)
-        Me.txtFirstBalance.TabIndex = 3
-        Me.txtFirstBalance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.txtFirstBalance.ThousandsSeparator = True
-        '
-        'lblAmount
-        '
-        Me.lblAmount.AutoSize = True
-        Me.lblAmount.BackColor = System.Drawing.Color.Transparent
-        Me.lblAmount.ForeColor = System.Drawing.Color.Black
-        Me.lblAmount.Location = New System.Drawing.Point(20, 77)
-        Me.lblAmount.Name = "lblAmount"
-        Me.lblAmount.Size = New System.Drawing.Size(59, 13)
-        Me.lblAmount.TabIndex = 98
-        Me.lblAmount.Text = "Saldo Awal"
-        '
-        'lblStartDate
-        '
-        Me.lblStartDate.AutoSize = True
-        Me.lblStartDate.BackColor = System.Drawing.Color.Transparent
-        Me.lblStartDate.ForeColor = System.Drawing.Color.Black
-        Me.lblStartDate.Location = New System.Drawing.Point(20, 105)
-        Me.lblStartDate.Name = "lblStartDate"
-        Me.lblStartDate.Size = New System.Drawing.Size(59, 13)
-        Me.lblStartDate.TabIndex = 99
-        Me.lblStartDate.Text = "Pertanggal"
-        '
-        'dtpFirstBalanceDate
-        '
-        Me.dtpFirstBalanceDate.CustomFormat = "dd/MM/yyyy"
-        Me.dtpFirstBalanceDate.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtpFirstBalanceDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpFirstBalanceDate.Location = New System.Drawing.Point(96, 101)
-        Me.dtpFirstBalanceDate.Name = "dtpFirstBalanceDate"
-        Me.dtpFirstBalanceDate.Size = New System.Drawing.Size(101, 21)
-        Me.dtpFirstBalanceDate.TabIndex = 4
-        Me.dtpFirstBalanceDate.Value = New Date(2019, 5, 1, 0, 0, 0, 0)
-        '
         'cboStatus
         '
         Me.cboStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboStatus.Enabled = False
         Me.cboStatus.FormattingEnabled = True
-        Me.cboStatus.Location = New System.Drawing.Point(295, 74)
+        Me.cboStatus.Location = New System.Drawing.Point(96, 74)
         Me.cboStatus.Name = "cboStatus"
         Me.cboStatus.Size = New System.Drawing.Size(163, 21)
-        Me.cboStatus.TabIndex = 5
+        Me.cboStatus.TabIndex = 3
         '
         'lblIDStatus
         '
         Me.lblIDStatus.AutoSize = True
         Me.lblIDStatus.BackColor = System.Drawing.Color.Transparent
         Me.lblIDStatus.ForeColor = System.Drawing.Color.Black
-        Me.lblIDStatus.Location = New System.Drawing.Point(245, 77)
+        Me.lblIDStatus.Location = New System.Drawing.Point(20, 77)
         Me.lblIDStatus.Name = "lblIDStatus"
         Me.lblIDStatus.Size = New System.Drawing.Size(38, 13)
         Me.lblIDStatus.TabIndex = 95
@@ -290,7 +237,7 @@ Partial Class frmMstChartOfAccountDet
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(484, 224)
+        Me.ClientSize = New System.Drawing.Size(484, 195)
         Me.Controls.Add(Me.pnlDetail)
         Me.Controls.Add(Me.lblInfo)
         Me.Controls.Add(Me.StatusStrip)
@@ -305,7 +252,6 @@ Partial Class frmMstChartOfAccountDet
         Me.StatusStrip.PerformLayout()
         Me.pnlDetail.ResumeLayout(False)
         Me.pnlDetail.PerformLayout()
-        CType(Me.txtFirstBalance, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -327,10 +273,6 @@ Partial Class frmMstChartOfAccountDet
     Friend WithEvents lblInfo As System.Windows.Forms.Label
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents txtCode As MPS.usTextBox
-    Friend WithEvents txtFirstBalance As MPS.usNumeric
-    Friend WithEvents lblAmount As System.Windows.Forms.Label
-    Friend WithEvents lblStartDate As System.Windows.Forms.Label
-    Friend WithEvents dtpFirstBalanceDate As System.Windows.Forms.DateTimePicker
     Friend WithEvents cboChartOfAccountGroup As MPS.usComboBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
 End Class

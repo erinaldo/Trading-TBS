@@ -245,7 +245,7 @@ Namespace BL
             Return DL.Receive.ListDataStatus(strReceiveID)
         End Function
 
-        Private Shared Sub SaveDataStatus(ByVal strReceiveID As String, ByVal strStatus As String, ByVal strStatusBy As String, _
+        Public Shared Sub SaveDataStatus(ByVal strReceiveID As String, ByVal strStatus As String, ByVal strStatusBy As String, _
                                          ByVal strRemarks As String)
             Dim clsData As New VO.ReceiveStatus
             clsData.ID = strReceiveID & "-" & Format(DL.Receive.GetMaxIDStatus(strReceiveID), "000")

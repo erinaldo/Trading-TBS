@@ -18,11 +18,12 @@ Namespace BL
             Return strReturn
         End Function
 
-        Public Shared Function SaveData(ByVal bolNew As Boolean, ByVal clsData As VO.Sales, ByVal clsDataSupplier() As VO.SalesSupplier) As String
+        Public Shared Function SaveData(ByVal bolNew As Boolean, ByVal clsData As VO.Sales, ByVal clsReceive As VO.Receive) As String
             Try
                 DL.SQL.OpenConnection()
                 DL.SQL.BeginTransaction()
 
+                '# Sales
                 If bolNew Then
                     clsData.ID = GetNewID(clsData.CompanyID, clsData.ProgramID)
                     If DL.Sales.DataExists(clsData.ID) Then
@@ -45,21 +46,24 @@ Namespace BL
                     ElseIf DL.Sales.IsPostedGL(clsData.ID) Then
                         Err.Raise(515, "", "Data tidak dapat diedit. Dikarenakan data telah diproses posting data transaksi")
                     End If
-
-                    DL.Sales.DeleteDataSupplier(clsData.ID)
                 End If
 
                 DL.Sales.SaveData(bolNew, clsData)
 
-                '# Save Data Sales Supplier
-                For Each clsItem As VO.SalesSupplier In clsDataSupplier
-                    clsItem.ID = clsData.ID & "-" & Format(DL.Sales.GetMaxIDSupplier(clsData.ID), "000")
-                    clsItem.SalesID = clsData.ID
-                    DL.Sales.SaveDataSupplier(clsItem)
-                Next
-
-                '# Save Data Status
+                '# Save Data Status Sales
                 SaveDataStatus(clsData.ID, IIf(bolNew, "BARU", "EDIT"), clsData.LogBy, clsData.Remarks)
+
+                '# Receive
+                If bolNew Then clsReceive.ID = BL.Receive.GetNewID(clsReceive.CompanyID, clsReceive.ProgramID)
+
+                clsReceive.ReferencesID = clsData.ID
+                DL.Receive.SaveData(bolNew, clsReceive)
+
+                '# Save Data Status Receive
+                BL.Receive.SaveDataStatus(clsReceive.ID, IIf(bolNew, "BARU", "EDIT"), clsReceive.LogBy, clsReceive.Remarks)
+
+                '# Calculate Arrival Usage
+                DL.Sales.CalculateArrivalUsage(clsData.ID)
 
                 DL.SQL.CommitTransaction()
             Catch ex As Exception

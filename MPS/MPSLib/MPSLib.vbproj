@@ -71,6 +71,7 @@
     <Compile Include="BusinessLayers\Base\ChartOfAccountAssign.vb" />
     <Compile Include="BusinessLayers\Base\ChartOfAccountGroup.vb" />
     <Compile Include="BusinessLayers\Base\Company.vb" />
+    <Compile Include="BusinessLayers\DownPayment.vb" />
     <Compile Include="BusinessLayers\Base\JournalPost.vb" />
     <Compile Include="BusinessLayers\Base\Modules.vb" />
     <Compile Include="BusinessLayers\Base\ModulesAccess.vb" />
@@ -119,6 +120,7 @@
     <Compile Include="DataLayers\Base\UserCompany.vb" />
     <Compile Include="DataLayers\Base\BusinessPartner.vb" />
     <Compile Include="DataLayers\Cost.vb" />
+    <Compile Include="DataLayers\DownPayment.vb" />
     <Compile Include="DataLayers\Item.vb" />
     <Compile Include="DataLayers\Journal.vb" />
     <Compile Include="DataLayers\PaymentReferences.vb" />
@@ -160,6 +162,7 @@
     <Compile Include="ValueObject\AccountReceivableStatus.vb" />
     <Compile Include="ValueObject\Base\Access.vb" />
     <Compile Include="ValueObject\Base\BusinessPartnerAssign.vb" />
+    <Compile Include="ValueObject\Base\BusinessPartnerStatus.vb" />
     <Compile Include="ValueObject\Base\ChartOfAccount.vb" />
     <Compile Include="ValueObject\Base\ChartOfAccountAssign.vb" />
     <Compile Include="ValueObject\Base\ChartOfAccountGroup.vb" />
@@ -183,6 +186,9 @@
     <Compile Include="ValueObject\Cost.vb" />
     <Compile Include="ValueObject\CostDet.vb" />
     <Compile Include="ValueObject\CostStatus.vb" />
+    <Compile Include="ValueObject\DownPayment.vb" />
+    <Compile Include="ValueObject\DownPaymentDet.vb" />
+    <Compile Include="ValueObject\DownPaymentStatus.vb" />
     <Compile Include="ValueObject\Item.vb" />
     <Compile Include="ValueObject\Journal.vb" />
     <Compile Include="ValueObject\JournalDet.vb" />

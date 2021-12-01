@@ -270,6 +270,7 @@ Partial Class frmTraSalesReturn
         Me.grdView.OptionsBehavior.AutoExpandAllGroups = True
         Me.grdView.OptionsView.ColumnAutoWidth = False
         Me.grdView.OptionsView.ShowAutoFilterRow = True
+        Me.grdView.OptionsView.ShowFooter = True
         '
         'pgMain
         '

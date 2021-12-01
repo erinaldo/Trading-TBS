@@ -152,6 +152,12 @@
     <Compile Include="PresentationLayers\Forms\Master\frmMstBusinessPartnerHistory.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="PresentationLayers\Forms\Master\frmMstBusinessPartnerPrice.Designer.vb">
+      <DependentUpon>frmMstBusinessPartnerPrice.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Master\frmMstBusinessPartnerPrice.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="PresentationLayers\Forms\Master\frmMstChartOfAccount.designer.vb">
       <DependentUpon>frmMstChartOfAccount.vb</DependentUpon>
     </Compile>
@@ -422,6 +428,18 @@
     <Compile Include="PresentationLayers\Forms\Transaction\frmTraCostItem.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraDownPayment.Designer.vb">
+      <DependentUpon>frmTraDownPayment.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraDownPayment.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraDownPaymentDet.Designer.vb">
+      <DependentUpon>frmTraDownPaymentDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PresentationLayers\Forms\Transaction\frmTraDownPaymentDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="PresentationLayers\Forms\Transaction\frmTraJournal.designer.vb">
       <DependentUpon>frmTraJournal.vb</DependentUpon>
     </Compile>
@@ -608,6 +626,9 @@
     <EmbeddedResource Include="PresentationLayers\Forms\Master\frmMstBusinessPartnerHistory.resx">
       <DependentUpon>frmMstBusinessPartnerHistory.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\Master\frmMstBusinessPartnerPrice.resx">
+      <DependentUpon>frmMstBusinessPartnerPrice.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\Master\frmMstChartOfAccount.resx">
       <DependentUpon>frmMstChartOfAccount.vb</DependentUpon>
     </EmbeddedResource>
@@ -742,6 +763,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraCostItem.resx">
       <DependentUpon>frmTraCostItem.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraDownPayment.resx">
+      <DependentUpon>frmTraDownPayment.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraDownPaymentDet.resx">
+      <DependentUpon>frmTraDownPaymentDet.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayers\Forms\Transaction\frmTraJournal.resx">
       <DependentUpon>frmTraJournal.vb</DependentUpon>

@@ -4,6 +4,8 @@ Namespace VO
         Property ID As String
         Property BPID As Integer
         Property BPName As String
+        Property SupplierID As Integer
+        Property SupplierName As String
         Property SalesDate As DateTime
         Property PaymentTerm As Integer
         Property DueDate As DateTime
@@ -31,5 +33,8 @@ Namespace VO
         Property Remarks As String
         Property IDStatus As Integer
         Property Tolerance As Decimal
+        Property ReceiveID As String
+        Property PurchasePrice1 As Decimal
+        Property PurchasePrice2 As Decimal
     End Class
 End Namespace

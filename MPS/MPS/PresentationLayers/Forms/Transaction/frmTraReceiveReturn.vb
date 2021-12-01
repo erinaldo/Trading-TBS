@@ -1,4 +1,6 @@
-﻿Public Class frmTraReceiveReturn
+﻿Imports DevExpress.XtraGrid
+
+Public Class frmTraReceiveReturn
 
     Private intPos As Integer = 0
     Private clsData As New VO.ReceiveReturn
@@ -35,10 +37,10 @@
         UI.usForm.SetGrid(grdView, "ArrivalNettoBefore", "Netto 1", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "ArrivalDeduction", "Potongan", 100, UI.usDefGrid.gReal2Num)
         UI.usForm.SetGrid(grdView, "ArrivalNettoAfter", "Netto 2", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "Price1", "Harga 1", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "Price2", "Harga 2", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "TotalPrice1", "Total Harga 1", 100, UI.usDefGrid.gReal2Num)
-        UI.usForm.SetGrid(grdView, "TotalPrice2", "Total Harga 2", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "Price1", "Harga", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "Price2", "Harga 2", 100, UI.usDefGrid.gReal2Num, False)
+        UI.usForm.SetGrid(grdView, "TotalPrice1", "Total Harga", 100, UI.usDefGrid.gReal2Num)
+        UI.usForm.SetGrid(grdView, "TotalPrice2", "Total Harga 2", 100, UI.usDefGrid.gReal2Num, False)
         UI.usForm.SetGrid(grdView, "IsPostedGL", "Posted GL", 100, UI.usDefGrid.gBoolean)
         UI.usForm.SetGrid(grdView, "PostedBy", "Posted By", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "PostedDate", "Posted Date", 100, UI.usDefGrid.gFullDate)
@@ -94,6 +96,7 @@
         pgMain.Value = 30
         Try
             grdMain.DataSource = BL.ReceiveReturn.ListData(intCompanyID, MPSLib.UI.usUserApp.ProgramID, dtpDateFrom.Value.Date, dtpDateTo.Value.Date, cboStatus.SelectedValue)
+            prvSumGrid()
             grdView.BestFitColumns()
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
@@ -234,6 +237,39 @@
         End With
     End Sub
 
+    Private Sub prvSumGrid()
+        Dim SumTotalBrutto As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalBrutto", "Total Brutto: {0:#,##0.00}")
+        Dim SumTotalTarra As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalTarra", "Total Tarra: {0:#,##0.00}")
+        Dim SumTotalNetto1 As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalNettoBefore", "Total Netto 1: {0:#,##0.00}")
+        Dim SumTotalPotongan As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalDeduction", "Total Potongan: {0:#,##0.00}")
+        Dim SumTotalNetto2 As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ArrivalNettoAfter", "Total Netto 2: {0:#,##0.00}")
+        Dim SumTotalPrice1 As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalPrice1", "Total Price: {0:#,##0.00}")
+
+        If grdView.Columns("ArrivalBrutto").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalBrutto").Summary.Add(SumTotalBrutto)
+        End If
+
+        If grdView.Columns("ArrivalTarra").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalTarra").Summary.Add(SumTotalTarra)
+        End If
+
+        If grdView.Columns("ArrivalNettoBefore").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalNettoBefore").Summary.Add(SumTotalNetto1)
+        End If
+
+        If grdView.Columns("ArrivalDeduction").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalDeduction").Summary.Add(SumTotalPotongan)
+        End If
+
+        If grdView.Columns("ArrivalNettoAfter").SummaryText.Trim = "" Then
+            grdView.Columns("ArrivalNettoAfter").Summary.Add(SumTotalNetto2)
+        End If
+
+        If grdView.Columns("TotalPrice1").SummaryText.Trim = "" Then
+            grdView.Columns("TotalPrice1").Summary.Add(SumTotalPrice1)
+        End If
+    End Sub
+
     Private Sub prvUserAccess()
         With ToolBar.Buttons
             .Item(cNew).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionReceiveReturn, VO.Access.Values.NewAccess)
@@ -260,6 +296,7 @@
         prvDefaultFilter()
         prvQuery()
         prvUserAccess()
+        Me.WindowState = FormWindowState.Maximized
     End Sub
 
     Private Sub ToolBar_ButtonClick(sender As Object, e As ToolBarButtonClickEventArgs) Handles ToolBar.ButtonClick

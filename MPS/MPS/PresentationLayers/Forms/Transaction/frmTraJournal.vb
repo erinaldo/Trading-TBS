@@ -1,4 +1,5 @@
-﻿Public Class frmTraJournal
+﻿Imports DevExpress.XtraGrid
+Public Class frmTraJournal
 
     Private intPos As Integer = 0
     Private clsData As New VO.Journal
@@ -79,6 +80,7 @@
         pgMain.Value = 30
         Try
             grdMain.DataSource = BL.Journal.ListData(intCompanyID, MPSLib.UI.usUserApp.ProgramID, dtpDateFrom.Value.Date, dtpDateTo.Value.Date, cboStatus.SelectedValue)
+            prvSumGrid()
             grdView.BestFitColumns()
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
@@ -203,6 +205,14 @@
         End With
     End Sub
 
+    Private Sub prvSumGrid()
+        Dim SumTotalAmount As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalAmount", "Total Jurnal: {0:#,##0.00}")
+
+        If grdView.Columns("TotalAmount").SummaryText.Trim = "" Then
+            grdView.Columns("TotalAmount").Summary.Add(SumTotalAmount)
+        End If
+    End Sub
+
     Private Sub prvUserAccess()
         With ToolBar.Buttons
             .Item(cNew).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionJournal, VO.Access.Values.NewAccess)
@@ -229,6 +239,7 @@
         prvDefaultFilter()
         prvQuery()
         prvUserAccess()
+        Me.WindowState = FormWindowState.Maximized
     End Sub
 
     Private Sub ToolBar_ButtonClick(sender As Object, e As ToolBarButtonClickEventArgs) Handles ToolBar.ButtonClick
@@ -270,5 +281,5 @@
     End Sub
 
 #End Region
-    
+
 End Class

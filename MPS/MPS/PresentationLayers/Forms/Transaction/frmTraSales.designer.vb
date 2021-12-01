@@ -30,7 +30,9 @@ Partial Class frmTraSales
         Me.BarDetail = New System.Windows.Forms.ToolBarButton()
         Me.BarDelete = New System.Windows.Forms.ToolBarButton()
         Me.BarSep1 = New System.Windows.Forms.ToolBarButton()
+        Me.BarSplitReceive = New System.Windows.Forms.ToolBarButton()
         Me.BarPrintDO = New System.Windows.Forms.ToolBarButton()
+        Me.BarSep2 = New System.Windows.Forms.ToolBarButton()
         Me.BarRefresh = New System.Windows.Forms.ToolBarButton()
         Me.BarClose = New System.Windows.Forms.ToolBarButton()
         Me.pnlMain = New DevExpress.XtraEditors.PanelControl()
@@ -47,8 +49,6 @@ Partial Class frmTraSales
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pgMain = New System.Windows.Forms.ProgressBar()
-        Me.BarSplitReceive = New System.Windows.Forms.ToolBarButton()
-        Me.BarSep2 = New System.Windows.Forms.ToolBarButton()
         CType(Me.grdMain, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.grdView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pnlMain, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -88,6 +88,7 @@ Partial Class frmTraSales
         Me.grdView.OptionsCustomization.AllowGroup = False
         Me.grdView.OptionsView.ColumnAutoWidth = False
         Me.grdView.OptionsView.ShowAutoFilterRow = True
+        Me.grdView.OptionsView.ShowFooter = True
         Me.grdView.OptionsView.ShowGroupPanel = False
         '
         'ToolBar
@@ -125,11 +126,22 @@ Partial Class frmTraSales
         Me.BarSep1.Name = "BarSep1"
         Me.BarSep1.Style = System.Windows.Forms.ToolBarButtonStyle.Separator
         '
+        'BarSplitReceive
+        '
+        Me.BarSplitReceive.Name = "BarSplitReceive"
+        Me.BarSplitReceive.Tag = "Copy"
+        Me.BarSplitReceive.Text = "Split Pembelian"
+        '
         'BarPrintDO
         '
         Me.BarPrintDO.Name = "BarPrintDO"
         Me.BarPrintDO.Tag = "Print"
         Me.BarPrintDO.Text = "Cetak Bon"
+        '
+        'BarSep2
+        '
+        Me.BarSep2.Name = "BarSep2"
+        Me.BarSep2.Style = System.Windows.Forms.ToolBarButtonStyle.Separator
         '
         'BarRefresh
         '
@@ -289,17 +301,6 @@ Partial Class frmTraSales
         Me.pgMain.Name = "pgMain"
         Me.pgMain.Size = New System.Drawing.Size(984, 23)
         Me.pgMain.TabIndex = 3
-        '
-        'BarSplitReceive
-        '
-        Me.BarSplitReceive.Name = "BarSplitReceive"
-        Me.BarSplitReceive.Tag = "Copy"
-        Me.BarSplitReceive.Text = "Split Pembelian"
-        '
-        'BarSep2
-        '
-        Me.BarSep2.Name = "BarSep2"
-        Me.BarSep2.Style = System.Windows.Forms.ToolBarButtonStyle.Separator
         '
         'frmTraSales
         '

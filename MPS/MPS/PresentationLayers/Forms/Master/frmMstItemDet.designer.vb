@@ -30,15 +30,10 @@ Partial Class frmMstItemDet
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripLogDate = New System.Windows.Forms.ToolStripStatusLabel()
         Me.pnlDetail = New System.Windows.Forms.Panel()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.txtTolerance = New MPS.usNumeric()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.txtPurchasePrice2 = New MPS.usNumeric()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.txtPurchasePrice1 = New MPS.usNumeric()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.txtSalesPrice = New MPS.usNumeric()
         Me.txtBalanceQty = New MPS.usNumeric()
-        Me.txtMinQty = New MPS.usNumeric()
         Me.cboUOMID = New MPS.usComboBox()
         Me.cboStatus = New MPS.usComboBox()
         Me.lblIDStatus = New System.Windows.Forms.Label()
@@ -47,21 +42,14 @@ Partial Class frmMstItemDet
         Me.lblName = New System.Windows.Forms.Label()
         Me.txtName = New MPS.usTextBox()
         Me.lblUomID1 = New System.Windows.Forms.Label()
-        Me.lblMinQty = New System.Windows.Forms.Label()
         Me.lblBalanceQty = New System.Windows.Forms.Label()
-        Me.lblSalesPrice = New System.Windows.Forms.Label()
         Me.Toolbar = New MPS.usToolBar()
         Me.BarRefresh = New System.Windows.Forms.ToolBarButton()
         Me.BarClose = New System.Windows.Forms.ToolBarButton()
-        Me.Label4 = New System.Windows.Forms.Label()
         Me.StatusStrip.SuspendLayout()
         Me.pnlDetail.SuspendLayout()
         CType(Me.txtTolerance, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtPurchasePrice2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtPurchasePrice1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtSalesPrice, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtBalanceQty, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtMinQty, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'lblInfo
@@ -81,7 +69,7 @@ Partial Class frmMstItemDet
         '
         Me.StatusStrip.Font = New System.Drawing.Font("Tahoma", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripEmpty, Me.ToolStripLogInc, Me.ToolStripLogBy, Me.ToolStripStatusLabel1, Me.ToolStripLogDate})
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 296)
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 234)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.Size = New System.Drawing.Size(622, 22)
         Me.StatusStrip.TabIndex = 3
@@ -134,13 +122,7 @@ Partial Class frmMstItemDet
         Me.pnlDetail.Controls.Add(Me.Label4)
         Me.pnlDetail.Controls.Add(Me.txtTolerance)
         Me.pnlDetail.Controls.Add(Me.Label3)
-        Me.pnlDetail.Controls.Add(Me.txtPurchasePrice2)
-        Me.pnlDetail.Controls.Add(Me.Label2)
-        Me.pnlDetail.Controls.Add(Me.txtPurchasePrice1)
-        Me.pnlDetail.Controls.Add(Me.Label1)
-        Me.pnlDetail.Controls.Add(Me.txtSalesPrice)
         Me.pnlDetail.Controls.Add(Me.txtBalanceQty)
-        Me.pnlDetail.Controls.Add(Me.txtMinQty)
         Me.pnlDetail.Controls.Add(Me.cboUOMID)
         Me.pnlDetail.Controls.Add(Me.cboStatus)
         Me.pnlDetail.Controls.Add(Me.lblIDStatus)
@@ -149,14 +131,23 @@ Partial Class frmMstItemDet
         Me.pnlDetail.Controls.Add(Me.lblName)
         Me.pnlDetail.Controls.Add(Me.txtName)
         Me.pnlDetail.Controls.Add(Me.lblUomID1)
-        Me.pnlDetail.Controls.Add(Me.lblMinQty)
         Me.pnlDetail.Controls.Add(Me.lblBalanceQty)
-        Me.pnlDetail.Controls.Add(Me.lblSalesPrice)
         Me.pnlDetail.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pnlDetail.Location = New System.Drawing.Point(0, 50)
         Me.pnlDetail.Name = "pnlDetail"
-        Me.pnlDetail.Size = New System.Drawing.Size(622, 246)
+        Me.pnlDetail.Size = New System.Drawing.Size(622, 184)
         Me.pnlDetail.TabIndex = 2
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.BackColor = System.Drawing.Color.Transparent
+        Me.Label4.ForeColor = System.Drawing.Color.Black
+        Me.Label4.Location = New System.Drawing.Point(587, 111)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(18, 13)
+        Me.Label4.TabIndex = 102
+        Me.Label4.Text = "%"
         '
         'txtTolerance
         '
@@ -166,7 +157,7 @@ Partial Class frmMstItemDet
         Me.txtTolerance.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
         Me.txtTolerance.Name = "txtTolerance"
         Me.txtTolerance.Size = New System.Drawing.Size(161, 21)
-        Me.txtTolerance.TabIndex = 6
+        Me.txtTolerance.TabIndex = 4
         Me.txtTolerance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtTolerance.ThousandsSeparator = True
         '
@@ -181,88 +172,18 @@ Partial Class frmMstItemDet
         Me.Label3.TabIndex = 101
         Me.Label3.Text = "Toleransi"
         '
-        'txtPurchasePrice2
-        '
-        Me.txtPurchasePrice2.DecimalPlaces = 2
-        Me.txtPurchasePrice2.Location = New System.Drawing.Point(116, 188)
-        Me.txtPurchasePrice2.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
-        Me.txtPurchasePrice2.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
-        Me.txtPurchasePrice2.Name = "txtPurchasePrice2"
-        Me.txtPurchasePrice2.Size = New System.Drawing.Size(160, 21)
-        Me.txtPurchasePrice2.TabIndex = 5
-        Me.txtPurchasePrice2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.txtPurchasePrice2.ThousandsSeparator = True
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.BackColor = System.Drawing.Color.Transparent
-        Me.Label2.ForeColor = System.Drawing.Color.Black
-        Me.Label2.Location = New System.Drawing.Point(31, 192)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(64, 13)
-        Me.Label2.TabIndex = 99
-        Me.Label2.Text = "Harga Beli 2"
-        '
-        'txtPurchasePrice1
-        '
-        Me.txtPurchasePrice1.DecimalPlaces = 2
-        Me.txtPurchasePrice1.Location = New System.Drawing.Point(116, 161)
-        Me.txtPurchasePrice1.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
-        Me.txtPurchasePrice1.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
-        Me.txtPurchasePrice1.Name = "txtPurchasePrice1"
-        Me.txtPurchasePrice1.Size = New System.Drawing.Size(160, 21)
-        Me.txtPurchasePrice1.TabIndex = 4
-        Me.txtPurchasePrice1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.txtPurchasePrice1.ThousandsSeparator = True
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(31, 165)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(64, 13)
-        Me.Label1.TabIndex = 97
-        Me.Label1.Text = "Harga Beli 1"
-        '
-        'txtSalesPrice
-        '
-        Me.txtSalesPrice.DecimalPlaces = 2
-        Me.txtSalesPrice.Location = New System.Drawing.Point(116, 134)
-        Me.txtSalesPrice.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
-        Me.txtSalesPrice.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
-        Me.txtSalesPrice.Name = "txtSalesPrice"
-        Me.txtSalesPrice.Size = New System.Drawing.Size(160, 21)
-        Me.txtSalesPrice.TabIndex = 3
-        Me.txtSalesPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.txtSalesPrice.ThousandsSeparator = True
-        '
         'txtBalanceQty
         '
         Me.txtBalanceQty.DecimalPlaces = 2
         Me.txtBalanceQty.Enabled = False
-        Me.txtBalanceQty.Location = New System.Drawing.Point(422, 161)
+        Me.txtBalanceQty.Location = New System.Drawing.Point(422, 134)
         Me.txtBalanceQty.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
         Me.txtBalanceQty.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
         Me.txtBalanceQty.Name = "txtBalanceQty"
         Me.txtBalanceQty.Size = New System.Drawing.Size(160, 21)
-        Me.txtBalanceQty.TabIndex = 8
+        Me.txtBalanceQty.TabIndex = 5
         Me.txtBalanceQty.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtBalanceQty.ThousandsSeparator = True
-        '
-        'txtMinQty
-        '
-        Me.txtMinQty.DecimalPlaces = 2
-        Me.txtMinQty.Location = New System.Drawing.Point(422, 134)
-        Me.txtMinQty.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
-        Me.txtMinQty.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
-        Me.txtMinQty.Name = "txtMinQty"
-        Me.txtMinQty.Size = New System.Drawing.Size(160, 21)
-        Me.txtMinQty.TabIndex = 7
-        Me.txtMinQty.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.txtMinQty.ThousandsSeparator = True
         '
         'cboUOMID
         '
@@ -278,17 +199,17 @@ Partial Class frmMstItemDet
         Me.cboStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboStatus.Enabled = False
         Me.cboStatus.FormattingEnabled = True
-        Me.cboStatus.Location = New System.Drawing.Point(422, 188)
+        Me.cboStatus.Location = New System.Drawing.Point(116, 134)
         Me.cboStatus.Name = "cboStatus"
         Me.cboStatus.Size = New System.Drawing.Size(160, 21)
-        Me.cboStatus.TabIndex = 9
+        Me.cboStatus.TabIndex = 3
         '
         'lblIDStatus
         '
         Me.lblIDStatus.AutoSize = True
         Me.lblIDStatus.BackColor = System.Drawing.Color.Transparent
         Me.lblIDStatus.ForeColor = System.Drawing.Color.Black
-        Me.lblIDStatus.Location = New System.Drawing.Point(337, 192)
+        Me.lblIDStatus.Location = New System.Drawing.Point(31, 138)
         Me.lblIDStatus.Name = "lblIDStatus"
         Me.lblIDStatus.Size = New System.Drawing.Size(38, 13)
         Me.lblIDStatus.TabIndex = 95
@@ -350,38 +271,16 @@ Partial Class frmMstItemDet
         Me.lblUomID1.TabIndex = 93
         Me.lblUomID1.Text = "Satuan"
         '
-        'lblMinQty
-        '
-        Me.lblMinQty.AutoSize = True
-        Me.lblMinQty.BackColor = System.Drawing.Color.Transparent
-        Me.lblMinQty.ForeColor = System.Drawing.Color.Black
-        Me.lblMinQty.Location = New System.Drawing.Point(337, 138)
-        Me.lblMinQty.Name = "lblMinQty"
-        Me.lblMinQty.Size = New System.Drawing.Size(62, 13)
-        Me.lblMinQty.TabIndex = 93
-        Me.lblMinQty.Text = "Minimal Qty"
-        '
         'lblBalanceQty
         '
         Me.lblBalanceQty.AutoSize = True
         Me.lblBalanceQty.BackColor = System.Drawing.Color.Transparent
         Me.lblBalanceQty.ForeColor = System.Drawing.Color.Black
-        Me.lblBalanceQty.Location = New System.Drawing.Point(337, 165)
+        Me.lblBalanceQty.Location = New System.Drawing.Point(337, 138)
         Me.lblBalanceQty.Name = "lblBalanceQty"
         Me.lblBalanceQty.Size = New System.Drawing.Size(54, 13)
         Me.lblBalanceQty.TabIndex = 93
         Me.lblBalanceQty.Text = "Saldo Qty"
-        '
-        'lblSalesPrice
-        '
-        Me.lblSalesPrice.AutoSize = True
-        Me.lblSalesPrice.BackColor = System.Drawing.Color.Transparent
-        Me.lblSalesPrice.ForeColor = System.Drawing.Color.Black
-        Me.lblSalesPrice.Location = New System.Drawing.Point(31, 138)
-        Me.lblSalesPrice.Name = "lblSalesPrice"
-        Me.lblSalesPrice.Size = New System.Drawing.Size(58, 13)
-        Me.lblSalesPrice.TabIndex = 93
-        Me.lblSalesPrice.Text = "Harga Jual"
         '
         'Toolbar
         '
@@ -407,22 +306,11 @@ Partial Class frmMstItemDet
         Me.BarClose.Tag = "Close"
         Me.BarClose.Text = "Tutup"
         '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.BackColor = System.Drawing.Color.Transparent
-        Me.Label4.ForeColor = System.Drawing.Color.Black
-        Me.Label4.Location = New System.Drawing.Point(587, 111)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(18, 13)
-        Me.Label4.TabIndex = 102
-        Me.Label4.Text = "%"
-        '
         'frmMstItemDet
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(622, 318)
+        Me.ClientSize = New System.Drawing.Size(622, 256)
         Me.Controls.Add(Me.pnlDetail)
         Me.Controls.Add(Me.lblInfo)
         Me.Controls.Add(Me.Toolbar)
@@ -439,11 +327,7 @@ Partial Class frmMstItemDet
         Me.pnlDetail.ResumeLayout(False)
         Me.pnlDetail.PerformLayout()
         CType(Me.txtTolerance, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtPurchasePrice2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtPurchasePrice1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtSalesPrice, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtBalanceQty, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtMinQty, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -461,23 +345,15 @@ Partial Class frmMstItemDet
     Friend WithEvents lblName As System.Windows.Forms.Label
     Friend WithEvents txtName As usTextBox
     Friend WithEvents lblUomID1 As System.Windows.Forms.Label
-    Friend WithEvents lblMinQty As System.Windows.Forms.Label
     Friend WithEvents lblBalanceQty As System.Windows.Forms.Label
-    Friend WithEvents lblSalesPrice As System.Windows.Forms.Label
     Friend WithEvents cboStatus As MPS.usComboBox
     Friend WithEvents lblIDStatus As System.Windows.Forms.Label
-    Friend WithEvents txtSalesPrice As MPS.usNumeric
     Friend WithEvents txtBalanceQty As MPS.usNumeric
-    Friend WithEvents txtMinQty As MPS.usNumeric
     Friend WithEvents cboUOMID As MPS.usComboBox
     Friend WithEvents Toolbar As MPS.usToolBar
     Friend WithEvents BarRefresh As System.Windows.Forms.ToolBarButton
     Friend WithEvents ToolBarButton1 As System.Windows.Forms.ToolBarButton
     Friend WithEvents BarClose As System.Windows.Forms.ToolBarButton
-    Friend WithEvents txtPurchasePrice2 As MPS.usNumeric
-    Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents txtPurchasePrice1 As MPS.usNumeric
-    Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents txtTolerance As MPS.usNumeric
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label

@@ -51,11 +51,11 @@ Namespace DL
                 If bolNew Then
                     .CommandText = _
                        "INSERT INTO traSales " & vbNewLine & _
-                       "    (CompanyID, ProgramID, ID, BPID, SalesDate, PaymentTerm, DueDate, DriverName, PlatNumber, " & vbNewLine & _
+                       "    (CompanyID, ProgramID, ID, BPID, SupplierID, SalesDate, PaymentTerm, DueDate, DriverName, PlatNumber, " & vbNewLine & _
                        "     PPN, PPH, ItemID, ArrivalBrutto, ArrivalTarra, ArrivalNettoBefore, ArrivalDeduction, ArrivalNettoAfter, Price, TotalPrice, Remarks, IDStatus, CreatedBy,   " & vbNewLine & _
                        "     CreatedDate, LogBy, LogDate)   " & vbNewLine & _
                        "VALUES " & vbNewLine & _
-                       "    (@CompanyID, @ProgramID, @ID, @BPID, @SalesDate, @PaymentTerm, @DueDate, @DriverName, @PlatNumber, " & vbNewLine & _
+                       "    (@CompanyID, @ProgramID, @ID, @BPID, @SupplierID, @SalesDate, @PaymentTerm, @DueDate, @DriverName, @PlatNumber, " & vbNewLine & _
                        "     @PPN, @PPH, @ItemID, @ArrivalBrutto, @ArrivalTarra, @ArrivalNettoBefore, @ArrivalDeduction, @ArrivalNettoAfter, @Price, @TotalPrice, @Remarks, @IDStatus, @LogBy,   " & vbNewLine & _
                        "     GETDATE(), @LogBy, GETDATE())  " & vbNewLine
                 Else
@@ -64,6 +64,7 @@ Namespace DL
                         "    CompanyID=@CompanyID, " & vbNewLine & _
                         "    ProgramID=@ProgramID, " & vbNewLine & _
                         "    BPID=@BPID, " & vbNewLine & _
+                        "    SupplierID=@SupplierID, " & vbNewLine & _
                         "    SalesDate=@SalesDate, " & vbNewLine & _
                         "    PaymentTerm=@PaymentTerm, " & vbNewLine & _
                         "    PlatNumber=@PlatNumber, " & vbNewLine & _
@@ -92,6 +93,7 @@ Namespace DL
                 .Parameters.Add("@ProgramID", SqlDbType.Int).Value = clsData.ProgramID
                 .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = clsData.ID
                 .Parameters.Add("@BPID", SqlDbType.Int).Value = clsData.BPID
+                .Parameters.Add("@SupplierID", SqlDbType.Int).Value = clsData.SupplierID
                 .Parameters.Add("@SalesDate", SqlDbType.DateTime).Value = clsData.SalesDate
                 .Parameters.Add("@PaymentTerm", SqlDbType.Int).Value = clsData.PaymentTerm
                 .Parameters.Add("@DueDate", SqlDbType.DateTime).Value = clsData.DueDate
@@ -127,14 +129,18 @@ Namespace DL
                     .Connection = SQL.sqlConn
                     .CommandText = _
                         "SELECT " & vbNewLine & _
-                        "    A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.BPID, C.Name AS BPName, A.SalesDate, A.PaymentTerm, A.DriverName, A.PlatNumber, A.DueDate, " & vbNewLine & _
+                        "    A.CompanyID, MC.Name AS CompanyName, A.ProgramID, MP.Name AS ProgramName, A.ID, A.BPID, C.Name AS BPName, A.SupplierID, D.Name AS SupplierName, A.SalesDate, A.PaymentTerm, A.DriverName, A.PlatNumber, A.DueDate, " & vbNewLine & _
                         "    A.PPN, A.PPH, A.ItemID, MI.Code AS ItemCode, MI.Name AS ItemName, MI.UomID AS UOMID, MU.Code AS UomCode, " & vbNewLine & _
                         "    A.ArrivalBrutto, A.ArrivalTarra, A.ArrivalNettoBefore, A.ArrivalDeduction, A.ArrivalNettoAfter, A.Price, A.TotalPrice, A.ArrivalReturn, A.TotalPayment, A.IsPostedGL,   " & vbNewLine & _
                         "    A.PostedBy, A.PostedDate, A.IsDeleted, A.Remarks, A.IDStatus, A.CreatedBy,   " & vbNewLine & _
-                        "    A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID, MI.Tolerance, A.ArrivalUsage  " & vbNewLine & _
+                        "    A.CreatedDate, A.LogInc, A.LogBy, A.LogDate, A.JournalID, MI.Tolerance, A.ArrivalUsage, TR.ID AS ReceiveID, TR.Price1 AS PurchasePrice1, TR.Price2 AS PurchasePrice2 " & vbNewLine & _
                         "FROM traSales A " & vbNewLine & _
                         "INNER JOIN mstBusinessPartner C ON " & vbNewLine & _
                         "    A.BPID=C.ID " & vbNewLine & _
+                        "INNER JOIN mstBusinessPartner D ON " & vbNewLine & _
+                        "    A.SupplierID=D.ID " & vbNewLine & _
+                        "INNER JOIN traReceive TR ON " & vbNewLine & _
+                        "    A.ID=TR.ReferencesID " & vbNewLine & _
                         "INNER JOIN mstItem MI ON " & vbNewLine & _
                         "    A.ItemID=MI.ID " & vbNewLine & _
                         "INNER JOIN mstUOM MU ON " & vbNewLine & _
@@ -160,6 +166,8 @@ Namespace DL
                         voReturn.ID = .Item("ID")
                         voReturn.BPID = .Item("BPID")
                         voReturn.BPName = .Item("BPName")
+                        voReturn.SupplierID = .Item("SupplierID")
+                        voReturn.SupplierName = .Item("SupplierName")
                         voReturn.SalesDate = .Item("SalesDate")
                         voReturn.PaymentTerm = .Item("PaymentTerm")
                         voReturn.DueDate = .Item("DueDate")
@@ -192,6 +200,9 @@ Namespace DL
                         voReturn.JournalID = .Item("JournalID")
                         voReturn.Tolerance = .Item("Tolerance")
                         voReturn.ArrivalUsage = .Item("ArrivalUsage")
+                        voReturn.ReceiveID = .Item("ReceiveID")
+                        voReturn.PurchasePrice1 = .Item("PurchasePrice1")
+                        voReturn.PurchasePrice2 = .Item("PurchasePrice2")
                     End If
                 End With
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()

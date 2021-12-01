@@ -56,8 +56,6 @@
                 txtCode.Text = clsData.Code
                 cboChartOfAccountGroup.SelectedValue = clsData.AccountGroupID
                 txtName.Text = clsData.Name
-                txtFirstBalance.Value = clsData.FirstBalance
-                dtpFirstBalanceDate.Value = clsData.FirstBalanceDate
                 cboStatus.SelectedValue = clsData.IDStatus
                 ToolStripLogInc.Text = "Jumlah Edit : " & clsData.LogInc
                 ToolStripLogBy.Text = "Dibuat Oleh : " & clsData.LogBy
@@ -93,8 +91,8 @@
         clsData.ID = pubID
         clsData.Code = txtCode.Text.Trim
         clsData.Name = txtName.Text.Trim
-        clsData.FirstBalance = txtFirstBalance.Value
-        clsData.FirstBalanceDate = dtpFirstBalanceDate.Value
+        clsData.FirstBalance = 0
+        clsData.FirstBalanceDate = "2000/01/01"
         clsData.AccountGroupID = cboChartOfAccountGroup.SelectedValue
         clsData.AccountGroupName = cboChartOfAccountGroup.Text.Trim
         clsData.IDStatus = cboStatus.SelectedValue
@@ -119,8 +117,6 @@
         txtCode.Text = ""
         txtName.Text = ""
         cboStatus.SelectedValue = VO.Status.Values.Active
-        txtFirstBalance.Value = 0
-        dtpFirstBalanceDate.Value = "2000/01/01"
         ToolStripLogInc.Text = "Jumlah Edit : -"
         ToolStripLogBy.Text = "Dibuat Oleh : -"
         ToolStripLogDate.Text = Format(Now, UI.usDefCons.DateFull)

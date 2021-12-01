@@ -145,6 +145,7 @@
         prvSetGrid()
         prvQuery()
         prvUserAccess()
+        If Not pubIsLookUp Then Me.WindowState = FormWindowState.Maximized
     End Sub
 
     Private Sub ToolBar_ButtonClick(sender As Object, e As ToolBarButtonClickEventArgs) Handles ToolBar.ButtonClick

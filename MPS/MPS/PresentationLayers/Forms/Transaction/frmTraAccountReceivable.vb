@@ -1,4 +1,5 @@
-﻿Public Class frmTraAccountReceivable
+﻿Imports DevExpress.XtraGrid
+Public Class frmTraAccountReceivable
 
     Private intPos As Integer = 0
     Private clsData As New VO.AccountReceivable
@@ -79,6 +80,7 @@
         pgMain.Value = 30
         Try
             grdMain.DataSource = BL.AccountReceivable.ListData(intCompanyID, MPSLib.UI.usUserApp.ProgramID, dtpDateFrom.Value.Date, dtpDateTo.Value.Date, cboStatus.SelectedValue)
+            prvSumGrid()
             grdView.BestFitColumns()
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
@@ -205,6 +207,14 @@
         End With
     End Sub
 
+    Private Sub prvSumGrid()
+        Dim SumTotalAmount As New GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "TotalAmount", "Total Tagihan: {0:#,##0.00}")
+
+        If grdView.Columns("TotalAmount").SummaryText.Trim = "" Then
+            grdView.Columns("TotalAmount").Summary.Add(SumTotalAmount)
+        End If
+    End Sub
+
     Private Sub prvUserAccess()
         With ToolBar.Buttons
             .Item(cNew).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionAccountReceivable, VO.Access.Values.NewAccess)
@@ -272,5 +282,5 @@
     End Sub
 
 #End Region
-    
+
 End Class

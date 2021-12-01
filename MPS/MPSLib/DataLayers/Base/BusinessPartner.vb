@@ -1,14 +1,18 @@
 Namespace DL
     Public Class BusinessPartner
+
+#Region "Main"
+
         Public Shared Function ListData(ByVal decOnAmount As Decimal, ByVal intCompanyID As Integer, ByVal intProgramID As Integer) As DataTable
             Dim sqlcmdExecute As New SqlCommand
             With sqlcmdExecute
                 .CommandText = _
                     "SELECT  	" & vbNewLine & _
-                    "     A.ID, A.Name, A.Address, A.PICName, A.PICPhoneNumber, A.PaymentTermID, A.IsUsePurchaseLimit, A.MaxPurchaseLimit, 	" & vbNewLine & _
-                    "	 ISNULL(TR.TotalPrice1,0) AS TotalPurchase1, ISNULL(TR.TotalPrice2,0) AS TotalPurchase2, A.APBalance, A.ARBalance, 	" & vbNewLine & _
-                    "	 A.IDStatus, B.Name AS StatusInfo, A.CreatedBy, A.CreatedDate, A.LogBy, A.LogDate,   	" & vbNewLine & _
-                    "	 IsAssign=CAST(CASE WHEN ISNULL((SELECT TOP 1 ID FROM mstBusinessPartnerAssign WHERE BPID=A.ID),0)=0 THEN 0 ELSE 1 END AS BIT)" & vbNewLine & _
+                    "   A.ID, A.Name, A.Address, A.PICName, A.PICPhoneNumber, A.PaymentTermID, A.IsUsePurchaseLimit, A.MaxPurchaseLimit, 	" & vbNewLine & _
+                    "   ISNULL(TR.TotalPrice1,0) AS TotalPurchase1, ISNULL(TR.TotalPrice2,0) AS TotalPurchase2, A.APBalance, A.ARBalance, 	" & vbNewLine & _
+                    "   A.IDStatus, B.Name AS StatusInfo, A.CreatedBy, A.CreatedDate, A.LogBy, A.LogDate,   	" & vbNewLine & _
+                    "   IsAssign=CAST(CASE WHEN ISNULL((SELECT TOP 1 ID FROM mstBusinessPartnerAssign WHERE BPID=A.ID),0)=0 THEN 0 ELSE 1 END AS BIT), " & vbNewLine & _
+                    "   A.SalesPrice, A.PurchasePrice1, A.PurchasePrice2 " & vbNewLine & _
                     "FROM mstBusinessPartner A  	" & vbNewLine & _
                     "INNER JOIN mstStatus B ON   	" & vbNewLine & _
                     "    A.IDStatus=B.ID 	" & vbNewLine & _
@@ -44,6 +48,19 @@ Namespace DL
             Return SQL.QueryDataTable(sqlcmdExecute)
         End Function
 
+        Public Shared Function ListDataForUpdatePrice() As DataTable
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "SELECT  	" & vbNewLine & _
+                    "   A.ID, A.Name, A.SalesPrice, A.PurchasePrice1, A.PurchasePrice2, " & vbNewLine & _
+                    "   CAST(0 AS DECIMAL(18,2)) AS SalesPriceNew, CAST(0 AS DECIMAL(18,2)) AS PurchasePrice1New, CAST(0 AS DECIMAL(18,2)) AS PurchasePrice2New " & vbNewLine & _
+                    "FROM mstBusinessPartner A  	" & vbNewLine
+
+            End With
+            Return SQL.QueryDataTable(sqlcmdExecute)
+        End Function
+
         Public Shared Sub SaveData(ByVal bolNew As Boolean, ByVal clsData As VO.BusinessPartner)
             Dim sqlcmdExecute As New SqlCommand
             With sqlcmdExecute
@@ -51,10 +68,10 @@ Namespace DL
                     .CommandText = _
                        "INSERT INTO mstBusinessPartner " & vbNewLine & _
                        "    (ID, Name, Address, PICName, PICPhoneNumber, PaymentTermID,   " & vbNewLine & _
-                       "     IsUsePurchaseLimit, MaxPurchaseLimit, IDStatus, CreatedBy, CreatedDate, LogBy, LogDate)   " & vbNewLine & _
+                       "     IsUsePurchaseLimit, MaxPurchaseLimit, SalesPrice, PurchasePrice1, PurchasePrice2, IDStatus, CreatedBy, CreatedDate, LogBy, LogDate)   " & vbNewLine & _
                        "VALUES " & vbNewLine & _
                        "    (@ID, @Name, @Address, @PICName, @PICPhoneNumber, @PaymentTermID,   " & vbNewLine & _
-                       "     @IsUsePurchaseLimit, @MaxPurchaseLimit, @IDStatus, @LogBy, GETDATE(), @LogBy, GETDATE())  " & vbNewLine
+                       "     @IsUsePurchaseLimit, @MaxPurchaseLimit, @SalesPrice, @PurchasePrice1, @PurchasePrice2, @IDStatus, @LogBy, GETDATE(), @LogBy, GETDATE())  " & vbNewLine
                 Else
                     .CommandText = _
                     "UPDATE mstBusinessPartner SET " & vbNewLine & _
@@ -81,6 +98,9 @@ Namespace DL
                 .Parameters.Add("@PaymentTermID", SqlDbType.Int).Value = clsData.PaymentTermID
                 .Parameters.Add("@IsUsePurchaseLimit", SqlDbType.Bit).Value = clsData.IsUsePurchaseLimit
                 .Parameters.Add("@MaxPurchaseLimit", SqlDbType.Decimal).Value = clsData.MaxPurchaseLimit
+                .Parameters.Add("@SalesPrice", SqlDbType.Decimal).Value = clsData.SalesPrice
+                .Parameters.Add("@PurchasePrice1", SqlDbType.Decimal).Value = clsData.PurchasePrice1
+                .Parameters.Add("@PurchasePrice2", SqlDbType.Decimal).Value = clsData.PurchasePrice2
                 .Parameters.Add("@IDStatus", SqlDbType.Int).Value = clsData.IDStatus
                 .Parameters.Add("@LogBy", SqlDbType.VarChar, 20).Value = clsData.LogBy
             End With
@@ -101,7 +121,8 @@ Namespace DL
                     .CommandText = _
                        "SELECT TOP 1 " & vbNewLine & _
                        "    A.ID, A.Name, A.Address, A.PICName, A.PICPhoneNumber, A.PaymentTermID, " & vbNewLine & _
-                       "    A.IsUsePurchaseLimit, A.MaxPurchaseLimit, A.APBalance, A.ARBalance, A.IDStatus, A.LogBy, A.LogDate  " & vbNewLine & _
+                       "    A.IsUsePurchaseLimit, A.MaxPurchaseLimit, A.APBalance, A.ARBalance, " & vbNewLine & _
+                       "    A.SalesPrice, A.PurchasePrice1, A.PurchasePrice2, A.IDStatus, A.LogBy, A.LogDate  " & vbNewLine & _
                        "FROM mstBusinessPartner A " & vbNewLine & _
                        "WHERE " & vbNewLine & _
                        "    ID=@ID " & vbNewLine
@@ -124,6 +145,9 @@ Namespace DL
                         voReturn.MaxPurchaseLimit = .Item("MaxPurchaseLimit")
                         voReturn.APBalance = .Item("APBalance")
                         voReturn.ARBalance = .Item("ARBalance")
+                        voReturn.SalesPrice = .Item("SalesPrice")
+                        voReturn.PurchasePrice1 = .Item("PurchasePrice1")
+                        voReturn.PurchasePrice2 = .Item("PurchasePrice2")
                         voReturn.IDStatus = .Item("IDStatus")
                         voReturn.LogBy = .Item("LogBy")
                         voReturn.LogDate = .Item("LogDate")
@@ -253,6 +277,107 @@ Namespace DL
             End Try
             Return intReturn
         End Function
+
+        Public Shared Sub UpdatePrice(ByVal clsData As VO.BusinessPartner)
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                    "UPDATE mstBusinessPartner SET " & vbNewLine & _
+                    "    SalesPrice=CASE WHEN @SalesPrice=0 THEN SalesPrice ELSE @SalesPrice END, " & vbNewLine & _
+                    "    PurchasePrice1=CASE WHEN @PurchasePrice1=0 THEN PurchasePrice1 ELSE @PurchasePrice1 END, " & vbNewLine & _
+                    "    PurchasePrice2=CASE WHEN @PurchasePrice2=0 THEN PurchasePrice2 ELSE @PurchasePrice2 END, " & vbNewLine & _
+                    "    LogInc=LogInc+1, " & vbNewLine & _
+                    "    LogBy=@LogBy, " & vbNewLine & _
+                    "    LogDate=GETDATE() " & vbNewLine & _
+                    "WHERE " & vbNewLine & _
+                    "    ID=@ID " & vbNewLine
+
+                .Parameters.Add("@ID", SqlDbType.Int).Value = clsData.ID
+                .Parameters.Add("@SalesPrice", SqlDbType.Decimal).Value = clsData.SalesPrice
+                .Parameters.Add("@PurchasePrice1", SqlDbType.Decimal).Value = clsData.PurchasePrice1
+                .Parameters.Add("@PurchasePrice2", SqlDbType.Decimal).Value = clsData.PurchasePrice2
+                .Parameters.Add("@LogBy", SqlDbType.VarChar, 20).Value = clsData.LogBy
+            End With
+            Try
+                SQL.ExecuteNonQuery(sqlcmdExecute)
+            Catch ex As SqlException
+                Throw ex
+            End Try
+        End Sub
+
+#End Region
+
+#Region "Status"
+
+        Public Shared Function ListDataStatus(ByVal intBPID As Integer) As DataTable
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                   "SELECT " & vbNewLine & _
+                   "     A.ID, A.BPID, A.Status, A.StatusBy, A.StatusDate, A.Remarks  " & vbNewLine & _
+                   "FROM mstBusinessPartnerStatus A " & vbNewLine & _
+                   "WHERE  " & vbNewLine & _
+                   "    A.BPID=@BPID " & vbNewLine
+
+                .Parameters.Add("@BPID", SqlDbType.Int).Value = intBPID
+            End With
+            Return SQL.QueryDataTable(sqlcmdExecute)
+        End Function
+
+        Public Shared Sub SaveDataStatus(ByVal clsData As VO.BusinessPartnerStatus)
+            Dim sqlcmdExecute As New SqlCommand
+            With sqlcmdExecute
+                .CommandText = _
+                   "INSERT INTO mstBusinessPartnerStatus " & vbNewLine & _
+                   "    (ID, BPID, Status, StatusBy, StatusDate, Remarks)   " & vbNewLine & _
+                   "VALUES " & vbNewLine & _
+                   "    (@ID, @BPID, @Status, @StatusBy, @StatusDate, @Remarks)  " & vbNewLine
+
+                .Parameters.Add("@ID", SqlDbType.VarChar, 30).Value = clsData.ID
+                .Parameters.Add("@BPID", SqlDbType.Int).Value = clsData.BPID
+                .Parameters.Add("@Status", SqlDbType.VarChar, 100).Value = clsData.Status
+                .Parameters.Add("@StatusBy", SqlDbType.VarChar, 20).Value = clsData.StatusBy
+                .Parameters.Add("@StatusDate", SqlDbType.DateTime).Value = clsData.StatusDate
+                .Parameters.Add("@Remarks", SqlDbType.VarChar, 250).Value = clsData.Remarks
+            End With
+            Try
+                SQL.ExecuteNonQuery(sqlcmdExecute)
+            Catch ex As SqlException
+                Throw ex
+            End Try
+        End Sub
+
+        Public Shared Function GetMaxIDStatus() As Integer
+            Dim sqlcmdExecute As New SqlCommand, sqlrdData As SqlDataReader = Nothing
+            Dim intReturn As Integer = 1
+            Try
+                If Not SQL.bolUseTrans Then SQL.OpenConnection()
+                With sqlcmdExecute
+                    .Connection = SQL.sqlConn
+                    .CommandText = _
+                        "SELECT " & vbNewLine & _
+                        "   ID=ISNULL(MAX(ID),0) " & vbNewLine & _
+                        "FROM mstBusinessPartnerStatus " & vbNewLine
+
+                    If SQL.bolUseTrans Then .Transaction = SQL.sqlTrans
+                End With
+                sqlrdData = sqlcmdExecute.ExecuteReader(CommandBehavior.SingleRow)
+                With sqlrdData
+                    If .HasRows Then
+                        .Read()
+                        intReturn = .Item("ID") + 1
+                    End If
+                End With
+                If Not SQL.bolUseTrans Then SQL.CloseConnection()
+            Catch ex As Exception
+                Throw ex
+            Finally
+                If Not sqlrdData Is Nothing Then sqlrdData.Close()
+            End Try
+            Return intReturn
+        End Function
+
+#End Region
 
     End Class
 

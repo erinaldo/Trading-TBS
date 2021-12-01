@@ -25,6 +25,7 @@
         If pubIsNew Then
             prvClear()
         Else
+            ToolBar.Buttons(cSave).Text = "Edit"
             intProgramID = pubSelectedRow.Item("ProgramID")
             txtProgramName.Text = pubSelectedRow.Item("ProgramName")
             intCompanyID = pubSelectedRow.Item("CompanyID")
@@ -117,8 +118,8 @@
                 End With
                 Exit For
             Next
-            Me.Close()
         End If
+        Me.Close()
     End Sub
 
     Private Sub prvClear()

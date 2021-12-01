@@ -9,7 +9,7 @@ Public Class frmMstBusinessPartner
     Private intPos As Integer = 0
 
     Private Const _
-       cGet = 0, cSep1 = 1, cNew = 2, cDetail = 3, cDelete = 4, cHistory = 5, cAssign = 6, cSep2 = 7, cRefresh = 8, cClose = 9
+       cGet = 0, cSep1 = 1, cNew = 2, cDetail = 3, cDelete = 4, cHistory = 5, cAssign = 6, cUpdatePrice = 7, cSep2 = 8, cRefresh = 9, cClose = 10
 
     Private Sub prvSetTitleForm()
         If pubIsLookUp Then
@@ -29,6 +29,9 @@ Public Class frmMstBusinessPartner
         UI.usForm.SetGrid(grdView, "IsAssign", "Assign", 100, UI.usDefGrid.gBoolean)
         UI.usForm.SetGrid(grdView, "APBalance", "Saldo Hutang", 100, UI.usDefGrid.gReal2Num, False)
         UI.usForm.SetGrid(grdView, "ARBalance", "Saldo Piutang", 100, UI.usDefGrid.gReal2Num, False)
+        UI.usForm.SetGrid(grdView, "SalesPrice", "Harga Jual", 100, UI.usDefGrid.gReal2Num, False)
+        UI.usForm.SetGrid(grdView, "PurchasePrice1", "Harga Beli 1", 100, UI.usDefGrid.gReal2Num, False)
+        UI.usForm.SetGrid(grdView, "PurchasePrice2", "Harga Beli 2", 100, UI.usDefGrid.gReal2Num, False)
         UI.usForm.SetGrid(grdView, "IDStatus", "IDStatus", 100, UI.usDefGrid.gIntNum, False)
         UI.usForm.SetGrid(grdView, "CreatedBy", "Dibuat Oleh", 100, UI.usDefGrid.gString)
         UI.usForm.SetGrid(grdView, "CreatedDate", "Tanggal Buat", 100, UI.usDefGrid.gFullDate)
@@ -47,6 +50,7 @@ Public Class frmMstBusinessPartner
             .Item(cDelete).Enabled = bolEnable
             .Item(cHistory).Enabled = bolEnable
             .Item(cAssign).Enabled = bolEnable
+            .Item(cUpdatePrice).Enabled = bolEnable
         End With
     End Sub
 
@@ -153,11 +157,20 @@ Public Class frmMstBusinessPartner
         End With
     End Sub
 
+    Private Sub prvUpdatePrice()
+        Dim frmDetail As New frmMstBusinessPartnerPrice
+        With frmDetail
+            .StartPosition = FormStartPosition.CenterScreen
+            .pubShowDialog(Me)
+        End With
+    End Sub
+
     Private Sub prvUserAccess()
         With ToolBar.Buttons
             .Item(cNew).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.MasterBusinessPartners, VO.Access.Values.NewAccess)
             .Item(cDelete).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.MasterBusinessPartners, VO.Access.Values.DeleteAccess)
             .Item(cHistory).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.MasterBusinessPartners, VO.Access.Values.HistoryAccess)
+            .Item(cUpdatePrice).Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.MasterBusinessPartners, VO.Access.Values.ChangePriceAccess)
         End With
     End Sub
 
@@ -176,6 +189,7 @@ Public Class frmMstBusinessPartner
         prvSetGrid()
         prvQuery()
         prvUserAccess()
+        If Not pubIsLookUp Then Me.WindowState = FormWindowState.Maximized
     End Sub
 
     Private Sub ToolBar_ButtonClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ToolBarButtonClickEventArgs) Handles ToolBar.ButtonClick
@@ -192,6 +206,7 @@ Public Class frmMstBusinessPartner
                 Case ToolBar.Buttons(cDetail).Name : prvDetail()
                 Case ToolBar.Buttons(cDelete).Name : prvDelete()
                 Case ToolBar.Buttons(cHistory).Name : prvHistory()
+                Case ToolBar.Buttons(cUpdatePrice).Name : prvUpdatePrice()
             End Select
         End If
     End Sub

@@ -6,11 +6,14 @@ Public Class frmTraSalesDet
 
     Private frmParent As frmTraSales
     Private clsData As VO.Sales
-    Private intBPID As Integer
+    Private intBPID As Integer = 0
+    Private intSupplierID As Integer = 0
+    Private decPurchasePrice1 As Decimal = 0, decPurchasePrice2 As Decimal = 0
     Private dtItem As New DataTable
     Private intPos As Integer = 0
-    Private strJournalID As String = ""
+    Private strJournalID As String = "", strReceiveID As String = ""
     Private intItemID As Integer = 0
+    Private decTolerance As Decimal = 0
     Private dtSupplier As New DataTable
     Private clsSupplier As VO.SalesSupplier
     Property pubID As String
@@ -41,18 +44,7 @@ Public Class frmTraSalesDet
         pgMain.Value = 0
     End Sub
 
-    Private Sub prvSetButton()
-        Dim bolEnabled As Boolean = IIf(grdSupplierView.RowCount = 0, False, True)
-        With ToolBarSupplier
-            .Buttons(cDelete).Enabled = bolEnabled
-        End With
-    End Sub
-
     Private Sub prvSetGrid()
-        UI.usForm.SetGrid(grdSupplierView, "BPID", "BPID", 100, UI.usDefGrid.gString, False)
-        UI.usForm.SetGrid(grdSupplierView, "BPName", "Pemasok", 250, UI.usDefGrid.gString)
-        UI.usForm.SetGrid(grdSupplierView, "Address", "Alamat", 350, UI.usDefGrid.gString)
-
         UI.usForm.SetGrid(grdStatusView, "ID", "ID", 100, UI.usDefGrid.gString, False)
         UI.usForm.SetGrid(grdStatusView, "SalesID", "SalesID", 100, UI.usDefGrid.gString, False)
         UI.usForm.SetGrid(grdStatusView, "Status", "Status", 200, UI.usDefGrid.gString)
@@ -107,6 +99,8 @@ Public Class frmTraSalesDet
                 txtID.Text = clsData.ID
                 intBPID = clsData.BPID
                 txtBPName.Text = clsData.BPName
+                intSupplierID = clsData.SupplierID
+                txtSupplierName.Text = clsData.SupplierName
                 dtpSalesDate.Value = clsData.SalesDate
                 cboPaymentTerm.SelectedValue = clsData.PaymentTerm
                 dtpDueDate.Value = clsData.DueDate
@@ -129,6 +123,9 @@ Public Class frmTraSalesDet
                 ToolStripLogBy.Text = "Dibuat Oleh : " & clsData.LogBy
                 ToolStripLogDate.Text = Format(clsData.LogDate, UI.usDefCons.DateFull)
                 strJournalID = clsData.JournalID
+                strReceiveID = clsData.ReceiveID
+                decPurchasePrice1 = clsData.PurchasePrice1
+                decPurchasePrice2 = clsData.PurchasePrice2
             End If
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
@@ -145,6 +142,11 @@ Public Class frmTraSalesDet
             UI.usForm.frmMessageBox("Pilih pelanggan terlebih dahulu")
             tcHeader.SelectedTab = tpMain
             txtBPName.Focus()
+            Exit Sub
+        ElseIf txtSupplierName.Text.Trim = "" Then
+            UI.usForm.frmMessageBox("Pilih pemasok terlebih dahulu")
+            tcHeader.SelectedTab = tpMain
+            txtSupplierName.Focus()
             Exit Sub
         ElseIf cboPaymentTerm.SelectedIndex = -1 Then
             UI.usForm.frmMessageBox("Pilih jenis pembayaran terlebih dahulu")
@@ -176,10 +178,6 @@ Public Class frmTraSalesDet
             tcHeader.SelectedTab = tpMain
             txtPrice.Focus()
             Exit Sub
-        ElseIf grdSupplierView.RowCount = 0 Then
-            UI.usForm.frmMessageBox("Pemasok harus diinput terlebih dahulu")
-            tcHeader.SelectedTab = tpSupplier
-            Exit Sub
         ElseIf cboStatus.Text.Trim = "" Then
             UI.usForm.frmMessageBox("Status kosong. Mohon untuk tutup form dan buka kembali")
             cboStatus.Focus()
@@ -192,12 +190,17 @@ Public Class frmTraSalesDet
 
         If Not UI.usForm.frmAskQuestion("Simpan data penjualan?") Then Exit Sub
 
+        '# Sales
         clsData = New VO.Sales
         clsData.ProgramID = pubCS.ProgramID
         clsData.CompanyID = pubCS.CompanyID
         clsData.ID = txtID.Text.Trim
         clsData.BPID = intBPID
         clsData.BPName = txtBPName.Text.Trim
+        clsData.SupplierID = intSupplierID
+        clsData.SupplierName = txtSupplierName.Text.Trim
+        clsData.SupplierID = intSupplierID
+        clsData.SupplierName = txtSupplierName.Text.Trim
         clsData.SalesDate = dtpSalesDate.Value
         clsData.PaymentTerm = cboPaymentTerm.SelectedValue
         clsData.DueDate = dtpDueDate.Value
@@ -219,19 +222,45 @@ Public Class frmTraSalesDet
         clsData.LogBy = MPSLib.UI.usUserApp.UserID
         clsData.JournalID = strJournalID
 
-        Dim clsSupplierAll(grdSupplierView.RowCount - 1) As VO.SalesSupplier
-        With grdSupplierView
-            For i As Integer = 0 To .RowCount - 1
-                clsSupplier = New VO.SalesSupplier
-                clsSupplier.BPID = .GetRowCellValue(i, "BPID")
-                clsSupplierAll(i) = clsSupplier
-            Next
-        End With
+        '# Receive
+        Dim clsReceive As New VO.Receive
+        clsReceive.ProgramID = pubCS.ProgramID
+        clsReceive.CompanyID = pubCS.CompanyID
+        clsReceive.ID = strReceiveID
+        clsReceive.BPID = intSupplierID
+        clsReceive.BPName = txtSupplierName.Text.Trim
+        clsReceive.ReceiveDate = dtpSalesDate.Value
+        clsReceive.PaymentTerm = cboPaymentTerm.SelectedValue
+        clsReceive.DueDate = dtpDueDate.Value
+        clsReceive.DriverName = txtDriverName.Text.Trim
+        clsReceive.PlatNumber = txtPlatNumber.Text.Trim
+        clsReceive.Remarks = txtRemarks.Text.Trim
+        clsReceive.ItemID = intItemID
+        clsReceive.ItemCode = txtItemCode.Text.Trim
+        clsReceive.ItemName = txtItemName.Text.Trim
+        clsReceive.UOMID = cboUOMID.SelectedValue
+        clsReceive.ArrivalBrutto = txtBrutto.Value
+        clsReceive.ArrivalTarra = txtTarra.Value
+        clsReceive.ArrivalNettoBefore = txtNettoBefore.Value
+        clsReceive.ArrivalDeduction = txtDeduction.Value
+        clsReceive.ArrivalNettoAfter = txtNettoAfter.Value
+        clsReceive.Price1 = decPurchasePrice1
+        clsReceive.TotalPrice1 = decPurchasePrice1 * txtNettoAfter.Value
+        clsReceive.Price2 = decPurchasePrice2
+        clsReceive.TotalPrice2 = decPurchasePrice2 * txtNettoAfter.Value
+        clsReceive.Tolerance = decTolerance
+        clsReceive.DONumber = ""
+        clsReceive.SPBNumber = ""
+        clsReceive.SegelNumber = ""
+        clsReceive.Specification = ""
+        clsReceive.IDStatus = VO.Status.Values.Draft
+        clsReceive.LogBy = MPSLib.UI.usUserApp.UserID
+        clsReceive.JournalID = ""
 
         Me.Cursor = Cursors.WaitCursor
         pgMain.Value = 30
         Try
-            Dim strID As String = BL.Sales.SaveData(pubIsNew, clsData, clsSupplierAll)
+            Dim strID As String = BL.Sales.SaveData(pubIsNew, clsData, clsReceive)
             pgMain.Value = 80
             If strID.Trim <> "" Then
                 If pubIsNew Then
@@ -241,12 +270,6 @@ Public Class frmTraSalesDet
                     prvPrintBonFaktur()
                     prvClear()
                     prvQueryHistory()
-                    prvQueryBP()
-                    If UI.usForm.frmAskQuestion("Lakukan split data pembelian?") Then
-                        If modSharedForm.ShowSplitReceive(strID, pubCS) Then
-                            frmParent.pubRefresh(strID)
-                        End If
-                    End If
                 Else
                     pubIsSave = True
                     prvPrintBonFaktur()
@@ -302,7 +325,7 @@ Public Class frmTraSalesDet
         ToolStripLogDate.Text = Format(Now, UI.usDefCons.DateFull)
     End Sub
 
-    Private Sub prvChooseBP()
+    Private Sub prvChooseCustomer()
         Dim frmDetail As New frmMstBusinessPartner
         With frmDetail
             .pubIsLookUp = True
@@ -314,6 +337,24 @@ Public Class frmTraSalesDet
                 intBPID = .pubLUdtRow.Item("ID")
                 txtBPName.Text = .pubLUdtRow.Item("Name")
                 cboPaymentTerm.SelectedValue = .pubLUdtRow.Item("PaymentTermID")
+                txtPrice.Value = .pubLUdtRow.Item("SalesPrice")
+            End If
+        End With
+    End Sub
+
+    Private Sub prvChooseSupplier()
+        Dim frmDetail As New frmMstBusinessPartner
+        With frmDetail
+            .pubIsLookUp = True
+            .pubCompanyID = pubCS.CompanyID
+            .pubProgramID = pubCS.ProgramID
+            .StartPosition = FormStartPosition.CenterScreen
+            .ShowDialog()
+            If .pubIsLookUpGet Then
+                intSupplierID = .pubLUdtRow.Item("ID")
+                txtSupplierName.Text = .pubLUdtRow.Item("Name")
+                decPurchasePrice1 = .pubLUdtRow.Item("PurchasePrice1")
+                decPurchasePrice2 = .pubLUdtRow.Item("PurchasePrice2")
             End If
         End With
     End Sub
@@ -336,6 +377,7 @@ Public Class frmTraSalesDet
                 txtItemName.Text = .pubLUdtRow.Item("Name")
                 cboUOMID.SelectedValue = .pubLUdtRow.Item("UomID")
                 txtPrice.Value = .pubLUdtRow.Item("SalesPrice")
+                decTolerance = .pubLUdtRow.Item("Tolerance")
                 txtBrutto.Focus()
             End If
         End With
@@ -345,75 +387,6 @@ Public Class frmTraSalesDet
         txtNettoBefore.Value = txtBrutto.Value - txtTarra.Value
         txtNettoAfter.Value = txtNettoBefore.Value - txtDeduction.Value
         txtTotalPrice.Value = txtNettoAfter.Value * txtPrice.Value
-    End Sub
-
-#End Region
-
-#Region "Supplier Handle"
-
-    Private Sub prvQueryBP()
-        Me.Cursor = Cursors.WaitCursor
-        pgMain.Value = 30
-        Try
-            dtSupplier = BL.Sales.ListDataSupplier(txtID.Text.Trim)
-            grdSupplier.DataSource = dtSupplier
-        Catch ex As Exception
-            UI.usForm.frmMessageBox(ex.Message)
-        Finally
-            Me.Cursor = Cursors.Default
-            pgMain.Value = 100
-            prvResetProgressBar()
-            prvSetButton()
-        End Try
-    End Sub
-
-    Private Sub prvAddSupplier()
-        If txtTotalPrice.Value <= 0 Then
-            If Not UI.usForm.frmAskQuestion("Nilai total harga lebih kecil / sama dengan 0. Apakah ingin melanjutkan proses penambahan pemasok?") Then Exit Sub
-        End If
-
-        Dim frmDetail As New frmMstBusinessPartner
-        With frmDetail
-            .pubOnAmount = txtTotalPrice.Value
-            .pubIsLookUp = True
-            .pubCompanyID = pubCS.CompanyID
-            .pubProgramID = pubCS.ProgramID
-            .StartPosition = FormStartPosition.CenterScreen
-            .ShowDialog()
-            If .pubIsLookUpGet Then
-                Dim drExists() As DataRow = dtSupplier.Select("BPID=" & .pubLUdtRow.Item("ID"))
-                If drExists.Count > 0 Then
-                    UI.usForm.frmMessageBox("Pemasok " & .pubLUdtRow.Item("Name") & " telah ada sebelumnya.")
-                    Exit Sub
-                Else
-                    Dim drNew As DataRow
-                    drNew = dtSupplier.NewRow
-                    With drNew
-                        .BeginEdit()
-                        .Item("BPID") = frmDetail.pubLUdtRow.Item("ID")
-                        .Item("BPName") = frmDetail.pubLUdtRow.Item("Name")
-                        .Item("Address") = frmDetail.pubLUdtRow.Item("Address")
-                        .EndEdit()
-                    End With
-                    dtSupplier.Rows.Add(drNew)
-                    dtSupplier.AcceptChanges()
-                End If
-            End If
-        End With
-    End Sub
-
-    Private Sub prvDeleteSupplier()
-        intPos = grdSupplierView.FocusedRowHandle
-        If intPos < 0 Then Exit Sub
-
-        Dim intBPID As String = grdSupplierView.GetRowCellValue(intPos, "BPID")
-        For i As Integer = 0 To dtSupplier.Rows.Count - 1
-            If dtSupplier.Rows(i).Item("BPID") = intBPID Then
-                dtSupplier.Rows(i).Delete()
-                Exit For
-            End If
-        Next
-        dtSupplier.AcceptChanges()
     End Sub
 
 #End Region
@@ -442,8 +415,6 @@ Public Class frmTraSalesDet
         If e.KeyCode = Keys.F1 Then
             tcHeader.SelectedTab = tpMain
         ElseIf e.KeyCode = Keys.F2 Then
-            tcHeader.SelectedTab = tpSupplier
-        ElseIf e.KeyCode = Keys.F3 Then
             tcHeader.SelectedTab = tpHistory
         ElseIf e.KeyCode = Keys.Escape Then
             If UI.usForm.frmAskQuestion("Tutup form?") Then Me.Close()
@@ -453,17 +424,19 @@ Public Class frmTraSalesDet
     Private Sub frmTraSalesDet_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         UI.usForm.SetIcon(Me, "MyLogo")
         ToolBar.SetIcon(Me)
-        ToolBarSupplier.SetIcon(Me)
         prvSetTitleForm()
         prvSetGrid()
         prvFillForm()
-        prvQueryBP()
         prvQueryHistory()
         prvUserAccess()
     End Sub
 
     Private Sub btnBP_Click(sender As Object, e As EventArgs) Handles btnBP.Click
-        prvChooseBP()
+        prvChooseCustomer()
+    End Sub
+
+    Private Sub btnSupplier_Click(sender As Object, e As EventArgs) Handles btnSupplier.Click
+        prvChooseSupplier()
     End Sub
 
     Private Sub btnItem_Click(sender As Object, e As EventArgs) Handles btnItem.Click
@@ -474,13 +447,6 @@ Public Class frmTraSalesDet
         Select Case e.Button.Text.Trim
             Case "Simpan" : prvSave()
             Case "Tutup" : Me.Close()
-        End Select
-    End Sub
-
-    Private Sub ToolBarSupplier_ButtonClick(sender As Object, e As ToolBarButtonClickEventArgs) Handles ToolBarSupplier.ButtonClick
-        Select Case e.Button.Text.Trim
-            Case "Tambah" : prvAddSupplier()
-            Case "Hapus" : prvDeleteSupplier()
         End Select
     End Sub
 
@@ -503,9 +469,11 @@ Public Class frmTraSalesDet
             txtItemName.Text = clsItem.Name
             cboUOMID.SelectedValue = clsItem.UomID
             txtPrice.Value = clsItem.SalesPrice
+            decTolerance = clsItem.Tolerance
             txtBrutto.Focus()
         End If
     End Sub
+
 #End Region
 
 End Class

@@ -24,6 +24,15 @@ Public Class frmMstBusinessPartnerDet
         End If
     End Sub
 
+    Private Sub prvSetGrid()
+        UI.usForm.SetGrid(grdStatusView, "ID", "ID", 100, UI.usDefGrid.gString, False)
+        UI.usForm.SetGrid(grdStatusView, "BPID", "BPID", 100, UI.usDefGrid.gString, False)
+        UI.usForm.SetGrid(grdStatusView, "Status", "Status", 200, UI.usDefGrid.gString)
+        UI.usForm.SetGrid(grdStatusView, "StatusBy", "Oleh", 200, UI.usDefGrid.gString)
+        UI.usForm.SetGrid(grdStatusView, "StatusDate", "Tanggal", 180, UI.usDefGrid.gFullDate)
+        UI.usForm.SetGrid(grdStatusView, "Remarks", "Keterangan", 300, UI.usDefGrid.gString)
+    End Sub
+
     Private Sub prvFillStatus()
         Try
             UI.usForm.FillComboBox(cboStatus, BL.StatusModules.ListDataByModulesID(VO.Modules.Values.MasterBusinessPartners), "IDStatus", "StatusName")
@@ -60,8 +69,9 @@ Public Class frmMstBusinessPartnerDet
                 cboPaymentTerm.SelectedValue = clsData.PaymentTermID
                 chkIsUsePurchaseLimit.Checked = clsData.IsUsePurchaseLimit
                 txtMaxPurchaseLimit.Value = clsData.MaxPurchaseLimit
-                txtAPBalance.Value = clsData.APBalance
-                txtARBalance.Value = clsData.ARBalance
+                txtSalesPrice.Value = clsData.SalesPrice
+                txtPurchasePrice1.Value = clsData.PurchasePrice1
+                txtPurchasePrice2.Value = clsData.PurchasePrice2
                 cboStatus.SelectedValue = clsData.IDStatus
                 ToolStripLogInc.Text = "Jumlah Edit : " & clsData.LogInc
                 ToolStripLogBy.Text = "Dibuat Oleh : " & clsData.LogBy
@@ -69,6 +79,9 @@ Public Class frmMstBusinessPartnerDet
 
                 If cboStatus.SelectedValue = VO.Status.Values.InActive Then cboStatus.Enabled = True
                 If clsData.IsUsePurchaseLimit Then txtMaxPurchaseLimit.Enabled = True
+                txtSalesPrice.Enabled = False
+                txtPurchasePrice1.Enabled = False
+                txtPurchasePrice2.Enabled = False
             End If
         Catch ex As Exception
             UI.usForm.frmMessageBox(ex.Message)
@@ -78,22 +91,22 @@ Public Class frmMstBusinessPartnerDet
     Private Sub prvSave()
         If txtName.Text.Trim = "" Then
             UI.usForm.frmMessageBox("Nama belum diinput")
+            tcBP.SelectedTab = tpMain
             txtName.Focus()
             Exit Sub
-            'ElseIf txtAddress.Text.Trim = "" Then
-            '    UI.usForm.frmMessageBox("Alamat belum diinput")
-            '    txtAddress.Focus()
-            '    Exit Sub
         ElseIf cboPaymentTerm.SelectedIndex = -1 Then
             UI.usForm.frmMessageBox("Jenis pembayaran harus dipilih agar dapat dijadikan nilai default saat transaksi")
+            tcBP.SelectedTab = tpMain
             cboPaymentTerm.Focus()
             Exit Sub
         ElseIf chkIsUsePurchaseLimit.Checked AndAlso txtMaxPurchaseLimit.Value <= 0 Then
             UI.usForm.frmMessageBox(chkIsUsePurchaseLimit.Text & " harus lebih besar dari 0 jika tercentang")
+            tcBP.SelectedTab = tpMain
             txtMaxPurchaseLimit.Focus()
             Exit Sub
         ElseIf cboStatus.Text.Trim = "" Then
             UI.usForm.frmMessageBox("Status kosong. Mohon untuk tutup form dan buka kembali")
+            tcBP.SelectedTab = tpMain
             cboStatus.Focus()
             Exit Sub
         End If
@@ -136,8 +149,9 @@ Public Class frmMstBusinessPartnerDet
         cboPaymentTerm.SelectedIndex = -1
         chkIsUsePurchaseLimit.Checked = False
         txtMaxPurchaseLimit.Value = 0
-        txtAPBalance.Value = 0
-        txtARBalance.Value = 0
+        txtSalesPrice.Value = 0
+        txtPurchasePrice1.Value = 0
+        txtPurchasePrice2.Value = 0
         cboStatus.SelectedValue = VO.Status.Values.Active
         ToolStripLogInc.Text = "Jumlah Edit : -"
         ToolStripLogBy.Text = "Dibuat Oleh : -"
@@ -150,11 +164,32 @@ Public Class frmMstBusinessPartnerDet
         End With
     End Sub
 
+#Region "History Handle"
+
+    Private Sub prvQueryHistory()
+        Me.Cursor = Cursors.WaitCursor
+        Try
+            grdStatus.DataSource = BL.BusinessPartner.ListDataStatus(pubID)
+            grdStatusView.BestFitColumns()
+        Catch ex As Exception
+            UI.usForm.frmMessageBox(ex.Message)
+            Me.Close()
+        Finally
+            Me.Cursor = Cursors.Default
+        End Try
+    End Sub
+
+#End Region
+
 #Region "Form Handle"
 
     Private Sub frmMstBusinessPartnerDet_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyCode = Keys.Escape Then
             If UI.usForm.frmAskQuestion("Tutup form ini?") Then Me.Close()
+        ElseIf e.KeyCode = Keys.F1 Then
+            tcBP.SelectedTab = tpMain
+        ElseIf e.KeyCode = Keys.F2 Then
+            tcBP.SelectedTab = tpStatus
         End If
     End Sub
 
@@ -162,7 +197,9 @@ Public Class frmMstBusinessPartnerDet
         UI.usForm.SetIcon(Me, "MyLogo")
         ToolBar.SetIcon(Me)
         prvSetTitleForm()
+        prvSetGrid()
         prvFillForm()
+        prvQueryHistory()
         prvUserAccess()
 
         AddHandler chkIsUsePurchaseLimit.CheckedChanged, AddressOf chkIsUsePurchaseLimit_CheckedChanged

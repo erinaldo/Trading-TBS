@@ -29,18 +29,22 @@ Partial Class frmMstBusinessPartnerDet
         Me.ToolStripLogBy = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripLogDate = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.lblARBalance = New System.Windows.Forms.Label()
-        Me.lblAPBalance = New System.Windows.Forms.Label()
+        Me.lblPurchasePrice1 = New System.Windows.Forms.Label()
+        Me.lblSalesPrice = New System.Windows.Forms.Label()
         Me.lblPICPhoneNumber = New System.Windows.Forms.Label()
         Me.lblPICName = New System.Windows.Forms.Label()
         Me.lblAddress = New System.Windows.Forms.Label()
         Me.lblName = New System.Windows.Forms.Label()
         Me.lblIDStatus = New System.Windows.Forms.Label()
         Me.pnlDetail = New System.Windows.Forms.Panel()
+        Me.txtPurchasePrice2 = New MPS.usNumeric()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.txtMaxPurchaseLimit = New MPS.usNumeric()
+        Me.chkIsUsePurchaseLimit = New DevExpress.XtraEditors.CheckEdit()
         Me.cboPaymentTerm = New MPS.usComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.txtARBalance = New MPS.usNumeric()
-        Me.txtAPBalance = New MPS.usNumeric()
+        Me.txtPurchasePrice1 = New MPS.usNumeric()
+        Me.txtSalesPrice = New MPS.usNumeric()
         Me.cboStatus = New MPS.usComboBox()
         Me.txtName = New MPS.usTextBox()
         Me.txtAddress = New MPS.usTextBox()
@@ -49,14 +53,23 @@ Partial Class frmMstBusinessPartnerDet
         Me.ToolBar = New MPS.usToolBar()
         Me.BarRefresh = New System.Windows.Forms.ToolBarButton()
         Me.BarClose = New System.Windows.Forms.ToolBarButton()
-        Me.chkIsUsePurchaseLimit = New DevExpress.XtraEditors.CheckEdit()
-        Me.txtMaxPurchaseLimit = New MPS.usNumeric()
+        Me.tcBP = New System.Windows.Forms.TabControl()
+        Me.tpMain = New System.Windows.Forms.TabPage()
+        Me.tpStatus = New System.Windows.Forms.TabPage()
+        Me.grdStatus = New DevExpress.XtraGrid.GridControl()
+        Me.grdStatusView = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.StatusStrip.SuspendLayout()
         Me.pnlDetail.SuspendLayout()
-        CType(Me.txtARBalance, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtAPBalance, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.chkIsUsePurchaseLimit.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txtPurchasePrice2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtMaxPurchaseLimit, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.chkIsUsePurchaseLimit.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txtPurchasePrice1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txtSalesPrice, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.tcBP.SuspendLayout()
+        Me.tpMain.SuspendLayout()
+        Me.tpStatus.SuspendLayout()
+        CType(Me.grdStatus, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.grdStatusView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'lblInfo
@@ -76,7 +89,7 @@ Partial Class frmMstBusinessPartnerDet
         '
         Me.StatusStrip.Font = New System.Drawing.Font("Tahoma", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripEmpty, Me.ToolStripLogInc, Me.ToolStripLogBy, Me.ToolStripStatusLabel1, Me.ToolStripLogDate})
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 231)
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 287)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.Size = New System.Drawing.Size(843, 22)
         Me.StatusStrip.TabIndex = 3
@@ -123,34 +136,34 @@ Partial Class frmMstBusinessPartnerDet
         Me.ToolStripLogDate.Size = New System.Drawing.Size(12, 17)
         Me.ToolStripLogDate.Text = "-"
         '
-        'lblARBalance
+        'lblPurchasePrice1
         '
-        Me.lblARBalance.AutoSize = True
-        Me.lblARBalance.BackColor = System.Drawing.Color.Transparent
-        Me.lblARBalance.ForeColor = System.Drawing.Color.Black
-        Me.lblARBalance.Location = New System.Drawing.Point(486, 103)
-        Me.lblARBalance.Name = "lblARBalance"
-        Me.lblARBalance.Size = New System.Drawing.Size(72, 13)
-        Me.lblARBalance.TabIndex = 93
-        Me.lblARBalance.Text = "Saldo Piutang"
+        Me.lblPurchasePrice1.AutoSize = True
+        Me.lblPurchasePrice1.BackColor = System.Drawing.Color.Transparent
+        Me.lblPurchasePrice1.ForeColor = System.Drawing.Color.Black
+        Me.lblPurchasePrice1.Location = New System.Drawing.Point(472, 104)
+        Me.lblPurchasePrice1.Name = "lblPurchasePrice1"
+        Me.lblPurchasePrice1.Size = New System.Drawing.Size(64, 13)
+        Me.lblPurchasePrice1.TabIndex = 93
+        Me.lblPurchasePrice1.Text = "Harga Beli 1"
         '
-        'lblAPBalance
+        'lblSalesPrice
         '
-        Me.lblAPBalance.AutoSize = True
-        Me.lblAPBalance.BackColor = System.Drawing.Color.Transparent
-        Me.lblAPBalance.ForeColor = System.Drawing.Color.Black
-        Me.lblAPBalance.Location = New System.Drawing.Point(486, 75)
-        Me.lblAPBalance.Name = "lblAPBalance"
-        Me.lblAPBalance.Size = New System.Drawing.Size(71, 13)
-        Me.lblAPBalance.TabIndex = 93
-        Me.lblAPBalance.Text = "Saldo Hutang"
+        Me.lblSalesPrice.AutoSize = True
+        Me.lblSalesPrice.BackColor = System.Drawing.Color.Transparent
+        Me.lblSalesPrice.ForeColor = System.Drawing.Color.Black
+        Me.lblSalesPrice.Location = New System.Drawing.Point(472, 76)
+        Me.lblSalesPrice.Name = "lblSalesPrice"
+        Me.lblSalesPrice.Size = New System.Drawing.Size(58, 13)
+        Me.lblSalesPrice.TabIndex = 93
+        Me.lblSalesPrice.Text = "Harga Jual"
         '
         'lblPICPhoneNumber
         '
         Me.lblPICPhoneNumber.AutoSize = True
         Me.lblPICPhoneNumber.BackColor = System.Drawing.Color.Transparent
         Me.lblPICPhoneNumber.ForeColor = System.Drawing.Color.Black
-        Me.lblPICPhoneNumber.Location = New System.Drawing.Point(31, 130)
+        Me.lblPICPhoneNumber.Location = New System.Drawing.Point(17, 131)
         Me.lblPICPhoneNumber.Name = "lblPICPhoneNumber"
         Me.lblPICPhoneNumber.Size = New System.Drawing.Size(60, 13)
         Me.lblPICPhoneNumber.TabIndex = 93
@@ -161,7 +174,7 @@ Partial Class frmMstBusinessPartnerDet
         Me.lblPICName.AutoSize = True
         Me.lblPICName.BackColor = System.Drawing.Color.Transparent
         Me.lblPICName.ForeColor = System.Drawing.Color.Black
-        Me.lblPICName.Location = New System.Drawing.Point(31, 103)
+        Me.lblPICName.Location = New System.Drawing.Point(17, 104)
         Me.lblPICName.Name = "lblPICName"
         Me.lblPICName.Size = New System.Drawing.Size(54, 13)
         Me.lblPICName.TabIndex = 93
@@ -172,7 +185,7 @@ Partial Class frmMstBusinessPartnerDet
         Me.lblAddress.AutoSize = True
         Me.lblAddress.BackColor = System.Drawing.Color.Transparent
         Me.lblAddress.ForeColor = System.Drawing.Color.Black
-        Me.lblAddress.Location = New System.Drawing.Point(31, 49)
+        Me.lblAddress.Location = New System.Drawing.Point(17, 50)
         Me.lblAddress.Name = "lblAddress"
         Me.lblAddress.Size = New System.Drawing.Size(40, 13)
         Me.lblAddress.TabIndex = 93
@@ -183,7 +196,7 @@ Partial Class frmMstBusinessPartnerDet
         Me.lblName.AutoSize = True
         Me.lblName.BackColor = System.Drawing.Color.Transparent
         Me.lblName.ForeColor = System.Drawing.Color.Black
-        Me.lblName.Location = New System.Drawing.Point(31, 22)
+        Me.lblName.Location = New System.Drawing.Point(17, 23)
         Me.lblName.Name = "lblName"
         Me.lblName.Size = New System.Drawing.Size(34, 13)
         Me.lblName.TabIndex = 93
@@ -194,7 +207,7 @@ Partial Class frmMstBusinessPartnerDet
         Me.lblIDStatus.AutoSize = True
         Me.lblIDStatus.BackColor = System.Drawing.Color.Transparent
         Me.lblIDStatus.ForeColor = System.Drawing.Color.Black
-        Me.lblIDStatus.Location = New System.Drawing.Point(486, 130)
+        Me.lblIDStatus.Location = New System.Drawing.Point(17, 159)
         Me.lblIDStatus.Name = "lblIDStatus"
         Me.lblIDStatus.Size = New System.Drawing.Size(38, 13)
         Me.lblIDStatus.TabIndex = 95
@@ -203,89 +216,116 @@ Partial Class frmMstBusinessPartnerDet
         'pnlDetail
         '
         Me.pnlDetail.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.pnlDetail.Controls.Add(Me.txtMaxPurchaseLimit)
-        Me.pnlDetail.Controls.Add(Me.chkIsUsePurchaseLimit)
-        Me.pnlDetail.Controls.Add(Me.cboPaymentTerm)
-        Me.pnlDetail.Controls.Add(Me.Label1)
-        Me.pnlDetail.Controls.Add(Me.txtARBalance)
-        Me.pnlDetail.Controls.Add(Me.txtAPBalance)
-        Me.pnlDetail.Controls.Add(Me.cboStatus)
-        Me.pnlDetail.Controls.Add(Me.lblIDStatus)
-        Me.pnlDetail.Controls.Add(Me.lblName)
-        Me.pnlDetail.Controls.Add(Me.txtName)
-        Me.pnlDetail.Controls.Add(Me.lblAddress)
-        Me.pnlDetail.Controls.Add(Me.txtAddress)
-        Me.pnlDetail.Controls.Add(Me.lblPICName)
-        Me.pnlDetail.Controls.Add(Me.txtPICName)
-        Me.pnlDetail.Controls.Add(Me.lblPICPhoneNumber)
-        Me.pnlDetail.Controls.Add(Me.txtPICPhoneNumber)
-        Me.pnlDetail.Controls.Add(Me.lblAPBalance)
-        Me.pnlDetail.Controls.Add(Me.lblARBalance)
+        Me.pnlDetail.Controls.Add(Me.tcBP)
         Me.pnlDetail.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pnlDetail.Location = New System.Drawing.Point(0, 50)
         Me.pnlDetail.Name = "pnlDetail"
-        Me.pnlDetail.Size = New System.Drawing.Size(843, 181)
+        Me.pnlDetail.Size = New System.Drawing.Size(843, 237)
         Me.pnlDetail.TabIndex = 2
+        '
+        'txtPurchasePrice2
+        '
+        Me.txtPurchasePrice2.Enabled = False
+        Me.txtPurchasePrice2.Location = New System.Drawing.Point(612, 128)
+        Me.txtPurchasePrice2.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
+        Me.txtPurchasePrice2.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
+        Me.txtPurchasePrice2.Name = "txtPurchasePrice2"
+        Me.txtPurchasePrice2.Size = New System.Drawing.Size(160, 21)
+        Me.txtPurchasePrice2.TabIndex = 9
+        Me.txtPurchasePrice2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txtPurchasePrice2.ThousandsSeparator = True
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.BackColor = System.Drawing.Color.Transparent
+        Me.Label2.ForeColor = System.Drawing.Color.Black
+        Me.Label2.Location = New System.Drawing.Point(472, 131)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(64, 13)
+        Me.Label2.TabIndex = 101
+        Me.Label2.Text = "Harga Beli 2"
+        '
+        'txtMaxPurchaseLimit
+        '
+        Me.txtMaxPurchaseLimit.Enabled = False
+        Me.txtMaxPurchaseLimit.Location = New System.Drawing.Point(612, 47)
+        Me.txtMaxPurchaseLimit.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
+        Me.txtMaxPurchaseLimit.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
+        Me.txtMaxPurchaseLimit.Name = "txtMaxPurchaseLimit"
+        Me.txtMaxPurchaseLimit.Size = New System.Drawing.Size(160, 21)
+        Me.txtMaxPurchaseLimit.TabIndex = 6
+        Me.txtMaxPurchaseLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txtMaxPurchaseLimit.ThousandsSeparator = True
+        '
+        'chkIsUsePurchaseLimit
+        '
+        Me.chkIsUsePurchaseLimit.Location = New System.Drawing.Point(472, 48)
+        Me.chkIsUsePurchaseLimit.Name = "chkIsUsePurchaseLimit"
+        Me.chkIsUsePurchaseLimit.Properties.Caption = "Maks. Limit Pembelian"
+        Me.chkIsUsePurchaseLimit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.[Default]
+        Me.chkIsUsePurchaseLimit.Size = New System.Drawing.Size(127, 19)
+        Me.chkIsUsePurchaseLimit.TabIndex = 99
         '
         'cboPaymentTerm
         '
         Me.cboPaymentTerm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboPaymentTerm.FormattingEnabled = True
-        Me.cboPaymentTerm.Location = New System.Drawing.Point(626, 19)
+        Me.cboPaymentTerm.Location = New System.Drawing.Point(612, 20)
         Me.cboPaymentTerm.Name = "cboPaymentTerm"
         Me.cboPaymentTerm.Size = New System.Drawing.Size(160, 21)
-        Me.cboPaymentTerm.TabIndex = 4
+        Me.cboPaymentTerm.TabIndex = 5
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.Transparent
         Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(486, 22)
+        Me.Label1.Location = New System.Drawing.Point(472, 23)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(94, 13)
         Me.Label1.TabIndex = 98
         Me.Label1.Text = "Jenis Pembayaran"
         '
-        'txtARBalance
+        'txtPurchasePrice1
         '
-        Me.txtARBalance.Enabled = False
-        Me.txtARBalance.Location = New System.Drawing.Point(626, 100)
-        Me.txtARBalance.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
-        Me.txtARBalance.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
-        Me.txtARBalance.Name = "txtARBalance"
-        Me.txtARBalance.Size = New System.Drawing.Size(160, 21)
-        Me.txtARBalance.TabIndex = 7
-        Me.txtARBalance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.txtARBalance.ThousandsSeparator = True
+        Me.txtPurchasePrice1.Enabled = False
+        Me.txtPurchasePrice1.Location = New System.Drawing.Point(612, 101)
+        Me.txtPurchasePrice1.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
+        Me.txtPurchasePrice1.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
+        Me.txtPurchasePrice1.Name = "txtPurchasePrice1"
+        Me.txtPurchasePrice1.Size = New System.Drawing.Size(160, 21)
+        Me.txtPurchasePrice1.TabIndex = 8
+        Me.txtPurchasePrice1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txtPurchasePrice1.ThousandsSeparator = True
         '
-        'txtAPBalance
+        'txtSalesPrice
         '
-        Me.txtAPBalance.Enabled = False
-        Me.txtAPBalance.Location = New System.Drawing.Point(626, 73)
-        Me.txtAPBalance.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
-        Me.txtAPBalance.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
-        Me.txtAPBalance.Name = "txtAPBalance"
-        Me.txtAPBalance.Size = New System.Drawing.Size(160, 21)
-        Me.txtAPBalance.TabIndex = 6
-        Me.txtAPBalance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.txtAPBalance.ThousandsSeparator = True
+        Me.txtSalesPrice.Enabled = False
+        Me.txtSalesPrice.Location = New System.Drawing.Point(612, 74)
+        Me.txtSalesPrice.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
+        Me.txtSalesPrice.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
+        Me.txtSalesPrice.Name = "txtSalesPrice"
+        Me.txtSalesPrice.Size = New System.Drawing.Size(160, 21)
+        Me.txtSalesPrice.TabIndex = 7
+        Me.txtSalesPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txtSalesPrice.ThousandsSeparator = True
         '
         'cboStatus
         '
         Me.cboStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboStatus.Enabled = False
         Me.cboStatus.FormattingEnabled = True
-        Me.cboStatus.Location = New System.Drawing.Point(626, 127)
+        Me.cboStatus.Location = New System.Drawing.Point(109, 155)
         Me.cboStatus.Name = "cboStatus"
         Me.cboStatus.Size = New System.Drawing.Size(160, 21)
-        Me.cboStatus.TabIndex = 8
+        Me.cboStatus.TabIndex = 4
         '
         'txtName
         '
         Me.txtName.BackColor = System.Drawing.Color.White
         Me.txtName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtName.Location = New System.Drawing.Point(123, 19)
+        Me.txtName.Location = New System.Drawing.Point(109, 20)
         Me.txtName.MaxLength = 250
         Me.txtName.Name = "txtName"
         Me.txtName.Size = New System.Drawing.Size(300, 21)
@@ -295,7 +335,7 @@ Partial Class frmMstBusinessPartnerDet
         '
         Me.txtAddress.BackColor = System.Drawing.Color.White
         Me.txtAddress.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtAddress.Location = New System.Drawing.Point(123, 46)
+        Me.txtAddress.Location = New System.Drawing.Point(109, 47)
         Me.txtAddress.MaxLength = 250
         Me.txtAddress.Multiline = True
         Me.txtAddress.Name = "txtAddress"
@@ -306,7 +346,7 @@ Partial Class frmMstBusinessPartnerDet
         '
         Me.txtPICName.BackColor = System.Drawing.Color.White
         Me.txtPICName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtPICName.Location = New System.Drawing.Point(123, 100)
+        Me.txtPICName.Location = New System.Drawing.Point(109, 101)
         Me.txtPICName.MaxLength = 250
         Me.txtPICName.Name = "txtPICName"
         Me.txtPICName.Size = New System.Drawing.Size(300, 21)
@@ -316,7 +356,7 @@ Partial Class frmMstBusinessPartnerDet
         '
         Me.txtPICPhoneNumber.BackColor = System.Drawing.Color.White
         Me.txtPICPhoneNumber.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtPICPhoneNumber.Location = New System.Drawing.Point(123, 127)
+        Me.txtPICPhoneNumber.Location = New System.Drawing.Point(109, 128)
         Me.txtPICPhoneNumber.MaxLength = 250
         Me.txtPICPhoneNumber.Name = "txtPICPhoneNumber"
         Me.txtPICPhoneNumber.Size = New System.Drawing.Size(300, 21)
@@ -346,32 +386,98 @@ Partial Class frmMstBusinessPartnerDet
         Me.BarClose.Tag = "Close"
         Me.BarClose.Text = "Tutup"
         '
-        'chkIsUsePurchaseLimit
+        'tcBP
         '
-        Me.chkIsUsePurchaseLimit.Location = New System.Drawing.Point(486, 47)
-        Me.chkIsUsePurchaseLimit.Name = "chkIsUsePurchaseLimit"
-        Me.chkIsUsePurchaseLimit.Properties.Caption = "Maks. Limit Pembelian"
-        Me.chkIsUsePurchaseLimit.Properties.GlyphAlignment = DevExpress.Utils.HorzAlignment.[Default]
-        Me.chkIsUsePurchaseLimit.Size = New System.Drawing.Size(127, 19)
-        Me.chkIsUsePurchaseLimit.TabIndex = 99
+        Me.tcBP.Appearance = System.Windows.Forms.TabAppearance.FlatButtons
+        Me.tcBP.Controls.Add(Me.tpMain)
+        Me.tcBP.Controls.Add(Me.tpStatus)
+        Me.tcBP.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tcBP.Location = New System.Drawing.Point(0, 0)
+        Me.tcBP.Name = "tcBP"
+        Me.tcBP.SelectedIndex = 0
+        Me.tcBP.Size = New System.Drawing.Size(839, 233)
+        Me.tcBP.TabIndex = 102
         '
-        'txtMaxPurchaseLimit
+        'tpMain
         '
-        Me.txtMaxPurchaseLimit.Enabled = False
-        Me.txtMaxPurchaseLimit.Location = New System.Drawing.Point(626, 46)
-        Me.txtMaxPurchaseLimit.Maximum = New Decimal(New Integer() {-1, -1, -1, 0})
-        Me.txtMaxPurchaseLimit.Minimum = New Decimal(New Integer() {-1, -1, -1, -2147483648})
-        Me.txtMaxPurchaseLimit.Name = "txtMaxPurchaseLimit"
-        Me.txtMaxPurchaseLimit.Size = New System.Drawing.Size(160, 21)
-        Me.txtMaxPurchaseLimit.TabIndex = 5
-        Me.txtMaxPurchaseLimit.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.txtMaxPurchaseLimit.ThousandsSeparator = True
+        Me.tpMain.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.tpMain.Controls.Add(Me.txtName)
+        Me.tpMain.Controls.Add(Me.txtPurchasePrice2)
+        Me.tpMain.Controls.Add(Me.lblPurchasePrice1)
+        Me.tpMain.Controls.Add(Me.Label2)
+        Me.tpMain.Controls.Add(Me.lblSalesPrice)
+        Me.tpMain.Controls.Add(Me.txtMaxPurchaseLimit)
+        Me.tpMain.Controls.Add(Me.txtPICPhoneNumber)
+        Me.tpMain.Controls.Add(Me.chkIsUsePurchaseLimit)
+        Me.tpMain.Controls.Add(Me.lblPICPhoneNumber)
+        Me.tpMain.Controls.Add(Me.cboPaymentTerm)
+        Me.tpMain.Controls.Add(Me.txtPICName)
+        Me.tpMain.Controls.Add(Me.Label1)
+        Me.tpMain.Controls.Add(Me.lblPICName)
+        Me.tpMain.Controls.Add(Me.txtPurchasePrice1)
+        Me.tpMain.Controls.Add(Me.txtAddress)
+        Me.tpMain.Controls.Add(Me.txtSalesPrice)
+        Me.tpMain.Controls.Add(Me.lblAddress)
+        Me.tpMain.Controls.Add(Me.cboStatus)
+        Me.tpMain.Controls.Add(Me.lblName)
+        Me.tpMain.Controls.Add(Me.lblIDStatus)
+        Me.tpMain.Location = New System.Drawing.Point(4, 25)
+        Me.tpMain.Name = "tpMain"
+        Me.tpMain.Size = New System.Drawing.Size(831, 204)
+        Me.tpMain.TabIndex = 0
+        Me.tpMain.Text = "Main - F1"
+        Me.tpMain.UseVisualStyleBackColor = True
+        '
+        'tpStatus
+        '
+        Me.tpStatus.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.tpStatus.Controls.Add(Me.grdStatus)
+        Me.tpStatus.Location = New System.Drawing.Point(4, 25)
+        Me.tpStatus.Name = "tpStatus"
+        Me.tpStatus.Size = New System.Drawing.Size(831, 204)
+        Me.tpStatus.TabIndex = 1
+        Me.tpStatus.Text = "Status - F2"
+        Me.tpStatus.UseVisualStyleBackColor = True
+        '
+        'grdStatus
+        '
+        Me.grdStatus.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.grdStatus.EmbeddedNavigator.Buttons.Append.Enabled = False
+        Me.grdStatus.EmbeddedNavigator.Buttons.Append.Visible = False
+        Me.grdStatus.EmbeddedNavigator.Buttons.CancelEdit.Enabled = False
+        Me.grdStatus.EmbeddedNavigator.Buttons.CancelEdit.Visible = False
+        Me.grdStatus.EmbeddedNavigator.Buttons.Edit.Enabled = False
+        Me.grdStatus.EmbeddedNavigator.Buttons.Edit.Visible = False
+        Me.grdStatus.EmbeddedNavigator.Buttons.EndEdit.Enabled = False
+        Me.grdStatus.EmbeddedNavigator.Buttons.EndEdit.Visible = False
+        Me.grdStatus.EmbeddedNavigator.Buttons.NextPage.Enabled = False
+        Me.grdStatus.EmbeddedNavigator.Buttons.NextPage.Visible = False
+        Me.grdStatus.EmbeddedNavigator.Buttons.PrevPage.Enabled = False
+        Me.grdStatus.EmbeddedNavigator.Buttons.PrevPage.Visible = False
+        Me.grdStatus.EmbeddedNavigator.Buttons.Remove.Enabled = False
+        Me.grdStatus.EmbeddedNavigator.Buttons.Remove.Visible = False
+        Me.grdStatus.Location = New System.Drawing.Point(0, 0)
+        Me.grdStatus.MainView = Me.grdStatusView
+        Me.grdStatus.Name = "grdStatus"
+        Me.grdStatus.Size = New System.Drawing.Size(827, 200)
+        Me.grdStatus.TabIndex = 13
+        Me.grdStatus.UseEmbeddedNavigator = True
+        Me.grdStatus.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.grdStatusView})
+        '
+        'grdStatusView
+        '
+        Me.grdStatusView.GridControl = Me.grdStatus
+        Me.grdStatusView.Name = "grdStatusView"
+        Me.grdStatusView.OptionsCustomization.AllowColumnMoving = False
+        Me.grdStatusView.OptionsCustomization.AllowGroup = False
+        Me.grdStatusView.OptionsView.ColumnAutoWidth = False
+        Me.grdStatusView.OptionsView.ShowGroupPanel = False
         '
         'frmMstBusinessPartnerDet
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(843, 253)
+        Me.ClientSize = New System.Drawing.Size(843, 309)
         Me.Controls.Add(Me.pnlDetail)
         Me.Controls.Add(Me.lblInfo)
         Me.Controls.Add(Me.ToolBar)
@@ -386,11 +492,17 @@ Partial Class frmMstBusinessPartnerDet
         Me.StatusStrip.ResumeLayout(False)
         Me.StatusStrip.PerformLayout()
         Me.pnlDetail.ResumeLayout(False)
-        Me.pnlDetail.PerformLayout()
-        CType(Me.txtARBalance, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtAPBalance, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.chkIsUsePurchaseLimit.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtPurchasePrice2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtMaxPurchaseLimit, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.chkIsUsePurchaseLimit.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtPurchasePrice1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtSalesPrice, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.tcBP.ResumeLayout(False)
+        Me.tpMain.ResumeLayout(False)
+        Me.tpMain.PerformLayout()
+        Me.tpStatus.ResumeLayout(False)
+        CType(Me.grdStatus, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.grdStatusView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -405,8 +517,8 @@ Partial Class frmMstBusinessPartnerDet
     Friend WithEvents ToolBar As MPS.usToolBar
     Friend WithEvents BarRefresh As System.Windows.Forms.ToolBarButton
     Friend WithEvents BarClose As System.Windows.Forms.ToolBarButton
-    Friend WithEvents lblARBalance As System.Windows.Forms.Label
-    Friend WithEvents lblAPBalance As System.Windows.Forms.Label
+    Friend WithEvents lblPurchasePrice1 As System.Windows.Forms.Label
+    Friend WithEvents lblSalesPrice As System.Windows.Forms.Label
     Friend WithEvents txtPICPhoneNumber As MPS.usTextBox
     Friend WithEvents lblPICPhoneNumber As System.Windows.Forms.Label
     Friend WithEvents txtPICName As MPS.usTextBox
@@ -418,12 +530,19 @@ Partial Class frmMstBusinessPartnerDet
     Friend WithEvents lblIDStatus As System.Windows.Forms.Label
     Friend WithEvents cboStatus As MPS.usComboBox
     Friend WithEvents pnlDetail As System.Windows.Forms.Panel
-    Friend WithEvents txtARBalance As MPS.usNumeric
-    Friend WithEvents txtAPBalance As MPS.usNumeric
+    Friend WithEvents txtPurchasePrice1 As MPS.usNumeric
+    Friend WithEvents txtSalesPrice As MPS.usNumeric
     Friend WithEvents cboPaymentTerm As MPS.usComboBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents txtMaxPurchaseLimit As MPS.usNumeric
     Friend WithEvents chkIsUsePurchaseLimit As DevExpress.XtraEditors.CheckEdit
+    Friend WithEvents txtPurchasePrice2 As MPS.usNumeric
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents tcBP As System.Windows.Forms.TabControl
+    Friend WithEvents tpMain As System.Windows.Forms.TabPage
+    Friend WithEvents tpStatus As System.Windows.Forms.TabPage
+    Friend WithEvents grdStatus As DevExpress.XtraGrid.GridControl
+    Friend WithEvents grdStatusView As DevExpress.XtraGrid.Views.Grid.GridView
 End Class
 
 

@@ -74,17 +74,14 @@ Partial Class frmTraSalesDet
         Me.lblSalesPrice = New System.Windows.Forms.Label()
         Me.lblUomID1 = New System.Windows.Forms.Label()
         Me.lblQty = New System.Windows.Forms.Label()
-        Me.tpSupplier = New System.Windows.Forms.TabPage()
-        Me.grdSupplier = New DevExpress.XtraGrid.GridControl()
-        Me.grdSupplierView = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.ToolBarSupplier = New MPS.usToolBar()
-        Me.BarAddSupplier = New System.Windows.Forms.ToolBarButton()
-        Me.BarDeleteSupplier = New System.Windows.Forms.ToolBarButton()
         Me.tpHistory = New System.Windows.Forms.TabPage()
         Me.grdStatus = New DevExpress.XtraGrid.GridControl()
         Me.grdStatusView = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.lblInfo = New System.Windows.Forms.Label()
         Me.pgMain = New System.Windows.Forms.ProgressBar()
+        Me.btnSupplier = New DevExpress.XtraEditors.SimpleButton()
+        Me.txtSupplierName = New MPS.usTextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
         Me.StatusStrip.SuspendLayout()
         Me.tcHeader.SuspendLayout()
         Me.tpMain.SuspendLayout()
@@ -95,9 +92,6 @@ Partial Class frmTraSalesDet
         CType(Me.txtTotalPrice, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtPrice, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtBrutto, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.tpSupplier.SuspendLayout()
-        CType(Me.grdSupplier, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.grdSupplierView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tpHistory.SuspendLayout()
         CType(Me.grdStatus, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.grdStatusView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -131,7 +125,7 @@ Partial Class frmTraSalesDet
         '
         Me.StatusStrip.Font = New System.Drawing.Font("Tahoma", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.StatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripEmpty, Me.ToolStripLogInc, Me.ToolStripLogBy, Me.ToolStripStatusLabel1, Me.ToolStripLogDate})
-        Me.StatusStrip.Location = New System.Drawing.Point(0, 367)
+        Me.StatusStrip.Location = New System.Drawing.Point(0, 393)
         Me.StatusStrip.Name = "StatusStrip"
         Me.StatusStrip.Size = New System.Drawing.Size(1003, 22)
         Me.StatusStrip.TabIndex = 3
@@ -182,19 +176,21 @@ Partial Class frmTraSalesDet
         '
         Me.tcHeader.Appearance = System.Windows.Forms.TabAppearance.FlatButtons
         Me.tcHeader.Controls.Add(Me.tpMain)
-        Me.tcHeader.Controls.Add(Me.tpSupplier)
         Me.tcHeader.Controls.Add(Me.tpHistory)
         Me.tcHeader.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tcHeader.Location = New System.Drawing.Point(0, 50)
         Me.tcHeader.Name = "tcHeader"
         Me.tcHeader.SelectedIndex = 0
-        Me.tcHeader.Size = New System.Drawing.Size(1003, 317)
+        Me.tcHeader.Size = New System.Drawing.Size(1003, 343)
         Me.tcHeader.TabIndex = 2
         '
         'tpMain
         '
         Me.tpMain.AutoScroll = True
         Me.tpMain.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.tpMain.Controls.Add(Me.btnSupplier)
+        Me.tpMain.Controls.Add(Me.txtSupplierName)
+        Me.tpMain.Controls.Add(Me.Label6)
         Me.tpMain.Controls.Add(Me.txtNettoAfter)
         Me.tpMain.Controls.Add(Me.Label12)
         Me.tpMain.Controls.Add(Me.Label8)
@@ -238,7 +234,7 @@ Partial Class frmTraSalesDet
         Me.tpMain.Location = New System.Drawing.Point(4, 25)
         Me.tpMain.Name = "tpMain"
         Me.tpMain.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpMain.Size = New System.Drawing.Size(995, 288)
+        Me.tpMain.Size = New System.Drawing.Size(995, 314)
         Me.tpMain.TabIndex = 0
         Me.tpMain.Text = "Main - F1"
         Me.tpMain.UseVisualStyleBackColor = True
@@ -263,7 +259,7 @@ Partial Class frmTraSalesDet
         Me.Label12.AutoSize = True
         Me.Label12.BackColor = System.Drawing.Color.Transparent
         Me.Label12.ForeColor = System.Drawing.Color.Black
-        Me.Label12.Location = New System.Drawing.Point(29, 159)
+        Me.Label12.Location = New System.Drawing.Point(29, 186)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(64, 13)
         Me.Label12.TabIndex = 115
@@ -285,7 +281,7 @@ Partial Class frmTraSalesDet
         Me.txtPlatNumber.BackColor = System.Drawing.Color.White
         Me.txtPlatNumber.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtPlatNumber.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.txtPlatNumber.Location = New System.Drawing.Point(135, 155)
+        Me.txtPlatNumber.Location = New System.Drawing.Point(135, 182)
         Me.txtPlatNumber.MaxLength = 250
         Me.txtPlatNumber.Name = "txtPlatNumber"
         Me.txtPlatNumber.Size = New System.Drawing.Size(96, 21)
@@ -308,7 +304,7 @@ Partial Class frmTraSalesDet
         Me.Label11.AutoSize = True
         Me.Label11.BackColor = System.Drawing.Color.Transparent
         Me.Label11.ForeColor = System.Drawing.Color.Black
-        Me.Label11.Location = New System.Drawing.Point(29, 186)
+        Me.Label11.Location = New System.Drawing.Point(29, 213)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(61, 13)
         Me.Label11.TabIndex = 113
@@ -329,7 +325,7 @@ Partial Class frmTraSalesDet
         '
         Me.txtDriverName.BackColor = System.Drawing.Color.White
         Me.txtDriverName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtDriverName.Location = New System.Drawing.Point(135, 182)
+        Me.txtDriverName.Location = New System.Drawing.Point(135, 209)
         Me.txtDriverName.MaxLength = 250
         Me.txtDriverName.Name = "txtDriverName"
         Me.txtDriverName.Size = New System.Drawing.Size(220, 21)
@@ -340,7 +336,7 @@ Partial Class frmTraSalesDet
         Me.Label10.AutoSize = True
         Me.Label10.BackColor = System.Drawing.Color.Transparent
         Me.Label10.ForeColor = System.Drawing.Color.Black
-        Me.Label10.Location = New System.Drawing.Point(29, 213)
+        Me.Label10.Location = New System.Drawing.Point(29, 240)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(63, 13)
         Me.Label10.TabIndex = 110
@@ -365,7 +361,7 @@ Partial Class frmTraSalesDet
         '
         Me.txtRemarks.BackColor = System.Drawing.Color.White
         Me.txtRemarks.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtRemarks.Location = New System.Drawing.Point(135, 209)
+        Me.txtRemarks.Location = New System.Drawing.Point(135, 236)
         Me.txtRemarks.MaxLength = 250
         Me.txtRemarks.Multiline = True
         Me.txtRemarks.Name = "txtRemarks"
@@ -377,7 +373,7 @@ Partial Class frmTraSalesDet
         Me.dtpDueDate.CustomFormat = "dd/MM/yyyy"
         Me.dtpDueDate.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtpDueDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpDueDate.Location = New System.Drawing.Point(135, 128)
+        Me.dtpDueDate.Location = New System.Drawing.Point(135, 155)
         Me.dtpDueDate.Name = "dtpDueDate"
         Me.dtpDueDate.Size = New System.Drawing.Size(96, 21)
         Me.dtpDueDate.TabIndex = 5
@@ -397,7 +393,7 @@ Partial Class frmTraSalesDet
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(29, 131)
+        Me.Label5.Location = New System.Drawing.Point(29, 158)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(69, 13)
         Me.Label5.TabIndex = 101
@@ -419,7 +415,7 @@ Partial Class frmTraSalesDet
         '
         Me.cboPaymentTerm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboPaymentTerm.FormattingEnabled = True
-        Me.cboPaymentTerm.Location = New System.Drawing.Point(135, 101)
+        Me.cboPaymentTerm.Location = New System.Drawing.Point(135, 128)
         Me.cboPaymentTerm.Name = "cboPaymentTerm"
         Me.cboPaymentTerm.Size = New System.Drawing.Size(143, 21)
         Me.cboPaymentTerm.TabIndex = 4
@@ -440,7 +436,7 @@ Partial Class frmTraSalesDet
         Me.Label4.AutoSize = True
         Me.Label4.BackColor = System.Drawing.Color.Transparent
         Me.Label4.ForeColor = System.Drawing.Color.Black
-        Me.Label4.Location = New System.Drawing.Point(29, 105)
+        Me.Label4.Location = New System.Drawing.Point(29, 132)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(94, 13)
         Me.Label4.TabIndex = 99
@@ -507,7 +503,7 @@ Partial Class frmTraSalesDet
         Me.dtpSalesDate.Enabled = False
         Me.dtpSalesDate.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtpSalesDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom
-        Me.dtpSalesDate.Location = New System.Drawing.Point(135, 74)
+        Me.dtpSalesDate.Location = New System.Drawing.Point(135, 101)
         Me.dtpSalesDate.Name = "dtpSalesDate"
         Me.dtpSalesDate.Size = New System.Drawing.Size(143, 21)
         Me.dtpSalesDate.TabIndex = 3
@@ -530,7 +526,7 @@ Partial Class frmTraSalesDet
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(29, 79)
+        Me.Label3.Location = New System.Drawing.Point(29, 106)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(45, 13)
         Me.Label3.TabIndex = 5
@@ -682,76 +678,6 @@ Partial Class frmTraSalesDet
         Me.lblQty.TabIndex = 93
         Me.lblQty.Text = "Brutto"
         '
-        'tpSupplier
-        '
-        Me.tpSupplier.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.tpSupplier.Controls.Add(Me.grdSupplier)
-        Me.tpSupplier.Controls.Add(Me.ToolBarSupplier)
-        Me.tpSupplier.Location = New System.Drawing.Point(4, 25)
-        Me.tpSupplier.Name = "tpSupplier"
-        Me.tpSupplier.Size = New System.Drawing.Size(995, 288)
-        Me.tpSupplier.TabIndex = 2
-        Me.tpSupplier.Text = "Pemasok - F2"
-        Me.tpSupplier.UseVisualStyleBackColor = True
-        '
-        'grdSupplier
-        '
-        Me.grdSupplier.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.grdSupplier.EmbeddedNavigator.Buttons.Append.Enabled = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.Append.Visible = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.CancelEdit.Enabled = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.CancelEdit.Visible = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.Edit.Enabled = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.Edit.Visible = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.EndEdit.Enabled = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.EndEdit.Visible = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.NextPage.Enabled = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.NextPage.Visible = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.PrevPage.Enabled = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.PrevPage.Visible = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.Remove.Enabled = False
-        Me.grdSupplier.EmbeddedNavigator.Buttons.Remove.Visible = False
-        Me.grdSupplier.Location = New System.Drawing.Point(0, 28)
-        Me.grdSupplier.MainView = Me.grdSupplierView
-        Me.grdSupplier.Name = "grdSupplier"
-        Me.grdSupplier.Size = New System.Drawing.Size(991, 256)
-        Me.grdSupplier.TabIndex = 1
-        Me.grdSupplier.UseEmbeddedNavigator = True
-        Me.grdSupplier.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.grdSupplierView})
-        '
-        'grdSupplierView
-        '
-        Me.grdSupplierView.GridControl = Me.grdSupplier
-        Me.grdSupplierView.Name = "grdSupplierView"
-        Me.grdSupplierView.OptionsCustomization.AllowColumnMoving = False
-        Me.grdSupplierView.OptionsCustomization.AllowGroup = False
-        Me.grdSupplierView.OptionsView.ColumnAutoWidth = False
-        Me.grdSupplierView.OptionsView.ShowGroupPanel = False
-        '
-        'ToolBarSupplier
-        '
-        Me.ToolBarSupplier.Appearance = System.Windows.Forms.ToolBarAppearance.Flat
-        Me.ToolBarSupplier.Buttons.AddRange(New System.Windows.Forms.ToolBarButton() {Me.BarAddSupplier, Me.BarDeleteSupplier})
-        Me.ToolBarSupplier.DropDownArrows = True
-        Me.ToolBarSupplier.Location = New System.Drawing.Point(0, 0)
-        Me.ToolBarSupplier.Name = "ToolBarSupplier"
-        Me.ToolBarSupplier.ShowToolTips = True
-        Me.ToolBarSupplier.Size = New System.Drawing.Size(991, 28)
-        Me.ToolBarSupplier.TabIndex = 0
-        Me.ToolBarSupplier.TextAlign = System.Windows.Forms.ToolBarTextAlign.Right
-        '
-        'BarAddSupplier
-        '
-        Me.BarAddSupplier.Name = "BarAddSupplier"
-        Me.BarAddSupplier.Tag = "Add"
-        Me.BarAddSupplier.Text = "Tambah"
-        '
-        'BarDeleteSupplier
-        '
-        Me.BarDeleteSupplier.Name = "BarDeleteSupplier"
-        Me.BarDeleteSupplier.Tag = "Delete"
-        Me.BarDeleteSupplier.Text = "Hapus"
-        '
         'tpHistory
         '
         Me.tpHistory.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
@@ -759,9 +685,9 @@ Partial Class frmTraSalesDet
         Me.tpHistory.Location = New System.Drawing.Point(4, 25)
         Me.tpHistory.Name = "tpHistory"
         Me.tpHistory.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpHistory.Size = New System.Drawing.Size(995, 288)
+        Me.tpHistory.Size = New System.Drawing.Size(995, 314)
         Me.tpHistory.TabIndex = 1
-        Me.tpHistory.Text = "History - F3"
+        Me.tpHistory.Text = "History - F2"
         Me.tpHistory.UseVisualStyleBackColor = True
         '
         'grdStatus
@@ -784,7 +710,7 @@ Partial Class frmTraSalesDet
         Me.grdStatus.Location = New System.Drawing.Point(3, 3)
         Me.grdStatus.MainView = Me.grdStatusView
         Me.grdStatus.Name = "grdStatus"
-        Me.grdStatus.Size = New System.Drawing.Size(985, 278)
+        Me.grdStatus.Size = New System.Drawing.Size(985, 304)
         Me.grdStatus.TabIndex = 12
         Me.grdStatus.UseEmbeddedNavigator = True
         Me.grdStatus.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.grdStatusView})
@@ -814,16 +740,43 @@ Partial Class frmTraSalesDet
         'pgMain
         '
         Me.pgMain.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.pgMain.Location = New System.Drawing.Point(0, 389)
+        Me.pgMain.Location = New System.Drawing.Point(0, 415)
         Me.pgMain.Name = "pgMain"
         Me.pgMain.Size = New System.Drawing.Size(1003, 23)
         Me.pgMain.TabIndex = 4
+        '
+        'btnSupplier
+        '
+        Me.btnSupplier.Image = CType(resources.GetObject("btnSupplier.Image"), System.Drawing.Image)
+        Me.btnSupplier.Location = New System.Drawing.Point(360, 73)
+        Me.btnSupplier.Name = "btnSupplier"
+        Me.btnSupplier.Size = New System.Drawing.Size(23, 23)
+        Me.btnSupplier.TabIndex = 117
+        '
+        'txtSupplierName
+        '
+        Me.txtSupplierName.BackColor = System.Drawing.Color.Azure
+        Me.txtSupplierName.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtSupplierName.Location = New System.Drawing.Point(135, 74)
+        Me.txtSupplierName.Name = "txtSupplierName"
+        Me.txtSupplierName.ReadOnly = True
+        Me.txtSupplierName.Size = New System.Drawing.Size(220, 21)
+        Me.txtSupplierName.TabIndex = 116
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(29, 78)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(49, 13)
+        Me.Label6.TabIndex = 118
+        Me.Label6.Text = "Pemasok"
         '
         'frmTraSalesDet
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1003, 412)
+        Me.ClientSize = New System.Drawing.Size(1003, 438)
         Me.Controls.Add(Me.tcHeader)
         Me.Controls.Add(Me.StatusStrip)
         Me.Controls.Add(Me.pgMain)
@@ -847,10 +800,6 @@ Partial Class frmTraSalesDet
         CType(Me.txtTotalPrice, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtPrice, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtBrutto, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.tpSupplier.ResumeLayout(False)
-        Me.tpSupplier.PerformLayout()
-        CType(Me.grdSupplier, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.grdSupplierView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tpHistory.ResumeLayout(False)
         CType(Me.grdStatus, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.grdStatusView, System.ComponentModel.ISupportInitialize).EndInit()
@@ -914,10 +863,7 @@ Partial Class frmTraSalesDet
     Friend WithEvents lblUomID1 As System.Windows.Forms.Label
     Friend WithEvents lblQty As System.Windows.Forms.Label
     Friend WithEvents pgMain As System.Windows.Forms.ProgressBar
-    Friend WithEvents tpSupplier As System.Windows.Forms.TabPage
-    Friend WithEvents grdSupplier As DevExpress.XtraGrid.GridControl
-    Friend WithEvents grdSupplierView As DevExpress.XtraGrid.Views.Grid.GridView
-    Friend WithEvents ToolBarSupplier As MPS.usToolBar
-    Friend WithEvents BarAddSupplier As System.Windows.Forms.ToolBarButton
-    Friend WithEvents BarDeleteSupplier As System.Windows.Forms.ToolBarButton
+    Friend WithEvents btnSupplier As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents txtSupplierName As MPS.usTextBox
+    Friend WithEvents Label6 As System.Windows.Forms.Label
 End Class

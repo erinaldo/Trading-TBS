@@ -236,7 +236,7 @@
                     If .HasRows Then
                         .Read()
                         bolExists = True
-                    End If 
+                    End If
                 End With
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()
             Catch ex As Exception
@@ -270,7 +270,7 @@
                     If .HasRows Then
                         .Read()
                         bolExists = True
-                    End If 
+                    End If
                 End With
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()
             Catch ex As Exception
@@ -304,7 +304,7 @@
                     If .HasRows Then
                         .Read()
                         bolExists = True
-                    End If 
+                    End If
                 End With
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()
             Catch ex As Exception
@@ -653,7 +653,7 @@
                     If .HasRows Then
                         .Read()
                         intReturn = .Item("ID") + 1
-                    End If 
+                    End If
                 End With
                 If Not SQL.bolUseTrans Then SQL.CloseConnection()
             Catch ex As Exception

@@ -34,6 +34,8 @@ Namespace VO
             TransactionAccountReceivable = 19
             TransactionCost = 20
             TransactionJournal = 21
+            TransactionSalesDownPayment = 24
+            TransactionReceiveDownPayment = 25
 
             '# Reports
             ReportProfitAndLoss = 22

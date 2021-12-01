@@ -11,6 +11,9 @@ Namespace VO
         Property MaxPurchaseLimit As Decimal
         Property APBalance As Decimal
         Property ARBalance As Decimal
+        Property SalesPrice As Decimal
+        Property PurchasePrice1 As Decimal
+        Property PurchasePrice2 As Decimal
         Property IDStatus As Integer
 
         Enum HistoryFilter

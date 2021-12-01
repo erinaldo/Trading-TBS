@@ -19,6 +19,8 @@ Namespace VO
             DuplicateUserAccessAccess = 11
             AssignAccess = 12
             ChangePriceAccess = 13
+            SalesDownPayment = 14
+            ReceiveDownPayment = 15
         End Enum
 
     End Class 

@@ -74,24 +74,15 @@
         mnuMasterBarang.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.MasterItem, VO.Access.Values.ViewAccess)
 
         '# Transaction
-        mnuTransaksiPenjualan.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionSales, VO.Access.Values.ViewAccess)
-        mnuTransaksiReturPenjualan.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionSalesReturn, VO.Access.Values.ViewAccess)
+        mnuTransaksiPenjualanPanjar.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionSalesDownPayment, VO.Access.Values.ViewAccess)
+        mnuTransaksiPenjualanPenjualan.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionSales, VO.Access.Values.ViewAccess)
+        mnuTransaksiPenjualanReturPenjualan.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionSalesReturn, VO.Access.Values.ViewAccess)
+        mnuTransaksiPenjualanPenagihan.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionAccountReceivable, VO.Access.Values.ViewAccess)
 
-        mnuTransaksiPembelian.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionReceive, VO.Access.Values.ViewAccess)
-        mnuTransaksiReturPembelian.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionReceiveReturn, VO.Access.Values.ViewAccess)
-
-        If BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionReceive, VO.Access.Values.ViewAccess) = False AndAlso _
-            BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionReceiveReturn, VO.Access.Values.ViewAccess) = False Then
-            mnuTransaksiSep1.Visible = False
-        End If
-
-        mnuTransaksiPenagihan.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionAccountReceivable, VO.Access.Values.ViewAccess)
-        mnuTransaksiPembayaran.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionAccountPayable, VO.Access.Values.ViewAccess)
-
-        If BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionAccountReceivable, VO.Access.Values.ViewAccess) = False AndAlso _
-            BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionAccountPayable, VO.Access.Values.ViewAccess) = False Then
-            mnuTransaksiSep2.Visible = False
-        End If
+        mnuTransaksiPembelianPanjar.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionReceiveDownPayment, VO.Access.Values.ViewAccess)
+        mnuTransaksiPembelianPembelian.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionReceive, VO.Access.Values.ViewAccess)
+        mnuTransaksiPembelianReturPembelian.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionReceiveReturn, VO.Access.Values.ViewAccess)
+        mnuTransaksiPembelianPembayaran.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionAccountPayable, VO.Access.Values.ViewAccess)
 
         mnuTransaksiBiaya.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionCost, VO.Access.Values.ViewAccess)
         mnuTransaksiJurnalUmum.Visible = BL.UserAccess.IsCanAccess(MPSLib.UI.usUserApp.UserID, MPSLib.UI.usUserApp.ProgramID, VO.Modules.Values.TransactionJournal, VO.Access.Values.ViewAccess)
@@ -225,27 +216,47 @@
 
 #Region "Transaction"
 
-    Private Sub mnuTransaksiPenjualan_Click(sender As Object, e As EventArgs) Handles mnuTransaksiPenjualan.Click
+    Private Sub mnuTransaksiPenjualanPanjar_Click(sender As Object, e As EventArgs) Handles mnuTransaksiPenjualanPanjar.Click
+        Dim frmDetail As New frmTraDownPayment
+        With frmDetail
+            .Text += " Penjualan"
+            .pubDPType = VO.DownPayment.Type.Sales
+            .MdiParent = Me
+            .Show()
+        End With
+    End Sub
+
+    Private Sub mnuTransaksiPenjualanPenjualan_Click(sender As Object, e As EventArgs) Handles mnuTransaksiPenjualanPenjualan.Click
         UI.usForm.frmOpen(frmMainTraSales, "frmTraSales", Me)
     End Sub
 
-    Private Sub mnuTransaksiReturPenjualan_Click(sender As Object, e As EventArgs) Handles mnuTransaksiReturPenjualan.Click
+    Private Sub mnuTransaksiPenjualanReturPenjualan_Click(sender As Object, e As EventArgs) Handles mnuTransaksiPenjualanReturPenjualan.Click
         UI.usForm.frmOpen(frmMainTraSalesReturn, "frmTraSalesReturn", Me)
     End Sub
 
-    Private Sub mnuTransaksiPembelian_Click(sender As Object, e As EventArgs) Handles mnuTransaksiPembelian.Click
-        UI.usForm.frmOpen(frmMainTraReceive, "frmTraReceive", Me)
-    End Sub
-
-    Private Sub mnuTransaksiReturPembelian_Click(sender As Object, e As EventArgs) Handles mnuTransaksiReturPembelian.Click
-        UI.usForm.frmOpen(frmMainTraReceiveReturn, "frmTraReceiveReturn", Me)
-    End Sub
-
-    Private Sub mnuTransaksiPenagihan_Click(sender As Object, e As EventArgs) Handles mnuTransaksiPenagihan.Click
+    Private Sub mnuTransaksiPenjualanPenagihan_Click(sender As Object, e As EventArgs) Handles mnuTransaksiPenjualanPenagihan.Click
         UI.usForm.frmOpen(frmMainTraAccountReceivable, "frmTraAccountReceivable", Me)
     End Sub
 
-    Private Sub mnuTransaksiPembayaran_Click(sender As Object, e As EventArgs) Handles mnuTransaksiPembayaran.Click
+    Private Sub mnuTransaksiPembelianPanjar_Click(sender As Object, e As EventArgs) Handles mnuTransaksiPembelianPanjar.Click
+        Dim frmDetail As New frmTraDownPayment
+        With frmDetail
+            .Text += " Pembelian"
+            .pubDPType = VO.DownPayment.Type.Purchase
+            .MdiParent = Me
+            .Show()
+        End With
+    End Sub
+
+    Private Sub mnuTransaksiPembelianPembelian_Click(sender As Object, e As EventArgs) Handles mnuTransaksiPembelianPembelian.Click
+        UI.usForm.frmOpen(frmMainTraReceive, "frmTraReceive", Me)
+    End Sub
+
+    Private Sub mnuTransaksiPembelianReturPembelian_Click(sender As Object, e As EventArgs) Handles mnuTransaksiPembelianReturPembelian.Click
+        UI.usForm.frmOpen(frmMainTraReceiveReturn, "frmTraReceiveReturn", Me)
+    End Sub
+
+    Private Sub mnuTransaksiPembelianPembayaran_Click(sender As Object, e As EventArgs) Handles mnuTransaksiPembelianPembayaran.Click
         UI.usForm.frmOpen(frmMainTraAccountPayable, "frmTraAccountPayable", Me)
     End Sub
 

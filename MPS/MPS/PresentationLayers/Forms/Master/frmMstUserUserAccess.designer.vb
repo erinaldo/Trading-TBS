@@ -130,6 +130,7 @@ Partial Class frmMstUserUserAccess
         Me.cboModules.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cboModules.FormattingEnabled = True
         Me.cboModules.Location = New System.Drawing.Point(87, 40)
+        Me.cboModules.MaxDropDownItems = 100
         Me.cboModules.Name = "cboModules"
         Me.cboModules.Size = New System.Drawing.Size(230, 21)
         Me.cboModules.TabIndex = 1
